@@ -1,4 +1,4 @@
-package com.risk.Risk;
+package model;
 
 import java.util.HashMap;
 

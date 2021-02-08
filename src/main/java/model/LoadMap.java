@@ -9,6 +9,10 @@ import java.util.Scanner;
 
 
 
+
+
+
+
 public class LoadMap {
 public static int InMapIndex = 1;	
 
@@ -57,25 +61,58 @@ private HashMap<Integer, CountryDetails> d_listOfCountries; //temporary HashMap 
 		return map;
 	}
 
-
+	private BufferedReader readCountries(BufferedReader p_reader) {
+		String l_s;
+		try {
+			while(!((l_s = p_reader.readLine()).equals(""))) {
+				String[] l_countryString = l_s.split("\\s+");
+				CountryDetails newCountry = new CountryDetails(l_countryString[0], l_countryString[1], l_countryString[2], l_countryString[3], l_countryString[4], map);
+				try {
+					if(newCountry.getInContinent()==null)
+					{
+						System.out.println("Error reading the file.");
+						System.exit(-1);
+					}
+					d_listOfCountries.put(newCountry.getIndex(), newCountry);
+				}
+				catch(NullPointerException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		return p_reader;
+	}
+	
+	private BufferedReader readContinents(BufferedReader p_reader) {
+		String l_s;
+		try {
+			while(!((l_s = p_reader.readLine()).equals(""))) {
+				String[] l_continentString = l_s.split("\\s+");
+				
+				if(Integer.parseInt(l_continentString[1])>=0) {
+					map.getContinents().put(l_continentString[0].toLowerCase(), new Continent(l_continentString[0], l_continentString[1], l_continentString[2]));
+					InMapIndex++;
+				} 
+				else {
+					System.out.println("Error reading the file.");
+					System.exit(-1);
+				}
+			}
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		InMapIndex = 1;
+		return p_reader;
+		
+	}
 
 	private BufferedReader readBorders(BufferedReader p_reader) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-
-
-	private BufferedReader readCountries(BufferedReader p_reader) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-
-	private BufferedReader readContinents(BufferedReader p_reader) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
 
