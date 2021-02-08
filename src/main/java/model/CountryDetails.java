@@ -2,6 +2,8 @@ package model;
 
 import java.util.HashMap;
 
+import main.java.GameMap;
+
 /**
  * CountryDetails class have all the details of countries related to the selected .map file.
  * It also maintains a list of it's neighboring Countries.
@@ -24,7 +26,7 @@ public class CountryDetails {
 		this.d_neighbours = new HashMap<String, CountryDetails>();
 	}
 	
-	public CountryDetails(String p_index, String p_countryName, String p_continentIndex, String p_xCoOrdinate, String p_yCoOrdinate){
+	public CountryDetails(String p_index, String p_countryName, String p_continentIndex, String p_xCoOrdinate, String p_yCoOrdinate, GameMap map){
 		this.d_index = Integer.parseInt(p_index);
 		this.d_countryName = p_countryName;
 		for(Continent c : map.getContinents().values()) {
