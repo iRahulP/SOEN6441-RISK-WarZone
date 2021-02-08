@@ -1,0 +1,104 @@
+; Carsten Hide Tischbirek
+; Risk Map Suedwestliche Ostsee / Southwestern Baltic Sea
+
+; Risk board Game Map
+; Dimensions: 677 x 425 Pixels
+
+[files]
+pic sw_baltic.jpg
+map sw_baltic.gif
+crd sw_baltic.cards
+
+[continents]
+Sued-Daenemark 3 red
+Schleswig-Holstein 6 yellow
+Hamburg 1 purple
+Mecklenburg-Vorpommern 7 brown
+Sued-Schweden 3 green
+Sjaelland 4 orange
+Fyn 2 blue
+
+[countries]
+1 Ringkoebing 1 130 40
+2 Aerhus 1 230 30
+3 Ribe 1 130 120
+4 Vejle 1 190 90
+5 Sonder-Jylland 1 160 180
+6 Nordfriesland 2 160 255
+7 Schleswig-Flensburg 2 200 250
+8 Dittmarschen 2 160 315
+9 Rendsburg-Eckernfoerde 2 220 300
+10 Steinburg 2 185 350
+11 Ploen/Kiel 2 260 305
+12 Segeberg/Neumuenster 2 240 360
+13 Pinneberg 2 210 380
+14 Fehmarn 2 315 275
+15 Ostholstein/Luebeck 2 285 325
+16 Herzogtum-Lauenburg 2 275 395
+17 Hansestadt-Hamburg 3 225 400
+18 Nordwest-Mecklenburg 4 320 360
+19 Bad-Doberan 4 390 325
+20 Guestrow 4 415 360
+21 Parching/Schwerin 4 375 405
+22 Nordvorpommern/Rostock 4 450 315
+23 Ruegen 4 500 270
+24 Demmin 4 460 360
+25 Muerlitz 4 440 410
+26 Ostpommern 4 520 350
+27 Uecker-Randow 4 550 390
+28 Blekinge 5 625 25
+29 Kristianstad 5 525 50
+30 Malmoe-Hus 5 480 115
+31 Bornholm 5 610 170
+32 Frederiks-Borg 6 410 70
+33 Kopenhagen 6 415 105
+34 Roskilde 6 390 140
+35 Soro 6 345 115
+36 Falster 6 385 190
+37 Lolland 6 350 235
+38 Samsoe 7 275 85
+39 Odense 7 255 160
+40 Langeland 7 285 220
+
+
+[borders]
+1 2 3 4
+2 1 4
+3 1 4 5
+4 1 2 3 5 39
+5 3 4 6 7 39
+6 5 7 8
+7 5 6 8 9
+8 6 7 9 10
+9 7 8 10 11 12
+10 8 9 12 13
+11 9 12 15
+12 9 10 11 13 15 16 17 
+13 10 12 17
+14 15
+15 11 12 14 16 18
+16 12 15 17 18
+17 12 13 16
+18 15 16 19 20 21
+19 18 20 22
+20 18 19 21 22 24 25 
+21 18 20 25
+22 19 20 23 24 26
+23 22 31
+24 20 22 25 26
+25 20 21 24
+26 22 24 27
+27 26
+28 29
+29 28 30 31
+30 29 32 33
+31 23 29
+32 30 33 34 35
+33 30 32 34
+34 32 33 35 36
+35 32 34 36 38 40
+36 34 35 37
+37 36 40
+38 35 39
+39 4 5 38 40
+40 35 37 39
