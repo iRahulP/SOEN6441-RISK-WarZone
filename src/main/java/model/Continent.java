@@ -1,6 +1,5 @@
 package model;
 
-import com.risk.Risk.LoadMap;
 
 /**
  * Continent Class has the information about continents like the continent name,continent control value,
@@ -30,7 +29,7 @@ public class Continent {
         d_ContinentName = p_ContinentName;
         d_ControlValue = Integer.parseInt(p_ControlValue);
         d_ContinentColor = p_ContinentColor;
-        d_MapIndex = LoadMap.inMapIndex;
+        d_MapIndex = LoadMap.InMapIndex;
         // Countries TO_DO
     }
 
