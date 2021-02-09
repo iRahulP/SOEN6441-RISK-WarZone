@@ -17,6 +17,8 @@ public class CountryDetails {
 	private HashMap<String, CountryDetails> d_neighbours;
 	private int d_xCoOrdinate;
 	private int d_yCoOrdinate;
+	private int numberOfArmies;
+
 	
 	public CountryDetails(){}
 	
@@ -24,6 +26,7 @@ public class CountryDetails {
 		this.d_countryName = p_countryName;
 		this.d_inContinent = p_inContinent;
 		this.d_neighbours = new HashMap<String, CountryDetails>();
+		this.numberOfArmies = 0;
 	}
 	
 	public CountryDetails(String p_index, String p_countryName, String p_continentIndex, String p_xCoOrdinate, String p_yCoOrdinate, GameMap map){
@@ -38,6 +41,7 @@ public class CountryDetails {
 		this.d_neighbours = new HashMap<String, CountryDetails>();
 		this.d_xCoOrdinate = Integer.parseInt(p_xCoOrdinate);
 		this.d_yCoOrdinate = Integer.parseInt(p_yCoOrdinate);
+		this.numberOfArmies = 0;
 	}
 
 	public int getIndex() {
@@ -71,6 +75,15 @@ public class CountryDetails {
 	public void setyCoOrdinate(int p_yCoOrdinate) {
 		this.d_yCoOrdinate = p_yCoOrdinate;
 	}
+	
+	public int getNumberOfArmies() {
+		return this.numberOfArmies;
+	}
+
+	public void setNumberOfArmies(int numberOfArmies) {
+		this.numberOfArmies = numberOfArmies;
+	}
+
 	
 	@Override
 	public String toString() {
