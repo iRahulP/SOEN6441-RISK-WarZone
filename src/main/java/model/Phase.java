@@ -1,6 +1,6 @@
 package model;
 /**
- * Maintains the current phase of the game.
+ * It maintains the current phase of the game.
  * @author rahul
  *
  */
