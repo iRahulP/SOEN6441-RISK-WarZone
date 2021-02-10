@@ -2,97 +2,112 @@ package controller;
 
 import model.GameMap;
 import model.Phase;
+import model.Player;
+
 import java.util.ArrayList;
 
 /**
- * Class responsible to interpret user commands, call apt methods, and update game phases based on method responses.
+ * Class responsible to interpret different commands as provided by User over Command Line Interface
+ * Call required methods as appropriate, also update game phases based on method responses.
  *
  */
-public class Commands {
+public class Command {
 
     public static boolean l_allArmiesPlaced = false;
 
-    public GameMap map;
-    public RunCommand runCmd;
-    public StartUp startUp;
-    public AssignReinforcement arfc;
-    Phase gamePhase;
-    public ArrayList<Player> players;
+    public GameMap d_map;
+    public RunCommand d_runCmd;
+    public StartUp d_startUp;
+    public AssignReinforcement d_arfc;
+    Phase d_gamePhase;
+    public ArrayList<Player> d_players;
 
-    public Commands() {
-        map = new GameMap();
-        runCmd = new RunCommand();
-        startUp = new StartUp();
-        rfc = new Reinforcement();
-        players = new ArrayList<Player>();
-        gamePhase = Phase.NULL;
+    public Command() {
+        d_map = new GameMap();
+        d_runCmd = new RunCommand();
+        d_startUp = new StartUp();
+        d_arfc = new AssignReinforcement();
+        d_players = new ArrayList<Player>();
+        d_gamePhase = Phase.NULL;
     }
-
 
     /**
      * Ensures map name is valid.
-     * @param s input string
+     * @param p_sample input string
      * @return true if valid match, else false
      */
-    public boolean isMapNameValid(String s) {
-        return s != null && s.matches("^[a-zA-Z.]*$");
+    public boolean isMapNameValid(String p_sample) {
+        return p_sample != null && p_sample.matches("^[a-zA-Z.]*$");
     }
 
     /**
-     * Ensures string matches the defined criteria.
-     * @param s input string
+     * Ensures string matches the defined criteria of being an Alpha for Names.
+     * @param p_sample input string
      * @return true if valid match, else false
      */
-    public boolean isAlpha(String s) {
-        return s != null && s.matches("^[a-zA-Z-_]*$");
+    public boolean isAlpha(String p_sample) {
+        return p_sample != null && p_sample.matches("^[a-zA-Z-_]*$");
     }
 
     /**
-     * Setter method to set game phase.
-     * @param gamePhase changed phase value
+     * Ensures string matches the defined criteria of being a Numeric for ID.
+     * @param p_sample input string
+     * @return true if valid match, else false
      */
-    public void setGamePhase(Phase gamePhase) {
-        this.gamePhase = gamePhase;
+    public boolean isNumeric(String p_sample) {
+        return p_sample != null && p_sample.matches("[0-9]+");
+    }
+
+
+    /**
+     * Setter method to set Game Phase.
+     * @param p_gamePhase Phase value to be set.
+     */
+    public void setGamePhase(Phase p_gamePhase) {
+        this.d_gamePhase = p_gamePhase;
     }
 
     /**
-     * Function responsible to parsing user commands, calling apt methods, and updating the game phase.
-     * @param player Player playing the move
-     * @param newCommand Command to be interpreted
+     * Function responsible for parsing user commands passed on Command line interface.
+     * Calls appropriate methods, and Updates game Phases.
+     * @param p_player Player playing the move
+     * @param p_newCommand Command to be interpreted
      * @return next game phase
      */
-    public Phase parseCommand(Player player, String newCommand) {
+    public Phase parseCommand(Player p_player, String p_newCommand) {
 
-        int controlValue = 0;
-        int numberOfArmies = 0;
-        int armiesToFortify = 0;
+        int d_controlValue = 0;
+        int d_numberOfArmies = 0;
+        int d_armiesToFortify = 0;
+        int d_continentId = 0;
+        int d_countryId = 0;
+        int d_neighbourCountryId = 0;
+        String d_mapName = null;
+        String d_continentName = null;
+        String d_countryName = null;
+        String d_neighborCountryName = null;
+        String d_playerName = null;
+        String d_fromCountry = null;
+        String d_toCountry = null;
+        String[] d_data = p_newCommand.split("\\s+");
+        String d_commandName = d_data[0];
 
-        String mapName = null;
-        String continentName = null;
-        String countryName = null;
-        String neighborCountryName = null;
-        String playerName = null;
-        String fromCountry = null;
-        String toCountry = null;
-        String[] data = newCommand.split("\\s+");
-        String commandName = data[0];
-
-        if (gamePhase.equals(Phase.NULL)) {
-            switch (commandName) {
+        if (d_gamePhase.equals(Phase.NULL)) {
+            switch (d_commandName) {
                 case "editmap":
                     try {
-                        if (!(data[1] == "")) {
-                            if (this.isMapNameValid(data[1])) {
+                        if (!(d_data[1] == "")) {
+                            if (this.isMapNameValid(d_data[1])) {
                                 mapName = data[1];
                                 map = runCmd.editMap(mapName);
-                                System.out.println("You can now edit " + mapName);
+                                System.out.println("Edit phase for Map: " + mapName);
                                 gamePhase = Phase.EDITMAP;
                             } else {
-                                System.out.println("Invalid map name");
+                                System.out.println("Invalid Map name");
                             }
                         }
                     } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("Invalid command - it should be of the form editmap mapname.map");
+                        System.out.println("Invalid command - it should be of the form editmap sample.map");
                     }
                     break;
 
@@ -118,13 +133,13 @@ public class Commands {
                             }
                         }
                     } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("Invalid command - it should be of the form loadmap mapname.map");
+                        System.out.println("Invalid command - it should be of the form loadmap sample.map");
                     } catch (Exception e) {
-                        System.out.println("Invalid command - it should be of the form loadmap mapname.map");
+                        System.out.println("Invalid command - it should be of the form loadmap sample.map");
                     }
                     break;
                 default:
-                    System.out.println("Load or edit map first using commands: loadmap mapname.map or editmap.mapname.map");
+                    System.out.println("LoadMap or EditMap first using commands: loadmap sample.map or editmap sample.map");
                     break;
             }
         } else if (gamePhase.equals(Phase.EDITMAP)) {
@@ -133,29 +148,29 @@ public class Commands {
                     try {
                         for (int i = 1; i < data.length; i++) {
                             if (data[i].equals("-add")) {
-                                if (this.isAlpha(data[i + 1])) {
-                                    continentName = data[i + 1];
+                                if (this.isNumeric(data[i + 1])) {
+                                    continentId = Integer.parseInt(data[i + 1]);
                                 } else {
-                                    System.out.println("Invalid continent name");
+                                    System.out.println("Invalid continent Id");
                                 }
                                 controlValue = Integer.parseInt(data[i + 2]);
 
-                                boolean check = runCmd.addContinent(map, continentName, controlValue);
+                                boolean check = runCmd.addContinent(map, continentid, controlValue);
                                 if (check) {
-                                    System.out.println(continentName + " continent added to the map");
+                                    System.out.println(continentId + " added to the map");
                                     gamePhase = Phase.EDITMAP;
                                 } else {
-                                    System.out.println("Continent already exists - Please add valid Continent Name");
+                                    System.out.println("Continent already exists - Please add valid Continent Id");
                                 }
                             } else if (data[i].equals("-remove")) {
-                                if (this.isAlpha(data[i + 1])) {
-                                    continentName = data[i + 1];
+                                if (this.isNumeric(data[i + 1])) {
+                                    continentId = Integer.parseInt(data[i + 1]);
                                 } else
-                                    System.out.println("Invalid continent name");
+                                    System.out.println("Invalid continent id");
 
-                                boolean check = runCmd.removeContinent(map, continentName);
+                                boolean check = runCmd.removeContinent(map, continentId);
                                 if (check) {
-                                    System.out.println("Continent removed from the map");
+                                    System.out.println("Continent with ID :"+continentId+" removed from the map");
                                     gamePhase = Phase.EDITMAP;
                                 } else
                                     System.out.println("Continent does not exist - Please enter valid continent name");
