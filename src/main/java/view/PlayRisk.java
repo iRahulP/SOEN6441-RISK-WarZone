@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 
 /**
- * Responsible for playing the game.
+ * Responsible for playing the game acts as GameEngine.
  * Covers tasks ranging from 'map editing' to 'actual game play'.
  * Responsible for only interacting with the user and calling appropriate methods for further
  * actions.
@@ -18,7 +18,9 @@ import java.util.Scanner;
  *
  */
 public class PlayRisk {
-
+    /**
+     * @param args Command line arguments
+     */
     public static void main(String[] args) {
         PlayRisk l_game = new PlayRisk();
         System.out.println("Welcome to Risk Game based on Warzone!");
