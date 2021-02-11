@@ -1,12 +1,11 @@
 package model;
 
 import java.util.HashMap;
-
-import main.java.GameMap;
-
 /**
  * CountryDetails class have all the details of countries related to the selected .map file.
  * It also maintains a list of it's neighboring Countries.
+ * 
+ * @author Shravya
  *
  */
 public class CountryDetails {
