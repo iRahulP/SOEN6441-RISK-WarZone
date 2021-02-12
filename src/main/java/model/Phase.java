@@ -37,7 +37,7 @@ public enum Phase {
      * Player assigns reinforced armies amongst owned countries.
      * Phase ends when reinforcement armies are distributed amongst the owned countries.
      */
-    ASSIGN_REINFORCEMENT,
+    DEPLOYMENT,
 
     /**
      * Marks the end of the current player and signals to let the player get the turn.
