@@ -433,8 +433,38 @@ public class Command {
     //REINFORCEMENT/DEPLOYMENT Phase
     //deploy, showmap
         else if (d_GamePhase.equals(Phase.DEPLOYMENT)) {
+            switch (d_CommandName) {
+                case "deploy":
+                    try {
+                        if (!(d_Data[1] == null) || !(d_Data[2] == null)) {
+                            if (this.isNumeric(d_Data[1]) || this.isNumeric(d_Data[2])) {
+                                d_CountryId = d_Data[1];
+                                d_NumberOfArmies = Integer.parseInt(d_Data[2]);
+                                boolean check = d_Arfc.deploy(d_Player, d_CountryId, d_NumberOfArmies);
+                                if (check) {
+                                    if (p_player.getOwnedArmies() == 0) {
+                                        System.out.println("Deployment phase Successful!");
+                                    }
+                                }
+                            } else
+                                System.out.println("Invalid command");
+                        }
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println("Invalid command - it should be of the form deploy countryID num");
+                    } catch (Exception e) {
+                        System.out.println("Invalid command - it should be of the form deploy countryID num");
+                    }
+                    break;
 
-        }
+                case "showmap":
+                    d_StartUp.showMap(d_Players, d_Map);
+                    break;
+
+                default:
+                    System.out.println("Invalid command - either use deploy or showmap commands in Deployment phase.");
+                    break;
+                }
+            }
 
         return d_GamePhase;
     }
