@@ -73,7 +73,7 @@ private HashMap<Integer, CountryDetails> d_listOfCountries; //temporary HashMap 
 						System.out.println("Error reading the file.");
 						System.exit(-1);
 					}
-					d_listOfCountries.put(newCountry.getIndex(), newCountry);
+					d_listOfCountries.put(newCountry.getcountryID(), newCountry);
 				}
 				catch(NullPointerException e) {
 					e.printStackTrace();
