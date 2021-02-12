@@ -18,20 +18,25 @@ public static int InMapIndex = 1;
 
 
 private GameMap map;	
-private HashMap<Integer, CountryDetails> d_listOfCountries; //temporary HashMap to facilitate reading .map files
+private HashMap<Integer, CountryDetails> d_listOfCountries;
 
 	public static void main(String[] args){
 		
 		Scanner in = new Scanner(System.in);
-		System.out.println("Enter the name of the map you want to play:");
+		System.out.println("ENTER THE NAME OF MAP FILE:");
 		String l_mapName = in.nextLine();
 		LoadMap loadedMap = new LoadMap();
 		loadedMap.readMap(l_mapName);
 		in.close();
-		//loadedMap.printMap();
 	}
 
+	public GameMap getMap() {
+		return this.map;
+	}
 	
+	public void setMap(GameMap map) {
+		this.map = map;
+	}
 
 	private GameMap readMap(String p_mapName) {
 		map = new GameMap(p_mapName);
@@ -112,6 +117,21 @@ private HashMap<Integer, CountryDetails> d_listOfCountries; //temporary HashMap 
 
 	private BufferedReader readBorders(BufferedReader p_reader) {
 		return null;
+	}
+	
+	private void addNeighbour(CountryDetails argumentCountry, String stringIndex) {
+		int borderIndex = Integer.parseInt(stringIndex);
+		CountryDetails neighbourCountry = new CountryDetails();
+		try {
+			neighbourCountry = d_listOfCountries.get(borderIndex);
+		}
+		catch(IndexOutOfBoundsException e){
+			System.out.println("Found error reading the .map file");
+			System.out.println("The neighbour " + borderIndex + " does not exist.");
+			System.exit(-1);
+		}
+		if(!argumentCountry.getNeighbours().containsKey(neighbourCountry.getCountryName().toLowerCase()))
+			argumentCountry.getNeighbours().put(neighbourCountry.getCountryName().toLowerCase(), neighbourCountry);
 	}
 
 }
