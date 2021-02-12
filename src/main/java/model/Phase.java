@@ -1,4 +1,4 @@
-package model;
+    package model;
 /**
  * It maintains the current phase of the game.
  * @author rahul
