@@ -37,11 +37,11 @@ public class PlayRisk {
             l_gamePhase = cmd.parseCommand(null, l_cmd);
         }
 
-        int l_numberOfPlayers = cmd.d_players.size();
+        int l_numberOfPlayers = cmd.d_Players.size();
         int l_traversalCounter = 0;
         while(true) {
             while(l_traversalCounter<l_numberOfPlayers) {
-                Player l_p = cmd.d_players.get(l_traversalCounter);
+                Player l_p = cmd.d_Players.get(l_traversalCounter);
                 AssignReinforcement.assignReinforcementArmies(l_p);
                 System.out.println("It's "+ l_p.getPlayerName() + "'s turn");
 
@@ -66,12 +66,12 @@ public class PlayRisk {
      *
      */
     private void sampleMaps() {
-        File d_folder = new File("src/main/resources/maps/");
-        File[] d_files = d_folder.listFiles();
+        File d_Folder = new File("src/main/resources/maps/");
+        File[] d_Files = d_Folder.listFiles();
 
-        for(int i=0; i<d_files.length; i++) {
-            if(d_files[i].isFile())
-                System.out.print(d_files[i].getName()+" /t");
+        for(int i=0; i<d_Files.length; i++) {
+            if(d_Files[i].isFile())
+                System.out.print(d_Files[i].getName()+" /t");
         }
         System.out.println();
     }

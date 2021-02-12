@@ -14,20 +14,20 @@ import java.util.ArrayList;
 public class Command {
 
     public static boolean l_allArmiesPlaced = false;
-    public GameMap d_map;
-    public RunCommand d_runCmd;
-    public StartUp d_startUp;
-    public AssignReinforcement d_arfc;
-    Phase d_gamePhase;
-    public ArrayList<Player> d_players;
+    public GameMap d_Map;
+    public RunCommand d_RunCmd;
+    public StartUp d_StartUp;
+    public AssignReinforcement d_Arfc;
+    Phase d_GamePhase;
+    public ArrayList<Player> d_Players;
 
     public Command() {
-        d_map = new GameMap();
-        d_runCmd = new RunCommand();
-        d_startUp = new StartUp();
-        d_arfc = new AssignReinforcement();
-        d_players = new ArrayList<Player>();
-        d_gamePhase = Phase.NULL;
+        d_Map = new GameMap();
+        d_RunCmd = new RunCommand();
+        d_StartUp = new StartUp();
+        d_Arfc = new AssignReinforcement();
+        d_Players = new ArrayList<Player>();
+        d_GamePhase = Phase.NULL;
     }
 
     /**
@@ -63,7 +63,7 @@ public class Command {
      * @param p_gamePhase Phase value to be set.
      */
     public void setGamePhase(Phase p_gamePhase) {
-        this.d_gamePhase = p_gamePhase;
+        this.d_GamePhase = p_gamePhase;
     }
 
     /**
@@ -75,33 +75,30 @@ public class Command {
      */
     public Phase parseCommand(Player p_player, String p_newCommand) {
 
-        int d_controlValue = 0;
-        int d_numberOfArmies = 0;
-        int d_armiesToFortify = 0;
-        int d_continentId = 0;
-        int d_countryId = 0;
-        int d_neighbourCountryId = 0;
-        String d_mapName = null;
-        String d_continentName = null;
-        String d_countryName = null;
-        String d_neighborCountryName = null;
-        String d_playerName = null;
-        String d_fromCountry = null;
-        String d_toCountry = null;
-        String[] d_data = p_newCommand.split("\\s+");
-        String d_commandName = d_data[0];
-//initial command line commands
-        //editmap nad loadmap
-        if (d_gamePhase.equals(Phase.NULL)) {
-            switch (d_commandName) {
+        int d_ControlValue = 0;
+        int d_NumberOfArmies = 0;
+        int d_ArmiesToFortify = 0;
+        String d_MapName = null;
+        String d_ContinentId = null;
+        String d_CountryId = null;
+        String d_NeighborCountryId = null;
+        String d_PlayerName = null;
+        String d_FromCountry = null;
+        String d_ToCountry = null;
+        String[] d_Data = p_newCommand.split("\\s+");
+        String d_CommandName = d_Data[0];
+    //initial command line commands
+    //editmap nad loadmap
+        if (d_GamePhase.equals(Phase.NULL)) {
+            switch (d_CommandName) {
                 case "editmap":
                     try {
-                        if (d_data[1] != "") {
-                            if (this.isMapNameValid(d_data[1])) {
-                                d_mapName = d_data[1];
-                                d_map = d_runCmd.editMap(d_mapName);
-                                System.out.println("Editing for Map: " + d_mapName);
-                                d_gamePhase = Phase.EDITMAP;
+                        if (d_Data[1] != "") {
+                            if (this.isMapNameValid(d_Data[1])) {
+                                d_MapName = d_Data[1];
+                                d_Map = d_RunCmd.editMap(d_MapName);
+                                System.out.println("Editing for Map: " + d_MapName);
+                                d_GamePhase = Phase.EDITMAP;
                             } else {
                                 System.out.println("Invalid Map Name");
                             }
@@ -113,20 +110,20 @@ public class Command {
 
                 case "loadmap":
                     try {
-                        if (d_data[1] != null) {
-                            if (this.isMapNameValid(d_data[1])) {
-                                d_mapName = d_data[1];
-                                d_map = d_runCmd.loadMap(d_mapName);
-                                if (d_map != null) {
-                                    if (!d_map.getValid()) {
+                        if (d_Data[1] != null) {
+                            if (this.isMapNameValid(d_Data[1])) {
+                                d_MapName = d_Data[1];
+                                d_Map = d_RunCmd.loadMap(d_MapName);
+                                if (d_Map != null) {
+                                    if (!d_Map.getValid()) {
                                         System.out.println("Map is not valid");
-                                        d_gamePhase = Phase.NULL;
+                                        d_GamePhase = Phase.NULL;
                                     } else {
                                         System.out.println("Map is valid. Please Add players -> ");
-                                        d_gamePhase = Phase.STARTUP;
+                                        d_GamePhase = Phase.STARTUP;
                                     }
                                 } else {
-                                    d_gamePhase = Phase.NULL;
+                                    d_GamePhase = Phase.NULL;
                                 }
                             } else {
                                 System.out.println("Map name not valid");
@@ -143,20 +140,237 @@ public class Command {
         }
     //EDITMAP Phase
     //editcontinent, editcountry, editneighbour, savemap, showmap, editmap, loadmap, validatemap
-        else if (d_gamePhase.equals(Phase.EDITMAP)) {
+        else if (d_GamePhase.equals(Phase.EDITMAP)) {
+            switch (d_CommandName) {
+                case "editcontinent":
+                    try {
+                        for (int i = 1; i < d_Data.length; i++) {
+                            if (d_Data[i].equals("-add")) {
+                                if (this.isNumeric(d_Data[i + 1])) {
+                                    d_ContinentId = d_Data[i + 1];
+                                }
+                                else {
+                                    System.out.println("Invalid Continent ID");
+                                }
+                                d_ControlValue = Integer.parseInt(d_Data[i + 2]);
 
+                                boolean check = d_RunCmd.addContinent(d_Map, d_ContinentId , d_ControlValue);
+                                if (check) {
+                                    System.out.println(d_ContinentId + " continent added to the map");
+                                    d_GamePhase = Phase.EDITMAP;
+                                } else {
+                                    System.out.println("Continent already exists - Please add valid Continent ID");
+                                }
+                            } else if (d_Data[i].equals("-remove")) {
+                                if (this.isNumeric(d_Data[i + 1])) {
+                                    d_ContinentId = d_Data[i + 1];
+                                }
+                                else
+                                    System.out.println("Invalid Continent Id");
+
+                                boolean check = d_RunCmd.removeContinent(d_Map, d_ContinentId);
+                                if (check) {
+                                    System.out.println("Continent removed from Map");
+                                    d_GamePhase = Phase.EDITMAP;
+                                } else
+                                    System.out.println("Continent doesn't exist - Please enter valid Continent ID");
+                            }
+                        }
+                    }
+                    catch(ArrayIndexOutOfBoundsException | NumberFormatException e) {
+                        System.out.println("Invalid command - It should be of the form editcontinent -add continentID controlvalue -remove continentID");
+                    } catch(Exception e) {
+                        System.out.println("Invalid command - it should be of the form editcontinent -add continentID controlvalue -remove continentID");
+                    }
+                    break;
+
+                case "editcountry":
+                    try {
+                        for (int i = 1; i < d_Data.length; i++) {
+                            if (d_Data[i].equals("-add")) {
+                                if (this.isNumeric(d_Data[i + 1]) || this.isNumeric(d_Data[i + 2])) {
+                                    d_CountryId = d_Data[i + 1];
+                                    d_ContinentId = d_Data[i + 2];
+                                } else {
+                                    System.out.println("Invalid country name");
+                                }
+                                boolean check = d_RunCmd.addCountry(d_Map, d_CountryId, d_ContinentId);
+                                if (check) {
+                                    System.out.println("Country added to the map");
+                                    d_GamePhase = Phase.EDITMAP;
+                                } else {
+                                    System.out.println("Country already exists - Please add valid Country ID");
+                                }
+                            } else if (d_Data[i].equals("-remove")) {
+                                if (this.isNumeric(d_Data[i + 1])) {
+                                    d_CountryId = d_Data[i + 1];
+                                }
+                                else {
+                                    System.out.println("Invalid country name");
+                                }
+                                boolean check = d_RunCmd.removeCountry(d_Map, d_CountryId);
+                                if (check) {
+                                    System.out.println("Country removed from the map");
+                                    d_GamePhase = Phase.EDITMAP;
+                                } else {
+                                    System.out.println("Country does not exist - Please enter valid country name");
+                                }
+                            }
+                        }
+                    }
+                    catch(ArrayIndexOutOfBoundsException e) {
+                        System.out.println("Invalid command - it should be of the form editcountry -add countryId continentId -remove countryId");
+                    }
+                    catch(Exception e) {
+                        System.out.println("Invalid command - it should be of the form editcountry -add countryId continentId -remove countryId");
+                    }
+                    break;
+
+                case "editneighbor":
+                    try {
+                        for (int i = 1; i < d_Data.length; i++) {
+                            if (d_Data[i].equals("-add")) {
+                                if (this.isNumeric(d_Data[i + 1]) || this.isNumeric(d_Data[i + 2])) {
+                                    d_CountryId = d_Data[i + 1];
+                                    d_NeighborCountryId = d_Data[i + 2];
+                                } else {
+                                    System.out.println("Invalid country ID");
+                                }
+
+                                boolean check = d_RunCmd.addNeighbor(d_Map, d_CountryId, d_NeighborCountryId);
+                                if (check) {
+                                    System.out.println("Neighbor added to the map");
+                                    d_GamePhase = Phase.EDITMAP;
+                                } else {
+                                    System.out.println("Country does not exist - Please enter valid countryID neighborcountryID");
+                                }
+                            } else if (d_Data[i].equals("-remove")) {
+                                if (this.isNumeric(d_Data[i + 1]) || this.isNumeric(d_Data[i + 2])) {
+                                    d_CountryId = d_Data[i + 1];
+                                    d_NeighborCountryId = d_Data[i + 2];
+                                } else {
+                                    System.out.println("Invalid country ID");
+                                }
+
+                                boolean check = d_RunCmd.removeNeighbor(d_Map, d_CountryId, d_NeighborCountryId);
+                                if (check) {
+                                    System.out.println("Neighbor removed from the map");
+                                    d_GamePhase = Phase.EDITMAP;
+                                } else
+                                    System.out.println("Country does not exist - Please enter valid countryID neighborcountryID");
+                            }
+                        }
+                    }
+                    catch(ArrayIndexOutOfBoundsException e) {
+                        System.out.println("Invalid command - it should be of the form editneighbor -add countryID neighborcountryID -remove countryID neighborcountryID");
+                    }
+                    catch(Exception e) {
+                        System.out.println("Invalid command - it should be of the form editneighbor -add countryID neighborcountryID -remove countryID neighborcountryID");
+                    }
+                    break;
+
+                case "savemap":
+                    try {
+                        if (d_Data[1] != "") {
+                            if (this.isMapNameValid(d_Data[1])) {
+                                d_MapName = d_Data[1];
+                                boolean check = d_RunCmd.saveMap(d_Map, d_MapName);
+                                if (check) {
+                                    System.out.println("Map file saved successfully");
+                                    d_GamePhase = Phase.EDITMAP;
+                                } else
+                                    System.out.println("Error in saving - invalid map");
+                            } else
+                                System.out.println("Map name not valid!");
+                        }
+                    }
+                    catch(ArrayIndexOutOfBoundsException e) {
+                        System.out.println("Invalid command - it should be of the form(without extension) savemap filename");
+                    }
+                    catch(Exception e) {
+                        System.out.println("Invalid command - it should be of the form(without extension) savemap filename");
+                    }
+                    break;
+
+                case "showmap":
+                    d_RunCmd.showMap(d_Map);
+                    d_GamePhase = Phase.EDITMAP;
+                    break;
+
+                case "editmap":
+                    try {
+                        if (d_Data[1] != null) {
+                            if (this.isMapNameValid(d_Data[1])) {
+                                d_MapName = d_Data[1];
+                                d_Map = d_RunCmd.editMap(d_MapName);
+                                System.out.println("Start editing " + d_MapName);
+                                d_GamePhase = Phase.EDITMAP;
+                            } else
+                                System.out.println("Map name is invalid!");
+                        }
+                    }
+                    catch(ArrayIndexOutOfBoundsException e) {
+                        System.out.println("Invalid command - it should be of the form editmap sample.map");
+                    }
+                    catch(Exception e) {
+                        System.out.println("Invalid command - it should be of the form editmap sample.map");
+                    }
+                    break;
+
+                case "loadmap":
+                    try {
+                        if (d_Data[1] != "") {
+                            if (this.isMapNameValid(d_Data[1])) {
+                                d_MapName = d_Data[1];
+                                d_Map = d_RunCmd.loadMap(d_MapName);
+                                if (d_Map != null) {
+                                    if (!d_Map.getValid()) {
+                                        System.out.println("Invalid Map");
+                                        d_GamePhase = Phase.NULL;
+                                    } else {
+                                        System.out.println("Map is valid. Add players now.");
+                                        d_GamePhase = Phase.STARTUP;
+                                    }
+                                } else {
+                                    d_GamePhase = Phase.NULL;
+                                }
+                            } else
+                                System.out.println("Map name is invalid!");
+                        }
+                    }
+                    catch(ArrayIndexOutOfBoundsException e) {
+                        System.out.println("Invalid command - it should be of the form loadmap sample.map");
+                    }
+                    catch(Exception e) {
+                        System.out.println("Invalid command - it should be of the form loadmap sample.map");
+                    }
+                    break;
+
+                case "validatemap":
+                    if(d_RunCmd.validateMap(d_Map)) {
+                        System.out.println("Map is Validated and Correct!");
+                    }
+                    else {
+                        System.out.println("Invalid map");
+                    }
+                    break;
+
+                default:
+                    System.out.println("Invalid command - either use edit commands(editcontinent/editcountry/editneighbor) or savemap/validatemap/editmap/loadmap/showmap command");
+                    break;
+            }
         }
     //STARTUP Phase
     //gameplayer, assigncountries, showmap
-        else if (d_gamePhase.equals(Phase.STARTUP)) {
+        else if (d_GamePhase.equals(Phase.STARTUP)) {
 
         }
     //REINFORCEMENT/DEPLOYMENT Phase
     //deploy, showmap
-        else if (d_gamePhase.equals(Phase.ASSIGN_REINFORCEMENT)) {
+        else if (d_GamePhase.equals(Phase.ASSIGN_REINFORCEMENT)) {
 
         }
 
-        return d_gamePhase;
+        return d_GamePhase;
     }
 }
