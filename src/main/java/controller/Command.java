@@ -44,6 +44,15 @@ public class Command {
      * @param p_sample input string
      * @return true if valid match, else false
      */
+    public boolean isPlayerNameValid(String p_sample) {
+        return p_sample != null && p_sample.matches("[a-zA-Z0-9]+");
+    }
+
+    /**
+     * Ensures string matches the defined criteria of being an Alpha for Names.
+     * @param p_sample input string
+     * @return true if valid match, else false
+     */
     public boolean isAlphabetic(String p_sample) {
         return p_sample != null && p_sample.matches("^[a-zA-Z-_]*$");
     }
@@ -363,11 +372,67 @@ public class Command {
     //STARTUP Phase
     //gameplayer, assigncountries, showmap
         else if (d_GamePhase.equals(Phase.STARTUP)) {
+            switch (d_CommandName) {
+                case "gameplayer":
+                    try {
+                        for (int i = 1; i < d_Data.length; i++) {
+                            if (d_Data[i].equals("-add")) {
+                                if (this.isPlayerNameValid(d_Data[i + 1])) {
+                                    d_PlayerName = d_Data[i + 1];
+                                    boolean check = d_StartUp.addPlayer(d_Players, d_PlayerName);
+                                    if (check) {
+                                        System.out.println("Player added!");
+                                    } else {
+                                        System.out.println("Can not add any more player. Max pool of 6 Satisfied!");
+                                    }
+                                    d_GamePhase = Phase.STARTUP;
+                                } else {
+                                    System.out.println("Invalid Player Name");
+                                }
+                            } else if (d_Data[i].equals("-remove")) {
+                                if (this.isPlayerNameValid(d_Data[i + 1])) {
+                                    d_PlayerName = d_Data[i + 1];
+                                    boolean check = d_StartUp.removePlayer(d_Players, d_PlayerName);
+                                    if (check)
+                                        System.out.println("Player removed!");
+                                    else
+                                        System.out.println("Player doesn't exist");
+                                    d_GamePhase = Phase.STARTUP;
+                                } else
+                                    System.out.println("Invalid Player Name");
+                            }
+                        }
+                    }
+                    catch(ArrayIndexOutOfBoundsException e) {
+                        System.out.println("Invalid command - it should be of the form gameplayer -add playername -remove playername");
+                    }
+                    catch(Exception e) {
+                        System.out.println("Invalid command - it should be of the form gameplayer -add playername -remove playername");
+                    }
+                    break;
 
+                case "assigncountries":
+                    boolean check = d_StartUp.assignCountries(d_Map, d_Players);
+                    if (check) {
+                        System.out.println("Countries allocated randomly amongst Players");
+                    }
+                    d_GamePhase = Phase.ARMYALLOCATION;
+                    d_StartUp.armyDistribution(d_Players, this, d_GamePhase);
+                    d_GamePhase = Phase.DEPLOYMENT;
+                    break;
+
+                case "showmap":
+                    d_StartUp.showMap(d_Players, d_Map);
+                    break;
+
+                default:
+                    System.out.println("Invalid command - use gameplayer command/assigncountries command/showmap command in start up phase!");
+                    break;
+            }
         }
     //REINFORCEMENT/DEPLOYMENT Phase
     //deploy, showmap
-        else if (d_GamePhase.equals(Phase.ASSIGN_REINFORCEMENT)) {
+        else if (d_GamePhase.equals(Phase.DEPLOYMENT)) {
 
         }
 
