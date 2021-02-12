@@ -10,7 +10,7 @@ import java.util.HashMap;
  */
 public class CountryDetails {
 
-	private int d_index;
+	private int d_countryID;
 	private String d_countryName;
 	private String d_inContinent;
 	private HashMap<String, CountryDetails> d_neighbours;
@@ -38,15 +38,15 @@ public class CountryDetails {
 	/**
 	 * Creates CountryDetails object as per the argument parameters.
 	 * This constructor used while reading from ".map" files.
-	 * @param p_index index in the ".map" file as per Domination's conventions
+	 * @param p_countryID index of the country in the ".map" file
 	 * @param p_countryName name of the country
 	 * @param p_continentIndex index of the continent this country belongs to
 	 * @param p_xCoOrdinate x-coordinate on GUI map
 	 * @param p_yCoOrdinate y-coordinate on GUI map
 	 * @param p_map GameMap in which this country resides
 	 */
-	public CountryDetails(String p_index, String p_countryName, String p_continentIndex, String p_xCoOrdinate, String p_yCoOrdinate, GameMap p_map){
-		this.d_index = Integer.parseInt(p_index);
+	public CountryDetails(String p_countryID, String p_countryName, String p_continentIndex, String p_xCoOrdinate, String p_yCoOrdinate, GameMap p_map){
+		this.d_countryID = Integer.parseInt(p_countryID);
 		this.d_countryName = p_countryName;
 		for(Continent c : p_map.getContinents().values()) {
 			if(c.getInMapIndex()==Integer.parseInt(p_continentIndex)) {
@@ -62,10 +62,10 @@ public class CountryDetails {
 
 	/**
 	 * Returns the index of this country in the ".map" file
-	 * @return returns d_index of this country in the ".map" file
+	 * @return returns d_countryID of this country in the ".map" file
 	 */
-	public int getIndex() {
-		return d_index;
+	public int getcountryID() {
+		return d_countryID;
 	}
 	
 	/**
