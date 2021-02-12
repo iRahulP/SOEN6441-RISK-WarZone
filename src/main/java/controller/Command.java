@@ -90,7 +90,8 @@ public class Command {
         String d_toCountry = null;
         String[] d_data = p_newCommand.split("\\s+");
         String d_commandName = d_data[0];
-
+//initial command line commands
+        //editmap nad loadmap
         if (d_gamePhase.equals(Phase.NULL)) {
             switch (d_commandName) {
                 case "editmap":
@@ -140,7 +141,22 @@ public class Command {
                     break;
             }
         }
-        return d_gamePhase;
+    //EDITMAP Phase
+    //editcontinent, editcountry, editneighbour, savemap, showmap, editmap, loadmap, validatemap
+        else if (d_gamePhase.equals(Phase.EDITMAP)) {
 
+        }
+    //STARTUP Phase
+    //gameplayer, assigncountries, showmap
+        else if (d_gamePhase.equals(Phase.STARTUP)) {
+
+        }
+    //REINFORCEMENT/DEPLOYMENT Phase
+    //deploy, showmap
+        else if (d_gamePhase.equals(Phase.ASSIGN_REINFORCEMENT)) {
+
+        }
+
+        return d_gamePhase;
     }
 }
