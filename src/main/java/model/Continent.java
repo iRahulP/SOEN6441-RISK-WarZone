@@ -16,7 +16,7 @@ public class Continent {
     private String d_continentName;
     private int d_controlValue;
     private String d_continentColor;
-    private int d_inMapIndex;
+    private int d_continentId;
     private HashMap<String, CountryDetails> d_countries;
 
     /**
@@ -31,11 +31,25 @@ public class Continent {
         d_continentName = p_continentName;
         d_controlValue = Integer.parseInt(p_controlValue);
         d_continentColor = p_continentColor;
-        d_inMapIndex = LoadMap.InMapIndex;
-        d_countries = new HashMap<String, CountryDetails>();
+        d_continentId = LoadMap.InMapIndex;
+        d_countries = new HashMap<>();
     }
 
-    //TO-DO Add overloaded constructor for editMap
+
+    /**
+     * Creates a Continent based on continentId and controlValue(used in editMap)
+     * Will be used when user defined continents are to be created.
+     *
+     * @param p_continentId  Id of the continent
+     * @param p_controlValue Control value for this continent
+     */
+    Continent(String p_continentId, int p_controlValue) {
+        // continent name
+        d_continentId = Integer.parseInt(p_continentId);
+        d_controlValue = p_controlValue;
+        d_continentColor = "000";
+        d_countries = new HashMap<>();
+    }
 
     /**
      * Returns the name of the continent.
@@ -94,19 +108,19 @@ public class Continent {
     /**
      * Returns the index for this continent when saved  in ".map" file following domination's rules
      *
-     * @return returns index of the continent
+     * @return returns ID value of the continent
      */
-    public int getInMapIndex() {
-        return this.d_inMapIndex;
+    public int getContinentId() {
+        return this.d_continentId;
     }
 
     /**
      * Sets the index of this continent
      *
-     * @param p_inMapIndex index of the continent
+     * @param p_continentId ID value of the continent
      */
-    public void setInMapIndex(int p_inMapIndex) {
-        d_inMapIndex = p_inMapIndex;
+    public void setInMapIndex(int p_continentId) {
+        d_continentId = p_continentId;
     }
 }
 
