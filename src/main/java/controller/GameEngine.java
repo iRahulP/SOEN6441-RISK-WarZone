@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Call required methods as appropriate, also update game phases based on method responses.
  *
  */
-public class Command {
+public class GameEngine {
 
     public static boolean l_allArmiesPlaced = false;
     public GameMap d_Map;
@@ -21,7 +21,7 @@ public class Command {
     Phase d_GamePhase;
     public ArrayList<Player> d_Players;
 
-    public Command() {
+    public GameEngine() {
         d_Map = new GameMap();
         d_RunCmd = new RunCommand();
         d_StartUp = new StartUp();
@@ -83,7 +83,6 @@ public class Command {
      * @return next game phase
      */
     public Phase parseCommand(Player p_player, String p_newCommand) {
-
         int d_ControlValue = 0;
         int d_NumberOfArmies = 0;
         int d_ArmiesToFortify = 0;
@@ -96,8 +95,8 @@ public class Command {
         String d_ToCountry = null;
         String[] d_Data = p_newCommand.split("\\s+");
         String d_CommandName = d_Data[0];
-    //initial command line commands
-    //editmap nad loadmap
+        //initial command line commands
+        //editmap nad loadmap
         if (d_GamePhase.equals(Phase.NULL)) {
             switch (d_CommandName) {
                 case "editmap":
@@ -147,8 +146,8 @@ public class Command {
                     break;
             }
         }
-    //EDITMAP Phase
-    //editcontinent, editcountry, editneighbour, savemap, showmap, editmap, loadmap, validatemap
+        //EDITMAP Phase
+        //editcontinent, editcountry, editneighbour, savemap, showmap, editmap, loadmap, validatemap
         else if (d_GamePhase.equals(Phase.EDITMAP)) {
             switch (d_CommandName) {
                 case "editcontinent":
@@ -369,8 +368,8 @@ public class Command {
                     break;
             }
         }
-    //STARTUP Phase
-    //gameplayer, assigncountries, showmap
+        //STARTUP Phase
+        //gameplayer, assigncountries, showmap
         else if (d_GamePhase.equals(Phase.STARTUP)) {
             switch (d_CommandName) {
                 case "gameplayer":
@@ -430,8 +429,8 @@ public class Command {
                     break;
             }
         }
-    //REINFORCEMENT/DEPLOYMENT Phase
-    //deploy, showmap
+        //REINFORCEMENT/DEPLOYMENT Phase
+        //deploy, showmap
         else if (d_GamePhase.equals(Phase.DEPLOYMENT)) {
             switch (d_CommandName) {
                 case "deploy":
@@ -463,8 +462,8 @@ public class Command {
                 default:
                     System.out.println("Invalid command - either use deploy or showmap commands in Deployment phase.");
                     break;
-                }
             }
+        }
 
         return d_GamePhase;
     }

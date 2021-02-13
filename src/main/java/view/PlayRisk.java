@@ -1,6 +1,7 @@
 package view;
 
 import controller.Command;
+import controller.GameEngine;
 import model.Phase;
 import model.Player;
 
@@ -30,7 +31,7 @@ public class PlayRisk {
         Scanner sc = new Scanner(System.in);
         String l_cmd = sc.nextLine();
         Phase l_gamePhase = Phase.NULL;
-        Command cmd = new Command();
+        GameEngine cmd = new GameEngine();
         l_gamePhase = cmd.parseCommand(null, l_cmd);
         while(l_gamePhase!= Phase.ASSIGN_REINFORCEMENT) {
             l_cmd = sc.nextLine();
