@@ -106,7 +106,7 @@ public class Continent {
     }
 
     /**
-     * Returns the index for this continent when saved  in ".map" file following domination's rules
+     * Returns the ID value for this continent when saved  in ".map" file following domination's rules
      *
      * @return returns ID value of the continent
      */
@@ -115,11 +115,11 @@ public class Continent {
     }
 
     /**
-     * Sets the index of this continent
+     * Sets the ID value of this continent
      *
      * @param p_continentId ID value of the continent
      */
-    public void setInMapIndex(int p_continentId) {
+    public void setContinentId(int p_continentId) {
         d_continentId = p_continentId;
     }
 }
