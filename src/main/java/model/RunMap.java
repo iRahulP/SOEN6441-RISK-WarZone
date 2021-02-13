@@ -1,7 +1,25 @@
 package model;
 
+import java.io.File;
 
 public class RunMap {
+	public GameMap loadMap(String p_mapName) {
+		String l_filePath = "maps/" + p_mapName;
+		GameMap l_gameMap;
+		File l_file = new File(l_filePath);
+		if(l_file.exists())
+		{
+			LoadMap l_loadMap = new LoadMap();
+			l_gameMap = l_loadMap.readMap(l_filePath);
+			l_gameMap.setMapName(p_mapName);
+			
+		}else {
+			System.out.println("Map " + p_mapName + " does not exist. Try to load again or use 'editMap' to create a map.");
+			return null;
+		}
+		return l_gameMap;
+			
+	}
 
 	public void showMap(GameMap map) {
 		if(map==null)
