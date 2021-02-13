@@ -23,7 +23,7 @@ public class RunMap {
 					}
 					else if(l_PrintCountryName) {
 						System.out.printf("\n%25s%25s%25s\n", "", country.getCountryName(), "");
-						l_PrintCountryName = false;
+						l_PrintCountryName =  false;
 					}
 				}
 				for(CountryDetails neighbor : country.getNeighbours().values()) {
