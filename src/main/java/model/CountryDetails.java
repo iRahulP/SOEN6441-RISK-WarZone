@@ -49,7 +49,7 @@ public class CountryDetails {
 		this.d_countryID = Integer.parseInt(p_countryID);
 		this.d_countryName = p_countryName;
 		for(Continent c : p_map.getContinents().values()) {
-			if(c.getInMapIndex()==Integer.parseInt(p_continentIndex)) {
+			if(c.getContinentId()==Integer.parseInt(p_continentIndex)) {
 				this.d_inContinent = c.getContinentName();
 				//break;
 			}	
@@ -120,7 +120,7 @@ public class CountryDetails {
 
 	/**
 	 * Setter method to fetch y-coordinate
-	 * @param p_xCoOrdinate argument d_yCoOrdinate value to be set
+	 * @param p_yCoOrdinate argument d_yCoOrdinate value to be set
 	 */
 	public void setyCoOrdinate(int p_yCoOrdinate) {
 		this.d_yCoOrdinate = p_yCoOrdinate;
