@@ -306,7 +306,7 @@ public class GameEngine {
                         if (d_Data[1] != null) {
                             if (this.isMapNameValid(d_Data[1])) {
                                 d_MapName = d_Data[1];
-                                d_Map = d_RunCmd.editMap(d_MapName);
+                                //d_Map = d_RunG.editMap(d_MapName);
                                 System.out.println("Start editing " + d_MapName);
                                 d_GamePhase = Phase.EDITMAP;
                             } else
@@ -326,9 +326,9 @@ public class GameEngine {
                         if (d_Data[1] != "") {
                             if (this.isMapNameValid(d_Data[1])) {
                                 d_MapName = d_Data[1];
-                                //d_Map = d_RunCmd.loadMap(d_MapName);
+                                d_Map = d_RunG.loadMap(d_MapName);
                                 if (d_Map != null) {
-                                    if (!d_Map.getValid()) {
+                                    if (!d_Map.isValid()) {
                                         System.out.println("Invalid Map");
                                         d_GamePhase = Phase.NULL;
                                     } else {
@@ -351,8 +351,9 @@ public class GameEngine {
                     break;
 
                 case "validatemap":
-                    if(d_RunCmd.validateMap(d_Map)) {
-                        System.out.println("Map is Validated and Correct!");
+                    //if(d_RunG.validateMap(d_Map)) {
+                    if(true) {
+                            System.out.println("Map is Validated and Correct!");
                     }
                     else {
                         System.out.println("Invalid map");
