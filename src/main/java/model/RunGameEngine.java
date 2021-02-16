@@ -65,7 +65,8 @@ public class RunGameEngine {
 	 * @return
 	 */
 	public boolean addContinent(GameMap p_map, String p_continentName, int p_controlValue) {
-		if(!(MapValidator.doesContinentExist(p_map, p_continentName))) {
+		return false;
+		/*if(!(MapValidator.doesContinentExist(p_map, p_continentName))) {
 			if(p_controlValue<0)
 				return false;
 			Continent l_continent = new Continent(p_continentName, p_controlValue);
@@ -74,7 +75,8 @@ public class RunGameEngine {
 		}
 		else {
 			return false;
-		}
+		}*/
+		
 	}
 	
 	/**
@@ -98,7 +100,7 @@ public class RunGameEngine {
 				if(!removeCountry(p_map, c.getCountryName()))
 					return false;
 			}
-			map.getContinents().remove(p_continentName.toLowerCase());
+			p_map.getContinents().remove(p_continentName.toLowerCase());
 			return true;
 		}
 		else {
@@ -115,7 +117,8 @@ public class RunGameEngine {
 	 * @return
 	 */
 	public boolean addCountry(GameMap p_map, String p_countryName, String p_continentName) {
-		if(!MapValidator.doesCountryExist(p_map, p_countryName)) {
+		return false;
+		/*if(!MapValidator.doesCountryExist(p_map, p_countryName)) {
 			if(!p_map.getContinents().containsKey(p_continentName.toLowerCase())) {
 				System.out.println(p_continentName + " does not exist.");
 				return false;
@@ -128,7 +131,7 @@ public class RunGameEngine {
 		}
 		else {
 			return false;
-		}
+		}*/
 	}
 	
 	/**
@@ -147,9 +150,9 @@ public class RunGameEngine {
 			}
 			Iterator<CountryDetails> l_itr = l_tempList.listIterator();
 			while(l_itr.hasNext()) {
-				CountryDetails l_neighbor = l_itr.next();
-				if(!removeNeighbor(p_map, l_country.getCountryName(), l_neighbor.getCountryName()))
-					return false;
+				//CountryDetails l_neighbor = l_itr.next();
+				/*if(!removeNeighbor(p_map, l_country.getCountryName(), l_neighbor.getCountryName()))
+					return false;*/
 			}
 			p_map.getCountries().remove(p_countryName.toLowerCase());
 			p_map.getContinents().get(l_country.getInContinent().toLowerCase()).getCountries().remove(p_countryName.toLowerCase());
