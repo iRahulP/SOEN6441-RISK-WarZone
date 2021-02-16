@@ -297,7 +297,7 @@ public class GameEngine {
                     break;
 
                 case "showmap":
-                    //d_RunCmd.showMap(d_Map);
+                    d_RunG.showMap(d_Map);
                     d_GamePhase = Phase.EDITMAP;
                     break;
 
