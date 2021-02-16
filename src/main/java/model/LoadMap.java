@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 
+
+
 public class LoadMap {
     public static int InMapIndex = 1;
 
@@ -33,7 +35,7 @@ public class LoadMap {
         this.map = map;
     }
 
-    private GameMap readMap(String p_mapName) {
+    public GameMap readMap(String p_mapName) {
         map = new GameMap(p_mapName);
         d_listOfCountries = new HashMap<Integer, CountryDetails>();
 
