@@ -35,7 +35,7 @@ public class LoadMap {
         this.map = map;
     }
 
-    private GameMap readMap(String p_mapName) {
+    public GameMap readMap(String p_mapName) {
         map = new GameMap(p_mapName);
         d_listOfCountries = new HashMap<Integer, CountryDetails>();
 
