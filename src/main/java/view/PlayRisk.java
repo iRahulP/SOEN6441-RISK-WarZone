@@ -73,10 +73,10 @@ public class PlayRisk {
     private void sampleMaps() {
         File d_Folder = new File("src/main/resources/maps/");
         File[] d_Files = d_Folder.listFiles();
-
-        for(int i = 0; i< Objects.requireNonNull(d_Files).length; i++) {
+        System.out.println("Consider files as sample.map and enter: loadmap sample.map | editmap sample.map");
+        for(int i = 1; i< Objects.requireNonNull(d_Files).length; i++) {
             if(d_Files[i].isFile())
-                System.out.print(d_Files[i].getName()+" /t");
+                System.out.print(d_Files[i].getName()+" | ");
         }
         System.out.println();
     }
