@@ -2,7 +2,7 @@ package model;
 
 import java.io.File;
 
-public class RunMap {
+public class RunGameEngine {
 	public GameMap loadMap(String p_mapName) {
 		String l_filePath = "maps/" + p_mapName;
 		GameMap l_gameMap;
