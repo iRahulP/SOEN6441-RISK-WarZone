@@ -27,7 +27,7 @@ public class Continent {
      * @param p_controlValue   Control value for this continent
      * @param p_continentColor Color value of the continent
      */
-    Continent(String p_continentName, String p_continentColor, String p_controlValue) {
+    Continent(String p_continentName, String p_controlValue,String p_continentColor) {
         d_continentName = p_continentName;
         d_controlValue = Integer.parseInt(p_controlValue);
         d_continentColor = p_continentColor;
