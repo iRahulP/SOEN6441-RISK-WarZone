@@ -4,7 +4,7 @@ import java.io.File;
 
 public class RunGameEngine {
 	public GameMap loadMap(String p_mapName) {
-		String l_filePath = "maps/" + p_mapName;
+		String l_filePath = "src/main/resources/maps/" + p_mapName;
 		GameMap l_gameMap;
 		File l_file = new File(l_filePath);
 		if(l_file.exists())
