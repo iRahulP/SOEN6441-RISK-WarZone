@@ -96,8 +96,9 @@ public class GameEngine {
         String d_ToCountry = null;
         String[] d_Data = p_newCommand.split("\\s+");
         String d_CommandName = d_Data[0];
+
         //initial command line commands
-        //editmap nad loadmap
+        //NULL : editmap / loadmap
         if (d_GamePhase.equals(Phase.NULL)) {
             switch (d_CommandName) {
                 case "editmap":
@@ -148,7 +149,7 @@ public class GameEngine {
             }
         }
         //EDITMAP Phase
-        //editcontinent, editcountry, editneighbour, savemap, showmap, editmap, loadmap, validatemap
+        //EDIT MAP : editcontinent, editcountry, editneighbour, savemap, showmap, editmap, loadmap, validatemap
         else if (d_GamePhase.equals(Phase.EDITMAP)) {
             switch (d_CommandName) {
                 case "editcontinent":
@@ -370,7 +371,7 @@ public class GameEngine {
             }
         }
         //STARTUP Phase
-        //gameplayer, assigncountries, showmap
+        //STARTUP : gameplayer, assigncountries, showmap
         else if (d_GamePhase.equals(Phase.STARTUP)) {
             switch (d_CommandName) {
                 case "gameplayer":
@@ -430,8 +431,8 @@ public class GameEngine {
                     break;
             }
         }
-        //REINFORCEMENT/DEPLOYMENT Phase
-        //deploy, showmap
+        //DEPLOYMENT Phase
+        //DEPLOYMENT : deploy, showmap
         else if (d_GamePhase.equals(Phase.DEPLOYMENT)) {
             switch (d_CommandName) {
                 case "deploy":
