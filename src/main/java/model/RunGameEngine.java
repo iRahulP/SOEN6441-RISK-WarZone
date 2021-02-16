@@ -25,6 +25,8 @@ public class RunGameEngine {
 			LoadMap l_loadMap = new LoadMap();
 			l_gameMap = l_loadMap.readMap(l_filePath);
 			l_gameMap.setMapName(p_mapName);
+			//check map validation TODO
+			l_gameMap.setValid(true);
 		}else {
 			System.out.println("Map " + p_mapName + " does not exist. Try to load again or use 'editMap' to create a map.");
 			return null;
