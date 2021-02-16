@@ -1,8 +1,21 @@
 package model;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
 
+/**
+ * Contain logic for executing GameEngine
+ * @author Rucha
+ *
+ */
 public class RunGameEngine {
+	
+	/**
+	 * 
+	 * @param p_mapName
+	 * @return
+	 */
 	public GameMap loadMap(String p_mapName) {
 		String l_filePath = "maps/" + p_mapName;
 		GameMap l_gameMap;
@@ -20,6 +33,11 @@ public class RunGameEngine {
 			
 	}
 	
+	/**
+	 * 
+	 * @param p_mapName
+	 * @return
+	 */
 	public GameMap editMap(String p_mapName) {
 		String l_filePath = "maps/" + p_mapName;
 		GameMap l_gameMap;
@@ -31,12 +49,116 @@ public class RunGameEngine {
 		}
 		else {
 			System.out.println(p_mapName + " does not exist.");
-			System.out.println("Creating a new map named " + p_mapName);
+			System.out.println("Creating a new Map named " + p_mapName);
 			l_gameMap = new GameMap(p_mapName);
 		}
 		return l_gameMap;
 	}
 
+	/**
+	 * 
+	 * @param p_map
+	 * @param p_continentName
+	 * @param p_controlValue
+	 * @return
+	 */
+	public boolean addContinent(GameMap p_map, String p_continentName, int p_controlValue) {
+		if(!(MapValidator.doesContinentExist(p_map, p_continentName))) {
+			if(p_controlValue<0)
+				return false;
+			Continent l_continent = new Continent(p_continentName, p_controlValue);
+			p_map.getContinents().put(p_continentName.toLowerCase(), l_continent);
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 * 
+	 * @param p_map
+	 * @param p_continentName
+	 * @return
+	 */
+	public boolean removeContinent(GameMap p_map, String p_continentName) {
+		if(p_map.getContinents().containsKey(p_continentName.toLowerCase())) {
+			Continent l_continent = p_map.getContinents().get(p_continentName.toLowerCase());
+			
+			//remove each country of the continent
+			ArrayList<CountryDetails> l_tempList = new ArrayList<CountryDetails>();
+			for(CountryDetails c : l_continent.getCountries().values()) {
+				l_tempList.add(c);
+			}
+			Iterator<CountryDetails> itr = l_tempList.listIterator();
+			while(itr.hasNext()) {
+				CountryDetails c = itr.next();
+				if(!removeCountry(p_map, c.getCountryName()))
+					return false;
+			}
+			map.getContinents().remove(p_continentName.toLowerCase());
+			return true;
+		}
+		else {
+			System.out.println(p_continentName + " does not exist.");
+			return false;
+		}
+	}
+	
+	/**
+	 * 
+	 * @param p_map
+	 * @param p_countryName
+	 * @param p_continentName
+	 * @return
+	 */
+	public boolean addCountry(GameMap p_map, String p_countryName, String p_continentName) {
+		if(!MapValidator.doesCountryExist(p_map, p_countryName)) {
+			if(!p_map.getContinents().containsKey(p_continentName.toLowerCase())) {
+				System.out.println(p_continentName + " does not exist.");
+				return false;
+			}
+			CountryDetails l_country = new CountryDetails(p_countryName, p_continentName);
+			Continent l_continent = p_map.getContinents().get(p_continentName.toLowerCase());
+			l_continent.getCountries().put(p_countryName.toLowerCase(), l_country);
+			p_map.getCountries().put(p_countryName.toLowerCase(), l_country);
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 * 
+	 * @param p_map
+	 * @param p_countryName
+	 * @return
+	 */
+	public boolean removeCountry(GameMap p_map, String p_countryName) {
+		if(p_map.getCountries().containsKey(p_countryName.toLowerCase())) {
+			CountryDetails l_country = p_map.getCountries().get(p_countryName.toLowerCase());
+			ArrayList<CountryDetails> l_tempList = new ArrayList<CountryDetails>();
+			
+			for(CountryDetails l_neighbor : l_country.getNeighbours().values()) {
+				l_tempList.add(l_neighbor);
+			}
+			Iterator<CountryDetails> l_itr = l_tempList.listIterator();
+			while(l_itr.hasNext()) {
+				CountryDetails l_neighbor = l_itr.next();
+				if(!removeNeighbor(p_map, l_country.getCountryName(), l_neighbor.getCountryName()))
+					return false;
+			}
+			p_map.getCountries().remove(p_countryName.toLowerCase());
+			p_map.getContinents().get(l_country.getInContinent().toLowerCase()).getCountries().remove(p_countryName.toLowerCase());
+			return true;
+		}
+		else {
+			System.out.println(p_countryName + " does not exist.");
+			return false;
+		}
+	}
+	
 	public void showMap(GameMap map) {
 		if(map==null)
 			return;
