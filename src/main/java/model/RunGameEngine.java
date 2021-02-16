@@ -17,7 +17,7 @@ public class RunGameEngine {
 	 * @return
 	 */
 	public GameMap loadMap(String p_mapName) {
-		String l_filePath = "maps/" + p_mapName;
+		String l_filePath = "src/main/resources/maps/" + p_mapName;
 		GameMap l_gameMap;
 		File l_file = new File(l_filePath);
 		if(l_file.exists())
@@ -39,7 +39,7 @@ public class RunGameEngine {
 	 * @return
 	 */
 	public GameMap editMap(String p_mapName) {
-		String l_filePath = "maps/" + p_mapName;
+		String l_filePath = "src/main/resources/maps/" + p_mapName;
 		GameMap l_gameMap;
 		File l_file = new File(l_filePath);
 		if(l_file.exists()) {
