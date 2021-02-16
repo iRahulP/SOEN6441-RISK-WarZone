@@ -3,6 +3,7 @@ package controller;
 import model.GameMap;
 import model.Phase;
 import model.Player;
+import model.StartUp;
 
 import java.util.ArrayList;
 
@@ -15,17 +16,17 @@ public class GameEngine {
 
     public static boolean l_allArmiesPlaced = false;
     public GameMap d_Map;
-    public RunCommand d_RunCmd;
+    //public RunCommand d_RunCmd;
     public StartUp d_StartUp;
-    public AssignReinforcement d_Arfc;
+    //public AssignReinforcement d_Arfc;
     Phase d_GamePhase;
     public ArrayList<Player> d_Players;
 
     public GameEngine() {
         d_Map = new GameMap();
-        d_RunCmd = new RunCommand();
+        //d_RunCmd = new RunCommand();
         d_StartUp = new StartUp();
-        d_Arfc = new AssignReinforcement();
+        //d_Arfc = new AssignReinforcement();
         d_Players = new ArrayList<Player>();
         d_GamePhase = Phase.NULL;
     }
@@ -104,7 +105,7 @@ public class GameEngine {
                         if (d_Data[1] != "") {
                             if (this.isMapNameValid(d_Data[1])) {
                                 d_MapName = d_Data[1];
-                                d_Map = d_RunCmd.editMap(d_MapName);
+                                //d_Map = d_RunCmd.editMap(d_MapName);
                                 System.out.println("Editing for Map: " + d_MapName);
                                 d_GamePhase = Phase.EDITMAP;
                             } else {
@@ -121,7 +122,7 @@ public class GameEngine {
                         if (d_Data[1] != null) {
                             if (this.isMapNameValid(d_Data[1])) {
                                 d_MapName = d_Data[1];
-                                d_Map = d_RunCmd.loadMap(d_MapName);
+                                //d_Map = d_RunCmd.loadMap(d_MapName);
                                 if (d_Map != null) {
                                     if (!d_Map.getValid()) {
                                         System.out.println("Map is not valid");
@@ -301,7 +302,7 @@ public class GameEngine {
                     break;
 
                 case "showmap":
-                    d_RunCmd.showMap(d_Map);
+                    //d_RunCmd.showMap(d_Map);
                     d_GamePhase = Phase.EDITMAP;
                     break;
 
@@ -330,7 +331,7 @@ public class GameEngine {
                         if (d_Data[1] != "") {
                             if (this.isMapNameValid(d_Data[1])) {
                                 d_MapName = d_Data[1];
-                                d_Map = d_RunCmd.loadMap(d_MapName);
+                                //d_Map = d_RunCmd.loadMap(d_MapName);
                                 if (d_Map != null) {
                                     if (!d_Map.getValid()) {
                                         System.out.println("Invalid Map");
@@ -415,7 +416,7 @@ public class GameEngine {
                     if (check) {
                         System.out.println("Countries allocated randomly amongst Players");
                     }
-                    d_GamePhase = Phase.ARMYALLOCATION;
+                    d_GamePhase = Phase.ASSIGN_REINFORCEMENTS;
                     d_StartUp.armyDistribution(d_Players, this, d_GamePhase);
                     d_GamePhase = Phase.DEPLOYMENT;
                     break;
