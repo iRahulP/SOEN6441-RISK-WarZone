@@ -19,6 +19,23 @@ public class RunGameEngine {
 		return l_gameMap;
 			
 	}
+	
+	public GameMap editMap(String p_mapName) {
+		String l_filePath = "maps/" + p_mapName;
+		GameMap l_gameMap;
+		File l_file = new File(l_filePath);
+		if(l_file.exists()) {
+			LoadMap l_loadMap = new LoadMap();
+			l_gameMap = l_loadMap.readMap(l_filePath);
+			l_gameMap.setMapName(p_mapName);
+		}
+		else {
+			System.out.println(p_mapName + " does not exist.");
+			System.out.println("Creating a new map named " + p_mapName);
+			l_gameMap = new GameMap(p_mapName);
+		}
+		return l_gameMap;
+	}
 
 	public void showMap(GameMap map) {
 		if(map==null)
