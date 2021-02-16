@@ -159,8 +159,8 @@ public class RunGameEngine {
 		}
 	}
 	
-	public void showMap(GameMap map) {
-		if(map==null)
+	public void showMap(GameMap p_map) {
+		if(p_map==null)
 			return;
 		System.out.printf("%25s%25s%35s\n", "Continents", "Country", "Country's neighbors");
 		System.out.printf("%85s\n", "-------------------------------------------------------------------------------------------");
