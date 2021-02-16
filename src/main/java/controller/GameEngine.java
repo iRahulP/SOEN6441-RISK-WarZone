@@ -1,9 +1,6 @@
 package controller;
 
-import model.GameMap;
-import model.Phase;
-import model.Player;
-import model.StartUp;
+import model.*;
 
 import java.util.ArrayList;
 
@@ -16,7 +13,7 @@ public class GameEngine {
 
     public static boolean l_allArmiesPlaced = false;
     public GameMap d_Map;
-    //public RunCommand d_RunCmd;
+    public RunGameEngine d_RunG;
     public StartUp d_StartUp;
     //public AssignReinforcement d_Arfc;
     Phase d_GamePhase;
@@ -24,7 +21,7 @@ public class GameEngine {
 
     public GameEngine() {
         d_Map = new GameMap();
-        //d_RunCmd = new RunCommand();
+        d_RunG = new RunGameEngine();
         d_StartUp = new StartUp();
         //d_Arfc = new AssignReinforcement();
         d_Players = new ArrayList<Player>();
@@ -86,14 +83,11 @@ public class GameEngine {
     public Phase parseCommand(Player p_player, String p_newCommand) {
         int d_ControlValue = 0;
         int d_NumberOfArmies = 0;
-        int d_ArmiesToFortify = 0;
         String d_MapName = null;
         String d_ContinentId = null;
         String d_CountryId = null;
         String d_NeighborCountryId = null;
         String d_PlayerName = null;
-        String d_FromCountry = null;
-        String d_ToCountry = null;
         String[] d_Data = p_newCommand.split("\\s+");
         String d_CommandName = d_Data[0];
 
