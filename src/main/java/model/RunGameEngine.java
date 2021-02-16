@@ -17,7 +17,7 @@ public class RunGameEngine {
 	 * @return
 	 */
 	public GameMap loadMap(String p_mapName) {
-		String l_filePath = "src/main/resources/maps/" + p_mapName;
+		String l_filePath = "maps/" + p_mapName;
 		GameMap l_gameMap;
 		File l_file = new File(l_filePath);
 		if(l_file.exists())
@@ -166,14 +166,14 @@ public class RunGameEngine {
 		System.out.printf("%85s\n", "-------------------------------------------------------------------------------------------");
 		boolean l_PrintContinentName = true;
 		boolean l_PrintCountryName = true;
-		for(Continent l_continent : map.getContinents().values()) {
-			if(l_continent.getCountries().size()==0) {
-				System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentName(), "", "");
+		for(Continent continent : p_map.getContinents().values()) {
+			if(continent.getCountries().size()==0) {
+				System.out.printf("\n%25s%25s%25s\n", continent.getContinentName(), "", "");
 			}
-			for(CountryDetails country : l_continent.getCountries().values()) {
+			for(CountryDetails country : continent.getCountries().values()) {
 				if(country.getNeighbours().size()==0) {
 					if(l_PrintContinentName && l_PrintCountryName) {
-						System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentName(), country.getCountryName(), "");
+						System.out.printf("\n%25s%25s%25s\n", continent.getContinentName(), country.getCountryName(), "");
 						l_PrintContinentName = false;
 						l_PrintCountryName = false;
 					}
@@ -184,7 +184,7 @@ public class RunGameEngine {
 				}
 				for(CountryDetails neighbor : country.getNeighbours().values()) {
 					if(l_PrintContinentName && l_PrintCountryName) {
-						System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentName(), country.getCountryName(), neighbor.getCountryName());
+						System.out.printf("\n%25s%25s%25s\n", continent.getContinentName(), country.getCountryName(), neighbor.getCountryName());
 						l_PrintContinentName = false;
 						l_PrintCountryName = false;
 					}
