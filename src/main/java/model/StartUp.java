@@ -7,6 +7,8 @@ import java.util.*;
  *
  */
 public class StartUp {
+	
+
 	/**
 	 * Addition of players to the game
 	 * The maximum no. of players assigned is restricted to 6
@@ -24,20 +26,6 @@ public class StartUp {
 		return true;
 	}
 
-	public void playerList(ArrayList<Player> p_players) {
-	      if (p_players.size() == 0) {
-	         System.out.println("No player added in the game till now.");
-	      }
-	      int l_numberOfPlayers = p_players.size();
-	      int l_traversalCounter = 0;
-	         while (l_traversalCounter < l_numberOfPlayers) {
-	            Player l_p = p_players.get(l_traversalCounter);
-	            System.out.println(l_traversalCounter+")"+l_p.getPlayerName());
-	            l_traversalCounter++;
-	         }
-	         l_traversalCounter = 0;
-	   }
-	
 	/**
 	 * Removing players from the game
 	 * 
@@ -56,7 +44,5 @@ public class StartUp {
 		}
 		return false;
 	}
-
-	
 
 }
