@@ -72,7 +72,7 @@ public class LoadMap {
                         System.out.println("Error reading the file.");
                         System.exit(-1);
                     }
-                    d_listOfCountries.put(newCountry.getcountryID(), newCountry);
+                    d_listOfCountries.put(newCountry.getIndex(), newCountry);
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
