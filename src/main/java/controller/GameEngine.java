@@ -417,6 +417,10 @@ public class GameEngine {
                     d_GamePhase = Phase.DEPLOYMENT;
                     break;
 
+                case "playerlist":
+                	//System.out.println(d_Players);
+                    d_StartUp.playerList(d_Players);
+                    break;
                 case "showmap":
                     //d_StartUp.showMap(d_Players, d_Map);
                     break;
