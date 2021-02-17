@@ -10,21 +10,19 @@ import org.jgrapht.graph.DefaultUndirectedGraph;
  */
 public class MapValidator {
 
-    /*
     private Graph<CountryDetails, DefaultEdge> l_mapGraph; //JGraphT type Graph representing the game map
 
     MapValidator(){
-        //TODO change this to Directed Graphs
         l_mapGraph = new DefaultUndirectedGraph<>(DefaultEdge.class);
     }
-*/
+
     /**
      * Creates a graph(using jgrapht library) by taking countries as vertices and adds edges between country and its neighbors
      *
      * @param p_map Game map representing countries ,continents and borders.
      * @return returns graph representing the map
      */
-  /*  public Graph<CountryDetails, DefaultEdge> createGraph(GameMap p_map) {
+    public Graph<CountryDetails, DefaultEdge> createGraph(GameMap p_map) {
 
         //add CountryDetails to the Graph
         for (CountryDetails l_countryDetails : p_map.getCountries().values()) {
@@ -39,7 +37,7 @@ public class MapValidator {
         }
         return l_mapGraph;
     }
-*/
+
     /**
      * Check if the same continent already exist
      *
