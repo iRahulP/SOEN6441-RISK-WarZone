@@ -13,25 +13,25 @@ import java.util.HashMap;
  */
 public class Continent {
 
-    private String d_continentName;
     private int d_controlValue;
     private String d_continentColor;
-    private int d_continentId;
+    private String d_continentId;
+    private int d_inMapIndex;
     private HashMap<String, CountryDetails> d_countries;
 
     /**
      * Creates a Continent object with the arguments passed
      * This constructor will be used when loading .map files
      *
-     * @param p_continentName  Name of the continent
+     * @param p_continentId  Name of the continent
      * @param p_controlValue   Control value for this continent
      * @param p_continentColor Color value of the continent
      */
-    Continent(String p_continentName, String p_controlValue,String p_continentColor) {
-        d_continentName = p_continentName;
+    Continent(String p_continentId, String p_controlValue,String p_continentColor) {
+        d_continentId = p_continentId;
         d_controlValue = Integer.parseInt(p_controlValue);
         d_continentColor = p_continentColor;
-        d_continentId = LoadMap.InMapIndex;
+        d_inMapIndex = LoadMap.InMapIndex;
         d_countries = new HashMap<>();
     }
 
@@ -44,8 +44,7 @@ public class Continent {
      * @param p_controlValue Control value for this continent
      */
     Continent(String p_continentId, int p_controlValue) {
-        // continent name
-        d_continentId = Integer.parseInt(p_continentId);
+        d_continentId = p_continentId;
         d_controlValue = p_controlValue;
         d_continentColor = "000";
         d_countries = new HashMap<>();
@@ -56,8 +55,8 @@ public class Continent {
      *
      * @return returns the name of the continent
      */
-    public String getContinentName() {
-        return this.d_continentName;
+    public String getContinentId() {
+        return this.d_continentId;
     }
 
     /**
@@ -106,21 +105,21 @@ public class Continent {
     }
 
     /**
-     * Returns the ID value for this continent when saved  in ".map" file following domination's rules
+     * Returns the Index value for this continent when saved  in ".map" file following domination's rules
      *
-     * @return returns ID value of the continent
+     * @return returns Index value of the continent
      */
-    public int getContinentId() {
-        return this.d_continentId;
+    public int getInMapIndex() {
+        return this.d_inMapIndex;
     }
 
     /**
-     * Sets the ID value of this continent
+     * Sets the Index value of this continent
      *
-     * @param p_continentId ID value of the continent
+     * @param p_inMapIndex Index value of the continent
      */
-    public void setContinentId(int p_continentId) {
-        d_continentId = p_continentId;
+    public void setInMapIndex(int p_inMapIndex) {
+        d_inMapIndex = p_inMapIndex;
     }
 
     /**

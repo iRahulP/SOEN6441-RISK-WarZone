@@ -50,7 +50,7 @@ public class CountryDetails {
 		this.d_countryId = p_countryId;
 		for(Continent c : p_map.getContinents().values()) {
 			if(c.getInMapIndex()==Integer.parseInt(p_continentIndex)) {
-				this.d_inContinent = c.getContinentName();
+				this.d_inContinent = c.getContinentId();
 				//break;
 			}	
 		}	

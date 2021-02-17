@@ -173,12 +173,12 @@ public class RunGameEngine {
 		boolean l_PrintCountryName = true;
 		for(Continent l_continent : p_map.getContinents().values()) {
 			if(l_continent.getCountries().size()==0) {
-				System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentName(), "", "");
+				System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentId(), "", "");
 			}
 			for(CountryDetails country : l_continent.getCountries().values()) {
 				if(country.getNeighbours().size()==0) {
 					if(l_PrintContinentName && l_PrintCountryName) {
-						System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentName(), country.getCountryId(), "");
+						System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentId(), country.getCountryId(), "");
 						l_PrintContinentName = false;
 						l_PrintCountryName = false;
 					}
@@ -189,7 +189,7 @@ public class RunGameEngine {
 				}
 				for(CountryDetails neighbor : country.getNeighbours().values()) {
 					if(l_PrintContinentName && l_PrintCountryName) {
-						System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentName(), country.getCountryId(), neighbor.getCountryId());
+						System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentId(), country.getCountryId(), neighbor.getCountryId());
 						l_PrintContinentName = false;
 						l_PrintCountryName = false;
 					}
