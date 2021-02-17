@@ -122,12 +122,5 @@ public class Continent {
         d_inMapIndex = p_inMapIndex;
     }
 
-    /**
-     * Returns the continentID.
-     * @return returns the ContinentID
-     */
-    public int getInMapIndex() {
-        return this.d_continentId;
-    }
 }
 
