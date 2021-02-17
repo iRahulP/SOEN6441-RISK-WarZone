@@ -97,7 +97,7 @@ public class RunGameEngine {
 			Iterator<CountryDetails> itr = l_tempList.listIterator();
 			while(itr.hasNext()) {
 				CountryDetails c = itr.next();
-				if(!removeCountry(p_map, c.getCountryName()))
+				if(!removeCountry(p_map, c.getCountryId()))
 					return false;
 			}
 			p_map.getContinents().remove(p_continentName.toLowerCase());
@@ -178,27 +178,27 @@ public class RunGameEngine {
 			for(CountryDetails country : l_continent.getCountries().values()) {
 				if(country.getNeighbours().size()==0) {
 					if(l_PrintContinentName && l_PrintCountryName) {
-						System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentName(), country.getCountryName(), "");
+						System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentName(), country.getCountryId(), "");
 						l_PrintContinentName = false;
 						l_PrintCountryName = false;
 					}
 					else if(l_PrintCountryName) {
-						System.out.printf("\n%25s%25s%25s\n", "", country.getCountryName(), "");
+						System.out.printf("\n%25s%25s%25s\n", "", country.getCountryId(), "");
 						l_PrintCountryName =  false;
 					}
 				}
 				for(CountryDetails neighbor : country.getNeighbours().values()) {
 					if(l_PrintContinentName && l_PrintCountryName) {
-						System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentName(), country.getCountryName(), neighbor.getCountryName());
+						System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentName(), country.getCountryId(), neighbor.getCountryId());
 						l_PrintContinentName = false;
 						l_PrintCountryName = false;
 					}
 					else if(l_PrintCountryName) {
-						System.out.printf("\n%25s%25s%25s\n", "", country.getCountryName(), neighbor.getCountryName());
+						System.out.printf("\n%25s%25s%25s\n", "", country.getCountryId(), neighbor.getCountryId());
 						l_PrintCountryName = false;
 					}
 					else {
-						System.out.printf("%25s%25s%25s\n", "", "", neighbor.getCountryName());
+						System.out.printf("%25s%25s%25s\n", "", "", neighbor.getCountryId());
 					}
 				}
 				l_PrintCountryName = true;

@@ -137,8 +137,8 @@ public class LoadMap {
             System.out.println("The neighbour " + borderIndex + " does not exist.");
             System.exit(-1);
         }
-        if (!argumentCountry.getNeighbours().containsKey(neighbourCountry.getCountryName().toLowerCase()))
-            argumentCountry.getNeighbours().put(neighbourCountry.getCountryName().toLowerCase(), neighbourCountry);
+        if (!argumentCountry.getNeighbours().containsKey(neighbourCountry.getCountryId().toLowerCase()))
+            argumentCountry.getNeighbours().put(neighbourCountry.getCountryId().toLowerCase(), neighbourCountry);
     }
 
 }
