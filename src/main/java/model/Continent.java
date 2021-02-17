@@ -122,5 +122,13 @@ public class Continent {
     public void setContinentId(int p_continentId) {
         d_continentId = p_continentId;
     }
+
+    /**
+     * Returns the continentID.
+     * @return returns the ContinentID
+     */
+    public int getInMapIndex() {
+        return this.d_continentId;
+    }
 }
 
