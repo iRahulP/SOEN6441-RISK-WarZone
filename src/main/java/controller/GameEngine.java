@@ -150,7 +150,7 @@ public class GameEngine {
                     try {
                         for (int i = 1; i < d_Data.length; i++) {
                             if (d_Data[i].equals("-add")) {
-                                if (this.isAlphabetic(d_Data[i + 1])) {
+                                if (this.isNumeric(d_Data[i + 1])) {
                                     d_ContinentId = d_Data[i + 1];
                                 }
                                 else {
@@ -166,7 +166,7 @@ public class GameEngine {
                                     System.out.println("Continent already exists - Please add valid Continent ID");
                                 }
                             } else if (d_Data[i].equals("-remove")) {
-                                if (this.isAlphabetic(d_Data[i + 1])) {
+                                if (this.isNumeric(d_Data[i + 1])) {
                                     d_ContinentId = d_Data[i + 1];
                                 }
                                 else
@@ -192,7 +192,7 @@ public class GameEngine {
                     try {
                         for (int i = 1; i < d_Data.length; i++) {
                             if (d_Data[i].equals("-add")) {
-                                if (this.isAlphabetic(d_Data[i + 1]) || this.isAlphabetic(d_Data[i + 2])) {
+                                if (this.isNumeric(d_Data[i + 1]) || this.isNumeric(d_Data[i + 2])) {
                                     d_CountryId = d_Data[i + 1];
                                     d_ContinentId = d_Data[i + 2];
                                 } else {
@@ -206,7 +206,7 @@ public class GameEngine {
                                     System.out.println("Country already exists - Please add valid Country ID");
                                 }
                             } else if (d_Data[i].equals("-remove")) {
-                                if (this.isAlphabetic(d_Data[i + 1])) {
+                                if (this.isNumeric(d_Data[i + 1])) {
                                     d_CountryId = d_Data[i + 1];
                                 }
                                 else {
@@ -234,7 +234,7 @@ public class GameEngine {
                     try {
                         for (int i = 1; i < d_Data.length; i++) {
                             if (d_Data[i].equals("-add")) {
-                                if (this.isAlphabetic(d_Data[i + 1]) || this.isAlphabetic(d_Data[i + 2])) {
+                                if (this.isNumeric(d_Data[i + 1]) || this.isNumeric(d_Data[i + 2])) {
                                     d_CountryId = d_Data[i + 1];
                                     d_NeighborCountryId = d_Data[i + 2];
                                 } else {
@@ -249,7 +249,7 @@ public class GameEngine {
                                     System.out.println("Country does not exist - Please enter valid countryID neighborcountryID");
                                 }
                             } else if (d_Data[i].equals("-remove")) {
-                                if (this.isAlphabetic(d_Data[i + 1]) || this.isAlphabetic(d_Data[i + 2])) {
+                                if (this.isNumeric(d_Data[i + 1]) || this.isNumeric(d_Data[i + 2])) {
                                     d_CountryId = d_Data[i + 1];
                                     d_NeighborCountryId = d_Data[i + 2];
                                 } else {
@@ -433,7 +433,7 @@ public class GameEngine {
                 case "deploy":
                     try {
                         if (!(d_Data[1] == null) || !(d_Data[2] == null)) {
-                            if (this.isAlphabetic(d_Data[1]) || this.isNumeric(d_Data[2])) {
+                            if (this.isNumeric(d_Data[1]) || this.isNumeric(d_Data[2])) {
                                 d_CountryId = d_Data[1];
                                 d_NumberOfArmies = Integer.parseInt(d_Data[2]);
 //                                boolean check = d_Arfc.deploy(d_Player, d_CountryId, d_NumberOfArmies);
