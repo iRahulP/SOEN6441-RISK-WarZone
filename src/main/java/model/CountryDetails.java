@@ -10,8 +10,8 @@ import java.util.HashMap;
  */
 public class CountryDetails {
 
-	private int d_countryID;
-	private String d_countryName;
+	private int d_index;
+	private String d_countryId;
 	private String d_inContinent;
 	private HashMap<String, CountryDetails> d_neighbours;
 	private int d_xCoOrdinate;
@@ -25,11 +25,11 @@ public class CountryDetails {
 	
 	/**
 	 * Create CountryDetails object with values in argument parameters and set defaults for the rest.
-	 * @param p_countryName Name of the country
+	 * @param p_countryId ID of the country
 	 * @param p_inContinent Name of the continent in which this country belongs
 	 */
-	public CountryDetails(String p_countryName, String p_inContinent){
-		this.d_countryName = p_countryName;
+	public CountryDetails(String p_countryId, String p_inContinent){
+		this.d_countryId = p_countryId;
 		this.d_inContinent = p_inContinent;
 		this.d_neighbours = new HashMap<String, CountryDetails>();
 		this.d_numberOfArmies = 0;
@@ -38,18 +38,18 @@ public class CountryDetails {
 	/**
 	 * Creates CountryDetails object as per the argument parameters.
 	 * This constructor used while reading from ".map" files.
-	 * @param p_countryID index of the country in the ".map" file
-	 * @param p_countryName name of the country
+	 * @param p_index index in the ".map" file as per Domination's conventions
+	 * @param p_countryId ID of the country
 	 * @param p_continentIndex index of the continent this country belongs to
 	 * @param p_xCoOrdinate x-coordinate on GUI map
 	 * @param p_yCoOrdinate y-coordinate on GUI map
 	 * @param p_map GameMap in which this country resides
 	 */
-	public CountryDetails(String p_countryID, String p_countryName, String p_continentIndex, String p_xCoOrdinate, String p_yCoOrdinate, GameMap p_map){
-		this.d_countryID = Integer.parseInt(p_countryID);
-		this.d_countryName = p_countryName;
+	public CountryDetails(String p_index, String p_countryId, String p_continentIndex, String p_xCoOrdinate, String p_yCoOrdinate, GameMap p_map){
+		this.d_index = Integer.parseInt(p_index);
+		this.d_countryId = p_countryId;
 		for(Continent c : p_map.getContinents().values()) {
-			if(c.getContinentId()==Integer.parseInt(p_continentIndex)) {
+			if(c.getInMapIndex()==Integer.parseInt(p_continentIndex)) {
 				this.d_inContinent = c.getContinentName();
 				//break;
 			}	
@@ -62,10 +62,10 @@ public class CountryDetails {
 
 	/**
 	 * Returns the index of this country in the ".map" file
-	 * @return returns d_countryID of this country in the ".map" file
+	 * @return returns d_index of this country in the ".map" file
 	 */
-	public int getcountryID() {
-		return d_countryID;
+	public int getIndex() {
+		return d_index;
 	}
 	
 	/**
@@ -81,8 +81,8 @@ public class CountryDetails {
 	 * Returns the name of the country
 	 * @return returns d_countryName
 	 */
-	public String getCountryName() {
-		return d_countryName;
+	public String getCountryId() {
+		return d_countryId;
 	}
 	
 	/**
@@ -127,6 +127,15 @@ public class CountryDetails {
 	}
 	
 	/**
+	 * Printing the details of country and the continent it belongs to
+	 */
+	public void printCountry(){
+		System.out.println("index: " + d_index);
+		System.out.println("countryName: " + d_countryId);
+		System.out.println("inContinent: " + d_inContinent);
+	}
+	
+	/**
 	 * Getter method to get number of armies in the country.
 	 * @return returns d_numberOfArmies
 	 */
@@ -145,7 +154,7 @@ public class CountryDetails {
 	
 	@Override
 	public String toString() {
-		return "Country [countryName=" + d_countryName + ", xCoOrdinate=" + d_xCoOrdinate + ", yCoOrdinate=" + d_yCoOrdinate
+		return "Country [countryName=" + d_countryId + ", xCoOrdinate=" + d_xCoOrdinate + ", yCoOrdinate=" + d_yCoOrdinate
 				+ "]";
 	}
 	
