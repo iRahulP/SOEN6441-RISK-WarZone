@@ -64,7 +64,7 @@ public class Continent {
      *
      * @return returns the Control Value of the continent
      */
-    public int getControlVale() {
+    public int getControlValue() {
         return this.d_controlValue;
     }
 
