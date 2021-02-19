@@ -16,7 +16,7 @@ public class GameEngine {
     public RunGameEngine d_RunG;
     public StartUp d_StartUp;
     //public AssignReinforcement d_Arfc;
-    Phase d_GamePhase;
+    public Phase d_GamePhase;
     public ArrayList<Player> d_Players;
 
     public GameEngine() {
@@ -462,7 +462,12 @@ public class GameEngine {
                     break;
             }
         }
+        else if (d_GamePhase.equals(Phase.ISSUE_ORDERS)) {
 
-        return d_GamePhase;
+        }
+        else if (d_GamePhase.equals(Phase.EXECUTE_ORDERS)) {
+
+        }
+            return d_GamePhase;
     }
 }

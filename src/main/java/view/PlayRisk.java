@@ -1,6 +1,7 @@
 package view;
 
 import controller.GameEngine;
+import model.AssignReinforcement;
 import model.Phase;
 import model.Player;
 
@@ -35,7 +36,8 @@ public class PlayRisk {
         Phase l_gamePhase = Phase.NULL;
         GameEngine cmd = new GameEngine();
         l_gamePhase = cmd.parseCommand(null, l_cmd);
-        while(l_gamePhase!= Phase.EXECUTE_ORDERS) {
+        //looping for commands until initial Phases where Player iteration not required!
+        while(l_gamePhase!= Phase.ASSIGN_REINFORCEMENTS) {
             l_cmd = sc.nextLine();
             l_gamePhase = cmd.parseCommand(null, l_cmd);
         }
@@ -47,7 +49,7 @@ public class PlayRisk {
             while(l_traversalCounter<l_numberOfPlayers) {
                 Player l_p = cmd.d_Players.get(l_traversalCounter);
                 //Assign to each player the correct number of reinforcement armies according to the Warzone rules.
-                //ASSIGN_REINFORCEMENTS.assignReinforcementArmies(l_p);
+                AssignReinforcement.assignReinforcementArmies(l_p);
                 System.out.println("It's "+ l_p.getPlayerName() + "'s turn");
 
                 while(l_gamePhase!=Phase.TURNEND) {
@@ -57,6 +59,7 @@ public class PlayRisk {
                     l_cmd = sc.nextLine();
                     l_gamePhase = cmd.parseCommand(l_p, l_cmd);
                 }
+                l_gamePhase = Phase.EXECUTE_ORDERS;
                 l_gamePhase = Phase.DEPLOYMENT;
                 cmd.setGamePhase(l_gamePhase);
                 l_traversalCounter++;
