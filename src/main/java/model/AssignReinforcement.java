@@ -6,12 +6,28 @@ package model;
  */
 public class AssignReinforcement {
     /**
-     * Function assigns to each player the correct number of reinforcement armies according to the Warzone rules.
-     * @param p_player tracks current Player
+     * Method assigns to each player the correct number of reinforcement armies according to the Warzone rules.
+     * @param p_player current player
      * @return true if successfully assigned, else false
      */
     public static boolean assignReinforcementArmies(Player p_player){
-
+        int l_totalControlValue = 0;
+        int l_totalReinforcementArmies;
+        if(p_player.getOwnedCountries().size() >= 9){
+            if(p_player.getOwnedContinents().size()> 0){
+                for(Continent c:p_player.getOwnedContinents().values()){
+                    l_totalControlValue += c.getControlValue();
+                }
+                l_totalReinforcementArmies = (int)(p_player.getOwnedCountries().size()/3) + l_totalControlValue;
+            }
+            else{
+                l_totalReinforcementArmies = (int)(p_player.getOwnedCountries().size()/3);
+            }
+        }
+        else{
+            l_totalReinforcementArmies = 3;
+        }
+        p_player.setOwnedArmies(l_totalReinforcementArmies);
         return true;
     }
 
