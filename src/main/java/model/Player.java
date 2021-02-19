@@ -12,6 +12,7 @@ public class Player {
     private String d_playerName;
     private HashMap<String, Continent> d_ownedContinents;
     private HashMap<String, CountryDetails> d_ownedCountries;
+    private int d_ownedArmies;
 
     /**
      * This constructor assigns name to the player.
@@ -22,6 +23,7 @@ public class Player {
         d_playerName = p_playerName;
         d_ownedContinents = new HashMap<String, Continent>();
         d_ownedCountries = new HashMap<String, CountryDetails>();
+        this.d_ownedArmies = 0;
     }
 
     /**
@@ -77,6 +79,22 @@ public class Player {
     public HashMap<String, Continent> getOwnedContinents() {
         return d_ownedContinents;
     }
+
+    /**
+     * Getter method to return the initial armies.
+     *
+     * @return d_ownedArmies
+     */
+    public int getOwnedArmies() {
+        return d_ownedArmies;
+    }
+
+    /**
+     * Setter method to set the initial armies
+     *
+     * @param d_ownedArmies number of armies owned by players
+     */
+    public void setOwnedArmies(int d_ownedArmies) { this.d_ownedArmies = d_ownedArmies;}
 
     //TO-DO exec_order and issue_order
 }

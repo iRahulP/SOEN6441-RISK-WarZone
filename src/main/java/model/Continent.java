@@ -73,7 +73,7 @@ public class Continent {
      *
      * @param p_controlValue set control value of the continent to this value
      */
-    public void setControlVale(int p_controlValue) {
+    public void setControlValue(int p_controlValue) {
         d_controlValue = p_controlValue;
     }
 
