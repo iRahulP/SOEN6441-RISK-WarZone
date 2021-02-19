@@ -149,9 +149,9 @@ public class RunGameEngine {
 			}
 			Iterator<CountryDetails> l_itr = l_tempList.listIterator();
 			while(l_itr.hasNext()) {
-				//CountryDetails l_neighbor = l_itr.next();
-				/*if(!removeNeighbor(p_map, l_country.getCountryId(), l_neighbor.getCountryId()))
-					return false;*/
+				CountryDetails l_neighbor = l_itr.next();
+				if(!removeNeighbor(p_map, l_country.getCountryId(), l_neighbor.getCountryId()))
+					return false;
 			}
 			p_map.getCountries().remove(p_countryID.toLowerCase());
 			p_map.getContinents().get(l_country.getInContinent().toLowerCase()).getCountries().remove(p_countryID.toLowerCase());
@@ -163,6 +163,47 @@ public class RunGameEngine {
 		}
 	}
 	
+	public boolean addNeighbor(GameMap map, String countryID, String neighborCountryID) {
+		//Check if both the country exists
+		if(map.getCountries().containsKey(countryID.toLowerCase()) && map.getCountries().containsKey(neighborCountryID.toLowerCase())) {
+			CountryDetails c1 = map.getCountries().get(countryID.toLowerCase());
+			CountryDetails c2 = map.getCountries().get(neighborCountryID.toLowerCase());
+			if(!c1.getNeighbours().containsKey(c2.getCountryId().toLowerCase()))
+				c1.getNeighbours().put(neighborCountryID.toLowerCase(), c2);
+			if(!c2.getNeighbours().containsKey(c1.getCountryId().toLowerCase()))
+				c2.getNeighbours().put(countryID.toLowerCase(), c1);
+			return true;
+		}
+		else {
+			if(!map.getCountries().containsKey(countryID.toLowerCase()) && !map.getCountries().containsKey(neighborCountryID.toLowerCase()))
+				System.out.println(countryID + " and " + neighborCountryID + "  does not exist. Create country first and then set their neighbors.");
+			else if(!map.getCountries().containsKey(countryID.toLowerCase()))
+				System.out.println(countryID + " does not exist. Create country first and then set its neighbors.");
+			else
+				System.out.println(neighborCountryID + " does not exist. Create country first and then set its neighbors.");
+			return false;
+		}
+	}
+	
+	public boolean removeNeighbor(GameMap map, String countryID, String neighborCountryID) {
+		//Check if both the country exists
+		if(map.getCountries().containsKey(countryID.toLowerCase()) && map.getCountries().containsKey(neighborCountryID.toLowerCase())) {
+			CountryDetails c1 = map.getCountries().get(countryID.toLowerCase());
+			CountryDetails c2 = map.getCountries().get(neighborCountryID.toLowerCase());
+			c1.getNeighbours().remove(neighborCountryID.toLowerCase());
+			c2.getNeighbours().remove(countryID.toLowerCase());
+			return true;
+		}
+		else {
+			if(!map.getCountries().containsKey(countryID.toLowerCase()) && !map.getCountries().containsKey(neighborCountryID.toLowerCase()))
+				System.out.println(countryID + " and " + neighborCountryID + "  does not exist.");
+			else if(!map.getCountries().containsKey(countryID.toLowerCase()))
+				System.out.println(countryID + " does not exist.");
+			else
+				System.out.println(neighborCountryID + " does not exist.");
+			return false;
+		}
+	}
 	
 	/**
 	 * 
