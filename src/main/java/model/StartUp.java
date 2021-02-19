@@ -45,4 +45,28 @@ public class StartUp {
 		return false;
 	}
 
+	/**
+	 * Responsible for distributing countries amongst players.
+	 * @param map Game map 
+	 * @param players List of players in the game
+	 * @return true if successful, else false
+	 */
+	public boolean assignCountries(GameMap map, ArrayList<Player> players) {
+		int numberOfPlayers = players.size();
+		if(players.size()<2) {
+			System.out.println("Minimum two players are required to play the game.");
+			return false;
+		}
+		int counter = 0;
+		for(CountryDetails c : map.getCountries().values()) {
+			Player p = players.get(counter);
+			p.getOwnedCountries().put(c.getCountryId().toLowerCase(), c);
+			if(counter>=numberOfPlayers-1)
+				counter = 0;
+			else
+				counter++;
+		}
+		//assignInitialArmies(players);  //assigning initial armies
+		return true;
+	}
 }
