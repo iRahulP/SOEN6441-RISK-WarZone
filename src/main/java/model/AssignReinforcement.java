@@ -12,7 +12,7 @@ public class AssignReinforcement {
      */
     public static boolean assignReinforcementArmies(Player p_player){
 
-        return false;
+        return true;
     }
 
     /**

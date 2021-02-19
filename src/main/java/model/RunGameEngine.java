@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+
 /**
  * Contain logic for executing GameEngine
  * @author Rucha
@@ -13,8 +14,8 @@ public class RunGameEngine {
 	
 	/**
 	 * 
-	 * @param p_mapName
-	 * @return
+	 * @param p_mapName name of the map to be used for loading
+	 * @return the existing map to be used for game play
 	 */
 	public GameMap loadMap(String p_mapName) {
 		String l_filePath = "src/main/resources/maps/" + p_mapName;
@@ -37,8 +38,8 @@ public class RunGameEngine {
 	
 	/**
 	 * 
-	 * @param p_mapName
-	 * @return
+	 * @param p_mapName Name of the map to be searched/created
+	 * @return object representing the existing map or null value if new one is to be created
 	 */
 	public GameMap editMap(String p_mapName) {
 		String l_filePath = "src/main/resources/maps/" + p_mapName;
@@ -59,35 +60,34 @@ public class RunGameEngine {
 
 	/**
 	 * 
-	 * @param p_map
-	 * @param p_continentName
-	 * @param p_controlValue
-	 * @return
+	 * @param p_map GameMap representing the map to which continent is to be added
+	 * @param p_continentID ID of the continent to be added
+	 * @param p_continentValue Continent value of the continent to be added
+	 * @return true if valid entry, else false indicating invalid command
 	 */
-	public boolean addContinent(GameMap p_map, String p_continentName, int p_controlValue) {
-		return false;
-		/*if(!(MapValidator.doesContinentExist(p_map, p_continentName))) {
-			if(p_controlValue<0)
+	public boolean addContinent(GameMap p_map, String p_continentID, int p_continentValue) {
+		if(!(MapValidator.doesContinentExist(p_map,p_continentID))) {
+			if(p_continentValue<0)
 				return false;
-			Continent l_continent = new Continent(p_continentName, p_controlValue);
-			p_map.getContinents().put(p_continentName.toLowerCase(), l_continent);
+			Continent l_continent = new Continent(p_continentID, p_continentValue);
+			p_map.getContinents().put(p_continentID.toLowerCase(), l_continent);
 			return true;
 		}
 		else {
 			return false;
-		}*/
+		}
 		
 	}
 	
 	/**
 	 * 
-	 * @param p_map
-	 * @param p_continentName
-	 * @return
+	 * @param p_map GameMap object representing the map being edited
+	 * @param p_continentID ID of the continent to be removed
+	 * @return true if successful, else false indicating invalid command
 	 */
-	public boolean removeContinent(GameMap p_map, String p_continentName) {
-		if(p_map.getContinents().containsKey(p_continentName.toLowerCase())) {
-			Continent l_continent = p_map.getContinents().get(p_continentName.toLowerCase());
+	public boolean removeContinent(GameMap p_map, String p_continentID) {
+		if(p_map.getContinents().containsKey(p_continentID.toLowerCase())) {
+			Continent l_continent = p_map.getContinents().get(p_continentID.toLowerCase());
 			
 			//remove each country of the continent
 			ArrayList<CountryDetails> l_tempList = new ArrayList<CountryDetails>();
@@ -100,49 +100,48 @@ public class RunGameEngine {
 				if(!removeCountry(p_map, c.getCountryId()))
 					return false;
 			}
-			p_map.getContinents().remove(p_continentName.toLowerCase());
+			p_map.getContinents().remove(p_continentID.toLowerCase());
 			return true;
 		}
 		else {
-			System.out.println(p_continentName + " does not exist.");
+			System.out.println(p_continentID + " does not exist.");
 			return false;
 		}
 	}
 	
 	/**
 	 * 
-	 * @param p_map
-	 * @param p_countryName
-	 * @param p_continentName
-	 * @return
+	 * @param p_map GameMap representing the map to which country is to be added
+	 * @param p_countryID ID of the country which is to be added
+	 * @param p_continentID ID of the continent to which this new country belongs
+	 * @return true if valid entry, else false indicating invalid command
 	 */
-	public boolean addCountry(GameMap p_map, String p_countryName, String p_continentName) {
-		return false;
-		/*if(!MapValidator.doesCountryExist(p_map, p_countryName)) {
-			if(!p_map.getContinents().containsKey(p_continentName.toLowerCase())) {
-				System.out.println(p_continentName + " does not exist.");
+	public boolean addCountry(GameMap p_map, String p_countryID, String p_continentID) {
+		if(!MapValidator.doesCountryExist(p_map, p_countryID)) {
+			if(!p_map.getContinents().containsKey(p_continentID.toLowerCase())) {
+				System.out.println(p_continentID + " does not exist.");
 				return false;
 			}
-			CountryDetails l_country = new CountryDetails(p_countryName, p_continentName);
-			Continent l_continent = p_map.getContinents().get(p_continentName.toLowerCase());
-			l_continent.getCountries().put(p_countryName.toLowerCase(), l_country);
-			p_map.getCountries().put(p_countryName.toLowerCase(), l_country);
+			CountryDetails l_country = new CountryDetails(p_countryID, p_continentID);
+			Continent l_continent = p_map.getContinents().get(p_continentID.toLowerCase());
+			l_continent.getCountries().put(p_countryID.toLowerCase(), l_country);
+			p_map.getCountries().put(p_countryID.toLowerCase(), l_country);
 			return true;
 		}
 		else {
 			return false;
-		}*/
+		}
 	}
 	
 	/**
 	 * 
-	 * @param p_map
-	 * @param p_countryName
-	 * @return
+	 * @param p_map GameMap object representing the map being edited
+	 * @param p_countryID Name of the country to be removed
+	 * @return true if successful, else false indicating invalid command
 	 */
-	public boolean removeCountry(GameMap p_map, String p_countryName) {
-		if(p_map.getCountries().containsKey(p_countryName.toLowerCase())) {
-			CountryDetails l_country = p_map.getCountries().get(p_countryName.toLowerCase());
+	public boolean removeCountry(GameMap p_map, String p_countryID) {
+		if(p_map.getCountries().containsKey(p_countryID.toLowerCase())) {
+			CountryDetails l_country = p_map.getCountries().get(p_countryID.toLowerCase());
 			ArrayList<CountryDetails> l_tempList = new ArrayList<CountryDetails>();
 			
 			for(CountryDetails l_neighbor : l_country.getNeighbours().values()) {
@@ -151,19 +150,24 @@ public class RunGameEngine {
 			Iterator<CountryDetails> l_itr = l_tempList.listIterator();
 			while(l_itr.hasNext()) {
 				//CountryDetails l_neighbor = l_itr.next();
-				/*if(!removeNeighbor(p_map, l_country.getCountryName(), l_neighbor.getCountryName()))
+				/*if(!removeNeighbor(p_map, l_country.getCountryId(), l_neighbor.getCountryId()))
 					return false;*/
 			}
-			p_map.getCountries().remove(p_countryName.toLowerCase());
-			p_map.getContinents().get(l_country.getInContinent().toLowerCase()).getCountries().remove(p_countryName.toLowerCase());
+			p_map.getCountries().remove(p_countryID.toLowerCase());
+			p_map.getContinents().get(l_country.getInContinent().toLowerCase()).getCountries().remove(p_countryID.toLowerCase());
 			return true;
 		}
 		else {
-			System.out.println(p_countryName + " does not exist.");
+			System.out.println(p_countryID + " does not exist.");
 			return false;
 		}
 	}
 	
+	
+	/**
+	 * 
+	 * @param p_map GameMap object representing the map to be shown.
+	 */
 	public void showMap(GameMap p_map) {
 		if(p_map==null)
 			return;
