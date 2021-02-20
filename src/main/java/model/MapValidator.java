@@ -1,6 +1,7 @@
 package model;
 
 import org.jgrapht.*;
+import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
 
@@ -10,6 +11,13 @@ import org.jgrapht.graph.DefaultEdge;
 public class MapValidator {
 
     private Graph<CountryDetails, DefaultEdge> l_mapGraph; //JGraphT type Graph representing the game map
+
+    /**
+     * This constructor instantiates the Directed Graph.
+     */
+    MapValidator(){
+        l_mapGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
+    }
 
     /**
      * Creates a graph(using jgrapht library) by taking countries as vertices and adds edges between country and its neighbors
@@ -26,7 +34,7 @@ public class MapValidator {
 
         //add Edges between country and its neighbours
         for (CountryDetails l_countryDetails : p_map.getCountries().values()) {
-            for (CountryDetails l_neighbor : p_map.getCountries().values()) {
+            for (CountryDetails l_neighbor : l_countryDetails.getNeighbours().values()) {
                 l_mapGraph.addEdge(l_countryDetails, l_neighbor);
             }
         }
