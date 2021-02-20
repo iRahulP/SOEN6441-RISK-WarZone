@@ -111,7 +111,7 @@ public class MapValidator {
         else
             return false;
     }
-
+    
 	/**
 	 * Check if any continent is empty and does not hold any country.
 	 * @param p_map GameMap object representing the game map
@@ -124,5 +124,6 @@ public class MapValidator {
 		}
 		return true;
 	}
+
 
 }
