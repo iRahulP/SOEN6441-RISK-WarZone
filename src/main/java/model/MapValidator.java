@@ -1,6 +1,7 @@
 package model;
 
 import org.jgrapht.*;
+import org.jgrapht.alg.connectivity.ConnectivityInspector;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
@@ -43,20 +44,28 @@ public class MapValidator {
         return l_mapGraph;
     }
 
-    public Graph<CountryDetails, DefaultEdge> createSubGraph(Graph<CountryDetails, DefaultEdge> subGraph, HashMap<String, CountryDetails> countries) {
+    public Graph<CountryDetails, DefaultEdge> createSubGraph(Graph<CountryDetails, DefaultEdge> p_subGraph, HashMap<String, CountryDetails> p_countries) {
 
-        for (CountryDetails country : countries.values()) {
-            subGraph.addVertex(country);
+        for (CountryDetails l_country : p_countries.values()) {
+            p_subGraph.addVertex(l_country);
         }
 
-        for (CountryDetails country : countries.values()) {
-            for (CountryDetails neighbour : country.getNeighbours().values()) {
-                if (countries.containsKey(neighbour.getCountryId().toLowerCase())) {
-                    subGraph.addEdge(country, neighbour);
+        for (CountryDetails l_country : p_countries.values()) {
+            for (CountryDetails l_neighbour : l_country.getNeighbours().values()) {
+                if (p_countries.containsKey(l_neighbour.getCountryId().toLowerCase())) {
+                    p_subGraph.addEdge(l_country, l_neighbour);
                 }
             }
         }
-        return subGraph;
+        return p_subGraph;
+    }
+
+    public boolean isGraphConnected(Graph<CountryDetails, DefaultEdge> p_graph) {
+        ConnectivityInspector<CountryDetails, DefaultEdge> l_cInspector = new ConnectivityInspector<>(p_graph);
+        if (l_cInspector.isConnected())
+            return true;
+        else
+            return false;
     }
 
     /**
