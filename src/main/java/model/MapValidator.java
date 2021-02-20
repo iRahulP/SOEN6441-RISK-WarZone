@@ -4,7 +4,6 @@ import org.jgrapht.*;
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
-
 import java.util.HashMap;
 
 
@@ -67,11 +66,28 @@ public class MapValidator {
         else
             return false;
     }
+    
+    /**
+	 * Checks if all continents are connected sub-graphs or not
+	 * @param p_map GameMap object representing the game map
+	 * @return true if all continents are connected sub-graph, else false indicating incorrect map
+	 */
+	public boolean continentConnectivityCheck(GameMap p_map) {
+		for(Continent l_continent : p_map.getContinents().values()) {
+			Graph<CountryDetails, DefaultEdge> subGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
+			subGraph = createSubGraph(subGraph, l_continent.getCountries());
+			if(!isGraphConnected(subGraph)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 
     /**
      * Check if the same continent already exist
      *
-     * @param p_map           GameMap object holding record of all the existing continents and countries
+     * @param p_map GameMap object holding record of all the existing continents and countries
      * @param p_continentName name of the continent to be checked
      * @return true if continent already exists, else false
      */
@@ -85,7 +101,7 @@ public class MapValidator {
     /**
      * Check if the same country already exist
      *
-     * @param p_map         GameMap object holding record of all the existing continents and countries
+     * @param p_map GameMap object holding record of all the existing continents and countries
      * @param p_countryName name of the country to be checked
      * @return true if country already exists, else false
      */
@@ -95,5 +111,18 @@ public class MapValidator {
         else
             return false;
     }
+
+	/**
+	 * Check if any continent is empty and does not hold any country.
+	 * @param p_map GameMap object representing the game map
+	 * @return true if no continent is empty, else false indicating empty continent
+	 */
+	public boolean notEmptyContinent(GameMap p_map) {
+		for(Continent l_continent : p_map.getContinents().values()) {
+			if(l_continent.getCountries().size()==0)
+				return false;
+		}
+		return true;
+	}
 
 }
