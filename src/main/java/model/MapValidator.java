@@ -4,6 +4,8 @@ import org.jgrapht.*;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
+import java.util.HashMap;
+
 
 /**
  * Validation of map takes place in this class
@@ -13,9 +15,9 @@ public class MapValidator {
     private Graph<CountryDetails, DefaultEdge> l_mapGraph; //JGraphT type Graph representing the game map
 
     /**
-     * This constructor instantiates the Directed Graph.
+     * This constructor instantiates the Directed Graph using JGraphT .
      */
-    MapValidator(){
+    MapValidator() {
         l_mapGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
     }
 
@@ -39,6 +41,22 @@ public class MapValidator {
             }
         }
         return l_mapGraph;
+    }
+
+    public Graph<CountryDetails, DefaultEdge> createSubGraph(Graph<CountryDetails, DefaultEdge> subGraph, HashMap<String, CountryDetails> countries) {
+
+        for (CountryDetails country : countries.values()) {
+            subGraph.addVertex(country);
+        }
+
+        for (CountryDetails country : countries.values()) {
+            for (CountryDetails neighbour : country.getNeighbours().values()) {
+                if (countries.containsKey(neighbour.getCountryId().toLowerCase())) {
+                    subGraph.addEdge(country, neighbour);
+                }
+            }
+        }
+        return subGraph;
     }
 
     /**
