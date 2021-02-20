@@ -222,42 +222,42 @@ public class RunGameEngine {
 		System.out.printf("%85s\n", "-------------------------------------------------------------------------------------------");
 		System.out.printf("%25s%25s%35s\n", "Continents", "Country", "Country's neighbors");
 		System.out.printf("%85s\n", "-------------------------------------------------------------------------------------------");
-		boolean l_PrintContinentName = true;
-		boolean l_PrintCountryName = true;
+		boolean l_PrintContinentID = true;
+		boolean l_PrintCountryID = true;
 		for(Continent l_continent : p_map.getContinents().values()) {
 			if(l_continent.getCountries().size()==0) {
 				System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentId(), "", "");
 			}
-			for(CountryDetails country : l_continent.getCountries().values()) {
-				if(country.getNeighbours().size()==0) {
-					if(l_PrintContinentName && l_PrintCountryName) {
-						System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentId(), country.getCountryId(), "");
-						l_PrintContinentName = false;
-						l_PrintCountryName = false;
+			for(CountryDetails l_country : l_continent.getCountries().values()) {
+				if(l_country.getNeighbours().size()==0) {
+					if(l_PrintContinentID && l_PrintCountryID) {
+						System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentId(), l_country.getCountryId(), "");
+						l_PrintContinentID = false;
+						l_PrintCountryID = false;
 					}
-					else if(l_PrintCountryName) {
-						System.out.printf("\n%25s%25s%25s\n", "", country.getCountryId(), "");
-						l_PrintCountryName =  false;
+					else if(l_PrintCountryID) {
+						System.out.printf("\n%25s%25s%25s\n", "", l_country.getCountryId(), "");
+						l_PrintCountryID =  false;
 					}
 				}
-				for(CountryDetails neighbor : country.getNeighbours().values()) {
-					if(l_PrintContinentName && l_PrintCountryName) {
-						System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentId(), country.getCountryId(), neighbor.getCountryId());
-						l_PrintContinentName = false;
-						l_PrintCountryName = false;
+				for(CountryDetails l_neighbor : l_country.getNeighbours().values()) {
+					if(l_PrintContinentID && l_PrintCountryID) {
+						System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentId(), l_country.getCountryId(), l_neighbor.getCountryId());
+						l_PrintContinentID = false;
+						l_PrintCountryID = false;
 					}
-					else if(l_PrintCountryName) {
-						System.out.printf("\n%25s%25s%25s\n", "", country.getCountryId(), neighbor.getCountryId());
-						l_PrintCountryName = false;
+					else if(l_PrintCountryID) {
+						System.out.printf("\n%25s%25s%25s\n", "", l_country.getCountryId(), l_neighbor.getCountryId());
+						l_PrintCountryID = false;
 					}
 					else {
-						System.out.printf("%25s%25s%25s\n", "", "", neighbor.getCountryId());
+						System.out.printf("%25s%25s%25s\n", "", "", l_neighbor.getCountryId());
 					}
 				}
-				l_PrintCountryName = true;
+				l_PrintCountryID = true;
 			}
-			l_PrintContinentName = true;
-			l_PrintCountryName = true;
+			l_PrintContinentID = true;
+			l_PrintCountryID = true;
 		}
 	}
 	

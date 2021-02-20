@@ -42,7 +42,7 @@ public class GameMap {
 	 * @return return name of the map
 	 */
 	public String getMapName() {
-		return d_mapName;
+		return this.d_mapName;
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class GameMap {
 	 * @return return whether the map is valid for game play or not
 	 */
 	public boolean isValid() {
-		return d_valid;
+		return this.d_valid;
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class GameMap {
 	 * @return return HashMap maintaining the list of continents in the map.
 	 */
 	public HashMap<String, Continent> getContinents() {
-		return d_continents;
+		return this.d_continents;
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class GameMap {
 	 * @return return HashMap maintaining the list of countries in the map
 	 */
 	public HashMap<String, CountryDetails> getCountries() {
-		return d_countries;
+		return this.d_countries;
 	}
 
 	/**

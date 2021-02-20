@@ -173,7 +173,7 @@ public class GameEngine {
                                     System.out.println("Invalid Continent Id");
 
                                 boolean check = d_RunG.removeContinent(d_Map, d_ContinentId);
-                                if (true) {
+                                if (check) {
                                     System.out.println("Continent removed from Map");
                                     d_GamePhase = Phase.EDITMAP;
                                 } else
@@ -234,7 +234,7 @@ public class GameEngine {
                     try {
                         for (int i = 1; i < d_Data.length; i++) {
                             if (d_Data[i].equals("-add")) {
-                                if (this.isAlphabetic(d_Data[i + 1]) || this.isNumeric(d_Data[i + 2])) {
+                                if (this.isAlphabetic(d_Data[i + 1]) || this.isAlphabetic(d_Data[i + 2])) {
                                     d_CountryId = d_Data[i + 1];
                                     d_NeighborCountryId = d_Data[i + 2];
                                 } else {
@@ -249,7 +249,7 @@ public class GameEngine {
                                     System.out.println("Country does not exist - Please enter valid countryID neighborcountryID");
                                 }
                             } else if (d_Data[i].equals("-remove")) {
-                                if (this.isAlphabetic(d_Data[i + 1]) || this.isNumeric(d_Data[i + 2])) {
+                                if (this.isAlphabetic(d_Data[i + 1]) || this.isAlphabetic(d_Data[i + 2])) {
                                     d_CountryId = d_Data[i + 1];
                                     d_NeighborCountryId = d_Data[i + 2];
                                 } else {
@@ -257,7 +257,7 @@ public class GameEngine {
                                 }
 
                                 boolean check = d_RunG.removeNeighbor(d_Map, d_CountryId, d_NeighborCountryId);
-                                if (true) {
+                                if (check) {
                                     System.out.println("Neighbor removed from the map");
                                     d_GamePhase = Phase.EDITMAP;
                                 } else
