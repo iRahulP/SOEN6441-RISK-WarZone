@@ -119,7 +119,7 @@ public class GameEngine {
                                 d_MapName = d_Data[1];
                                 d_Map = d_RunG.loadMap(d_MapName);
                                 if (d_Map != null) {
-                                    if (!d_Map.isValid()) {
+                                    if (!d_Map.getValid()) {
                                         System.out.println("Map is not valid");
                                         d_GamePhase = Phase.NULL;
                                     } else {
@@ -328,7 +328,7 @@ public class GameEngine {
                                 d_MapName = d_Data[1];
                                 d_Map = d_RunG.loadMap(d_MapName);
                                 if (d_Map != null) {
-                                    if (!d_Map.isValid()) {
+                                    if (!d_Map.getValid()) {
                                         System.out.println("Invalid Map");
                                         d_GamePhase = Phase.NULL;
                                     } else {
