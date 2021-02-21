@@ -91,8 +91,8 @@ public class MapValidator {
      * @param p_continentName name of the continent to be checked
      * @return true if continent already exists, else false
      */
-    public static boolean doesContinentExist(GameMap p_map, String p_continentName) {
-        if (p_map.getContinents().containsKey(p_continentName.toLowerCase()))
+    public static boolean doesContinentExist(GameMap p_map, String p_continentId) {
+        if (p_map.getContinents().containsKey(p_continentId.toLowerCase()))
             return true;
         else
             return false;
@@ -105,8 +105,8 @@ public class MapValidator {
      * @param p_countryName name of the country to be checked
      * @return true if country already exists, else false
      */
-    public static boolean doesCountryExist(GameMap p_map, String p_countryName) {
-        if (p_map.getCountries().containsKey(p_countryName.toLowerCase()))
+    public static boolean doesCountryExist(GameMap p_map, String p_countryId) {
+        if (p_map.getCountries().containsKey(p_countryId.toLowerCase()))
             return true;
         else
             return false;
