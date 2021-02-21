@@ -100,7 +100,7 @@ public class GameEngine {
                         if (d_Data[1] != "") {
                             if (this.isMapNameValid(d_Data[1])) {
                                 d_MapName = d_Data[1];
-                                //d_Map = d_RunG.editMap(d_MapName);
+                                d_Map = d_RunG.editMap(d_MapName);
                                 System.out.println("Editing for Map: " + d_MapName);
                                 d_GamePhase = Phase.EDITMAP;
                             } else {
@@ -150,7 +150,7 @@ public class GameEngine {
                     try {
                         for (int i = 1; i < d_Data.length; i++) {
                             if (d_Data[i].equals("-add")) {
-                                if (this.isNumeric(d_Data[i + 1])) {
+                                if (this.isAlphabetic(d_Data[i + 1])) {
                                     d_ContinentId = d_Data[i + 1];
                                 }
                                 else {
@@ -158,22 +158,22 @@ public class GameEngine {
                                 }
                                 d_ControlValue = Integer.parseInt(d_Data[i + 2]);
 
-//                                boolean check = d_RunG.addContinent(d_Map, d_ContinentId , d_ControlValue);
-                                if (true) {
+                                boolean check = d_RunG.addContinent(d_Map, d_ContinentId , d_ControlValue);
+                                if (check) {
                                     System.out.println(d_ContinentId + " continent added to the map");
                                     d_GamePhase = Phase.EDITMAP;
                                 } else {
                                     System.out.println("Continent already exists - Please add valid Continent ID");
                                 }
                             } else if (d_Data[i].equals("-remove")) {
-                                if (this.isNumeric(d_Data[i + 1])) {
+                                if (this.isAlphabetic(d_Data[i + 1])) {
                                     d_ContinentId = d_Data[i + 1];
                                 }
                                 else
                                     System.out.println("Invalid Continent Id");
 
-//                                boolean check = d_RunG.removeContinent(d_Map, d_ContinentId);
-                                if (true) {
+                                boolean check = d_RunG.removeContinent(d_Map, d_ContinentId);
+                                if (check) {
                                     System.out.println("Continent removed from Map");
                                     d_GamePhase = Phase.EDITMAP;
                                 } else
@@ -192,28 +192,28 @@ public class GameEngine {
                     try {
                         for (int i = 1; i < d_Data.length; i++) {
                             if (d_Data[i].equals("-add")) {
-                                if (this.isNumeric(d_Data[i + 1]) || this.isNumeric(d_Data[i + 2])) {
+                                if (this.isAlphabetic(d_Data[i + 1]) || this.isAlphabetic(d_Data[i + 2])) {
                                     d_CountryId = d_Data[i + 1];
                                     d_ContinentId = d_Data[i + 2];
                                 } else {
                                     System.out.println("Invalid country name");
                                 }
-//                                boolean check = d_RunG.addCountry(d_Map, d_CountryId, d_ContinentId);
-                                if (true) {
+                                boolean check = d_RunG.addCountry(d_Map, d_CountryId, d_ContinentId);
+                                if (check) {
                                     System.out.println("Country added to the map");
                                     d_GamePhase = Phase.EDITMAP;
                                 } else {
                                     System.out.println("Country already exists - Please add valid Country ID");
                                 }
                             } else if (d_Data[i].equals("-remove")) {
-                                if (this.isNumeric(d_Data[i + 1])) {
+                                if (this.isAlphabetic(d_Data[i + 1])) {
                                     d_CountryId = d_Data[i + 1];
                                 }
                                 else {
                                     System.out.println("Invalid country name");
                                 }
-//                                boolean check = d_RunCmd.removeCountry(d_Map, d_CountryId);
-                                if (true) {
+                                boolean check = d_RunG.removeCountry(d_Map, d_CountryId);
+                                if (check) {
                                     System.out.println("Country removed from the map");
                                     d_GamePhase = Phase.EDITMAP;
                                 } else {
@@ -234,30 +234,30 @@ public class GameEngine {
                     try {
                         for (int i = 1; i < d_Data.length; i++) {
                             if (d_Data[i].equals("-add")) {
-                                if (this.isNumeric(d_Data[i + 1]) || this.isNumeric(d_Data[i + 2])) {
+                                if (this.isAlphabetic(d_Data[i + 1]) || this.isAlphabetic(d_Data[i + 2])) {
                                     d_CountryId = d_Data[i + 1];
                                     d_NeighborCountryId = d_Data[i + 2];
                                 } else {
                                     System.out.println("Invalid country ID");
                                 }
 
-//                                boolean check = d_RunG.addNeighbor(d_Map, d_CountryId, d_NeighborCountryId);
-                                if (true) {
+                                boolean check = d_RunG.addNeighbor(d_Map, d_CountryId, d_NeighborCountryId);
+                                if (check) {
                                     System.out.println("Neighbor added to the map");
                                     d_GamePhase = Phase.EDITMAP;
                                 } else {
                                     System.out.println("Country does not exist - Please enter valid countryID neighborcountryID");
                                 }
                             } else if (d_Data[i].equals("-remove")) {
-                                if (this.isNumeric(d_Data[i + 1]) || this.isNumeric(d_Data[i + 2])) {
+                                if (this.isAlphabetic(d_Data[i + 1]) || this.isAlphabetic(d_Data[i + 2])) {
                                     d_CountryId = d_Data[i + 1];
                                     d_NeighborCountryId = d_Data[i + 2];
                                 } else {
                                     System.out.println("Invalid country ID");
                                 }
 
-//                                boolean check = d_RunG.removeNeighbor(d_Map, d_CountryId, d_NeighborCountryId);
-                                if (true) {
+                                boolean check = d_RunG.removeNeighbor(d_Map, d_CountryId, d_NeighborCountryId);
+                                if (check) {
                                     System.out.println("Neighbor removed from the map");
                                     d_GamePhase = Phase.EDITMAP;
                                 } else
@@ -278,8 +278,8 @@ public class GameEngine {
                         if (d_Data[1] != "") {
                             if (this.isMapNameValid(d_Data[1])) {
                                 d_MapName = d_Data[1];
-//                                boolean check = d_RunG.saveMap(d_Map, d_MapName);
-                                if (true) {
+                                boolean check = d_RunG.saveMap(d_Map, d_MapName);
+                                if (check) {
                                     System.out.println("Map file saved successfully");
                                     d_GamePhase = Phase.EDITMAP;
                                 } else
@@ -306,7 +306,7 @@ public class GameEngine {
                         if (d_Data[1] != null) {
                             if (this.isMapNameValid(d_Data[1])) {
                                 d_MapName = d_Data[1];
-                                //d_Map = d_RunG.editMap(d_MapName);
+                                d_Map = d_RunG.editMap(d_MapName);
                                 System.out.println("Start editing " + d_MapName);
                                 d_GamePhase = Phase.EDITMAP;
                             } else
@@ -351,8 +351,7 @@ public class GameEngine {
                     break;
 
                 case "validatemap":
-                    //if(d_RunG.validateMap(d_Map)) {
-                    if(true) {
+                    if(d_RunG.validateMap(d_Map)) {
                             System.out.println("Map is Validated and Correct!");
                     }
                     else {

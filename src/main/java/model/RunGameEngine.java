@@ -1,9 +1,12 @@
 package model;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
-
 
 /**
  * Contain logic for executing GameEngine
@@ -26,8 +29,13 @@ public class RunGameEngine {
 			LoadMap l_loadMap = new LoadMap();
 			l_gameMap = l_loadMap.readMap(l_filePath);
 			l_gameMap.setMapName(p_mapName);
-			//check map validation TODO
-			l_gameMap.setValid(true);
+			if(validateMap(l_gameMap)) {
+				l_gameMap.setValid(true);
+			}
+			else {
+				System.out.println("Map not suitable for game play. Correct the map to continue with this map or load another map from the existing maps.");
+				l_gameMap.setValid(false);
+			}
 		}else {
 			System.out.println("Map " + p_mapName + " does not exist. Try to load again or use 'editMap' to create a map.");
 			return null;
@@ -94,9 +102,9 @@ public class RunGameEngine {
 			for(CountryDetails c : l_continent.getCountries().values()) {
 				l_tempList.add(c);
 			}
-			Iterator<CountryDetails> itr = l_tempList.listIterator();
-			while(itr.hasNext()) {
-				CountryDetails c = itr.next();
+			Iterator<CountryDetails> l_itr = l_tempList.listIterator();
+			while(l_itr.hasNext()) {
+				CountryDetails c = l_itr.next();
 				if(!removeCountry(p_map, c.getCountryId()))
 					return false;
 			}
@@ -251,6 +259,99 @@ public class RunGameEngine {
 			l_PrintContinentName = true;
 			l_PrintCountryName = true;
 		}
+	}
+	
+	public boolean saveMap(GameMap p_map, String p_fileName) {
+		//Check if map is valid or not 
+		if(validateMap(p_map)) {
+			try {
+				BufferedWriter writer = new BufferedWriter(new FileWriter("maps/"+p_fileName+".map"));
+				int l_continentIndex = 1;	//to track continent index in "map" file
+				int l_countryIndex = 1; //to track country index in "map" file
+				HashMap<Integer, String> indexToCountry = new HashMap<Integer, String>(); //to get in country name corresponding to in map index to be in compliance with Domination format
+				HashMap<String, Integer> countryToIndex = new HashMap<String, Integer>(); //to get in map index to be in compliance with Domination format
+				
+				//write preliminary basic information
+				writer.write("name " + p_fileName + " Map");
+				writer.newLine();
+				writer.newLine();
+				writer.write("[files]");
+				writer.newLine();
+				writer.newLine();
+				//writer.newLine();
+				writer.flush();
+				
+				//write information about all the continents
+				writer.write("[continents]");
+				writer.newLine();
+				for(Continent l_continent : p_map.getContinents().values()) {
+					writer.write(l_continent.getContinentId() + " " + Integer.toString(l_continent.getControlValue()));
+					writer.newLine();
+					writer.flush();
+					l_continent.setInMapIndex(l_continentIndex);
+					l_continentIndex++;
+				}
+				writer.newLine();
+				
+				//write information about all the countries
+				writer.write("[countries]");
+				writer.newLine();
+				for(CountryDetails l_country : p_map.getCountries().values()) {
+					writer.write(Integer.toString(l_countryIndex) + " " + l_country.getCountryId() + " " + Integer.toString(p_map.getContinents().get(l_country.getInContinent().toLowerCase()).getInMapIndex()) + " " + l_country.getxCoOrdinate() + " " + l_country.getyCoOrdinate());
+					writer.newLine();
+					writer.flush();
+					indexToCountry.put(l_countryIndex, l_country.getCountryId().toLowerCase());
+					countryToIndex.put(l_country.getCountryId().toLowerCase(), l_countryIndex);
+					l_countryIndex++;
+				}
+				writer.newLine();
+				//countryIndex = 1;
+				
+				//write information about all the borders
+				writer.write("[borders]");
+				writer.newLine();
+				//writer.newLine();
+				writer.flush();
+				for(int i=1;i<l_countryIndex;i++) {
+					String l_countryID = indexToCountry.get(i);
+					CountryDetails c = p_map.getCountries().get(l_countryID.toLowerCase());
+					writer.write(Integer.toString(i) + " ");
+					for(CountryDetails l_neighbor : c.getNeighbours().values()) {
+						writer.write(Integer.toString(countryToIndex.get(l_neighbor.getCountryId().toLowerCase())) + " ");
+						writer.flush();
+					}
+					writer.newLine();
+				}
+			}
+			catch(IOException e) {
+				e.printStackTrace();
+				return false;
+			}
+			return true;
+		}
+		else
+		{
+			System.out.println("Map not suitable for game play. Correct the map to continue with the new map or load a map from the existing maps.");
+			return false;
+		}
+	}
+	
+	public boolean validateMap(GameMap p_map) {
+		MapValidator l_mv = new MapValidator();
+		if(!l_mv.notEmptyContinent(p_map)) {
+			System.out.println("Invalid map - emtpy continent present.");
+			return false;
+		}
+		else if(!l_mv.isGraphConnected(l_mv.createGraph(p_map))) {
+			System.out.println("Invalid map - not a connected graph");
+			return false;
+		}
+		else if(!l_mv.continentConnectivityCheck(p_map)) {
+			System.out.println("Invalid map - one of the continent is not a connected sub-graph");
+			return false;
+		}
+		
+		return true;
 	}
 	
 }
