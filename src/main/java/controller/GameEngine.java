@@ -453,7 +453,7 @@ public class GameEngine {
                     break;
 
                 case "showmap":
-//                    d_StartUp.showMap(d_Players, d_Map);
+                    d_StartUp.showMap(d_Players, d_Map);
                     break;
 
                 default:
