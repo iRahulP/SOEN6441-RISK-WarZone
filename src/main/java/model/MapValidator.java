@@ -94,7 +94,7 @@ public class MapValidator {
      * Check if the same continent already exist
      *
      * @param p_map GameMap object holding record of all the existing continents and countries
-     * @param p_continentName name of the continent to be checked
+     * @param p_continentId name of the continent to be checked
      * @return true if continent already exists, else false
      */
     public static boolean doesContinentExist(GameMap p_map, String p_continentId) {
@@ -108,7 +108,7 @@ public class MapValidator {
      * Check if the same country already exist
      *
      * @param p_map GameMap object holding record of all the existing continents and countries
-     * @param p_countryName name of the country to be checked
+     * @param p_countryId name of the country to be checked
      * @return true if country already exists, else false
      */
     public static boolean doesCountryExist(GameMap p_map, String p_countryId) {
