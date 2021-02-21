@@ -28,6 +28,7 @@ public class PlayRisk {
         System.out.println("Welcome to Risk Game based on Warzone!");
         System.out.println("try, Selecting a map from the below mentioned sample maps or create a new one: ");
         l_game.sampleMaps();
+
         //initial command reader from cli
         Scanner sc = new Scanner(System.in);
         String l_cmd = sc.nextLine();
@@ -43,23 +44,29 @@ public class PlayRisk {
 
         //Loops through list of Players
         int l_numberOfPlayers = cmd.d_Players.size();
-        int l_playerCounter = 0;
-        while(true){
-            while(l_playerCounter<l_numberOfPlayers) {
-                Player l_p = cmd.d_Players.get(l_playerCounter);
+        int l_traversalCounter = 0;
+        while(true) {
+            while(l_traversalCounter<l_numberOfPlayers) {
+                Player l_p = cmd.d_Players.get(l_traversalCounter);
                 //Assign to each player the correct number of reinforcement armies according to the Warzone rules.
                 AssignReinforcement.assignReinforcementArmies(l_p);
                 System.out.println("It's "+ l_p.getPlayerName() + "'s turn");
-                while(l_gamePhase!=Phase.TURN) {
+
+                while(l_gamePhase!=Phase.TURNEND) {
+                    if(l_gamePhase==Phase.DEPLOYMENT) {
+                        //System.out.println("Reinforcement Armies: " + l_p.getOwnedArmies());
+                    }
                     l_cmd = sc.nextLine();
                     l_gamePhase = cmd.parseCommand(l_p, l_cmd);
                 }
                 l_gamePhase = Phase.EXECUTE_ORDERS;
+                l_gamePhase = Phase.DEPLOYMENT;
                 cmd.setGamePhase(l_gamePhase);
-                l_playerCounter++;
+                l_traversalCounter++;
             }
-            l_playerCounter = 0;
+            l_traversalCounter = 0;
         }
+
     }
 
     /**
