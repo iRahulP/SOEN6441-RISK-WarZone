@@ -192,7 +192,7 @@ public class GameEngine {
                     try {
                         for (int i = 1; i < d_Data.length; i++) {
                             if (d_Data[i].equals("-add")) {
-                                if (this.isAlphabetic(d_Data[i + 1]) || this.isAlphabetic(d_Data[i + 2])) {
+                                if (this.isAlphabetic(d_Data[i + 1]) || this.isNumeric(d_Data[i + 2])) {
                                     d_CountryId = d_Data[i + 1];
                                     d_ContinentId = d_Data[i + 2];
                                 } else {
@@ -407,17 +407,17 @@ public class GameEngine {
                     break;
 
                 case "assigncountries":
-                    //boolean check = d_StartUp.assignCountries(d_Map, d_Players);
+                    boolean check = d_StartUp.assignCountries(d_Map, d_Players);
                     if (true) {
                         System.out.println("Countries allocated randomly amongst Players");
                     }
                     d_GamePhase = Phase.ASSIGN_REINFORCEMENTS;
                     ///d_StartUp.armyDistribution(d_Players, this, d_GamePhase);
-                    d_GamePhase = Phase.DEPLOYMENT;
+                    d_GamePhase = Phase.ISSUE_ORDERS;
                     break;
 
                 case "showmap":
-                    //d_StartUp.showMap(d_Players, d_Map);
+                    d_StartUp.showMap(d_Players, d_Map);
                     break;
 
                 default:
@@ -432,9 +432,11 @@ public class GameEngine {
                 case "deploy":
                     try {
                         if (!(d_Data[1] == null) || !(d_Data[2] == null)) {
-                            if (this.isNumeric(d_Data[1]) || this.isNumeric(d_Data[2])) {
+                            if (this.isAlphabetic(d_Data[1]) || this.isNumeric(d_Data[2])) {
                                 d_CountryId = d_Data[1];
                                 d_NumberOfArmies = Integer.parseInt(d_Data[2]);
+                                //p_player.deploy_order(p_player, d_CountryId, d_NumberOfArmies);
+                                d_GamePhase = Phase.DEPLOYMENT;
 //                                boolean check = d_Arfc.deploy(d_Player, d_CountryId, d_NumberOfArmies);
                                 if (true) {
                                     //if (p_player.getOwnedArmies() == 0) {
@@ -452,6 +454,15 @@ public class GameEngine {
                     }
                     break;
 
+                case "pass":
+                    try {
+                        System.out.println("Ending Turn for current Player!");
+                        d_GamePhase = Phase.TURNEND;
+                    } catch (Exception e) {
+                        System.out.println("Invalid command - it should be of the form deploy countryID num | pass");
+                    }
+                    break;
+
                 case "showmap":
                     d_StartUp.showMap(d_Players, d_Map);
                     break;
@@ -462,10 +473,12 @@ public class GameEngine {
             }
         }
         else if (d_GamePhase.equals(Phase.ISSUE_ORDERS)) {
-
+            //p_player.issue_order();
+            d_GamePhase = Phase.DEPLOYMENT;
         }
         else if (d_GamePhase.equals(Phase.EXECUTE_ORDERS)) {
-
+            //boolean check = p_player.next_order();
+            d_GamePhase = Phase.ASSIGN_REINFORCEMENTS;
         }
             return d_GamePhase;
     }
