@@ -15,7 +15,7 @@ public class GameEngine {
     public GameMap d_Map;
     public RunGameEngine d_RunG;
     public StartUp d_StartUp;
-    //public AssignReinforcement d_Arfc;
+    public AssignReinforcement d_Arfc;
     public Phase d_GamePhase;
     public ArrayList<Player> d_Players;
 
@@ -23,7 +23,7 @@ public class GameEngine {
         d_Map = new GameMap();
         d_RunG = new RunGameEngine();
         d_StartUp = new StartUp();
-        //d_Arfc = new AssignReinforcement();
+        d_Arfc = new AssignReinforcement();
         d_Players = new ArrayList<Player>();
         d_GamePhase = Phase.NULL;
     }
@@ -407,17 +407,16 @@ public class GameEngine {
                     break;
 
                 case "assigncountries":
-                    //boolean check = d_StartUp.assignCountries(d_Map, d_Players);
-                    if (true) {
+                    boolean check = d_StartUp.assignCountries(d_Map, d_Players);
+                    if (check) {
                         System.out.println("Countries allocated randomly amongst Players");
+                        d_GamePhase = Phase.ISSUE_ORDERS;
                     }
-                    d_GamePhase = Phase.ASSIGN_REINFORCEMENTS;
-                    ///d_StartUp.armyDistribution(d_Players, this, d_GamePhase);
-                    d_GamePhase = Phase.DEPLOYMENT;
+                    d_GamePhase = Phase.ISSUE_ORDERS;
                     break;
 
                 case "showmap":
-                    //d_StartUp.showMap(d_Players, d_Map);
+                    d_StartUp.showMap(d_Players, d_Map);
                     break;
 
                 default:
@@ -425,9 +424,10 @@ public class GameEngine {
                     break;
             }
         }
-        //DEPLOYMENT Phase
-        //DEPLOYMENT : deploy, showmap
-        else if (d_GamePhase.equals(Phase.DEPLOYMENT)) {
+
+        //ISSUE_ORDERS Phase
+        //ISSUE_ORDERS : deploy - orders, showmap
+        else if (d_GamePhase.equals(Phase.ISSUE_ORDERS)) {
             switch (d_CommandName) {
                 case "deploy":
                     try {
@@ -435,22 +435,25 @@ public class GameEngine {
                             if (this.isNumeric(d_Data[1]) || this.isNumeric(d_Data[2])) {
                                 d_CountryId = d_Data[1];
                                 d_NumberOfArmies = Integer.parseInt(d_Data[2]);
-//                                boolean check = d_Arfc.deploy(d_Player, d_CountryId, d_NumberOfArmies);
-                                if (true) {
-                                    //if (p_player.getOwnedArmies() == 0) {
-                                    if (true) {
-                                        System.out.println("Deployment phase Successful!");
+                                Order temp = new Order(p_player, d_CountryId, d_NumberOfArmies);
+                                //p_player.issue_order();
+                                //boolean check = p_player.deploy_order(temp);
+                                if (p_player.getOwnedArmies() == 0) {
+                                    System.out.println("Deployment phase Successful!");
+                                    d_GamePhase = Phase.TURNEND;
                                     }
+                                d_GamePhase = Phase.ISSUE_ORDERS;
                                 }
                             } else
                                 System.out.println("Invalid command");
-                        }
+
                     } catch (ArrayIndexOutOfBoundsException e) {
                         System.out.println("Invalid command - it should be of the form deploy countryID num");
                     } catch (Exception e) {
                         System.out.println("Invalid command - it should be of the form deploy countryID num");
                     }
                     break;
+
 
                 case "showmap":
                     d_StartUp.showMap(d_Players, d_Map);
@@ -461,11 +464,10 @@ public class GameEngine {
                     break;
             }
         }
-        else if (d_GamePhase.equals(Phase.ISSUE_ORDERS)) {
 
-        }
+
         else if (d_GamePhase.equals(Phase.EXECUTE_ORDERS)) {
-
+           //p_player.next_order();
         }
             return d_GamePhase;
     }

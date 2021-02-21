@@ -37,7 +37,7 @@ public class PlayRisk {
         GameEngine cmd = new GameEngine();
         l_gamePhase = cmd.parseCommand(null, l_cmd);
         //looping for commands until initial Phases where Player iteration not required!
-        while(l_gamePhase!= Phase.ASSIGN_REINFORCEMENTS) {
+        while(l_gamePhase!= Phase.ISSUE_ORDERS) {
             l_cmd = sc.nextLine();
             l_gamePhase = cmd.parseCommand(null, l_cmd);
         }
@@ -52,18 +52,15 @@ public class PlayRisk {
                 AssignReinforcement.assignReinforcementArmies(l_p);
                 System.out.println("It's "+ l_p.getPlayerName() + "'s turn");
 
+                //listen orders from players - deploy - pass
                 while(l_gamePhase!=Phase.TURNEND) {
-                    if(l_gamePhase==Phase.DEPLOYMENT) {
-                        //System.out.println("Reinforcement Armies: " + l_p.getOwnedArmies());
-                    }
                     l_cmd = sc.nextLine();
                     l_gamePhase = cmd.parseCommand(l_p, l_cmd);
                 }
-                l_gamePhase = Phase.EXECUTE_ORDERS;
-                l_gamePhase = Phase.DEPLOYMENT;
-                cmd.setGamePhase(l_gamePhase);
                 l_traversalCounter++;
             }
+            l_gamePhase = Phase.EXECUTE_ORDERS;
+            cmd.setGamePhase(l_gamePhase);
             l_traversalCounter = 0;
         }
 

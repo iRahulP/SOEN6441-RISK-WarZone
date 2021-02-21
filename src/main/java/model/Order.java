@@ -27,7 +27,6 @@ public class Order {
      */
     public boolean execute(ArrayList<Order> p_orders){
         d_Arc = new AssignReinforcement();
-
         for (Order temp : p_orders) {
             Boolean check = d_Arc.deploy(temp.d_player, temp.d_countryId, temp.d_numArmies);
         }
