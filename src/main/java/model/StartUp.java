@@ -69,4 +69,56 @@ public class StartUp {
 		//assignInitialArmies(players);  //assigning initial armies
 		return true;
 	}
+
+	/**
+	 * Shows map with along with Owner and Army units.
+	 * @param p_players List of players in the game
+	 * @param p_map Game map
+	 */
+	public void showMap(ArrayList<Player> p_players, GameMap p_map) {
+		if(p_map==null)
+			return;
+		if(p_players.size()==0 || p_players.get(0).getOwnedCountries().size()==0) {
+			RunGameEngine rc = new RunGameEngine();
+			rc.showMap(p_map);
+			return;
+		}
+		System.out.format("%25s%25s%35s%25s%10s\n", "Owner", "Country", "Neighbors", "Continent", "#Armies");
+		System.out.format("%85s\n", "---------------------------------------------------------------------------------------------------------------------------");
+		boolean l_printPlayerName = true;
+		boolean l_printContinentId = true;
+		boolean l_printCountryId = true;
+		boolean l_printNumberOfArmies = true;
+
+		for(int i=0; i<p_players.size(); i++){
+			Player p = p_players.get(i);
+			for(CountryDetails country : p.getOwnedCountries().values()) {
+				for(CountryDetails neighbor : country.getNeighbours().values()) {
+					if(l_printPlayerName && l_printContinentId && l_printCountryId) {
+						System.out.format("\n%25s%25s%35s%25s%10d\n", p.getPlayerName(), country.getCountryId(), neighbor.getCountryId(), country.getInContinent(), country.getNumberOfArmies());
+						l_printPlayerName = false;
+						l_printContinentId = false;
+						l_printCountryId = false;
+						l_printNumberOfArmies = false;
+					}
+					else if(l_printContinentId && l_printCountryId && l_printNumberOfArmies) {
+						System.out.format("\n%25s%25s%35s%25s%10d\n", "", country.getCountryId(), neighbor.getCountryId(), country.getInContinent(), country.getNumberOfArmies());
+						l_printPlayerName = false;
+						l_printCountryId = false;
+						l_printNumberOfArmies = false;
+					}
+					else {
+						System.out.format("\n%25s%25s%35s%25s%10s\n", "", "", neighbor.getCountryId(), "", "");
+					}
+				}
+				l_printContinentId = true;
+				l_printCountryId = true;
+				l_printNumberOfArmies = true;
+			}
+			l_printPlayerName = true;
+			l_printContinentId = true;
+			l_printCountryId = true;
+			l_printNumberOfArmies = true;
+		}
+	}
 }
