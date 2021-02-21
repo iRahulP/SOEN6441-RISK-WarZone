@@ -220,6 +220,7 @@ public class RunGameEngine {
 	public void showMap(GameMap p_map) {
 		if(p_map==null)
 			return;
+		System.out.printf("%85s\n", "-------------------------------------------------------------------------------------------");
 		System.out.printf("%25s%25s%35s\n", "Continents", "Country", "Country's neighbors");
 		System.out.printf("%85s\n", "-------------------------------------------------------------------------------------------");
 		boolean l_PrintContinentName = true;
@@ -265,7 +266,7 @@ public class RunGameEngine {
 		//Check if map is valid or not 
 		if(validateMap(p_map)) {
 			try {
-				BufferedWriter writer = new BufferedWriter(new FileWriter("maps/"+p_fileName+".map"));
+				BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/maps/"+p_fileName+".map"));
 				int l_continentIndex = 1;	//to track continent index in "map" file
 				int l_countryIndex = 1; //to track country index in "map" file
 				HashMap<Integer, String> indexToCountry = new HashMap<Integer, String>(); //to get in country name corresponding to in map index to be in compliance with Domination format
