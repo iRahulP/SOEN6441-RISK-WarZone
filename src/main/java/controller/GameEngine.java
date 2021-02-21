@@ -438,9 +438,10 @@ public class GameEngine {
                                 Order temp = new Order(p_player, d_CountryId, d_NumberOfArmies);
                                 //p_player.issue_order();
                                 //boolean check = p_player.deploy_order(temp);
-                                if (p_player.getOwnedArmies() == 0) {
-                                    System.out.println("Deployment phase Successful!");
-                                    d_GamePhase = Phase.TURNEND;
+                                //if (p_player.getOwnedArmies() == 0) {
+                                if (true) {
+                                        System.out.println("Order issues for player : "+p_player.getPlayerName());
+                                        d_GamePhase = Phase.TURNEND;
                                     }
                                 d_GamePhase = Phase.ISSUE_ORDERS;
                                 }
@@ -450,6 +451,14 @@ public class GameEngine {
                     } catch (ArrayIndexOutOfBoundsException e) {
                         System.out.println("Invalid command - it should be of the form deploy countryID num");
                     } catch (Exception e) {
+                        System.out.println("Invalid command - it should be of the form deploy countryID num");
+                    }
+                    break;
+
+                case "pass":
+                    try {
+                        d_GamePhase = Phase.TURNEND;
+                    }catch (Exception e) {
                         System.out.println("Invalid command - it should be of the form deploy countryID num");
                     }
                     break;
