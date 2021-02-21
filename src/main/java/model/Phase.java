@@ -57,7 +57,7 @@ public enum Phase {
      * Marks the end of the current player and signals to let the player get the turn.
      * Phase ends when next player starts their move.
      */
-    TURN,
+    TURNEND,
 
     /**
      * CLoses the Game.
