@@ -49,7 +49,7 @@ public enum Phase {
 
     /**
      * Executes orders for all the Players from the pool of order's list.
-     * Phase ends when all the num armies are placed on CuntryID as per order's list.
+     * Phase ends when all the num armies are placed on CountryID as per order's list.
      */
     EXECUTE_ORDERS,
 
@@ -57,7 +57,7 @@ public enum Phase {
      * Marks the end of the current player and signals to let the player get the turn.
      * Phase ends when next player starts their move.
      */
-    TURNEND,
+    TURN,
 
     /**
      * CLoses the Game.
