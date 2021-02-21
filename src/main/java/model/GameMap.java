@@ -57,7 +57,7 @@ public class GameMap {
 	 * Getter method to fetch valid variable.
 	 * @return return whether the map is valid for game play or not
 	 */
-	public boolean isValid() {
+	public boolean getValid() {
 		return this.d_valid;
 	}
 
