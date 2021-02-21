@@ -12,13 +12,13 @@ import java.util.HashMap;
  */
 public class MapValidator {
 
-    private Graph<CountryDetails, DefaultEdge> l_mapGraph; //JGraphT type Graph representing the game map
+    private Graph<CountryDetails, DefaultEdge> d_mapGraph; //JGraphT type Graph representing the game map
 
     /**
      * This constructor instantiates the Directed Graph using JGraphT .
      */
     MapValidator() {
-        l_mapGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
+        d_mapGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
     }
 
     /**
@@ -31,18 +31,24 @@ public class MapValidator {
 
         //add CountryDetails to the Graph
         for (CountryDetails l_countryDetails : p_map.getCountries().values()) {
-            l_mapGraph.addVertex(l_countryDetails);
+            d_mapGraph.addVertex(l_countryDetails);
         }
 
         //add Edges between country and its neighbours
         for (CountryDetails l_countryDetails : p_map.getCountries().values()) {
             for (CountryDetails l_neighbor : l_countryDetails.getNeighbours().values()) {
-                l_mapGraph.addEdge(l_countryDetails, l_neighbor);
+                d_mapGraph.addEdge(l_countryDetails, l_neighbor);
             }
         }
-        return l_mapGraph;
+        return d_mapGraph;
     }
 
+    /**
+     *
+     * @param p_subGraph
+     * @param p_countries
+     * @return
+     */
     public Graph<CountryDetails, DefaultEdge> createSubGraph(Graph<CountryDetails, DefaultEdge> p_subGraph, HashMap<String, CountryDetails> p_countries) {
 
         for (CountryDetails l_country : p_countries.values()) {
