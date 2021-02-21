@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 
-
-
 public class LoadMap {
     public static int InMapIndex = 1;
 
@@ -72,6 +70,7 @@ public class LoadMap {
                         System.out.println("Error reading the file.");
                         System.exit(-1);
                     }
+                    addToContinentMap(newCountry);    //Add country to the appropriate continent in the map. Terminate if duplicate entry.
                     d_listOfCountries.put(newCountry.getIndex(), newCountry);
                 } catch (NullPointerException e) {
                     e.printStackTrace();
@@ -139,6 +138,26 @@ public class LoadMap {
         }
         if (!argumentCountry.getNeighbours().containsKey(neighbourCountry.getCountryId().toLowerCase()))
             argumentCountry.getNeighbours().put(neighbourCountry.getCountryId().toLowerCase(), neighbourCountry);
+    }
+
+    /**
+     * Adds the country to continent map.
+     * @param l_newCountry country to be added
+     */
+    private void addToContinentMap(CountryDetails l_newCountry) {
+
+        if (!MapValidator.doesCountryExist(map, l_newCountry.getCountryId())) {
+            //newCountry.printCountry();
+            Continent argumentContinent = map.getContinents().get(l_newCountry.getInContinent().toLowerCase());
+            //System.out.println("Fetched continent: " + argumentContinent.getContinentName());
+            argumentContinent.getCountries().put(l_newCountry.getCountryId().toLowerCase(), l_newCountry);
+            map.getCountries().put(l_newCountry.getCountryId().toLowerCase(), l_newCountry);
+        } else {
+            //terminate the program if same name country exists in the continent
+            System.out.println("Error reading the file.");
+            System.out.println("Two countries of same name exists in the same continent.");
+            System.exit(-1);
+        }
     }
 
 }
