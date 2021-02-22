@@ -1,8 +1,11 @@
 package model;
 
+import sun.misc.Queue;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.PriorityQueue;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * This class creates a Player and assigns attributes to the player.
@@ -18,7 +21,7 @@ public class Player {
     private int d_reinforcementArmies;
     private String d_countryId;
     private Order d_Order;
-    private PriorityQueue<Order> d_orderList;
+    private LinkedList<Order> d_orderList;
 
     /**
      * This constructor assigns name to the player.
@@ -30,7 +33,7 @@ public class Player {
         d_ownedContinents = new HashMap<>();
         d_ownedCountries = new HashMap<>();
         this.d_ownedArmies = 0;
-        d_orderList = new PriorityQueue<>();
+        d_orderList = new LinkedList<>();
     }
 
     /**
