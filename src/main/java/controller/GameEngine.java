@@ -3,8 +3,10 @@ package controller;
 import model.*;
 import view.PlayRisk;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Queue;
 
 /**
  * Class responsible to interpret different commands as provided by User over Command Line Interface
@@ -465,6 +467,7 @@ public class GameEngine {
                                         p_player.addOrder(temp);
                                         System.out.println("issue");
                                         p_player.issue_order();
+                                        System.out.println("after ISSUE");
                                         p_player.setOwnedArmies(p_player.getOwnedArmies()-d_NumberOfArmies);
                                         System.out.println("Order issued for player: " + p_player.getPlayerName());
                                         System.out.println("Player "+p_player.getPlayerName()+" has "+p_player.getOwnedArmies()+" Armies currently!");
@@ -472,7 +475,7 @@ public class GameEngine {
                                     else{
                                         System.out.println("Country not valid or insufficient Army units | please pass to next player");
                                     }
-                                    d_GamePhase = Phase.ISSUE_ORDERS;
+                                    d_GamePhase = Phase.TURNEND;
                                 }
                             } else
                                 System.out.println("Invalid Command");
@@ -516,11 +519,21 @@ public class GameEngine {
             System.out.println("Execute Phase Started");
             switch (d_CommandName) {
                 case "execute":
-                    //Order toRemove = p_player.next_order();
-                    //can be directly removed by using Q.remove() in the next_order return part
+                    for (Player p : d_Players) {
+                        Queue<Order> temp = p.getD_orderList();
+                        System.out.println(p.getPlayerName());
+                        System.out.println(temp.size());
+
+                        while (!temp.isEmpty()) {
+                            System.out.println("We are inside!");
+                            Order toRemove = p.next_order();
+                            System.out.println("Order : "+toRemove);
+                            toRemove.execute();
+                        }
+                    }
 
                     System.out.println("Orders executed!");
-                    //d_Play.assignEachPlayerReinforcements(ge);
+                    d_StartUp.showMap(d_Players, d_Map);
                     d_GamePhase = Phase.ISSUE_ORDERS;
                     break;
 
