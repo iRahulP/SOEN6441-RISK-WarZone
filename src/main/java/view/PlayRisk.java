@@ -6,6 +6,7 @@ import model.Phase;
 import model.Player;
 
 import java.io.File;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -42,6 +43,12 @@ public class PlayRisk {
             l_gamePhase = cmd.parseCommand(null, l_cmd);
         }
 
+        Iterator<Player> itr = cmd.d_Players.listIterator();
+        while(itr.hasNext()) {
+            Player p = itr.next();
+            AssignReinforcement.assignReinforcementArmies(p);
+        }
+
         //Loops through list of Players
         int l_numberOfPlayers = cmd.d_Players.size();
         int l_traversalCounter = 0;
@@ -49,7 +56,6 @@ public class PlayRisk {
             while(l_traversalCounter<l_numberOfPlayers) {
                 Player l_p = cmd.d_Players.get(l_traversalCounter);
                 //Assign to each player the correct number of reinforcement armies according to the Warzone rules.
-                AssignReinforcement.assignReinforcementArmies(l_p);
                 System.out.println("It's "+ l_p.getPlayerName() + "'s turn");
                 //listen orders from players - deploy - pass
                 l_gamePhase = Phase.ISSUE_ORDERS;
