@@ -52,6 +52,8 @@ public class PlayRisk {
                 AssignReinforcement.assignReinforcementArmies(l_p);
                 System.out.println("It's "+ l_p.getPlayerName() + "'s turn");
                 //listen orders from players - deploy - pass
+                l_gamePhase = Phase.ISSUE_ORDERS;
+                cmd.setGamePhase(l_gamePhase);
                 while(l_gamePhase!=Phase.TURNEND) {
                     l_cmd = sc.nextLine();
                     l_gamePhase = cmd.parseCommand(l_p, l_cmd);
