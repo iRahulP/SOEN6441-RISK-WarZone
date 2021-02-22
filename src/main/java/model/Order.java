@@ -1,9 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Order {
-
 
     private int d_numArmies;
     private String d_countryId;
@@ -25,13 +25,21 @@ public class Order {
      * method which enacts the order
      * @return true if successful, else false
      */
-    public boolean execute(ArrayList<Order> p_orders){
-        d_Arc = new AssignReinforcement();
-        for (Order temp : p_orders) {
-            Boolean check = d_Arc.deploy(temp.d_player, temp.d_countryId, temp.d_numArmies);
-        }
+    public boolean execute(Order p_order){
+
+        d_player = p_order.getD_player();
+        d_countryId = p_order.getD_countryId();
+        d_numArmies = p_order.getD_numArmies();
+
+
+        CountryDetails c= d_player.getOwnedCountries().get(d_countryId.toLowerCase());
+        int existingArmies = c.getNumberOfArmies();
+        existingArmies += d_numArmies;
+        c.setNumberOfArmies(existingArmies);
+
         return true;
     }
+
     /**
      * Getter for current player
      * @return d_player

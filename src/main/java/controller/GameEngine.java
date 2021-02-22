@@ -3,6 +3,7 @@ package controller;
 import model.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Class responsible to interpret different commands as provided by User over Command Line Interface
@@ -428,38 +429,62 @@ public class GameEngine {
         //ISSUE_ORDERS Phase
         //ISSUE_ORDERS : deploy - orders, showmap
         else if (d_GamePhase.equals(Phase.ISSUE_ORDERS)) {
-            switch (d_CommandName) {
-                case "deploy":
-                    try {
-                        if (!(d_Data[1] == null) || !(d_Data[2] == null)) {
-                            if (this.isNumeric(d_Data[1]) || this.isNumeric(d_Data[2])) {
-                                d_CountryId = d_Data[1];
-                                d_NumberOfArmies = Integer.parseInt(d_Data[2]);
-                                Order temp = new Order(p_player, d_CountryId, d_NumberOfArmies);
-                                //p_player.issue_order();
-                                //boolean check = p_player.deploy_order(temp);
-                                //if (p_player.getOwnedArmies() == 0) {
-                                if (true) {
-                                        System.out.println("Order issues for player : "+p_player.getPlayerName());
-                                        d_GamePhase = Phase.TURNEND;
+            int counter = 0;
+            System.out.println(d_Players.size());
+            //traverses through all players to check if armies left in pool
+            Iterator<Player> itr = d_Players.listIterator();
+            while(itr.hasNext()) {
+                Player p = itr.next();
+                if (p.getOwnedArmies() > 0) {
+                    counter = counter + p.getOwnedArmies();
+                }
+            }
+
+            System.out.println("Total Armies with all Players: "+counter);
+            //case when atleast one player has armies left
+            if(counter > 0){
+                System.out.println("Can provide orders");
+                switch (d_CommandName) {
+                    case "deploy":
+                        try {
+                            if (!(d_Data[1] == null) || !(d_Data[2] == null)) {
+                                if (this.isNumeric(d_Data[1]) || this.isNumeric(d_Data[2])) {
+                                    d_CountryId = d_Data[1];
+                                    d_NumberOfArmies = Integer.parseInt(d_Data[2]);
+                                    boolean checkOwnedCountry = p_player.getOwnedCountries().containsKey(d_CountryId.toLowerCase());
+                                    System.out.println(checkOwnedCountry);
+                                    //if >= then directly gets to execute if all armies deployed in a single order -limited to d_NumberOfArmies-1 armies
+                                    boolean checkArmies = (p_player.getOwnedArmies() > d_NumberOfArmies);
+                                    System.out.println(checkArmies);
+                                    if(checkOwnedCountry && checkArmies){
+                                        System.out.println("I am in");
+                                        Order temp = new Order(p_player, d_CountryId, d_NumberOfArmies);
+                                        //p_player.addOrder(temp);
+                                        //p_player.issue_order();
+                                        p_player.setOwnedArmies(p_player.getOwnedArmies()-d_NumberOfArmies);
+                                        System.out.println("Order issued for player: " + p_player.getPlayerName());
                                     }
-                                d_GamePhase = Phase.ISSUE_ORDERS;
+                                    else{
+                                        System.out.println("Invalid Country or Army units not available! -> pass");
+                                    }
+                                    d_GamePhase = Phase.ISSUE_ORDERS;
                                 }
                             } else
-                                System.out.println("Invalid command");
+                                System.out.println("Invalid Command");
 
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("Invalid command - it should be of the form deploy countryID num");
-                    } catch (Exception e) {
-                        System.out.println("Invalid command - it should be of the form deploy countryID num");
-                    }
-                    break;
+                        } catch (ArrayIndexOutOfBoundsException e) {
+                            System.out.println("Invalid command - it should be of the form deploy countryID num | pass");
+                        } catch (Exception e) {
+                            System.out.println("Invalid command - it should be of the form deploy countryID num | pass");
+                        }
+                        break;
+
 
                 case "pass":
                     try {
                         d_GamePhase = Phase.TURNEND;
                     }catch (Exception e) {
-                        System.out.println("Invalid command - it should be of the form deploy countryID num");
+                        System.out.println("Invalid command - it should be of the form deploy countryID num | pass");
                     }
                     break;
 
@@ -471,12 +496,24 @@ public class GameEngine {
                 default:
                     System.out.println("Invalid command - either use deploy or showmap commands in Deployment phase.");
                     break;
+
+            }
+
+        }
+            else{
+                System.out.println("Can't provide orders");
+                //no armies left to deploy, so execute orders
+                d_GamePhase = Phase.EXECUTE_ORDERS;
             }
         }
 
 
         else if (d_GamePhase.equals(Phase.EXECUTE_ORDERS)) {
-           //p_player.next_order();
+            System.out.println("Execute Phase Started");
+            //Order toRemove = p_player.next_order();
+            //can be directly removed by using Q.remove() in the next_order return part
+
+            d_GamePhase = Phase.ISSUE_ORDERS;
         }
             return d_GamePhase;
     }

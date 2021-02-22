@@ -51,7 +51,6 @@ public class PlayRisk {
                 //Assign to each player the correct number of reinforcement armies according to the Warzone rules.
                 AssignReinforcement.assignReinforcementArmies(l_p);
                 System.out.println("It's "+ l_p.getPlayerName() + "'s turn");
-
                 //listen orders from players - deploy - pass
                 while(l_gamePhase!=Phase.TURNEND) {
                     l_cmd = sc.nextLine();
@@ -59,7 +58,7 @@ public class PlayRisk {
                 }
                 l_traversalCounter++;
             }
-            l_gamePhase = Phase.EXECUTE_ORDERS;
+            l_gamePhase = Phase.ISSUE_ORDERS;
             cmd.setGamePhase(l_gamePhase);
             l_traversalCounter = 0;
         }
