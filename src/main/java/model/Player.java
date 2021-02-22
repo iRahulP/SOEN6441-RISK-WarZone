@@ -114,12 +114,26 @@ public class Player {
     }
 
     /**
-     *This function sets the created Object to Players Object
+     * This function sets the created Object to Players Object
+     *
      * @param p_order created Order
      */
     public void addOrder(Order p_order) {
         d_Order = p_order;
     }
 
+    /**
+     * This function takes the first Order in the List and calls execute() on it.
+     *
+     * @return first Order in the List.
+     */
+    public Order next_order() {
+        //TODO need to be completed.
+        Order l_firstOrder = d_orderList.peek();
+        if( l_firstOrder != null) {
+            l_firstOrder.execute(l_firstOrder);
+        }
+        return l_firstOrder;
+    }
 
 }
