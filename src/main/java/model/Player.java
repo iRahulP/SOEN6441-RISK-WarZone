@@ -110,7 +110,9 @@ public class Player {
      * It has no parameters.
      */
     public void issue_order() {
-        d_orderList.add(d_Order);
+        d_orderList.add(this.d_Order);
+
+        System.out.println(d_orderList.peek().getD_numArmies());
     }
 
     /**
@@ -119,7 +121,7 @@ public class Player {
      * @param p_order created Order
      */
     public void addOrder(Order p_order) {
-        d_Order = p_order;
+        this.d_Order = p_order;
     }
 
     /**
