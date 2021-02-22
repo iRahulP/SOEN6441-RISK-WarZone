@@ -43,11 +43,7 @@ public class PlayRisk {
             l_gamePhase = cmd.parseCommand(null, l_cmd);
         }
 
-        Iterator<Player> itr = cmd.d_Players.listIterator();
-        while(itr.hasNext()) {
-            Player p = itr.next();
-            AssignReinforcement.assignReinforcementArmies(p);
-        }
+        l_game.assignEachPlayerReinforcements(cmd);
 
         //Loops through list of Players
         int l_numberOfPlayers = cmd.d_Players.size();
@@ -73,6 +69,17 @@ public class PlayRisk {
 
     }
 
+    /**
+     * assigns default reinforcements to each player based on Countries owned.
+     * @param p_cmd GameEngine ref from main
+     */
+    private void assignEachPlayerReinforcements(GameEngine p_cmd){
+        Iterator<Player> itr = p_cmd.d_Players.listIterator();
+        while(itr.hasNext()) {
+            Player p = itr.next();
+            AssignReinforcement.assignReinforcementArmies(p);
+        }
+    }
     /**
      * Shows names of existing map files from sample Resources.
      *
