@@ -71,9 +71,9 @@ public class PlayRisk {
 
     /**
      * assigns default reinforcements to each player based on Countries owned.
-     * @param p_cmd GameEngine ref from main
+     * @param p_cmd GameEngine ref from main to get track of players
      */
-    private void assignEachPlayerReinforcements(GameEngine p_cmd){
+    public void assignEachPlayerReinforcements(GameEngine p_cmd){
         Iterator<Player> itr = p_cmd.d_Players.listIterator();
         while(itr.hasNext()) {
             Player p = itr.next();

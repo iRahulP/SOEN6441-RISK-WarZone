@@ -1,8 +1,14 @@
 package model;
 
+
+import java.util.*;
+
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.PriorityQueue;
+import java.util.LinkedList;
+import java.util.List;
+
 
 /**
  * This class creates a Player and assigns attributes to the player.
@@ -18,7 +24,7 @@ public class Player {
     private int d_reinforcementArmies;
     private String d_countryId;
     private Order d_Order;
-    private PriorityQueue<Order> d_orderList;
+    private Queue<Order> d_orderList;
 
     /**
      * This constructor assigns name to the player.
@@ -30,7 +36,7 @@ public class Player {
         d_ownedContinents = new HashMap<>();
         d_ownedCountries = new HashMap<>();
         this.d_ownedArmies = 0;
-        d_orderList = new PriorityQueue<>();
+        d_orderList = new ArrayDeque<>();
     }
 
     /**
@@ -110,9 +116,24 @@ public class Player {
      * It has no parameters.
      */
     public void issue_order() {
-        d_orderList.add(this.d_Order);
+//        this.d_orderList.add(this.d_Order);
 
-        System.out.println(d_orderList.peek().getD_numArmies());
+        System.out.println(d_orderList);
+        System.out.println("AAAA");
+        this.d_orderList.add(this.d_Order);
+        for (Order x : d_orderList){
+            System.out.println(x.getD_player().getPlayerName());
+        }
+
+
+        System.out.println("BBBB");
+        System.out.println(d_orderList);
+
+    }
+
+
+    public Queue<Order> getD_orderList() {
+        return d_orderList;
     }
 
     /**
@@ -121,7 +142,14 @@ public class Player {
      * @param p_order created Order
      */
     public void addOrder(Order p_order) {
+      //  this.d_Order = p_order;
+        System.out.println(p_order);
+        System.out.println("HEHE");
         this.d_Order = p_order;
+        System.out.println("BVJ");
+
+        System.out.println(d_orderList);
+
     }
 
     /**
@@ -130,12 +158,7 @@ public class Player {
      * @return first Order in the List.
      */
     public Order next_order() {
-        //TODO need to be completed.
-        Order l_firstOrder = d_orderList.peek();
-        if( l_firstOrder != null) {
-            l_firstOrder.execute(l_firstOrder);
-        }
-        return l_firstOrder;
+        return d_orderList.poll();
     }
 
 }

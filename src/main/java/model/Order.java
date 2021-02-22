@@ -9,6 +9,7 @@ public class Order {
     private String d_countryId;
     public AssignReinforcement d_Arc;
     private Player d_player;
+  
     /**
      * This constructor will initialize the order object with deploy details.
      * @param p_player current player issuing deploy order
@@ -25,17 +26,13 @@ public class Order {
      * method which enacts the order
      * @return true if successful, else false
      */
-    public boolean execute(Order p_order){
-
-        d_player = p_order.getD_player();
-        d_countryId = p_order.getD_countryId();
-        d_numArmies = p_order.getD_numArmies();
-
-
+    public boolean execute(){
         CountryDetails c= d_player.getOwnedCountries().get(d_countryId.toLowerCase());
         int existingArmies = c.getNumberOfArmies();
         existingArmies += d_numArmies;
         c.setNumberOfArmies(existingArmies);
+        
+        
 
         return true;
     }
