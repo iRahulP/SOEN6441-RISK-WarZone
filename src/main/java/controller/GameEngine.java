@@ -1,6 +1,7 @@
 package controller;
 
 import model.*;
+import view.PlayRisk;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -19,6 +20,7 @@ public class GameEngine {
     public AssignReinforcement d_Arfc;
     public Phase d_GamePhase;
     public ArrayList<Player> d_Players;
+    public PlayRisk d_Play;
 
     public GameEngine() {
         d_Map = new GameMap();
@@ -27,8 +29,8 @@ public class GameEngine {
         d_Arfc = new AssignReinforcement();
         d_Players = new ArrayList<Player>();
         d_GamePhase = Phase.NULL;
+        d_Play = new PlayRisk();
     }
-
     /**
      * Ensures map name is valid.
      * @param p_sample input string
@@ -459,8 +461,10 @@ public class GameEngine {
                                     System.out.println("Player "+p_player.getPlayerName()+" Can provide deploy order or pass order");
                                     if(checkOwnedCountry && checkArmies){
                                         Order temp = new Order(p_player, d_CountryId, d_NumberOfArmies);
-                                        //p_player.addOrder(temp);
-                                        //p_player.issue_order();
+                                        System.out.println("addOrder");
+                                        p_player.addOrder(temp);
+                                        System.out.println("issue");
+                                        p_player.issue_order();
                                         p_player.setOwnedArmies(p_player.getOwnedArmies()-d_NumberOfArmies);
                                         System.out.println("Order issued for player: " + p_player.getPlayerName());
                                         System.out.println("Player "+p_player.getPlayerName()+" has "+p_player.getOwnedArmies()+" Armies currently!");
@@ -514,10 +518,9 @@ public class GameEngine {
                 case "execute":
                     //Order toRemove = p_player.next_order();
                     //can be directly removed by using Q.remove() in the next_order return part
-                    //
-                    //PlayRisk d_pl = new PlayRisk();
-                    //d_pl.setTraversalCounter(0);
+
                     System.out.println("Orders executed!");
+                    //d_Play.assignEachPlayerReinforcements(ge);
                     d_GamePhase = Phase.ISSUE_ORDERS;
                     break;
 
