@@ -1,6 +1,8 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.PriorityQueue;
 
 /**
  * This class creates a Player and assigns attributes to the player.
@@ -13,6 +15,10 @@ public class Player {
     private HashMap<String, Continent> d_ownedContinents;
     private HashMap<String, CountryDetails> d_ownedCountries;
     private int d_ownedArmies;
+    private int d_reinforcementArmies;
+    private String d_countryId;
+    private Order d_Order;
+    private PriorityQueue<Order> d_orderList;
 
     /**
      * This constructor assigns name to the player.
@@ -21,9 +27,10 @@ public class Player {
      */
     public Player(String p_playerName) {
         d_playerName = p_playerName;
-        d_ownedContinents = new HashMap<String, Continent>();
-        d_ownedCountries = new HashMap<String, CountryDetails>();
+        d_ownedContinents = new HashMap<>();
+        d_ownedCountries = new HashMap<>();
         this.d_ownedArmies = 0;
+        d_orderList = new PriorityQueue<>();
     }
 
     /**
@@ -94,7 +101,25 @@ public class Player {
      *
      * @param d_ownedArmies number of armies owned by players
      */
-    public void setOwnedArmies(int d_ownedArmies) { this.d_ownedArmies = d_ownedArmies;}
+    public void setOwnedArmies(int d_ownedArmies) {
+        this.d_ownedArmies = d_ownedArmies;
+    }
 
-    //TO-DO exec_order and issue_order
+    /**
+     * This function adds Order object to the list of Orders.
+     * It has no parameters.
+     */
+    public void issue_order() {
+        d_orderList.add(d_Order);
+    }
+
+    /**
+     *This function sets the created Object to Players Object
+     * @param p_order created Order
+     */
+    public void addOrder(Order p_order) {
+        d_Order = p_order;
+    }
+
+
 }
