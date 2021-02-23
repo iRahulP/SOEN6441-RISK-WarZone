@@ -519,17 +519,26 @@ public class GameEngine {
             System.out.println("Execute Phase Started");
             switch (d_CommandName) {
                 case "execute":
+                    int count = 0;
                     for (Player p : d_Players) {
                         Queue<Order> temp = p.getD_orderList();
-                        System.out.println(p.getPlayerName());
-                        System.out.println(temp.size());
-
-                        while (!temp.isEmpty()) {
-                            System.out.println("We are inside!");
-                            Order toRemove = p.next_order();
-                            System.out.println("Order : "+toRemove);
-                            toRemove.execute();
+                            count = count +temp.size();
                         }
+
+                    System.out.println("Total Orders  :"+count);
+                    while(count!=0) {
+                        for (Player p : d_Players) {
+
+                            Queue<Order> temp = p.getD_orderList();
+                            System.out.println(temp);
+                            System.out.println(temp.size());
+                            if(temp.size()>0) {
+                                Order toRemove = p.next_order();
+                                System.out.println("Order : " + toRemove);
+                                toRemove.execute();
+                            }
+                        }
+                        count--;
                     }
 
                     System.out.println("Orders executed!");
