@@ -54,6 +54,7 @@ public class RunGameEngine {
 		GameMap l_gameMap;
 		File l_file = new File(l_filePath);
 		if(l_file.exists()) {
+			System.out.println(p_mapName+" exist and you can edit it.");
 			LoadMap l_loadMap = new LoadMap();
 			l_gameMap = l_loadMap.readMap(l_filePath);
 			l_gameMap.setMapName(p_mapName);
@@ -176,10 +177,18 @@ public class RunGameEngine {
 		if(map.getCountries().containsKey(countryID.toLowerCase()) && map.getCountries().containsKey(neighborCountryID.toLowerCase())) {
 			CountryDetails c1 = map.getCountries().get(countryID.toLowerCase());
 			CountryDetails c2 = map.getCountries().get(neighborCountryID.toLowerCase());
-			if(!c1.getNeighbours().containsKey(c2.getCountryId().toLowerCase()))
+			if(!c1.getNeighbours().containsKey(c2.getCountryId().toLowerCase())) {
 				c1.getNeighbours().put(neighborCountryID.toLowerCase(), c2);
-			if(!c2.getNeighbours().containsKey(c1.getCountryId().toLowerCase()))
+				System.out.println(countryID+" added as neighbor to "+neighborCountryID);
+			}
+			else 
+				System.out.println("already neighbor");
+			if(!c2.getNeighbours().containsKey(c1.getCountryId().toLowerCase())) {
 				c2.getNeighbours().put(countryID.toLowerCase(), c1);
+				System.out.println(neighborCountryID+" added as neighbor to "+countryID);
+			}
+			else 
+				System.out.println("already neighbor");
 			return true;
 		}
 		else {
@@ -198,8 +207,16 @@ public class RunGameEngine {
 		if(map.getCountries().containsKey(countryID.toLowerCase()) && map.getCountries().containsKey(neighborCountryID.toLowerCase())) {
 			CountryDetails c1 = map.getCountries().get(countryID.toLowerCase());
 			CountryDetails c2 = map.getCountries().get(neighborCountryID.toLowerCase());
-			c1.getNeighbours().remove(neighborCountryID.toLowerCase());
-			c2.getNeighbours().remove(countryID.toLowerCase());
+			if(c1.getNeighbours().containsKey(c2.getCountryId().toLowerCase())) {
+				c1.getNeighbours().remove(neighborCountryID.toLowerCase());
+				System.out.println(countryID+" remove as neighbor to "+neighborCountryID);
+			}
+			if(c2.getNeighbours().containsKey(c1.getCountryId().toLowerCase())) {
+				c2.getNeighbours().remove(countryID.toLowerCase());
+				System.out.println(neighborCountryID+" remove as neighbor to "+countryID);
+			}
+			//c1.getNeighbours().remove(neighborCountryID.toLowerCase());
+			//c2.getNeighbours().remove(countryID.toLowerCase());
 			return true;
 		}
 		else {

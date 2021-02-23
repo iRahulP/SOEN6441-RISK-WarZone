@@ -248,7 +248,7 @@ public class GameEngine {
 
                                 boolean check = d_RunG.addNeighbor(d_Map, d_CountryId, d_NeighborCountryId);
                                 if (check) {
-                                    System.out.println("Neighbor added to the map");
+                                    //System.out.println("Neighbor added to the map");
                                     d_GamePhase = Phase.EDITMAP;
                                 } else {
                                     System.out.println("Country does not exist - Please enter valid countryID neighborcountryID");
@@ -263,7 +263,7 @@ public class GameEngine {
 
                                 boolean check = d_RunG.removeNeighbor(d_Map, d_CountryId, d_NeighborCountryId);
                                 if (check) {
-                                    System.out.println("Neighbor removed from the map");
+                                    //System.out.println("Neighbor removed from the map");
                                     d_GamePhase = Phase.EDITMAP;
                                 } else
                                     System.out.println("Country does not exist - Please enter valid countryID neighborcountryID");
