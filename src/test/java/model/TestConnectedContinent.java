@@ -32,13 +32,15 @@ public class TestConnectedContinent {
         d_Map = d_Rgame.editMap("world.map");
         boolean check = d_Mvr.continentConnectivityCheck(d_Map);
         assertTrue(check);
+
+        d_Map = d_Rgame.editMap("createdMap.map");
+        check = d_Mvr.continentConnectivityCheck(d_Map);
+        assertTrue(check);
     }
 
     @Test
     public void testNotConnectedContinent(){
-        d_Map = d_Rgame.editMap("createdMap.map");
-        boolean check = d_Mvr.continentConnectivityCheck(d_Map);
-        assertTrue(check);
+
     }
 
 
