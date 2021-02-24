@@ -8,6 +8,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
         TestAddOrder.class,
         TestAssigncountries.class,
+        TestAssignReinforcements.class,
         TestConnectedContinent.class,
         TestContinent.class,
         TestCountryDetails.class,
