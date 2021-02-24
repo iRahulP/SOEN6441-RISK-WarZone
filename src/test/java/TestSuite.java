@@ -14,7 +14,8 @@ import org.junit.runners.Suite;
         TestEditMap.class,
         TestNeighbor.class,
         TestRemoveOrder.class,
-        TestValidateMap.class
+        TestValidateMap.class,
+        TestConnectedMap.class
 })
 
 /**
