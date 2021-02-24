@@ -3,10 +3,11 @@ package controller;
 import model.*;
 import view.PlayRisk;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Queue;
+
+import static java.lang.System.exit;
 
 /**
  * Class responsible to interpret different commands as provided by User over Command Line Interface
@@ -15,7 +16,6 @@ import java.util.Queue;
  */
 public class GameEngine {
 
-    public static boolean l_allArmiesPlaced = false;
     public GameMap d_Map;
     public RunGameEngine d_RunG;
     public StartUp d_StartUp;
@@ -33,6 +33,7 @@ public class GameEngine {
         d_GamePhase = Phase.NULL;
         d_Play = new PlayRisk();
     }
+
     /**
      * Ensures map name is valid.
      * @param p_sample input string
@@ -434,7 +435,6 @@ public class GameEngine {
         //ISSUE_ORDERS : deploy - orders, showmap
         else if (d_GamePhase.equals(Phase.ISSUE_ORDERS)) {
             int counter = 0;
-            System.out.println("Total players in game :"+ d_Players.size());
             //traverses through all players to check if armies left in pool
             Iterator<Player> itr = d_Players.listIterator();
             while(itr.hasNext()) {
@@ -444,10 +444,9 @@ public class GameEngine {
                     counter = counter + p.getOwnedArmies();
                 }
             }
-            System.out.println("Total Armies with all Players: "+counter);
-            //case when atleast one player has armies left
+            System.out.println("Total Armies left with all Players in Pool: "+counter);
+            //case when atleast one player has any army/armies left
             if(counter > 0){
-                System.out.println("Can provide orders");
                 switch (d_CommandName) {
                     case "deploy":
                         try {
@@ -456,44 +455,36 @@ public class GameEngine {
                                     d_CountryId = d_Data[1];
                                     d_NumberOfArmies = Integer.parseInt(d_Data[2]);
                                     boolean checkOwnedCountry = p_player.getOwnedCountries().containsKey(d_CountryId.toLowerCase());
-                                    System.out.println(checkOwnedCountry);
-                                    //if >= then directly gets to execute if all armies deployed in a single order -limited to d_NumberOfArmies-1 armies
                                     boolean checkArmies = (p_player.getOwnedArmies() >= d_NumberOfArmies);
-                                    System.out.println(checkArmies);
                                     System.out.println("Player "+p_player.getPlayerName()+" Can provide deploy order or pass order");
                                     if(checkOwnedCountry && checkArmies){
                                         Order temp = new Order(p_player, d_CountryId, d_NumberOfArmies);
-                                        System.out.println("addOrder");
                                         p_player.addOrder(temp);
-                                        System.out.println("issue");
                                         p_player.issue_order();
-                                        System.out.println("after ISSUE");
                                         p_player.setOwnedArmies(p_player.getOwnedArmies()-d_NumberOfArmies);
-                                        System.out.println("Order issued for player: " + p_player.getPlayerName());
-                                        System.out.println("Player "+p_player.getPlayerName()+" has "+p_player.getOwnedArmies()+" Armies currently!");
+                                        System.out.println("Player "+p_player.getPlayerName()+" now has "+p_player.getOwnedArmies()+" Army units left!");
                                     }
                                     else{
-                                        System.out.println("Country not valid or insufficient Army units | please pass to next player");
+                                        System.out.println("Country not owned by player or insufficient Army units | please pass to next player");
                                     }
-                                    d_GamePhase = Phase.TURNEND;
+                                    d_GamePhase = Phase.TURN;
+                                    break;
                                 }
                             } else
                                 System.out.println("Invalid Command");
 
                         }catch (Exception e) {
-                            System.out.println("Country not valid or insufficient Army units | please pass to next player");
+                            System.out.println("Country not owned by player or insufficient Army units | please pass to next player");
                         }
                         break;
 
-
                 case "pass":
                     try {
-                        d_GamePhase = Phase.TURNEND;
+                        d_GamePhase = Phase.TURN;
                     }catch (Exception e) {
-                        System.out.println("Invalid command - it should be of the form deploy countryID num | pass");
+                        System.out.println("Invalid Command - it should be of the form -> deploy countryID num | pass");
                     }
                     break;
-
 
                 case "showmap":
                     d_StartUp.showMap(d_Players, d_Map);
@@ -502,21 +493,19 @@ public class GameEngine {
                 default:
                     System.out.println("Invalid command - either use deploy | pass | showmap commands in ISSUE_ORDERS Phase");
                     break;
-
             }
-
         }
             else{
-                System.out.println("Starting Execute Phase as no armies left with any player!");
                 //no armies left to deploy, so execute orders
+                System.out.println("press ENTER to continue to execute Phase..");
                 d_GamePhase = Phase.EXECUTE_ORDERS;
+                return d_GamePhase;
             }
         }
 
         //EXECUTE_ORDERS Phase
         //EXECUTE ORDERS : execute, showmap
         else if (d_GamePhase.equals(Phase.EXECUTE_ORDERS)) {
-            System.out.println("Execute Phase Started");
             switch (d_CommandName) {
                 case "execute":
                     int count = 0;
@@ -525,30 +514,40 @@ public class GameEngine {
                             count = count +temp.size();
                         }
 
-                    System.out.println("Total Orders  :"+count);
-                    while(count!=0) {
-                        for (Player p : d_Players) {
-
-                            Queue<Order> temp = p.getD_orderList();
-                            System.out.println(temp);
-                            System.out.println(temp.size());
-                            if(temp.size()>0) {
-                                Order toRemove = p.next_order();
-                                System.out.println("Order : " + toRemove);
-                                toRemove.execute();
-                            }
-                        }
-                        count--;
+                    if(count == 0){
+                        System.out.println("Orders already executed!");
+                        d_StartUp.showMap(d_Players, d_Map);
+                        d_GamePhase = Phase.ISSUE_ORDERS;
+                        return d_GamePhase;
                     }
+                    else{
+                        System.out.println("Total Orders  :" + count);
+                        while (count != 0) {
+                            for (Player p : d_Players) {
 
-                    System.out.println("Orders executed!");
-                    d_StartUp.showMap(d_Players, d_Map);
-                    d_GamePhase = Phase.ISSUE_ORDERS;
+                                Queue<Order> temp = p.getD_orderList();
+                                if (temp.size() > 0) {
+                                    Order toRemove = p.next_order();
+                                    System.out.println("Order: " +toRemove+ " executed for player: "+p.getPlayerName());
+                                    toRemove.execute();
+                                }
+                            }
+                            count--;
+                        }
+
+                        System.out.println("Orders executed!");
+                        d_StartUp.showMap(d_Players, d_Map);
+                        d_GamePhase = Phase.ISSUE_ORDERS;
+                    }
                     break;
 
                 case "showmap":
                     d_StartUp.showMap(d_Players, d_Map);
                     break;
+
+                case "exit":
+                    System.out.println("Build 1 ENDS HERE!");
+                    exit(0);
 
                 default:
                     System.out.println("Execute Order Phase has commenced, either use showmap | execute");

@@ -2,13 +2,19 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
+/**
+ * class performs execute orders functionality 
+ */
 public class Order {
+	
+	/**
+	 * @param d_CountryId is for country name
+	 * @param d_Player player issuing deploy order
+	 */
+    private int d_NumArmies;
+    private String d_CountryId;
+    private Player d_Player;
 
-    private int d_numArmies;
-    private String d_countryId;
-    public AssignReinforcement d_Arc;
-    private Player d_player;
   
     /**
      * This constructor will initialize the order object with deploy details.
@@ -17,9 +23,9 @@ public class Order {
      * @param p_numArmies total armies which will be deployed
      */
     public Order(Player p_player,String p_countryId,int p_numArmies) {
-        d_player = p_player;
-        d_countryId = p_countryId;
-        d_numArmies = p_numArmies;
+        d_Player = p_player;
+        d_CountryId = p_countryId;
+        d_NumArmies = p_numArmies;
     }
 
     /**
@@ -27,13 +33,10 @@ public class Order {
      * @return true if successful, else false
      */
     public boolean execute(){
-        CountryDetails c= d_player.getOwnedCountries().get(d_countryId.toLowerCase());
+        CountryDetails c= d_Player.getOwnedCountries().get(d_CountryId.toLowerCase());
         int existingArmies = c.getNumberOfArmies();
-        existingArmies += d_numArmies;
+        existingArmies += d_NumArmies;
         c.setNumberOfArmies(existingArmies);
-        
-        
-
         return true;
     }
 
@@ -42,7 +45,7 @@ public class Order {
      * @return d_player
      */
     public Player getD_player() {
-        return d_player;
+        return d_Player;
     }
 
     /**
@@ -50,7 +53,7 @@ public class Order {
      * @param d_player player
      */
     public void setD_player(Player d_player) {
-        this.d_player = d_player;
+        this.d_Player = d_player;
     }
 
     /**
@@ -58,7 +61,7 @@ public class Order {
      * @return d_countryId
      */
     public String getD_countryId() {
-        return d_countryId;
+        return d_CountryId;
     }
 
     /**
@@ -66,7 +69,7 @@ public class Order {
      * @param d_countryId country ID
      */
     public void setD_countryId(String d_countryId) {
-        this.d_countryId = d_countryId;
+        this.d_CountryId = d_countryId;
     }
 
     /**
@@ -74,7 +77,7 @@ public class Order {
      * @return d_numArmies
      */
     public int getD_numArmies() {
-        return d_numArmies;
+        return d_NumArmies;
     }
 
     /**
@@ -82,7 +85,7 @@ public class Order {
      * @param d_numArmies number of armies
      */
     public void setD_numArmies(int d_numArmies) {
-        this.d_numArmies = d_numArmies;
+        this.d_NumArmies = d_numArmies;
     }
 
 }

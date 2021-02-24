@@ -1,4 +1,4 @@
-    package model;
+package model;
 /**
  * It maintains the current phase of the game.
  * @author rahul
@@ -33,12 +33,6 @@ public enum Phase {
      */
     ASSIGN_REINFORCEMENTS,
 
-    /**
-     * Individual turn of player begins in round-robin fashion.
-     * Player assigns reinforced armies amongst owned countries.
-     * Phase ends when reinforcement armies are distributed amongst the owned countries.
-     */
-    DEPLOYMENT,
 
     /**
      * Individual turn of player begins in round-robin fashion.
@@ -57,7 +51,7 @@ public enum Phase {
      * Marks the end of the current player and signals to let the player get the turn.
      * Phase ends when next player starts their move.
      */
-    TURNEND,
+    TURN,
 
     /**
      * CLoses the Game.

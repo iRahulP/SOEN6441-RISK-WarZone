@@ -17,14 +17,14 @@ import java.util.List;
  */
 public class Player {
 
-    private String d_playerName;
-    private HashMap<String, Continent> d_ownedContinents;
-    private HashMap<String, CountryDetails> d_ownedCountries;
-    private int d_ownedArmies;
-    private int d_reinforcementArmies;
-    private String d_countryId;
+    private String d_PlayerName;
+    private HashMap<String, Continent> d_OwnedContinents;
+    private HashMap<String, CountryDetails> d_OwnedCountries;
+    private int d_OwnedArmies;
+    private int d_ReinforcementArmies;
+    private String d_CountryId;
     private Order d_Order;
-    private Queue<Order> d_orderList;
+    private Queue<Order> d_OrderList;
 
     /**
      * This constructor assigns name to the player.
@@ -32,11 +32,11 @@ public class Player {
      * @param p_playerName name of the player
      */
     public Player(String p_playerName) {
-        d_playerName = p_playerName;
-        d_ownedContinents = new HashMap<>();
-        d_ownedCountries = new HashMap<>();
-        this.d_ownedArmies = 0;
-        d_orderList = new ArrayDeque<>();
+        d_PlayerName = p_playerName;
+        d_OwnedContinents = new HashMap<>();
+        d_OwnedCountries = new HashMap<>();
+        this.d_OwnedArmies = 0;
+        d_OrderList = new ArrayDeque<>();
     }
 
     /**
@@ -45,7 +45,7 @@ public class Player {
      * @param p_playerName name of the player
      */
     public void setPlayerName(String p_playerName) {
-        d_playerName = p_playerName;
+        d_PlayerName = p_playerName;
     }
 
     /**
@@ -54,7 +54,7 @@ public class Player {
      * @return d_playerName name of the player
      */
     public String getPlayerName() {
-        return d_playerName;
+        return d_PlayerName;
     }
 
     /**
@@ -63,7 +63,7 @@ public class Player {
      * @param p_countries Countries owned by player
      */
     public void setOwnedCountries(HashMap<String, CountryDetails> p_countries) {
-        d_ownedCountries = p_countries;
+        d_OwnedCountries = p_countries;
     }
 
     /**
@@ -72,7 +72,7 @@ public class Player {
      * @return d_ownedCountries
      */
     public HashMap<String, CountryDetails> getOwnedCountries() {
-        return d_ownedCountries;
+        return d_OwnedCountries;
     }
 
     /**
@@ -81,7 +81,7 @@ public class Player {
      * @param p_continents Countries owned by player
      */
     public void setOwnedContinents(HashMap<String, Continent> p_continents) {
-        d_ownedContinents = p_continents;
+        d_OwnedContinents = p_continents;
     }
 
     /**
@@ -90,7 +90,7 @@ public class Player {
      * @return d_ownedContinents
      */
     public HashMap<String, Continent> getOwnedContinents() {
-        return d_ownedContinents;
+        return d_OwnedContinents;
     }
 
     /**
@@ -99,7 +99,7 @@ public class Player {
      * @return d_ownedArmies
      */
     public int getOwnedArmies() {
-        return d_ownedArmies;
+        return d_OwnedArmies;
     }
 
     /**
@@ -108,7 +108,7 @@ public class Player {
      * @param d_ownedArmies number of armies owned by players
      */
     public void setOwnedArmies(int d_ownedArmies) {
-        this.d_ownedArmies = d_ownedArmies;
+        this.d_OwnedArmies = d_ownedArmies;
     }
 
     /**
@@ -116,24 +116,18 @@ public class Player {
      * It has no parameters.
      */
     public void issue_order() {
-//        this.d_orderList.add(this.d_Order);
-
-        System.out.println(d_orderList);
-        System.out.println("AAAA");
-        this.d_orderList.add(this.d_Order);
-        for (Order x : d_orderList){
+        this.d_OrderList.add(this.d_Order);
+        for (Order x : d_OrderList){
             System.out.println(x.getD_player().getPlayerName());
         }
-
-
-        System.out.println("BBBB");
-        System.out.println(d_orderList);
-
     }
 
-
+    /**
+     * getter for order queue
+     * @return d_OrderList
+     */
     public Queue<Order> getD_orderList() {
-        return d_orderList;
+        return d_OrderList;
     }
 
     /**
@@ -142,14 +136,7 @@ public class Player {
      * @param p_order created Order
      */
     public void addOrder(Order p_order) {
-      //  this.d_Order = p_order;
-        System.out.println(p_order);
-        System.out.println("HEHE");
         this.d_Order = p_order;
-        System.out.println("BVJ");
-
-        System.out.println(d_orderList);
-
     }
 
     /**
@@ -158,7 +145,7 @@ public class Player {
      * @return first Order in the List.
      */
     public Order next_order() {
-        return d_orderList.poll();
+        return d_OrderList.poll();
     }
 
 }

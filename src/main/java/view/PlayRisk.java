@@ -17,7 +17,7 @@ import java.util.Scanner;
  * Responsible for only interacting with the user and calling appropriate methods for further
  * actions.
  *
- * @author rahul
+ * @author Rahul
  *
  */
 public class PlayRisk {
@@ -33,33 +33,34 @@ public class PlayRisk {
         //initial command reader from cli
         Scanner sc = new Scanner(System.in);
         String l_cmd = sc.nextLine();
-        //initial Phase set to NULL
         Phase l_gamePhase = Phase.NULL;
         GameEngine cmd = new GameEngine();
         l_gamePhase = cmd.parseCommand(null, l_cmd);
+
         //looping for commands until initial Phases where Player iteration not required!
         while(l_gamePhase!= Phase.ISSUE_ORDERS) {
             l_cmd = sc.nextLine();
             l_gamePhase = cmd.parseCommand(null, l_cmd);
         }
 
+        //Assign to each player the correct number of reinforcement armies according to the Warzone rules.
         l_game.assignEachPlayerReinforcements(cmd);
 
-        //Loops through list of Players
+        //Loops through all Players in Round Robin fashion collecting orders.
         int l_numberOfPlayers = cmd.d_Players.size();
         int l_traversalCounter = 0;
         while(true) {
             while(l_traversalCounter<l_numberOfPlayers) {
                 Player l_p = cmd.d_Players.get(l_traversalCounter);
-                //Assign to each player the correct number of reinforcement armies according to the Warzone rules.
                 System.out.println("It's "+ l_p.getPlayerName() + "'s turn");
-                //listen orders from players - deploy - pass
+                //listen orders from players - deploy | pass
                 l_gamePhase = Phase.ISSUE_ORDERS;
                 cmd.setGamePhase(l_gamePhase);
-                while(l_gamePhase!=Phase.TURNEND) {
+                while(l_gamePhase!=Phase.TURN) {
                     l_cmd = sc.nextLine();
                     l_gamePhase = cmd.parseCommand(l_p, l_cmd);
                 }
+                //gets to next Player
                 l_traversalCounter++;
             }
             l_gamePhase = Phase.ISSUE_ORDERS;
@@ -80,6 +81,7 @@ public class PlayRisk {
             AssignReinforcement.assignReinforcementArmies(p);
         }
     }
+
     /**
      * Shows names of existing map files from sample Resources.
      *
