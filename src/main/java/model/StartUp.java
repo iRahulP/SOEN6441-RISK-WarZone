@@ -47,19 +47,19 @@ public class StartUp {
 
 	/**
 	 * Responsible for distributing countries amongst players.
-	 * @param map Game map 
-	 * @param players List of players in the game
+	 * @param p_map Game map
+	 * @param p_players List of players in the game
 	 * @return true if successful, else false
 	 */
-	public boolean assignCountries(GameMap map, ArrayList<Player> players) {
-		int l_numberOfPlayers = players.size();
-		if(players.size()<2) {
+	public boolean assignCountries(GameMap p_map, ArrayList<Player> p_players) {
+		int l_numberOfPlayers = p_players.size();
+		if(p_players.size()<2) {
 			System.out.println("Minimum two players are required to play the game.");
 			return false;
 		}
 		int l_counter = 0;
-		for(CountryDetails c : map.getCountries().values()) {
-			Player l_p = players.get(l_counter);
+		for(CountryDetails c : p_map.getCountries().values()) {
+			Player l_p = p_players.get(l_counter);
 			l_p.getOwnedCountries().put(c.getCountryId().toLowerCase(), c);
 			if(l_counter>=l_numberOfPlayers-1)
 				l_counter = 0;
