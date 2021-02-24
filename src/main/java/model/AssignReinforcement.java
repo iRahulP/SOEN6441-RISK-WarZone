@@ -30,34 +30,3 @@ public class AssignReinforcement {
     }
 }
 
-//    /**
-//     * deploy function allows Player to Place Armies by reducing the number of armies in the
-//     * player’s reinforcement pool
-//     * @param p_player tracks current Player
-//     * @param p_countryId armies deployed here
-//     * @param p_numArmies unit of armies to be deployed
-//     * @return true if successfully deployed, else false
-//     */
-//    public boolean deploy(Player p_player, String p_countryId, int p_numArmies){
-//        if(p_player.getOwnedCountries().containsKey(p_countryId.toLowerCase()))
-//        {
-//            if(p_player.getOwnedArmies() >= p_numArmies)
-//            {
-//                CountryDetails c= p_player.getOwnedCountries().get(p_countryId.toLowerCase());
-//                int existingArmies = c.getNumberOfArmies();
-//                existingArmies += p_numArmies;
-//                c.setNumberOfArmies(existingArmies);
-//                p_player.setOwnedArmies(p_player.getOwnedArmies()-p_numArmies);
-//                return true;
-//            }
-//            else{
-//                System.out.println("You don't have enough armies");
-//                return false;
-//            }
-//        }
-//        else{
-//            System.out.println("You don't own this country");
-//            return false;
-//        }
-//    }
-//}
