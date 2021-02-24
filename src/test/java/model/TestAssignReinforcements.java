@@ -23,6 +23,7 @@ public class TestAssignReinforcements {
     StartUp d_Stup;
     Phase d_GamePhase;
     GameEngine d_Ge;
+    RunGameEngine d_Rge;
     AssignReinforcement d_Arfc;
 
     /**
@@ -33,10 +34,11 @@ public class TestAssignReinforcements {
         d_Player1 = new Player("Yash");
         d_Player2 = new Player("Rahul");
         d_Map = new GameMap("dummy.map");
+        d_Rge = new RunGameEngine();
         d_Players = new ArrayList<Player>();
         d_Players.add(d_Player1);
         d_Players.add(d_Player2);
-        d_GamePhase = Phase.STARTUP;
+        d_GamePhase = Phase.ISSUE_ORDERS;
 
     }
 
@@ -48,13 +50,15 @@ public class TestAssignReinforcements {
     public void testAssignReinforcements() {
         d_Stup = new StartUp();
         d_Ge = new GameEngine();
+        d_Map = d_Rge.loadMap("dummy.map");
         boolean check = d_Stup.assignCountries(d_Map, d_Players);
+        System.out.println(d_Player1.getOwnedCountries());
         if(check){
             AssignReinforcement.assignReinforcementArmies(d_Player1);
         }
 
         assertNotEquals(d_Player1.getOwnedArmies(),d_Player2.getOwnedArmies());
-        assertEquals(3,d_Player1.getOwnedArmies());
+        assertEquals(7,d_Player1.getOwnedArmies());
         assertEquals(0,d_Player2.getOwnedArmies());
     }
 

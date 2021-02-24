@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import controller.GameEngine;
 import org.junit.Before;
 import org.junit.Test;
 /**
@@ -18,6 +19,10 @@ public class TestAssigncountries {
     GameMap d_Map;
     ArrayList<Player> d_Players;
     StartUp d_Stup;
+    RunGameEngine d_Rge;
+    Phase d_GamePhase;
+    GameEngine d_Ge;
+    AssignReinforcement d_Arfc;
 
     /**
      * Set up the map and add players 
@@ -28,9 +33,11 @@ public class TestAssigncountries {
         d_Player1 = new Player("yash");
         d_Player2 = new Player("rahul");
         d_Map = new GameMap("dummy.map");
+        d_Rge = new RunGameEngine();
         d_Players = new ArrayList<Player>();
         d_Players.add(d_Player1);
         d_Players.add(d_Player2);
+        d_GamePhase = Phase.ISSUE_ORDERS;
     }
 
     /**
@@ -38,9 +45,12 @@ public class TestAssigncountries {
      */
     @Test
     public void testPopulateCountries() {
-    	d_Stup = new StartUp();
+        d_Stup = new StartUp();
+        d_Ge = new GameEngine();
+        d_Map = d_Rge.loadMap("dummy.map");
         boolean check = d_Stup.assignCountries(d_Map, d_Players);
         assertEquals(true,check);
+        assertEquals(d_Player1.getOwnedCountries().size(),d_Player2.getOwnedCountries().size());
     }
 
 }
