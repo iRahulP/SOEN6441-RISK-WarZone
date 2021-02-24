@@ -25,7 +25,7 @@ public class TestConnectedContinent {
     }
 
     /**
-     * Test if tests are rightly identified or not
+     * Test cases when Continent subgraphs are connected.
      */
     @Test
     public void testConnectedContinent() {
@@ -36,6 +36,16 @@ public class TestConnectedContinent {
         d_Map = d_Rgame.editMap("createdMap.map");
         check = d_Mvr.continentConnectivityCheck(d_Map);
         assertTrue(check);
+    }
+
+    /**
+     * Tests case where a continent subgraph is not connected
+     */
+    @Test
+    public void testunConnectedContinent() {
+        d_Map = d_Rgame.editMap("unconnectedContinent.map");
+        boolean check = d_Mvr.continentConnectivityCheck(d_Map);
+        assertFalse(check);
     }
 
 
