@@ -2,13 +2,19 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
+/**
+ * class performs execute orders functionality 
+ */
 public class Order {
-
+	
+	/**
+	 * @param d_CountryId is for country name
+	 * @param d_Player player issuing deploy order
+	 */
     private int d_NumArmies;
     private String d_CountryId;
-    public AssignReinforcement d_Arc;
     private Player d_Player;
+
   
     /**
      * This constructor will initialize the order object with deploy details.

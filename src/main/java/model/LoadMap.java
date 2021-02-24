@@ -7,17 +7,24 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 
-
+/**
+ * 
+ * Class handles the functionality of loading the map.
+ *
+ */
 public class LoadMap {
+	/**
+	 *  Tracks the index value of continents, new or existing, to later facilitate writing them to
+	 * map files following domaination's conventions.
+	 */
     public static int d_InMapIndex = 1;
-
-
     private GameMap d_Map;
     private HashMap<Integer, CountryDetails> d_ListOfCountries;
-
+    
     /**
      * The main method asking for name of the map file want to run.
-     * Calls readMap function to read file.  
+     * Calls readMap function to read file.
+     * @param args argument for main
      */
     public static void main(String[] args) {
         Scanner l_in = new Scanner(System.in);
@@ -45,12 +52,11 @@ public class LoadMap {
     }
 
     /**
-	 * Reads the ".map" file and creates a GameMap object accordingly.
+     * Reads the ".map" file and creates a GameMap object accordingly.
 	 * Performs basic validation checks too.
-	 * @param mapName Name of the map file to be read
-	 * @return GameMap object representing the map just read
-	 * @throws FileNotFoundException, IOException
-	 */
+     * @param p_mapName Name of the map file to be read
+     * @return d_map GameMap object representing the map just read
+     */
     public GameMap readMap(String p_mapName) {
         d_Map = new GameMap(p_mapName);
         d_ListOfCountries = new HashMap<Integer, CountryDetails>();
@@ -77,13 +83,13 @@ public class LoadMap {
         return d_Map;
     }
     
+    
     /**
-	 * Reads the countries from the ".map" files.
+     * Reads the countries from the ".map" files.
 	 * Exits the program if duplicate country or in non-existent country.
-	 * @param reader Stream starting from countries section of ".map" file
-	 * @return BufferedReader stream at the point where it has finished reading countries
-	 * @throws IOException
-	 */
+     * @param p_reader Stream starting from countries section of ".map" file
+     * @return p_reader BufferedReader stream at the point where it has finished reading countries
+     */
     private BufferedReader readCountries(BufferedReader p_reader) {
         String l_s;
         try {
@@ -106,13 +112,13 @@ public class LoadMap {
         }
         return p_reader;
     }
+  
     /**
-	 * Reads the continents from the ".map" files.
+     *  Reads the continents from the ".map" files.
 	 * Exits the program if error of duplicate continents is found.
-	 * @param reader Stream starting from continents section of ".map" file
-	 * @return BufferedReader stream at the point where it has finished reading continents
-	 * @throws IOException
-	 */
+     * @param p_reader Stream starting from continents section of ".map" file
+     * @return  p_reader BufferedReader stream at the point where it has finished reading continents
+     */
     private BufferedReader readContinents(BufferedReader p_reader) {
         String l_s;
         try {
@@ -135,13 +141,13 @@ public class LoadMap {
 
     }
     
+    
     /**
-	 * Reads the borders from the ".map" files.
+     * Reads the borders from the ".map" files.
 	 * Exits the programming error if attempted to add invalid neighbor or to an invalid country.
-	 * @param reader Stream starting from borders section of ".map" file
-	 * @return BufferedReader stream at the end of file
-	 * @throws IOException
-	 */
+     * @param p_reader
+     * @return p_reader
+     */
     private BufferedReader readBorders(BufferedReader p_reader) {
         String l_s;
         try {
@@ -163,13 +169,14 @@ public class LoadMap {
         }
         return p_reader;
     }
+   
     
-	/**
-	 * Registers the country at argument 'stringIndex' with the argumentCountry.
-	 * Exits the programming throwing error if invalid neighbor is found.
-	 * @param p_argumentCountry Country to which neighbor is to be registered.
-	 * @param p_stringIndex Index of the country to be added as a neighbor to the argument country
-	 */
+    /**
+     * Registers the country at argument 'stringIndex' with the argumentCountry.
+	 * Exits the programming throwing error if invalid neighbor is found
+     * @param p_argumentCountry Country to which neighbor is to be registered.
+     * @param p_stringIndex Index of the country to be added as a neighbor to the argument country
+     */
     private void addNeighbour(CountryDetails p_argumentCountry, String p_stringIndex) {
         int l_borderIndex = Integer.parseInt(p_stringIndex);
         CountryDetails l_neighbourCountry = new CountryDetails();
@@ -184,11 +191,12 @@ public class LoadMap {
             p_argumentCountry.getNeighbours().put(l_neighbourCountry.getCountryId().toLowerCase(), l_neighbourCountry);
     }
 
+    
     /**
-	 * Registers this new country as part of its continent.
+     *  Registers this new country as part of its continent.
 	 * If duplicate country, exits the program throwing error.
-	 * @param newCountry Country to be registered with the corresponding continent
-	 */
+     * @param l_newCountry
+     */
     private void addToContinentMap(CountryDetails l_newCountry) {
 
         if (!MapValidator.doesCountryExist(d_Map, l_newCountry.getCountryId())) {
