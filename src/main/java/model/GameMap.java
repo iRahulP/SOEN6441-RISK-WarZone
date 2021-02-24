@@ -11,16 +11,16 @@ import java.util.HashMap;
 public class GameMap {
 	private String d_MapName;
 	private boolean d_Valid;
-	private HashMap<String,Continent> d_Countries; 
-	private HashMap<String,CountryDetails> d_Continents;
+	private HashMap<String,Continent> d_Continents;
+	private HashMap<String,CountryDetails> d_Countries;
 	
 	/**
 	 * Create GameMap object without naming the map.
 	 */
 	public GameMap() {
 		this.d_MapName= "";
-		this.d_Countries= new HashMap<String,Continent>();
-		this.d_Continents= new HashMap<String,CountryDetails>();
+		this.d_Continents= new HashMap<>();
+		this.d_Countries= new HashMap<>();
 		this.d_Valid= false;
 	}
 	
@@ -31,8 +31,8 @@ public class GameMap {
 	 */
 	public GameMap(String p_mapName){
 		this.d_MapName= p_mapName;
-		this.d_Countries= new HashMap<String,Continent>();
-		this.d_Continents= new HashMap<String,CountryDetails>();
+		this.d_Continents= new HashMap<>();
+		this.d_Countries= new HashMap<>();
 		this.d_Valid= false;
 	}
 	
@@ -73,7 +73,7 @@ public class GameMap {
 	 * @return return HashMap maintaining the list of continents in the map.
 	 */
 	public HashMap<String, Continent> getContinents() {
-		return this.d_Countries;
+		return this.d_Continents;
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class GameMap {
 	 * @param p_continents HashMap for d_Continents
 	 */
 	public void setContinents(HashMap<String, Continent> p_continents) {
-		this.d_Countries = p_continents;
+		this.d_Continents = p_continents;
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class GameMap {
 	 * @return return HashMap maintaining the list of countries in the map
 	 */
 	public HashMap<String, CountryDetails> getCountries() {
-		return this.d_Continents;
+		return this.d_Countries;
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class GameMap {
 	 * @param p_countries HashMap for d_Countries
 	 */
 	public void setCountries(HashMap<String, CountryDetails> p_countries) {
-		this.d_Continents = p_countries;
+		this.d_Countries = p_countries;
 	}
 	
 }
