@@ -4,101 +4,100 @@ import java.util.HashMap;
 
 /**
  * GameMap hold the details of map in the game.
- * 
  * Consist of HashMaps to access countries and continents of the map with their names.
  * @author Rucha
  *
  */
 public class GameMap {
-	private String d_mapName;
-	private boolean d_valid;
-	private HashMap<String,Continent> d_continents; 
-	private HashMap<String,CountryDetails> d_countries;
+	private String d_MapName;
+	private boolean d_Valid;
+	private HashMap<String,Continent> d_Countries; 
+	private HashMap<String,CountryDetails> d_Continents;
 	
 	/**
 	 * Create GameMap object without naming the map.
 	 */
 	public GameMap() {
-		this.d_mapName= "";
-		this.d_continents= new HashMap<String,Continent>();
-		this.d_countries= new HashMap<String,CountryDetails>();
-		this.d_valid= false;
+		this.d_MapName= "";
+		this.d_Countries= new HashMap<String,Continent>();
+		this.d_Continents= new HashMap<String,CountryDetails>();
+		this.d_Valid= false;
 	}
 	
 	/**
-	 * Register name of the map.
+	 * Create GameMap object with naming the map.
 	 * Initialize HashMaps for maintaining continents and countries.
-	 * @param p_mapName Name of map
+	 * @param p_mapName Name of the map
 	 */
 	public GameMap(String p_mapName){
-		this.d_mapName= p_mapName;
-		this.d_continents= new HashMap<String,Continent>();
-		this.d_countries= new HashMap<String,CountryDetails>();
-		this.d_valid= false;
+		this.d_MapName= p_mapName;
+		this.d_Countries= new HashMap<String,Continent>();
+		this.d_Continents= new HashMap<String,CountryDetails>();
+		this.d_Valid= false;
 	}
 	
 	/**
-	 * Return name of the map.
+	 * Getter method to return name of the map.
 	 * @return return name of the map
 	 */
 	public String getMapName() {
-		return this.d_mapName;
+		return this.d_MapName;
 	}
 
 	/**
-	 * Set name of the map to the given name.
+	 * Setter method to set name of the map to the given name.
 	 * @param p_mapName Name of the map
 	 */
 	public void setMapName(String p_mapName) {
-		this.d_mapName = p_mapName;
+		this.d_MapName = p_mapName;
 	}
 
 	/**
 	 * Getter method to fetch valid variable.
-	 * @return return whether the map is valid for game play or not
+	 * @return return whether the map is valid for playing game or not
 	 */
 	public boolean getValid() {
-		return this.d_valid;
+		return this.d_Valid;
 	}
 
 	/**
 	 * Setter method to set status for validity of the map.
-	 * @param p_valid Indicate whether the map is valid for game play or not
+	 * @param p_valid Indicate whether the map is valid for playing game or not
 	 */
 	public void setValid(boolean p_valid) {
-		this.d_valid = p_valid;
+		this.d_Valid = p_valid;
 	}
 
 	/**
-	 * Return HashMap maintaining the list of continents in the map.
+	 * Getter method to return HashMap maintaining the list of continents in the map.
 	 * @return return HashMap maintaining the list of continents in the map.
 	 */
 	public HashMap<String, Continent> getContinents() {
-		return this.d_continents;
+		return this.d_Countries;
 	}
 
 	/**
-	 * Sets the d_continents HashMap to the given HashMap parameter.
-	 * @param p_continents HashMap for d_continents
+	 * Setter method to set the d_Continents HashMap to the given HashMap parameter.
+	 * @param p_continents HashMap for d_Continents
 	 */
 	public void setContinents(HashMap<String, Continent> p_continents) {
-		this.d_continents = p_continents;
+		this.d_Countries = p_continents;
 	}
 
 	/**
-	 * Return HashMap maintaining the list of countries in the map.
+	 * Getter method to return HashMap maintaining the list of countries in the map.
 	 * @return return HashMap maintaining the list of countries in the map
 	 */
 	public HashMap<String, CountryDetails> getCountries() {
-		return this.d_countries;
+		return this.d_Continents;
 	}
 
 	/**
-	 * Sets the d_countries HashMap to the given HashMap parameter.
-	 * @param p_countries HashMap for d_countries
+	 * Setter method to set the d_Countries HashMap to the given HashMap parameter.
+	 * @param p_countries HashMap for d_Countries
 	 */
 	public void setCountries(HashMap<String, CountryDetails> p_countries) {
-		this.d_countries = p_countries;
+		this.d_Continents = p_countries;
 	}
 	
 }

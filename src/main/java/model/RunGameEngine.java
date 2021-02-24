@@ -9,18 +9,19 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 /**
- * Contain logic for executing GameEngine
+ * It contains logic for executing GameEngine
  * @author Rucha
- *
  */
 public class RunGameEngine {
 	
 	/**
-	 * 
-	 * @param p_mapName name of the map to be used for loading
-	 * @return the existing map to be used for game play
+	 * Load map for playing the game.
+	 * It checks whether map file exist or not.
+	 * @param p_mapName name of the map to be used for playing the game.
+	 * @return l_gameMap represents the existing map to be used for playing the game.
 	 */
 	public GameMap loadMap(String p_mapName) {
+		//check if file exists
 		String l_filePath = "src/main/resources/maps/" + p_mapName;
 		GameMap l_gameMap;
 		File l_file = new File(l_filePath);
@@ -33,23 +34,24 @@ public class RunGameEngine {
 				l_gameMap.setValid(true);
 			}
 			else {
-				System.out.println("Map not suitable for game play. Correct the map to continue with this map or load another map from the existing maps.");
+				System.out.println("Map is not suitable for playing . Correct the map to continue with this map or load another map from the existing maps.");
 				l_gameMap.setValid(false);
 			}
 		}else {
 			System.out.println("Map " + p_mapName + " does not exist. Try to load again or use 'editMap' to create a map.");
 			return null;
 		}
-		return l_gameMap;
-			
+		return l_gameMap;	
 	}
 	
 	/**
-	 * 
+	 * Load map for editing if it exist.
+	 * If the map file does not exist, creates a new GameMap object to add information.
 	 * @param p_mapName Name of the map to be searched/created
-	 * @return object representing the existing map or null value if new one is to be created
+	 * @return l_gameMap represents the existing map or null value if new one is to be created
 	 */
 	public GameMap editMap(String p_mapName) {
+		//check if file exists
 		String l_filePath = "src/main/resources/maps/" + p_mapName;
 		GameMap l_gameMap;
 		File l_file = new File(l_filePath);
@@ -68,13 +70,15 @@ public class RunGameEngine {
 	}
 
 	/**
-	 * 
-	 * @param p_map GameMap representing the map to which continent is to be added
+	 * Add continent with given name and control value if it is valid and does not exist.
+	 * Invalid if continent already exists.
+	 * @param p_map the map to which continent is to be added
 	 * @param p_continentID ID of the continent to be added
 	 * @param p_continentValue Continent value of the continent to be added
-	 * @return true if valid entry, else false indicating invalid command
+	 * @return true if successful, else false indicating invalid command
 	 */
 	public boolean addContinent(GameMap p_map, String p_continentID, int p_continentValue) {
+		//check if continent already exists
 		if(!(MapValidator.doesContinentExist(p_map,p_continentID))) {
 			if(p_continentValue<0)
 				return false;
@@ -84,29 +88,30 @@ public class RunGameEngine {
 		}
 		else {
 			return false;
-		}
-		
+		}	
 	}
 	
 	/**
-	 * 
-	 * @param p_map GameMap object representing the map being edited
+	 * Remove the continent and all the countries present in that continent.
+	 * Remove neighboring node for all the countries that are being removed.
+	 * @param p_map represent the map being edited
 	 * @param p_continentID ID of the continent to be removed
 	 * @return true if successful, else false indicating invalid command
 	 */
 	public boolean removeContinent(GameMap p_map, String p_continentID) {
+		//check if continent exists or not
 		if(p_map.getContinents().containsKey(p_continentID.toLowerCase())) {
 			Continent l_continent = p_map.getContinents().get(p_continentID.toLowerCase());
 			
 			//remove each country of the continent
 			ArrayList<CountryDetails> l_tempList = new ArrayList<CountryDetails>();
-			for(CountryDetails c : l_continent.getCountries().values()) {
-				l_tempList.add(c);
+			for(CountryDetails l_cd : l_continent.getCountries().values()) {
+				l_tempList.add(l_cd);
 			}
 			Iterator<CountryDetails> l_itr = l_tempList.listIterator();
 			while(l_itr.hasNext()) {
-				CountryDetails c = l_itr.next();
-				if(!removeCountry(p_map, c.getCountryId()))
+				CountryDetails l_c = l_itr.next();
+				if(!removeCountry(p_map, l_c.getCountryId()))
 					return false;
 			}
 			p_map.getContinents().remove(p_continentID.toLowerCase());
@@ -119,13 +124,15 @@ public class RunGameEngine {
 	}
 	
 	/**
-	 * 
-	 * @param p_map GameMap representing the map to which country is to be added
+	 * Add country with given name  to the corresponding given continent in the map if it is valid.
+	 * Invalid if country already exists.
+	 * @param p_map map to which country is to be added
 	 * @param p_countryID ID of the country which is to be added
-	 * @param p_continentID ID of the continent to which this new country belongs
-	 * @return true if valid entry, else false indicating invalid command
+	 * @param p_continentID ID of the continent to which new country is added.
+	 * @return true if successful, else false indicating invalid command
 	 */
 	public boolean addCountry(GameMap p_map, String p_countryID, String p_continentID) {
+		//check if country exists or not
 		if(!MapValidator.doesCountryExist(p_map, p_countryID)) {
 			if(!p_map.getContinents().containsKey(p_continentID.toLowerCase())) {
 				System.out.println(p_continentID + " does not exist.");
@@ -143,16 +150,18 @@ public class RunGameEngine {
 	}
 	
 	/**
-	 * 
-	 * @param p_map GameMap object representing the map being edited
-	 * @param p_countryID Name of the country to be removed
+	 * Remove the country and remove all its neighbors.
+	 * @param p_map represent the map being edited
+	 * @param p_countryID ID of the country to be removed
 	 * @return true if successful, else false indicating invalid command
 	 */
 	public boolean removeCountry(GameMap p_map, String p_countryID) {
+		//check if country exists or not
 		if(p_map.getCountries().containsKey(p_countryID.toLowerCase())) {
 			CountryDetails l_country = p_map.getCountries().get(p_countryID.toLowerCase());
 			ArrayList<CountryDetails> l_tempList = new ArrayList<CountryDetails>();
 			
+			//remove each neighbor this country
 			for(CountryDetails l_neighbor : l_country.getNeighbours().values()) {
 				l_tempList.add(l_neighbor);
 			}
@@ -172,67 +181,81 @@ public class RunGameEngine {
 		}
 	}
 	
-	public boolean addNeighbor(GameMap map, String countryID, String neighborCountryID) {
+	/**
+	 * Adds link between the two argument countries and made the neighbor.
+	 * @param p_map represent map being edited
+	 * @param p_countryID ID of one argument country
+	 * @param p_neighborCountryID ID of other argument country
+	 * @return true if successful, else false indicating invalid command
+	 */
+	public boolean addNeighbor(GameMap p_map, String p_countryID, String p_neighborCountryID) {
 		//Check if both the country exists
-		if(map.getCountries().containsKey(countryID.toLowerCase()) && map.getCountries().containsKey(neighborCountryID.toLowerCase())) {
-			CountryDetails c1 = map.getCountries().get(countryID.toLowerCase());
-			CountryDetails c2 = map.getCountries().get(neighborCountryID.toLowerCase());
-			if(!c1.getNeighbours().containsKey(c2.getCountryId().toLowerCase())) {
-				c1.getNeighbours().put(neighborCountryID.toLowerCase(), c2);
-				System.out.println(countryID+" added as neighbor to "+neighborCountryID);
+		if(p_map.getCountries().containsKey(p_countryID.toLowerCase()) && p_map.getCountries().containsKey(p_neighborCountryID.toLowerCase())) {
+			CountryDetails l_c1 = p_map.getCountries().get(p_countryID.toLowerCase());
+			CountryDetails l_c2 = p_map.getCountries().get(p_neighborCountryID.toLowerCase());
+			//check if both countries are neighbor to each other or not
+			if(!l_c1.getNeighbours().containsKey(l_c2.getCountryId().toLowerCase())) {
+				l_c1.getNeighbours().put(p_neighborCountryID.toLowerCase(), l_c2);
+				System.out.println(p_countryID+" added as neighbor to "+p_neighborCountryID);
 			}
 			else 
 				System.out.println("already neighbor");
-			if(!c2.getNeighbours().containsKey(c1.getCountryId().toLowerCase())) {
-				c2.getNeighbours().put(countryID.toLowerCase(), c1);
-				System.out.println(neighborCountryID+" added as neighbor to "+countryID);
+			if(!l_c2.getNeighbours().containsKey(l_c1.getCountryId().toLowerCase())) {
+				l_c2.getNeighbours().put(p_countryID.toLowerCase(), l_c1);
+				System.out.println(p_neighborCountryID+" added as neighbor to "+p_countryID);
 			}
 			else 
 				System.out.println("already neighbor");
 			return true;
 		}
 		else {
-			if(!map.getCountries().containsKey(countryID.toLowerCase()) && !map.getCountries().containsKey(neighborCountryID.toLowerCase()))
-				System.out.println(countryID + " and " + neighborCountryID + "  does not exist. Create country first and then set their neighbors.");
-			else if(!map.getCountries().containsKey(countryID.toLowerCase()))
-				System.out.println(countryID + " does not exist. Create country first and then set its neighbors.");
+			if(!p_map.getCountries().containsKey(p_countryID.toLowerCase()) && !p_map.getCountries().containsKey(p_neighborCountryID.toLowerCase()))
+				System.out.println(p_countryID + " and " + p_neighborCountryID + "  does not exist. Create country first and then set their neighbors.");
+			else if(!p_map.getCountries().containsKey(p_countryID.toLowerCase()))
+				System.out.println(p_countryID + " does not exist. Create country first and then set its neighbors.");
 			else
-				System.out.println(neighborCountryID + " does not exist. Create country first and then set its neighbors.");
-			return false;
-		}
-	}
-	
-	public boolean removeNeighbor(GameMap map, String countryID, String neighborCountryID) {
-		//Check if both the country exists
-		if(map.getCountries().containsKey(countryID.toLowerCase()) && map.getCountries().containsKey(neighborCountryID.toLowerCase())) {
-			CountryDetails c1 = map.getCountries().get(countryID.toLowerCase());
-			CountryDetails c2 = map.getCountries().get(neighborCountryID.toLowerCase());
-			if(c1.getNeighbours().containsKey(c2.getCountryId().toLowerCase())) {
-				c1.getNeighbours().remove(neighborCountryID.toLowerCase());
-				System.out.println(countryID+" remove as neighbor to "+neighborCountryID);
-			}
-			if(c2.getNeighbours().containsKey(c1.getCountryId().toLowerCase())) {
-				c2.getNeighbours().remove(countryID.toLowerCase());
-				System.out.println(neighborCountryID+" remove as neighbor to "+countryID);
-			}
-			//c1.getNeighbours().remove(neighborCountryID.toLowerCase());
-			//c2.getNeighbours().remove(countryID.toLowerCase());
-			return true;
-		}
-		else {
-			if(!map.getCountries().containsKey(countryID.toLowerCase()) && !map.getCountries().containsKey(neighborCountryID.toLowerCase()))
-				System.out.println(countryID + " and " + neighborCountryID + "  does not exist.");
-			else if(!map.getCountries().containsKey(countryID.toLowerCase()))
-				System.out.println(countryID + " does not exist.");
-			else
-				System.out.println(neighborCountryID + " does not exist.");
+				System.out.println(p_neighborCountryID + " does not exist. Create country first and then set its neighbors.");
 			return false;
 		}
 	}
 	
 	/**
-	 * 
-	 * @param p_map GameMap object representing the map to be shown.
+	 * Removes the link between the two neighboring Country
+	 * @param p_map represent map being edited
+	 * @param p_countryID ID of one argument country
+	 * @param p_neighborCountryID ID of other argument country
+	 * @return true if successful, else false indicating invalid command
+	 */
+	public boolean removeNeighbor(GameMap p_map, String p_countryID, String p_neighborCountryID) {
+		//Check if both the country exists
+		if(p_map.getCountries().containsKey(p_countryID.toLowerCase()) && p_map.getCountries().containsKey(p_neighborCountryID.toLowerCase())) {
+			CountryDetails l_c1 = p_map.getCountries().get(p_countryID.toLowerCase());
+			CountryDetails l_c2 = p_map.getCountries().get(p_neighborCountryID.toLowerCase());
+			//check if both countries are neighbor to each other
+			if(l_c1.getNeighbours().containsKey(l_c2.getCountryId().toLowerCase())) {
+				l_c1.getNeighbours().remove(p_neighborCountryID.toLowerCase());
+				System.out.println(p_countryID+" remove as neighbor to "+p_neighborCountryID);
+			}
+			if(l_c2.getNeighbours().containsKey(l_c1.getCountryId().toLowerCase())) {
+				l_c2.getNeighbours().remove(p_countryID.toLowerCase());
+				System.out.println(p_neighborCountryID+" remove as neighbor to "+p_countryID);
+			}
+			return true;
+		}
+		else {
+			if(!p_map.getCountries().containsKey(p_countryID.toLowerCase()) && !p_map.getCountries().containsKey(p_neighborCountryID.toLowerCase()))
+				System.out.println(p_countryID + " and " + p_neighborCountryID + "  does not exist.");
+			else if(!p_map.getCountries().containsKey(p_countryID.toLowerCase()))
+				System.out.println(p_countryID + " does not exist.");
+			else
+				System.out.println(p_neighborCountryID + " does not exist.");
+			return false;
+		}
+	}
+	
+	/**
+	 * print the continents, countries and each country's neighbor in the map
+	 * @param p_map the map to be shown.
 	 */
 	public void showMap(GameMap p_map) {
 		if(p_map==null)
@@ -246,30 +269,30 @@ public class RunGameEngine {
 			if(l_continent.getCountries().size()==0) {
 				System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentId(), "", "");
 			}
-			for(CountryDetails country : l_continent.getCountries().values()) {
-				if(country.getNeighbours().size()==0) {
+			for(CountryDetails l_country : l_continent.getCountries().values()) {
+				if(l_country.getNeighbours().size()==0) {
 					if(l_PrintContinentName && l_PrintCountryName) {
-						System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentId(), country.getCountryId(), "");
+						System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentId(), l_country.getCountryId(), "");
 						l_PrintContinentName = false;
 						l_PrintCountryName = false;
 					}
 					else if(l_PrintCountryName) {
-						System.out.printf("\n%25s%25s%25s\n", "", country.getCountryId(), "");
+						System.out.printf("\n%25s%25s%25s\n", "", l_country.getCountryId(), "");
 						l_PrintCountryName =  false;
 					}
 				}
-				for(CountryDetails neighbor : country.getNeighbours().values()) {
+				for(CountryDetails l_neighbor : l_country.getNeighbours().values()) {
 					if(l_PrintContinentName && l_PrintCountryName) {
-						System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentId(), country.getCountryId(), neighbor.getCountryId());
+						System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentId(), l_country.getCountryId(), l_neighbor.getCountryId());
 						l_PrintContinentName = false;
 						l_PrintCountryName = false;
 					}
 					else if(l_PrintCountryName) {
-						System.out.printf("\n%25s%25s%25s\n", "", country.getCountryId(), neighbor.getCountryId());
+						System.out.printf("\n%25s%25s%25s\n", "", l_country.getCountryId(), l_neighbor.getCountryId());
 						l_PrintCountryName = false;
 					}
 					else {
-						System.out.printf("%25s%25s%25s\n", "", "", neighbor.getCountryId());
+						System.out.printf("%25s%25s%25s\n", "", "", l_neighbor.getCountryId());
 					}
 				}
 				l_PrintCountryName = true;
@@ -279,66 +302,69 @@ public class RunGameEngine {
 		}
 	}
 	
+	/**
+	 * save GameMap as ".map" file using Domination game format.
+	 * @param p_map The map to be saved
+	 * @param p_fileName name of the file 
+	 * @return true if successful, else false indicating invalid command
+	 */
 	public boolean saveMap(GameMap p_map, String p_fileName) {
 		//Check if map is valid or not 
 		if(validateMap(p_map)) {
 			try {
-				BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/maps/"+p_fileName+ ".map"));
-				int l_continentIndex = 1;	//to track continent index in "map" file
-				int l_countryIndex = 1; //to track country index in "map" file
-				HashMap<Integer, String> indexToCountry = new HashMap<Integer, String>(); //to get in country name corresponding to in map index to be in compliance with Domination format
-				HashMap<String, Integer> countryToIndex = new HashMap<String, Integer>(); //to get in map index to be in compliance with Domination format
+				BufferedWriter l_writer = new BufferedWriter(new FileWriter("src/main/resources/maps/"+p_fileName+ ".map"));
+				int l_continentIndex = 1;	 //to track continent index in "map" file
+				int l_countryIndex = 1;		 //to track country index in "map" file
+				HashMap<Integer, String> l_indexToCountry = new HashMap<Integer, String>(); //get country name corresponding to map index to be in compliance with Domination format
+				HashMap<String, Integer> l_countryToIndex = new HashMap<String, Integer>(); //get map index to be in compliance with Domination format
 				
-				//write preliminary basic information
-				writer.write("name " + p_fileName + " Map");
-				writer.newLine();
-				writer.newLine();
-				writer.write("[files]");
-				writer.newLine();
-				writer.newLine();
-				//writer.newLine();
-				writer.flush();
+				//write basic information
+				l_writer.write("name " + p_fileName + " Map");
+				l_writer.newLine();
+				l_writer.newLine();
+				l_writer.write("[files]");
+				l_writer.newLine();
+				l_writer.newLine();
+				l_writer.flush();
 				
 				//write information about all the continents
-				writer.write("[continents]");
-				writer.newLine();
+				l_writer.write("[continents]");
+				l_writer.newLine();
 				for(Continent l_continent : p_map.getContinents().values()) {
-					writer.write(l_continent.getContinentId() + " " + Integer.toString(l_continent.getControlValue())+ " " + l_continent.getContinentColor());
-					writer.newLine();
-					writer.flush();
+					l_writer.write(l_continent.getContinentId() + " " + Integer.toString(l_continent.getControlValue())+ " " + l_continent.getContinentColor());
+					l_writer.newLine();
+					l_writer.flush();
 					l_continent.setInMapIndex(l_continentIndex);
 					l_continentIndex++;
 				}
-				writer.newLine();
+				l_writer.newLine();
 				
 				//write information about all the countries
-				writer.write("[countries]");
-				writer.newLine();
+				l_writer.write("[countries]");
+				l_writer.newLine();
 				for(CountryDetails l_country : p_map.getCountries().values()) {
-					writer.write(Integer.toString(l_countryIndex) + " " + l_country.getCountryId() + " " + Integer.toString(p_map.getContinents().get(l_country.getInContinent().toLowerCase()).getInMapIndex()) + " " + l_country.getxCoOrdinate() + " " + l_country.getyCoOrdinate());
-					writer.newLine();
-					writer.flush();
-					indexToCountry.put(l_countryIndex, l_country.getCountryId().toLowerCase());
-					countryToIndex.put(l_country.getCountryId().toLowerCase(), l_countryIndex);
+					l_writer.write(Integer.toString(l_countryIndex) + " " + l_country.getCountryId() + " " + Integer.toString(p_map.getContinents().get(l_country.getInContinent().toLowerCase()).getInMapIndex()) + " " + l_country.getxCoOrdinate() + " " + l_country.getyCoOrdinate());
+					l_writer.newLine();
+					l_writer.flush();
+					l_indexToCountry.put(l_countryIndex, l_country.getCountryId().toLowerCase());
+					l_countryToIndex.put(l_country.getCountryId().toLowerCase(), l_countryIndex);
 					l_countryIndex++;
 				}
-				writer.newLine();
-				//countryIndex = 1;
+				l_writer.newLine();
 				
 				//write information about all the borders
-				writer.write("[borders]");
-				writer.newLine();
-				//writer.newLine();
-				writer.flush();
+				l_writer.write("[borders]");
+				l_writer.newLine();
+				l_writer.flush();
 				for(int i=1;i<l_countryIndex;i++) {
-					String l_countryID = indexToCountry.get(i);
-					CountryDetails c = p_map.getCountries().get(l_countryID.toLowerCase());
-					writer.write(Integer.toString(i) + " ");
-					for(CountryDetails l_neighbor : c.getNeighbours().values()) {
-						writer.write(Integer.toString(countryToIndex.get(l_neighbor.getCountryId().toLowerCase())) + " ");
-						writer.flush();
+					String l_countryID = l_indexToCountry.get(i);
+					CountryDetails l_cd = p_map.getCountries().get(l_countryID.toLowerCase());
+					l_writer.write(Integer.toString(i) + " ");
+					for(CountryDetails l_neighbor : l_cd.getNeighbours().values()) {
+						l_writer.write(Integer.toString(l_countryToIndex.get(l_neighbor.getCountryId().toLowerCase())) + " ");
+						l_writer.flush();
 					}
-					writer.newLine();
+					l_writer.newLine();
 				}
 			}
 			catch(IOException e) {
@@ -354,6 +380,15 @@ public class RunGameEngine {
 		}
 	}
 	
+	/**
+	 * It consist of various validity checks to ensure that map is suitable for playing the game.
+	 * Checks:
+	 * 	1) any empty continent is present or not, i.e. continent without any country
+	 * 	2) map for the game is connected graph or not
+	 * 	3) each continent in map is a connected sub-graph or not
+	 * @param p_map GameMap to be be checked.
+	 * @return return true if map is valid, else false indicate invalid map
+	 */
 	public boolean validateMap(GameMap p_map) {
 		MapValidator l_mv = new MapValidator();
 		if(!l_mv.notEmptyContinent(p_map)) {
@@ -368,7 +403,6 @@ public class RunGameEngine {
 			System.out.println("Invalid map - one of the continent is not a connected sub-graph");
 			return false;
 		}
-		
 		return true;
 	}
 	
