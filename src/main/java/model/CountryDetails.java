@@ -1,6 +1,7 @@
 package model;
 
 import java.util.HashMap;
+
 /**
  * CountryDetails class have all the details of countries related to the selected .map file.
  * It also maintains a list of it's neighboring Countries.
@@ -10,13 +11,13 @@ import java.util.HashMap;
  */
 public class CountryDetails {
 
-	private int d_index;
-	private String d_countryId;
-	private String d_inContinent;
-	private HashMap<String, CountryDetails> d_neighbours;
-	private int d_xCoOrdinate;
-	private int d_yCoOrdinate;
-	private int d_numberOfArmies;
+	private int d_Index;
+	private String d_CountryId;
+	private String d_InContinent;
+	private HashMap<String, CountryDetails> d_Neighbours;
+	private int d_XCoOrdinate;
+	private int d_YCoOrdinate;
+	private int d_NumberOfArmies;
 
 	/**
 	 * Set CountryDetails object with default values.
@@ -29,10 +30,10 @@ public class CountryDetails {
 	 * @param p_inContinent Name of the continent in which this country belongs
 	 */
 	public CountryDetails(String p_countryId, String p_inContinent){
-		this.d_countryId = p_countryId;
-		this.d_inContinent = p_inContinent;
-		this.d_neighbours = new HashMap<String, CountryDetails>();
-		this.d_numberOfArmies = 0;
+		this.d_CountryId = p_countryId;
+		this.d_InContinent = p_inContinent;
+		this.d_Neighbours = new HashMap<String, CountryDetails>();
+		this.d_NumberOfArmies = 0;
 	}
 	
 	/**
@@ -46,18 +47,18 @@ public class CountryDetails {
 	 * @param p_map GameMap in which this country resides
 	 */
 	public CountryDetails(String p_index, String p_countryId, String p_continentIndex, String p_xCoOrdinate, String p_yCoOrdinate, GameMap p_map){
-		this.d_index = Integer.parseInt(p_index);
-		this.d_countryId = p_countryId;
+		this.d_Index = Integer.parseInt(p_index);
+		this.d_CountryId = p_countryId;
 		for(Continent c : p_map.getContinents().values()) {
 			if(c.getInMapIndex()==Integer.parseInt(p_continentIndex)) {
-				this.d_inContinent = c.getContinentId();
+				this.d_InContinent = c.getContinentId();
 				//break;
 			}	
 		}	
-		this.d_neighbours = new HashMap<String, CountryDetails>();
-		this.d_xCoOrdinate = Integer.parseInt(p_xCoOrdinate);
-		this.d_yCoOrdinate = Integer.parseInt(p_yCoOrdinate);
-		this.d_numberOfArmies = 0;
+		this.d_Neighbours = new HashMap<String, CountryDetails>();
+		this.d_XCoOrdinate = Integer.parseInt(p_xCoOrdinate);
+		this.d_YCoOrdinate = Integer.parseInt(p_yCoOrdinate);
+		this.d_NumberOfArmies = 0;
 	}
 
 	/**
@@ -65,7 +66,7 @@ public class CountryDetails {
 	 * @return returns d_index of this country in the ".map" file
 	 */
 	public int getIndex() {
-		return d_index;
+		return d_Index;
 	}
 	
 	/**
@@ -74,7 +75,7 @@ public class CountryDetails {
 	 */
 
 	public String getInContinent() {
-		return this.d_inContinent;
+		return this.d_InContinent;
 	}
 	
 	/**
@@ -82,7 +83,7 @@ public class CountryDetails {
 	 * @return returns d_countryName
 	 */
 	public String getCountryId() {
-		return d_countryId;
+		return d_CountryId;
 	}
 	
 	/**
@@ -91,7 +92,7 @@ public class CountryDetails {
 	 * @return returns d_neighbors of this country
 	 */
 	public HashMap<String, CountryDetails> getNeighbours(){
-		return this.d_neighbours;
+		return this.d_Neighbours;
 	}
 
 	/**
@@ -99,7 +100,7 @@ public class CountryDetails {
 	 * @return returns d_xCoOrdinate
 	 */
 	public int getxCoOrdinate() {
-		return this.d_xCoOrdinate;
+		return this.d_XCoOrdinate;
 	}
 	
 	/**
@@ -107,7 +108,7 @@ public class CountryDetails {
 	 * @param p_xCoOrdinate argument d_xCoOrdinate value to be set
 	 */
 	public void setxCoOrdinate(int p_xCoOrdinate) {
-		this.d_xCoOrdinate = p_xCoOrdinate;
+		this.d_XCoOrdinate = p_xCoOrdinate;
 	}
 	
 	/**
@@ -115,7 +116,7 @@ public class CountryDetails {
 	 * @return returns d_yCoOrdinate
 	 */
 	public int getyCoOrdinate() {
-		return this.d_yCoOrdinate;
+		return this.d_YCoOrdinate;
 	}
 
 	/**
@@ -123,16 +124,16 @@ public class CountryDetails {
 	 * @param p_yCoOrdinate argument d_yCoOrdinate value to be set
 	 */
 	public void setyCoOrdinate(int p_yCoOrdinate) {
-		this.d_yCoOrdinate = p_yCoOrdinate;
+		this.d_YCoOrdinate = p_yCoOrdinate;
 	}
 	
 	/**
 	 * Printing the details of country and the continent it belongs to
 	 */
 	public void printCountry(){
-		System.out.println("index: " + d_index);
-		System.out.println("countryName: " + d_countryId);
-		System.out.println("inContinent: " + d_inContinent);
+		System.out.println("index: " + d_Index);
+		System.out.println("countryName: " + d_CountryId);
+		System.out.println("inContinent: " + d_InContinent);
 	}
 	
 	/**
@@ -140,7 +141,7 @@ public class CountryDetails {
 	 * @return returns d_numberOfArmies
 	 */
 	public int getNumberOfArmies() {
-		return this.d_numberOfArmies;
+		return this.d_NumberOfArmies;
 	}
 
 	/**
@@ -148,13 +149,15 @@ public class CountryDetails {
 	 * @param p_numberOfArmies number of armies to be set in the country
 	 */
 	public void setNumberOfArmies(int p_numberOfArmies) {
-		this.d_numberOfArmies = p_numberOfArmies;
+		this.d_NumberOfArmies = p_numberOfArmies;
 	}
 
-	
+	/**
+	 * Overrides the String object with countryDetails
+	 */
 	@Override
 	public String toString() {
-		return "Country [countryName=" + d_countryId + ", xCoOrdinate=" + d_xCoOrdinate + ", yCoOrdinate=" + d_yCoOrdinate
+		return "Country [countryName=" + d_CountryId + ", xCoOrdinate=" + d_XCoOrdinate + ", yCoOrdinate=" + d_YCoOrdinate
 				+ "]";
 	}
 	
