@@ -12,13 +12,13 @@ import java.util.HashMap;
  */
 public class MapValidator {
 
-    private Graph<CountryDetails, DefaultEdge> d_mapGraph; //JGraphT type Graph representing the game map
+    private Graph<CountryDetails, DefaultEdge> d_MapGraph; //JGraphT type Graph representing the game map
 
     /**
      * This constructor instantiates the Directed Graph using JGraphT .
      */
     MapValidator() {
-        d_mapGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
+        d_MapGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
     }
 
     /**
@@ -31,23 +31,23 @@ public class MapValidator {
 
         //add CountryDetails to the Graph
         for (CountryDetails l_countryDetails : p_map.getCountries().values()) {
-            d_mapGraph.addVertex(l_countryDetails);
+            d_MapGraph.addVertex(l_countryDetails);
         }
 
         //add Edges between country and its neighbours
         for (CountryDetails l_countryDetails : p_map.getCountries().values()) {
             for (CountryDetails l_neighbor : l_countryDetails.getNeighbours().values()) {
-                d_mapGraph.addEdge(l_countryDetails, l_neighbor);
+                d_MapGraph.addEdge(l_countryDetails, l_neighbor);
             }
         }
-        return d_mapGraph;
+        return d_MapGraph;
     }
 
     /**
-     *
-     * @param p_subGraph
-     * @param p_countries
-     * @return
+     *This function creates a subgraph for a continent
+     * @param p_subGraph subgraph for a continent
+     * @param p_countries countries of a continent
+     * @return p_subGraph
      */
     public Graph<CountryDetails, DefaultEdge> createSubGraph(Graph<CountryDetails, DefaultEdge> p_subGraph, HashMap<String, CountryDetails> p_countries) {
 
@@ -65,6 +65,11 @@ public class MapValidator {
         return p_subGraph;
     }
 
+    /**
+     * This function checks if the graph is a connected graph.
+     * @param p_graph The graph whose connectivity is checked
+     * @return returns true is graph is connected
+     */
     public boolean isGraphConnected(Graph<CountryDetails, DefaultEdge> p_graph) {
         ConnectivityInspector<CountryDetails, DefaultEdge> l_cInspector = new ConnectivityInspector<>(p_graph);
         if (l_cInspector.isConnected())
