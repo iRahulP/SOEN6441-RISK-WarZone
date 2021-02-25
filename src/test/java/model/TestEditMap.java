@@ -7,16 +7,16 @@ import org.junit.Test;
 
 public class TestEditMap {
 	
-	RunGameEngine d_runGame;
-	GameMap d_map;
-	String d_mapName;
+	RunGameEngine d_RunGame;
+	GameMap d_Map;
+	String d_MapName;
 	
 	/**
      * Set up the context
      */
     @Before
     public void before(){
-        d_runGame = new RunGameEngine();
+        d_RunGame = new RunGameEngine();
     }
 
     /**
@@ -24,9 +24,9 @@ public class TestEditMap {
      */
     @Test
     public void testEditNewMap(){
-    	d_mapName= "practice.map";
-        d_map = d_runGame.editMap(d_mapName);
-        assertEquals(d_map.getMapName(), d_mapName);
+    	d_MapName= "practice.map";
+        d_Map = d_RunGame.editMap(d_MapName);
+        assertEquals(d_Map.getMapName(), d_MapName);
     }
     
     /**
@@ -34,9 +34,9 @@ public class TestEditMap {
      */
     @Test
     public void testEditExistingMap(){
-    	d_mapName= "dummy.map";
-        d_map = d_runGame.editMap(d_mapName);
-        assertEquals(d_map.getMapName(), d_mapName);
+    	d_MapName= "dummy.map";
+        d_Map = d_RunGame.editMap(d_MapName);
+        assertEquals(d_Map.getMapName(), d_MapName);
     }
     
 }
