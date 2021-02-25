@@ -105,7 +105,7 @@ public class Player {
     /**
      * Setter method to set the initial armies
      *
-     * @param d_ownedArmies number of armies owned by players
+     * @param p_ownedArmies number of armies owned by players
      */
     public void setOwnedArmies(int p_ownedArmies) {
         this.d_OwnedArmies = p_ownedArmies;
