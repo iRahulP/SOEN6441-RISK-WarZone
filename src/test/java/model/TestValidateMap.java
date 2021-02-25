@@ -27,7 +27,7 @@ public class TestValidateMap {
     @Test
     public void testValidateMap(){
         d_Map = d_Rgame.editMap("ameroki.map");
-        boolean check = d_Rgame.validateMap(d_Map);
-        assertTrue(check);
+        boolean l_check = d_Rgame.validateMap(d_Map);
+        assertTrue(l_check);
     }
 }
