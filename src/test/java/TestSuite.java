@@ -13,6 +13,7 @@ import org.junit.runners.Suite;
         TestContinent.class,
         TestCountryDetails.class,
         TestEditMap.class,
+        TestLoadMap.class,
         TestNeighbor.class,
         TestRemoveOrder.class,
         TestValidateMap.class,
