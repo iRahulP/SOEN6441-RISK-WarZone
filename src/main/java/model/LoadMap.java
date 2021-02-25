@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class LoadMap {
 	/**
 	 *  Tracks the index value of continents, new or existing, to later facilitate writing them to
-	 * map files following domaination's conventions.
+	 * map files following domination's conventions.
 	 */
     public static int d_InMapIndex = 1;
     private GameMap d_Map;
@@ -55,7 +55,7 @@ public class LoadMap {
      * Reads the ".map" file and creates a GameMap object accordingly.
 	 * Performs basic validation checks too.
      * @param p_mapName Name of the map file to be read
-     * @return d_map GameMap object representing the map just read
+     * @return d_Map GameMap object representing the map just read
      */
     public GameMap readMap(String p_mapName) {
         d_Map = new GameMap(p_mapName);
