@@ -107,8 +107,8 @@ public class Player {
      *
      * @param d_ownedArmies number of armies owned by players
      */
-    public void setOwnedArmies(int d_ownedArmies) {
-        this.d_OwnedArmies = d_ownedArmies;
+    public void setOwnedArmies(int p_ownedArmies) {
+        this.d_OwnedArmies = p_ownedArmies;
     }
 
     /**
@@ -117,8 +117,8 @@ public class Player {
      */
     public void issue_order() {
         this.d_OrderList.add(this.d_Order);
-        for (Order x : d_OrderList){
-            System.out.println(x.getD_player().getPlayerName());
+        for (Order l_x : d_OrderList){
+            System.out.println(l_x.getD_player().getPlayerName());
         }
     }
 

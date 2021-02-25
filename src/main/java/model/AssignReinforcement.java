@@ -14,8 +14,8 @@ public class AssignReinforcement {
         int l_totalReinforcementArmies;
         if(p_player.getOwnedCountries().size() >= 9){
             if(p_player.getOwnedContinents().size()> 0){
-                for(Continent c:p_player.getOwnedContinents().values()){
-                    l_totalControlValue += c.getControlValue();
+                for(Continent l_c:p_player.getOwnedContinents().values()){
+                    l_totalControlValue += l_c.getControlValue();
                 }
                 l_totalReinforcementArmies = (int)(p_player.getOwnedCountries().size()/3) + l_totalControlValue;
             }

@@ -87,27 +87,27 @@ public class GameEngine {
      * @return next game phase
      */
     public Phase parseCommand(Player p_player, String p_newCommand) {
-        int d_ControlValue = 0;
-        int d_NumberOfArmies = 0;
-        String d_MapName = null;
-        String d_ContinentId = null;
-        String d_CountryId = null;
-        String d_NeighborCountryId = null;
-        String d_PlayerName = null;
-        String[] d_Data = p_newCommand.split("\\s+");
-        String d_CommandName = d_Data[0];
+        int l_controlValue = 0;
+        int l_numberOfArmies = 0;
+        String l_mapName = null;
+        String l_continentId = null;
+        String l_countryId = null;
+        String l_neighborCountryId = null;
+        String l_playerName = null;
+        String[] l_data = p_newCommand.split("\\s+");
+        String l_commandName = l_data[0];
 
         //initial command line commands
         //NULL : editmap / loadmap
         if (d_GamePhase.equals(Phase.NULL)) {
-            switch (d_CommandName) {
+            switch (l_commandName) {
                 case "editmap":
                     try {
-                        if (d_Data[1] != "") {
-                            if (this.isMapNameValid(d_Data[1])) {
-                                d_MapName = d_Data[1];
-                                d_Map = d_RunG.editMap(d_MapName);
-                                System.out.println("Editing for Map: " + d_MapName);
+                        if (l_data[1] != "") {
+                            if (this.isMapNameValid(l_data[1])) {
+                                l_mapName = l_data[1];
+                                d_Map = d_RunG.editMap(l_mapName);
+                                System.out.println("Editing for Map: " + l_mapName);
                                 d_GamePhase = Phase.EDITMAP;
                             } else {
                                 System.out.println("Invalid Map Name");
@@ -120,10 +120,10 @@ public class GameEngine {
 
                 case "loadmap":
                     try {
-                        if (d_Data[1] != null) {
-                            if (this.isMapNameValid(d_Data[1])) {
-                                d_MapName = d_Data[1];
-                                d_Map = d_RunG.loadMap(d_MapName);
+                        if (l_data[1] != null) {
+                            if (this.isMapNameValid(l_data[1])) {
+                                l_mapName = l_data[1];
+                                d_Map = d_RunG.loadMap(l_mapName);
                                 if (d_Map != null) {
                                     if (!d_Map.getValid()) {
                                         System.out.println("Map is not valid");
@@ -151,35 +151,35 @@ public class GameEngine {
         //EDITMAP Phase
         //EDIT MAP : editcontinent, editcountry, editneighbour, savemap, showmap, editmap, loadmap, validatemap
         else if (d_GamePhase.equals(Phase.EDITMAP)) {
-            switch (d_CommandName) {
+            switch (l_commandName) {
                 case "editcontinent":
                     try {
-                        for (int i = 1; i < d_Data.length; i++) {
-                            if (d_Data[i].equals("-add")) {
-                                if (this.isAlphabetic(d_Data[i + 1])) {
-                                    d_ContinentId = d_Data[i + 1];
+                        for (int i = 1; i < l_data.length; i++) {
+                            if (l_data[i].equals("-add")) {
+                                if (this.isAlphabetic(l_data[i + 1])) {
+                                    l_continentId = l_data[i + 1];
                                 }
                                 else {
                                     System.out.println("Invalid Continent ID");
                                 }
-                                d_ControlValue = Integer.parseInt(d_Data[i + 2]);
+                                l_controlValue = Integer.parseInt(l_data[i + 2]);
 
-                                boolean check = d_RunG.addContinent(d_Map, d_ContinentId , d_ControlValue);
-                                if (check) {
-                                    System.out.println(d_ContinentId + " continent added to the map");
+                                boolean l_check = d_RunG.addContinent(d_Map, l_continentId , l_controlValue);
+                                if (l_check) {
+                                    System.out.println(l_continentId + " continent added to the map");
                                     d_GamePhase = Phase.EDITMAP;
                                 } else {
                                     System.out.println("Continent already exists - Please add valid Continent ID");
                                 }
-                            } else if (d_Data[i].equals("-remove")) {
-                                if (this.isAlphabetic(d_Data[i + 1])) {
-                                    d_ContinentId = d_Data[i + 1];
+                            } else if (l_data[i].equals("-remove")) {
+                                if (this.isAlphabetic(l_data[i + 1])) {
+                                    l_continentId = l_data[i + 1];
                                 }
                                 else
                                     System.out.println("Invalid Continent Id");
 
-                                boolean check = d_RunG.removeContinent(d_Map, d_ContinentId);
-                                if (check) {
+                                boolean l_check = d_RunG.removeContinent(d_Map, l_continentId);
+                                if (l_check) {
                                     System.out.println("Continent removed from Map");
                                     d_GamePhase = Phase.EDITMAP;
                                 } else
@@ -196,30 +196,30 @@ public class GameEngine {
 
                 case "editcountry":
                     try {
-                        for (int i = 1; i < d_Data.length; i++) {
-                            if (d_Data[i].equals("-add")) {
-                                if (this.isAlphabetic(d_Data[i + 1]) || this.isAlphabetic(d_Data[i + 2])) {
-                                    d_CountryId = d_Data[i + 1];
-                                    d_ContinentId = d_Data[i + 2];
+                        for (int i = 1; i < l_data.length; i++) {
+                            if (l_data[i].equals("-add")) {
+                                if (this.isAlphabetic(l_data[i + 1]) || this.isAlphabetic(l_data[i + 2])) {
+                                    l_countryId = l_data[i + 1];
+                                    l_continentId = l_data[i + 2];
                                 } else {
                                     System.out.println("Invalid country name");
                                 }
-                                boolean check = d_RunG.addCountry(d_Map, d_CountryId, d_ContinentId);
-                                if (check) {
+                                boolean l_check = d_RunG.addCountry(d_Map, l_countryId, l_continentId);
+                                if (l_check) {
                                     System.out.println("Country added to the map");
                                     d_GamePhase = Phase.EDITMAP;
                                 } else {
                                     System.out.println("Country already exists - Please add valid Country ID");
                                 }
-                            } else if (d_Data[i].equals("-remove")) {
-                                if (this.isAlphabetic(d_Data[i + 1])) {
-                                    d_CountryId = d_Data[i + 1];
+                            } else if (l_data[i].equals("-remove")) {
+                                if (this.isAlphabetic(l_data[i + 1])) {
+                                    l_countryId = l_data[i + 1];
                                 }
                                 else {
                                     System.out.println("Invalid country name");
                                 }
-                                boolean check = d_RunG.removeCountry(d_Map, d_CountryId);
-                                if (check) {
+                                boolean l_check = d_RunG.removeCountry(d_Map, l_countryId);
+                                if (l_check) {
                                     System.out.println("Country removed from the map");
                                     d_GamePhase = Phase.EDITMAP;
                                 } else {
@@ -238,33 +238,31 @@ public class GameEngine {
 
                 case "editneighbor":
                     try {
-                        for (int i = 1; i < d_Data.length; i++) {
-                            if (d_Data[i].equals("-add")) {
-                                if (this.isAlphabetic(d_Data[i + 1]) || this.isAlphabetic(d_Data[i + 2])) {
-                                    d_CountryId = d_Data[i + 1];
-                                    d_NeighborCountryId = d_Data[i + 2];
+                        for (int i = 1; i < l_data.length; i++) {
+                            if (l_data[i].equals("-add")) {
+                                if (this.isAlphabetic(l_data[i + 1]) || this.isAlphabetic(l_data[i + 2])) {
+                                    l_countryId = l_data[i + 1];
+                                    l_neighborCountryId = l_data[i + 2];
                                 } else {
                                     System.out.println("Invalid country ID");
                                 }
 
-                                boolean check = d_RunG.addNeighbor(d_Map, d_CountryId, d_NeighborCountryId);
-                                if (check) {
-                                    //System.out.println("Neighbor added to the map");
+                                boolean l_check = d_RunG.addNeighbor(d_Map, l_countryId, l_neighborCountryId);
+                                if (l_check) {
                                     d_GamePhase = Phase.EDITMAP;
                                 } else {
                                     System.out.println("Country does not exist - Please enter valid countryID neighborcountryID");
                                 }
-                            } else if (d_Data[i].equals("-remove")) {
-                                if (this.isAlphabetic(d_Data[i + 1]) || this.isAlphabetic(d_Data[i + 2])) {
-                                    d_CountryId = d_Data[i + 1];
-                                    d_NeighborCountryId = d_Data[i + 2];
+                            } else if (l_data[i].equals("-remove")) {
+                                if (this.isAlphabetic(l_data[i + 1]) || this.isAlphabetic(l_data[i + 2])) {
+                                    l_countryId = l_data[i + 1];
+                                    l_neighborCountryId = l_data[i + 2];
                                 } else {
                                     System.out.println("Invalid country ID");
                                 }
 
-                                boolean check = d_RunG.removeNeighbor(d_Map, d_CountryId, d_NeighborCountryId);
-                                if (check) {
-                                    //System.out.println("Neighbor removed from the map");
+                                boolean l_check = d_RunG.removeNeighbor(d_Map, l_countryId, l_neighborCountryId);
+                                if (l_check) {
                                     d_GamePhase = Phase.EDITMAP;
                                 } else
                                     System.out.println("Country does not exist - Please enter valid countryID neighborcountryID");
@@ -281,11 +279,11 @@ public class GameEngine {
 
                 case "savemap":
                     try {
-                        if (d_Data[1] != "") {
-                            if (this.isMapNameValid(d_Data[1])) {
-                                d_MapName = d_Data[1];
-                                boolean check = d_RunG.saveMap(d_Map, d_MapName);
-                                if (check) {
+                        if (l_data[1] != "") {
+                            if (this.isMapNameValid(l_data[1])) {
+                                l_mapName = l_data[1];
+                                boolean l_check = d_RunG.saveMap(d_Map, l_mapName);
+                                if (l_check) {
                                     System.out.println("Map file saved successfully");
                                     d_GamePhase = Phase.EDITMAP;
                                 } else
@@ -309,11 +307,11 @@ public class GameEngine {
 
                 case "editmap":
                     try {
-                        if (d_Data[1] != null) {
-                            if (this.isMapNameValid(d_Data[1])) {
-                                d_MapName = d_Data[1];
-                                d_Map = d_RunG.editMap(d_MapName);
-                                System.out.println("Start editing " + d_MapName);
+                        if (l_data[1] != null) {
+                            if (this.isMapNameValid(l_data[1])) {
+                                l_mapName = l_data[1];
+                                d_Map = d_RunG.editMap(l_mapName);
+                                System.out.println("Start editing " + l_mapName);
                                 d_GamePhase = Phase.EDITMAP;
                             } else
                                 System.out.println("Map name is invalid!");
@@ -329,10 +327,10 @@ public class GameEngine {
 
                 case "loadmap":
                     try {
-                        if (d_Data[1] != "") {
-                            if (this.isMapNameValid(d_Data[1])) {
-                                d_MapName = d_Data[1];
-                                d_Map = d_RunG.loadMap(d_MapName);
+                        if (l_data[1] != "") {
+                            if (this.isMapNameValid(l_data[1])) {
+                                l_mapName = l_data[1];
+                                d_Map = d_RunG.loadMap(l_mapName);
                                 if (d_Map != null) {
                                     if (!d_Map.getValid()) {
                                         System.out.println("Invalid Map");
@@ -373,15 +371,15 @@ public class GameEngine {
         //STARTUP Phase
         //STARTUP : gameplayer, assigncountries, showmap
         else if (d_GamePhase.equals(Phase.STARTUP)) {
-            switch (d_CommandName) {
+            switch (l_commandName) {
                 case "gameplayer":
                     try {
-                        for (int i = 1; i < d_Data.length; i++) {
-                            if (d_Data[i].equals("-add")) {
-                                if (this.isPlayerNameValid(d_Data[i + 1])) {
-                                    d_PlayerName = d_Data[i + 1];
-                                    boolean check = d_StartUp.addPlayer(d_Players, d_PlayerName);
-                                    if (check) {
+                        for (int i = 1; i < l_data.length; i++) {
+                            if (l_data[i].equals("-add")) {
+                                if (this.isPlayerNameValid(l_data[i + 1])) {
+                                    l_playerName = l_data[i + 1];
+                                    boolean l_check = d_StartUp.addPlayer(d_Players, l_playerName);
+                                    if (l_check) {
                                         System.out.println("Player added!");
                                     } else {
                                         System.out.println("Can not add any more player. Max pool of 6 Satisfied!");
@@ -390,11 +388,11 @@ public class GameEngine {
                                 } else {
                                     System.out.println("Invalid Player Name");
                                 }
-                            } else if (d_Data[i].equals("-remove")) {
-                                if (this.isPlayerNameValid(d_Data[i + 1])) {
-                                    d_PlayerName = d_Data[i + 1];
-                                    boolean check = d_StartUp.removePlayer(d_Players, d_PlayerName);
-                                    if (check)
+                            } else if (l_data[i].equals("-remove")) {
+                                if (this.isPlayerNameValid(l_data[i + 1])) {
+                                    l_playerName = l_data[i + 1];
+                                    boolean l_check = d_StartUp.removePlayer(d_Players, l_playerName);
+                                    if (l_check)
                                         System.out.println("Player removed!");
                                     else
                                         System.out.println("Player doesn't exist");
@@ -413,8 +411,8 @@ public class GameEngine {
                     break;
 
                 case "assigncountries":
-                    boolean check = d_StartUp.assignCountries(d_Map, d_Players);
-                    if (check) {
+                    boolean l_check = d_StartUp.assignCountries(d_Map, d_Players);
+                    if (l_check) {
                         System.out.println("Countries allocated randomly amongst Players");
                         d_GamePhase = Phase.ISSUE_ORDERS;
                     }
@@ -434,34 +432,34 @@ public class GameEngine {
         //ISSUE_ORDERS Phase
         //ISSUE_ORDERS : deploy - orders, showmap
         else if (d_GamePhase.equals(Phase.ISSUE_ORDERS)) {
-            int counter = 0;
+            int l_counter = 0;
             //traverses through all players to check if armies left in pool
-            Iterator<Player> itr = d_Players.listIterator();
-            while(itr.hasNext()) {
-                Player p = itr.next();
-                System.out.println("Player "+p.getPlayerName()+" has "+p.getOwnedArmies()+" Armies currently!");
-                if (p.getOwnedArmies() > 0) {
-                    counter = counter + p.getOwnedArmies();
+            Iterator<Player> l_itr = d_Players.listIterator();
+            while(l_itr.hasNext()) {
+                Player l_p = l_itr.next();
+                System.out.println("Player "+l_p.getPlayerName()+" has "+l_p.getOwnedArmies()+" Armies currently!");
+                if (l_p.getOwnedArmies() > 0) {
+                    l_counter = l_counter + l_p.getOwnedArmies();
                 }
             }
-            System.out.println("Total Armies left with all Players in Pool: "+counter);
+            System.out.println("Total Armies left with all Players in Pool: "+l_counter);
             //case when atleast one player has any army/armies left
-            if(counter > 0){
-                switch (d_CommandName) {
+            if(l_counter > 0){
+                switch (l_commandName) {
                     case "deploy":
                         try {
-                            if (!(d_Data[1] == null) || !(d_Data[2] == null)) {
-                                if (this.isNumeric(d_Data[1]) || this.isNumeric(d_Data[2])) {
-                                    d_CountryId = d_Data[1];
-                                    d_NumberOfArmies = Integer.parseInt(d_Data[2]);
-                                    boolean checkOwnedCountry = p_player.getOwnedCountries().containsKey(d_CountryId.toLowerCase());
-                                    boolean checkArmies = (p_player.getOwnedArmies() >= d_NumberOfArmies);
+                            if (!(l_data[1] == null) || !(l_data[2] == null)) {
+                                if (this.isNumeric(l_data[1]) || this.isNumeric(l_data[2])) {
+                                    l_countryId = l_data[1];
+                                    l_numberOfArmies = Integer.parseInt(l_data[2]);
+                                    boolean l_checkOwnedCountry = p_player.getOwnedCountries().containsKey(l_countryId.toLowerCase());
+                                    boolean l_checkArmies = (p_player.getOwnedArmies() >= l_numberOfArmies);
                                     System.out.println("Player "+p_player.getPlayerName()+" Can provide deploy order or pass order");
-                                    if(checkOwnedCountry && checkArmies){
-                                        Order temp = new Order(p_player, d_CountryId, d_NumberOfArmies);
-                                        p_player.addOrder(temp);
+                                    if(l_checkOwnedCountry && l_checkArmies){
+                                        Order l_temp = new Order(p_player, l_countryId, l_numberOfArmies);
+                                        p_player.addOrder(l_temp);
                                         p_player.issue_order();
-                                        p_player.setOwnedArmies(p_player.getOwnedArmies()-d_NumberOfArmies);
+                                        p_player.setOwnedArmies(p_player.getOwnedArmies()-l_numberOfArmies);
                                         System.out.println("Player "+p_player.getPlayerName()+" now has "+p_player.getOwnedArmies()+" Army units left!");
                                     }
                                     else{
@@ -506,33 +504,33 @@ public class GameEngine {
         //EXECUTE_ORDERS Phase
         //EXECUTE ORDERS : execute, showmap
         else if (d_GamePhase.equals(Phase.EXECUTE_ORDERS)) {
-            switch (d_CommandName) {
+            switch (l_commandName) {
                 case "execute":
-                    int count = 0;
-                    for (Player p : d_Players) {
-                        Queue<Order> temp = p.getD_orderList();
-                            count = count +temp.size();
+                    int l_count = 0;
+                    for (Player l_p : d_Players) {
+                        Queue<Order> l_temp = l_p.getD_orderList();
+                            l_count = l_count +l_temp.size();
                         }
 
-                    if(count == 0){
+                    if(l_count == 0){
                         System.out.println("Orders already executed!");
                         d_StartUp.showMap(d_Players, d_Map);
                         d_GamePhase = Phase.ISSUE_ORDERS;
                         return d_GamePhase;
                     }
                     else{
-                        System.out.println("Total Orders  :" + count);
-                        while (count != 0) {
-                            for (Player p : d_Players) {
+                        System.out.println("Total Orders  :" + l_count);
+                        while (l_count != 0) {
+                            for (Player l_p : d_Players) {
 
-                                Queue<Order> temp = p.getD_orderList();
-                                if (temp.size() > 0) {
-                                    Order toRemove = p.next_order();
-                                    System.out.println("Order: " +toRemove+ " executed for player: "+p.getPlayerName());
-                                    toRemove.execute();
+                                Queue<Order> l_temp = l_p.getD_orderList();
+                                if (l_temp.size() > 0) {
+                                    Order l_toRemove = l_p.next_order();
+                                    System.out.println("Order: " +l_toRemove+ " executed for player: "+l_p.getPlayerName());
+                                    l_toRemove.execute();
                                 }
                             }
-                            count--;
+                            l_count--;
                         }
 
                         System.out.println("Orders executed!");

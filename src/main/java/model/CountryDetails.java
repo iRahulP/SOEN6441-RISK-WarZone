@@ -73,7 +73,6 @@ public class CountryDetails {
 	 * Returns the name of the Continent in which this country belongs
 	 * @return returns d_inContinent in which this country belongs
 	 */
-
 	public String getInContinent() {
 		return this.d_InContinent;
 	}

@@ -33,10 +33,10 @@ public class Order {
      * @return true if successful, else false
      */
     public boolean execute(){
-        CountryDetails c= d_Player.getOwnedCountries().get(d_CountryId.toLowerCase());
-        int existingArmies = c.getNumberOfArmies();
-        existingArmies += d_NumArmies;
-        c.setNumberOfArmies(existingArmies);
+        CountryDetails l_c= d_Player.getOwnedCountries().get(d_CountryId.toLowerCase());
+        int l_existingArmies = l_c.getNumberOfArmies();
+        l_existingArmies += d_NumArmies;
+        l_c.setNumberOfArmies(l_existingArmies);
         return true;
     }
 
