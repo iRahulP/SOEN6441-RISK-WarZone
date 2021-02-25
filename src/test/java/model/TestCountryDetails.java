@@ -35,8 +35,8 @@ public class TestCountryDetails {
     	d_Map = d_RunGE.editMap("ameroki.map");
     	System.out.println(d_Map.getMapName());
         System.out.println(d_Map.getCountries().size());   	
-        boolean check_add = d_RunGE.addCountry(d_Map, d_CountryId, d_ContinentId);
-        assertEquals(true,check_add);
+        boolean l_check = d_RunGE.addCountry(d_Map, d_CountryId, d_ContinentId);
+        assertEquals(true,l_check);
     }
    
 
@@ -49,13 +49,13 @@ public class TestCountryDetails {
     	//worrick is part of map
     	d_Map = d_RunGE.editMap("ameroki.map");
     	d_CountryId = "worrick";
-        boolean check_remove = d_RunGE.removeCountry(d_Map, d_CountryId);
-        assertEquals(true,check_remove);
+        boolean l_check = d_RunGE.removeCountry(d_Map, d_CountryId);
+        assertEquals(true,l_check);
         
         //Brazil is not part of map
         d_CountryId="Brazil";
-        check_remove = d_RunGE.removeCountry(d_Map, d_CountryId);
-        assertEquals(false,check_remove);
+        l_check = d_RunGE.removeCountry(d_Map, d_CountryId);
+        assertEquals(false,l_check);
     }
     
    
