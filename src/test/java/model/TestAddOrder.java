@@ -13,20 +13,20 @@ import static org.junit.Assert.assertEquals;
  * Tests if addition of orders works
  */
 public class TestAddOrder {
-    Order d_order;
-    Queue<Order> d_orderList;
-    Player d_player;
-    String d_playerName;
+    Order d_Order;
+    Queue<Order> d_OrderList;
+    Player d_Player;
+    String d_PlayerName;
 
     /**
      * Set up the context
      */
     @Before
     public void before(){
-        d_playerName = "Rahul";
-        d_player = new Player(d_playerName);
-        d_order = new Order(d_player,"Canada",4);
-        d_orderList = new ArrayDeque<>();
+        d_PlayerName = "Rahul";
+        d_Player = new Player(d_PlayerName);
+        d_Order = new Order(d_Player,"Canada",4);
+        d_OrderList = new ArrayDeque<>();
     }
 
     /**
@@ -35,8 +35,8 @@ public class TestAddOrder {
     @Test
     public void testAddOrder(){
         //adds an order
-        d_orderList.add(d_order);
-        assertEquals(d_orderList.peek(), d_order);
+        d_OrderList.add(d_Order);
+        assertEquals(d_OrderList.peek(), d_Order);
     }
 
 }
