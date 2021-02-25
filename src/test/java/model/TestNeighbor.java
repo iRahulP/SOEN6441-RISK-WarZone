@@ -12,21 +12,21 @@ import org.junit.Test;
  */
 public class TestNeighbor {
 
-	RunGameEngine d_runGame;
-    GameMap d_map;
-    String d_countryName;
-    String d_neighborCountryName;
+	RunGameEngine d_RunGame;
+    GameMap d_Map;
+    String d_CountryName;
+    String d_NeighborCountryName;
    
     /**
      * Set up the context
      */
     @Before
     public void before(){
-        d_map = new GameMap("dummy.map");
-        d_runGame = new RunGameEngine();
-        d_countryName = "japan";
-        d_neighborCountryName = "india";//pero
-        d_map = d_runGame.editMap("dummy.map");
+        d_Map = new GameMap("dummy.map");
+        d_RunGame = new RunGameEngine();
+        d_CountryName = "japan";
+        d_NeighborCountryName = "india";//pero
+        d_Map = d_RunGame.editMap("dummy.map");
         
     }
     
@@ -41,9 +41,9 @@ public class TestNeighbor {
     @Test
     public void removeNeighbor() {
     	System.out.println("Inside removeNeighbor");
-        System.out.println(d_map.getMapName());
-        boolean check = d_runGame.removeNeighbor(d_map, d_countryName, d_neighborCountryName);
-        assertEquals(true,check);
+        System.out.println(d_Map.getMapName());
+        boolean l_check = d_RunGame.removeNeighbor(d_Map, d_CountryName, d_NeighborCountryName);
+        assertEquals(true,l_check);
     }
     
     /**
@@ -52,8 +52,8 @@ public class TestNeighbor {
     @Test
     public void addNeighbor() {
     	System.out.println("Inside addNeighbor");
-        System.out.println(d_map.getMapName());
-        boolean check = d_runGame.addNeighbor(d_map, d_countryName, d_neighborCountryName);
-        assertEquals(true,check);
+        System.out.println(d_Map.getMapName());
+        boolean l_check = d_RunGame.addNeighbor(d_Map, d_CountryName, d_NeighborCountryName);
+        assertEquals(true,l_check);
     }
 }
