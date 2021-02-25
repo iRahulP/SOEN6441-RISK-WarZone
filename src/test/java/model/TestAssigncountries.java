@@ -34,7 +34,7 @@ public class TestAssigncountries {
         d_Player2 = new Player("rahul");
         d_Map = new GameMap("dummy.map");
         d_Rge = new RunGameEngine();
-        d_Players = new ArrayList<Player>();
+        d_Players = new ArrayList<>();
         d_Players.add(d_Player1);
         d_Players.add(d_Player2);
         d_GamePhase = Phase.ISSUE_ORDERS;
@@ -48,8 +48,8 @@ public class TestAssigncountries {
         d_Stup = new StartUp();
         d_Ge = new GameEngine();
         d_Map = d_Rge.loadMap("dummy.map");
-        boolean check = d_Stup.assignCountries(d_Map, d_Players);
-        assertEquals(true,check);
+        boolean l_check = d_Stup.assignCountries(d_Map, d_Players);
+        assertEquals(true,l_check);
         assertEquals(d_Player1.getOwnedCountries().size(),d_Player2.getOwnedCountries().size());
     }
 
