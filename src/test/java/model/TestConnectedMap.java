@@ -31,7 +31,7 @@ public class TestConnectedMap {
     @Test
     public void testConnectedMap(){
     	d_Map = d_RunGE.editMap("world.map");
-        boolean check = d_MapValidator.isGraphConnected(d_MapValidator.createGraph(d_Map));
-        assertEquals(true,check);
+        boolean l_check = d_MapValidator.isGraphConnected(d_MapValidator.createGraph(d_Map));
+        assertEquals(true,l_check);
     }
 }
