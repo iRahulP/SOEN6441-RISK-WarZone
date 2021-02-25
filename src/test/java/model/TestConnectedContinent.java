@@ -30,12 +30,13 @@ public class TestConnectedContinent {
     @Test
     public void testConnectedContinent() {
         d_Map = d_Rgame.editMap("world.map");
-        boolean check = d_Mvr.continentConnectivityCheck(d_Map);
-        assertTrue(check);
+        boolean l_check = d_Mvr.continentConnectivityCheck(d_Map);
+        assertTrue(l_check);
 
+        //Continent with a single country is connected subgraph
         d_Map = d_Rgame.editMap("createdMap.map");
-        check = d_Mvr.continentConnectivityCheck(d_Map);
-        assertTrue(check);
+        l_check = d_Mvr.continentConnectivityCheck(d_Map);
+        assertTrue(l_check);
     }
 
     /**
@@ -44,8 +45,8 @@ public class TestConnectedContinent {
     @Test
     public void testunConnectedContinent() {
         d_Map = d_Rgame.editMap("unconnectedContinent.map");
-        boolean check = d_Mvr.continentConnectivityCheck(d_Map);
-        assertFalse(check);
+        boolean l_check = d_Mvr.continentConnectivityCheck(d_Map);
+        assertFalse(l_check);
     }
 
 
