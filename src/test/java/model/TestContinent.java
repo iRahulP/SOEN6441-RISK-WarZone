@@ -38,8 +38,8 @@ public class TestContinent {
         System.out.println(d_Map.getMapName());
         System.out.println(d_Map.getContinents().size());
 
-        boolean check = d_Rgame.addContinent(d_Map,d_ContinentId,d_ControlValue);
-        assertTrue(check);
+        boolean l_check = d_Rgame.addContinent(d_Map,d_ContinentId,d_ControlValue);
+        assertTrue(l_check);
     }
 
     /**
@@ -47,15 +47,16 @@ public class TestContinent {
      */
     @Test
     public void testRemoveContinent(){
+        d_Map = d_Rgame.editMap("ameroki.map");
         //azio is in the map,so it'll be removed
         d_ContinentId = "azio";
-        boolean check = d_Rgame.removeContinent(d_Map, d_ContinentId);
-        assertTrue(check);
+        boolean l_check = d_Rgame.removeContinent(d_Map, d_ContinentId);
+        assertTrue(l_check);
 
         //Asia not part of the map.
         d_ContinentId = "Asia";
-        check = d_Rgame.removeContinent(d_Map, d_ContinentId);
-        assertFalse(check);
+        l_check = d_Rgame.removeContinent(d_Map, d_ContinentId);
+        assertFalse(l_check);
 
     }
 }
