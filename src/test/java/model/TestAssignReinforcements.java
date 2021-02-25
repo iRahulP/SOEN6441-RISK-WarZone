@@ -51,9 +51,9 @@ public class TestAssignReinforcements {
         d_Stup = new StartUp();
         d_Ge = new GameEngine();
         d_Map = d_Rge.loadMap("dummy.map");
-        boolean check = d_Stup.assignCountries(d_Map, d_Players);
+        boolean l_check = d_Stup.assignCountries(d_Map, d_Players);
         System.out.println(d_Player1.getOwnedCountries());
-        if(check){
+        if(l_check){
             AssignReinforcement.assignReinforcementArmies(d_Player1);
         }
 
