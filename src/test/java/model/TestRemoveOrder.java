@@ -13,21 +13,21 @@ import static org.junit.Assert.assertEquals;
  * Tests if addition of orders works
  */
 public class TestRemoveOrder {
-    Order d_order;
-    Queue<Order> d_orderList;
-    Player d_player;
-    String d_playerName;
+    Order d_Order;
+    Queue<Order> d_OrderList;
+    Player d_Player;
+    String d_PlayerName;
 
     /**
      * Set up the context
      */
     @Before
     public void before(){
-        d_playerName = "Rahul";
-        d_player = new Player(d_playerName);
-        d_order = new Order(d_player,"India",5);
-        d_orderList = new ArrayDeque<>();
-        d_orderList.add(d_order);
+        d_PlayerName = "Rahul";
+        d_Player = new Player(d_PlayerName);
+        d_Order = new Order(d_Player,"India",5);
+        d_OrderList = new ArrayDeque<>();
+        d_OrderList.add(d_Order);
     }
 
     /**
@@ -36,8 +36,8 @@ public class TestRemoveOrder {
     @Test
     public void testRemoveOrder(){
         //removes order
-        d_orderList.poll();
-        assertEquals(0,d_orderList.size());
+        d_OrderList.poll();
+        assertEquals(0,d_OrderList.size());
     }
 
 }
