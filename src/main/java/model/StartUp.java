@@ -58,9 +58,9 @@ public class StartUp {
 			return false;
 		}
 		int l_counter = 0;
-		for(CountryDetails c : p_map.getCountries().values()) {
+		for(CountryDetails l_c : p_map.getCountries().values()) {
 			Player l_p = p_players.get(l_counter);
-			l_p.getOwnedCountries().put(c.getCountryId().toLowerCase(), c);
+			l_p.getOwnedCountries().put(l_c.getCountryId().toLowerCase(), l_c);
 			if(l_counter>=l_numberOfPlayers-1)
 				l_counter = 0;
 			else
