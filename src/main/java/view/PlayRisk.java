@@ -49,26 +49,26 @@ public class PlayRisk {
         //Loops through all Players in Round Robin fashion collecting orders.
         int l_numberOfPlayers = cmd.d_Players.size();
         int l_traversalCounter = 0;
-        while(true) {
-            while(l_traversalCounter<l_numberOfPlayers) {
-                Player l_p = cmd.d_Players.get(l_traversalCounter);
-                System.out.println("It's "+ l_p.getPlayerName() + "'s turn");
-                //listen orders from players - deploy | pass
+        while (true) {
+                while (l_traversalCounter < l_numberOfPlayers) {
+                    Player l_p = cmd.d_Players.get(l_traversalCounter);
+                    System.out.println("It's " + l_p.getPlayerName() + "'s turn");
+                    System.out.println("Player "+l_p.getPlayerName()+" has "+l_p.getOwnedArmies()+" Army units currently!");
+                    //listen orders from players - deploy | pass
+                    l_gamePhase = Phase.ISSUE_ORDERS;
+                    cmd.setGamePhase(l_gamePhase);
+                    while (l_gamePhase != Phase.TURN) {
+                        l_cmd = sc.nextLine();
+                        l_gamePhase = cmd.parseCommand(l_p, l_cmd);
+                    }
+                    //gets to next Player
+                    l_traversalCounter++;
+                }
                 l_gamePhase = Phase.ISSUE_ORDERS;
                 cmd.setGamePhase(l_gamePhase);
-                while(l_gamePhase!=Phase.TURN) {
-                    l_cmd = sc.nextLine();
-                    l_gamePhase = cmd.parseCommand(l_p, l_cmd);
-                }
-                //gets to next Player
-                l_traversalCounter++;
+                l_traversalCounter = 0;
             }
-            l_gamePhase = Phase.ISSUE_ORDERS;
-            cmd.setGamePhase(l_gamePhase);
-            l_traversalCounter = 0;
         }
-
-    }
 
     /**
      * assigns default reinforcements to each player based on Countries owned.

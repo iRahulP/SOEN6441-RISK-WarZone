@@ -437,7 +437,6 @@ public class GameEngine {
             Iterator<Player> l_itr = d_Players.listIterator();
             while(l_itr.hasNext()) {
                 Player l_p = l_itr.next();
-                System.out.println("Player "+l_p.getPlayerName()+" has "+l_p.getOwnedArmies()+" Armies currently!");
                 if (l_p.getOwnedArmies() > 0) {
                     l_counter = l_counter + l_p.getOwnedArmies();
                 }
@@ -454,7 +453,6 @@ public class GameEngine {
                                     l_numberOfArmies = Integer.parseInt(l_data[2]);
                                     boolean l_checkOwnedCountry = p_player.getOwnedCountries().containsKey(l_countryId.toLowerCase());
                                     boolean l_checkArmies = (p_player.getOwnedArmies() >= l_numberOfArmies);
-                                    System.out.println("Player "+p_player.getPlayerName()+" Can provide deploy order or pass order");
                                     if(l_checkOwnedCountry && l_checkArmies){
                                         Order l_temp = new Order(p_player, l_countryId, l_numberOfArmies);
                                         p_player.addOrder(l_temp);
@@ -535,6 +533,14 @@ public class GameEngine {
 
                         System.out.println("Orders executed!");
                         d_StartUp.showMap(d_Players, d_Map);
+                        Iterator<Player> itr = d_Players.listIterator();
+                        while(itr.hasNext()) {
+                            Player p = itr.next();
+                            AssignReinforcement.assignReinforcementArmies(p);
+                        }
+                        System.out.println("Current Orders were executed,Starting again with assigning Reinforcements!");
+                        System.out.println("Reinforcements assigned! Players can provide deploy Orders now!");
+                        System.out.println("\nPlayer 1 can provide deploy | pass order..");
                         d_GamePhase = Phase.ISSUE_ORDERS;
                     }
                     break;
