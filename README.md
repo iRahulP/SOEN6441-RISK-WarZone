@@ -1,4 +1,4 @@
-# SOEN6441-RISK
+# SOEN6441-RISK [![Java CI with Maven Actions Status](https://github.com/iRahulP/SOEN6441-RISK/workflows/maven.yml/badge.svg)](https://github.com/iRahulP/SOEN6441-RISK/actions)
 
 Risk Game Implementation as part of SOEN6441(Advanced Programming Practices) course at Concordia University for Winter21.
 
