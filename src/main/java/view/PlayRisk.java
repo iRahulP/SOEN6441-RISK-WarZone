@@ -2,7 +2,7 @@ package view;
 
 import controller.GameEngine;
 import model.AssignReinforcement;
-import model.Phase;
+import model.InternalPhase;
 import model.Player;
 
 import java.io.File;
@@ -33,12 +33,12 @@ public class PlayRisk {
         //initial command reader from cli
         Scanner sc = new Scanner(System.in);
         String l_cmd = sc.nextLine();
-        Phase l_gamePhase = Phase.NULL;
+        InternalPhase l_gamePhase = InternalPhase.NULL;
         GameEngine cmd = new GameEngine();
         l_gamePhase = cmd.parseCommand(null, l_cmd);
 
         //looping for commands until initial Phases where Player iteration not required!
-        while(l_gamePhase!= Phase.ISSUE_ORDERS) {
+        while(l_gamePhase!= InternalPhase.ISSUE_ORDERS) {
             l_cmd = sc.nextLine();
             l_gamePhase = cmd.parseCommand(null, l_cmd);
         }
@@ -55,16 +55,16 @@ public class PlayRisk {
                     System.out.println("It's " + l_p.getPlayerName() + "'s turn");
                     System.out.println("Player "+l_p.getPlayerName()+" has "+l_p.getOwnedArmies()+" Army units currently!");
                     //listen orders from players - deploy | pass
-                    l_gamePhase = Phase.ISSUE_ORDERS;
+                    l_gamePhase = InternalPhase.ISSUE_ORDERS;
                     cmd.setGamePhase(l_gamePhase);
-                    while (l_gamePhase != Phase.TURN) {
+                    while (l_gamePhase != InternalPhase.TURN) {
                         l_cmd = sc.nextLine();
                         l_gamePhase = cmd.parseCommand(l_p, l_cmd);
                     }
                     //gets to next Player
                     l_traversalCounter++;
                 }
-                l_gamePhase = Phase.ISSUE_ORDERS;
+                l_gamePhase = InternalPhase.ISSUE_ORDERS;
                 cmd.setGamePhase(l_gamePhase);
                 l_traversalCounter = 0;
             }
