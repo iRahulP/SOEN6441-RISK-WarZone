@@ -20,7 +20,7 @@ public class TestAssigncountries {
     ArrayList<Player> d_Players;
     StartUp d_Stup;
     RunGameEngine d_Rge;
-    Phase d_GamePhase;
+    InternalPhase d_GamePhase;
     GameEngine d_Ge;
     AssignReinforcement d_Arfc;
 
@@ -37,7 +37,7 @@ public class TestAssigncountries {
         d_Players = new ArrayList<>();
         d_Players.add(d_Player1);
         d_Players.add(d_Player2);
-        d_GamePhase = Phase.ISSUE_ORDERS;
+        d_GamePhase = InternalPhase.ISSUE_ORDERS;
     }
 
     /**
