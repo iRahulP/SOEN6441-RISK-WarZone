@@ -442,8 +442,7 @@ public class GameEngine {
                                     boolean l_checkOwnedCountry = p_player.getOwnedCountries().containsKey(l_countryId.toLowerCase());
                                     boolean l_checkArmies = (p_player.getOwnedArmies() >= l_numberOfArmies);
                                     if(l_checkOwnedCountry && l_checkArmies){
-                                        Order l_temp = new Deploy(p_player, l_countryId, l_numberOfArmies);
-                                        p_player.addOrder(l_temp);
+                                        p_player.addOrder(new Deploy(p_player, l_countryId, l_numberOfArmies));
                                         p_player.issue_order();
                                         p_player.setOwnedArmies(p_player.getOwnedArmies()-l_numberOfArmies);
                                         System.out.println("Player "+p_player.getPlayerName()+" now has "+p_player.getOwnedArmies()+" Army units left!");
