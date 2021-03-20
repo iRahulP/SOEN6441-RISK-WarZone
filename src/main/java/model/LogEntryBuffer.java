@@ -112,24 +112,24 @@ public class LogEntryBuffer extends Observable {
     	if(this.d_GamePhase==p_gamePhase){
             return;
         }
-        if(this.d_GamePhase==InternalPhase.NULL){
-            setPhaseValue("In NULL Phase:");
-        }
-        else if(this.d_GamePhase==InternalPhase.EDITMAP){
-            setPhaseValue("In EDITMAP Phase:");
-        }
-        else if(this.d_GamePhase==InternalPhase.STARTUP){
-            setPhaseValue("In STARTUP Phase:");
-        }
-        else if (this.d_GamePhase == InternalPhase.ISSUE_ORDERS) {
-            setPhaseValue("In ISSUE_ORDERS Phase:");
-        }
-        else if (this.d_GamePhase == InternalPhase.EXECUTE_ORDERS) {
-            setPhaseValue("In EXECUTE_ORDERS Phase:");
-        }
+    	 if(p_gamePhase==InternalPhase.NULL){
+             setPhaseValue("In NULL Phase:");
+         }
+         else if(p_gamePhase==InternalPhase.EDITMAP){
+             setPhaseValue("In EDITMAP Phase:");
+         }
+         else if(p_gamePhase==InternalPhase.STARTUP){
+             setPhaseValue("In STARTUP Phase:");
+         }
+         else if (p_gamePhase == InternalPhase.ISSUE_ORDERS) {
+             setPhaseValue("In ISSUE_ORDERS Phase:");
+         }
+         else if (p_gamePhase == InternalPhase.EXECUTE_ORDERS) {
+             setPhaseValue("In EXECUTE_ORDERS Phase:");
+         }
 
-        d_IsGamePhaseSet = true;
-        notifyObservers(this);
+         d_IsGamePhaseSet = true;
+         notifyObservers(this);
     }
 
     /**
