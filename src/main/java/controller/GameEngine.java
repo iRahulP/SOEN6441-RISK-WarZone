@@ -436,13 +436,13 @@ public class GameEngine {
                     case "deploy":
                         try {
                             if (!(l_data[1] == null) || !(l_data[2] == null)) {
-                                if (this.isNumeric(l_data[1]) || this.isNumeric(l_data[2])) {
+                                if (this.isAlphabetic(l_data[1]) || this.isNumeric(l_data[2])) {
                                     l_countryId = l_data[1];
                                     l_numberOfArmies = Integer.parseInt(l_data[2]);
                                     boolean l_checkOwnedCountry = p_player.getOwnedCountries().containsKey(l_countryId.toLowerCase());
                                     boolean l_checkArmies = (p_player.getOwnedArmies() >= l_numberOfArmies);
                                     if(l_checkOwnedCountry && l_checkArmies){
-                                        Order l_temp = new Order(p_player, l_countryId, l_numberOfArmies);
+                                        Order l_temp = new Deploy(p_player, l_countryId, l_numberOfArmies);
                                         p_player.addOrder(l_temp);
                                         p_player.issue_order();
                                         p_player.setOwnedArmies(p_player.getOwnedArmies()-l_numberOfArmies);
