@@ -25,7 +25,7 @@ public class TestAddOrder {
     public void before(){
         d_PlayerName = "Rahul";
         d_Player = new Player(d_PlayerName);
-        d_Order = new Order(d_Player,"Canada",4);
+        d_Order = new Deploy(d_Player,"Canada",4);
         d_OrderList = new ArrayDeque<>();
     }
 

@@ -67,7 +67,7 @@ public class TestOrderCapability {
         if(l_checkOwnedCountry1 && l_checkArmies1){
 
             System.out.println("Before :"+d_Player1.getOwnedArmies());
-            Order l_temp = new Order(d_Player1, "japan", d_NumberOfArmies);
+            Order l_temp = new Deploy(d_Player1, "japan", d_NumberOfArmies);
             d_Player1.addOrder(l_temp);
             d_Player1.issue_order();
             d_Player1.setOwnedArmies(d_Player1.getOwnedArmies()-d_NumberOfArmies);
@@ -85,7 +85,7 @@ public class TestOrderCapability {
 
         if(checkOwnedCountry2 && checkArmies2){
             System.out.println("Before :"+d_Player2.getOwnedArmies());
-            Order l_temp = new Order(d_Player2, "sluci", d_NumberOfArmies);
+            Order l_temp = new Deploy(d_Player2, "sluci", d_NumberOfArmies);
             d_Player2.addOrder(l_temp);
             d_Player2.issue_order();
             d_Player2.setOwnedArmies(d_Player2.getOwnedArmies()-d_NumberOfArmies);

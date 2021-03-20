@@ -25,7 +25,7 @@ public class TestRemoveOrder {
     public void before(){
         d_PlayerName = "Rahul";
         d_Player = new Player(d_PlayerName);
-        d_Order = new Order(d_Player,"India",5);
+        d_Order = new Deploy(d_Player,"India",5);
         d_OrderList = new ArrayDeque<>();
         d_OrderList.add(d_Order);
     }
