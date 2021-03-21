@@ -26,6 +26,8 @@ public class Blockade implements Order{
         l_existingArmies *= 3;
         l_c.setNumberOfArmies(l_existingArmies);
 
+        //Making territory neutral
+        d_Player.getOwnedCountries().remove(l_c.getCountryId().toLowerCase());
         return true;
     }
 
