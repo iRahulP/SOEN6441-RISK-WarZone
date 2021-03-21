@@ -48,7 +48,7 @@ public class TestAssignReinforcements {
      */
     @Test
     public void testAssignReinforcements() {
-        d_Stup = new StartUp();
+        d_Stup = new StartUp(d_Ge);
         d_Ge = new GameEngine();
         d_Map = d_Rge.loadMap("dummy.map");
         boolean l_check = d_Stup.assignCountries(d_Map, d_Players);
