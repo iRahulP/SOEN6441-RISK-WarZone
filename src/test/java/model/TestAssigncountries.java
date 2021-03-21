@@ -45,7 +45,7 @@ public class TestAssigncountries {
      */
     @Test
     public void testPopulateCountries() {
-        d_Stup = new StartUp();
+        d_Stup = new StartUp(d_Ge);
         d_Ge = new GameEngine();
         d_Map = d_Rge.loadMap("dummy.map");
         boolean l_check = d_Stup.assignCountries(d_Map, d_Players);
