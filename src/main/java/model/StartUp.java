@@ -2,17 +2,24 @@ package model;
 
 import java.util.*;
 
+import controller.GameEngine;
+
 /**
  * Implementation of startup phase of the game.
  *
  */
-public class StartUp {
-	
+public class StartUp extends Play {
+	public StartUp(GameEngine p_ge) {
+		d_Ge = p_ge;
+		d_PhaseName = "StartUp";
+	}
+
+
 
 	/**
 	 * Addition of players to the game
 	 * The maximum no. of players assigned is restricted to 6
-	 * 
+	 *
 	 * @param p_players List of players in the game
 	 * @param p_playerName Names of players in the game
 	 * @return true if the players are added successfully, else false
@@ -28,7 +35,7 @@ public class StartUp {
 
 	/**
 	 * Removing players from the game
-	 * 
+	 *
 	 * @param p_players List of players in the game
 	 * @param p_playerName Names of players in the game
 	 * @return true if the players are removed successfully, else false
@@ -78,7 +85,7 @@ public class StartUp {
 		if(p_map==null)
 			return;
 		if(p_players.size()==0 || p_players.get(0).getOwnedCountries().size()==0) {
-			RunGameEngine l_rc = new RunGameEngine();
+			PostLoad l_rc = new PostLoad(d_Ge);
 			l_rc.showMap(p_map);
 			return;
 		}
@@ -119,5 +126,97 @@ public class StartUp {
 			l_printCountryId = true;
 			l_printNumberOfArmies = true;
 		}
+	}
+
+
+
+
+	@Override
+	public void reinforce(){
+
+	}
+
+
+
+
+	@Override
+	public void editContinent(String[] p_data, String p_continentId, int p_controlValue) {
+		// TODO Auto-generated method stub
+
+	}
+
+
+
+	@Override
+	public void editCountry(String[] p_data, String p_continentId, String p_countryId) {
+		// TODO Auto-generated method stub
+
+	}
+
+
+	@Override
+	public void editNeighbour(String[] p_data, String p_countryId, String p_neighborCountryId) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void savemap(String[] p_data, String p_mapName) {
+		// TODO Auto-generated method stub
+
+	}
+
+
+	@Override
+	public void editMap(String[] p_data, String p_mapName) {
+		// TODO Auto-generated method stub
+
+	}
+
+
+
+
+	@Override
+	public void gamePlayer(String[] p_data,ArrayList<Player> p_players, String p_playerName) {
+		try {
+			for (int i = 1; i < p_data.length; i++) {
+				if (p_data[i].equals("-add")) {
+					if (d_Ge.isPlayerNameValid(p_data[i + 1])) {
+						p_playerName = p_data[i + 1];
+						// setPhase(new StartUp(this));
+						boolean l_check = addPlayer(p_players, p_playerName);
+
+//                          String str=d_Phase.getD_PhaseName();
+//                         System.out.println(str);
+						if (l_check) {
+							System.out.println("Player added!");
+						} else {
+							System.out.println("Can not add any more player. Max pool of 6 Satisfied!");
+						}
+						d_Ge.d_GamePhase = InternalPhase.STARTUP;
+					} else {
+						System.out.println("Invalid Player Name");
+					}
+				} else if (p_data[i].equals("-remove")) {
+					if (d_Ge.isPlayerNameValid(p_data[i + 1])) {
+						p_playerName = p_data[i + 1];
+						boolean l_check = removePlayer(p_players, p_playerName);
+						if (l_check)
+							System.out.println("Player removed!");
+						else
+							System.out.println("Player doesn't exist");
+						d_Ge.d_GamePhase = InternalPhase.STARTUP;
+					} else
+						System.out.println("Invalid Player Name");
+				}
+			}
+		}
+		catch(ArrayIndexOutOfBoundsException e) {
+			System.out.println("Invalid command - it should be of the form gameplayer -add playername -remove playername");
+		}
+		catch(Exception e) {
+			System.out.println("Invalid command - it should be of the form gameplayer -add playername -remove playername");
+		}
+
 	}
 }
