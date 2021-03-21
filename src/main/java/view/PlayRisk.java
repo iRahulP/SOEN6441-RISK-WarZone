@@ -44,7 +44,7 @@ public class PlayRisk {
         }
 
         //Assign to each player the correct number of reinforcement armies according to the Warzone rules.
-        //l_game.assignEachPlayerReinforcements(cmd);
+        l_game.assignEachPlayerReinforcements(cmd);
 
         //Loops through all Players in Round Robin fashion collecting orders.
         int l_numberOfPlayers = cmd.d_Players.size();
@@ -74,13 +74,13 @@ public class PlayRisk {
      * assigns default reinforcements to each player based on Countries owned.
      * @param p_cmd GameEngine ref from main to get track of players
      */
-//    public void assignEachPlayerReinforcements(GameEngine p_cmd){
-//        Iterator<Player> itr = p_cmd.d_Players.listIterator();
-//        while(itr.hasNext()) {
-//            Player p = itr.next();
-//            AssignReinforcement.assignReinforcementArmies(p);
-//        }
-//    }
+    public void assignEachPlayerReinforcements(GameEngine p_cmd){
+        Iterator<Player> itr = p_cmd.d_Players.listIterator();
+        while(itr.hasNext()) {
+            Player p = itr.next();
+            AssignReinforcement.assignReinforcementArmies(p);
+        }
+    }
 
     /**
      * Shows names of existing map files from sample Resources.
