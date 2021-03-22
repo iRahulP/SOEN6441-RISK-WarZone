@@ -23,7 +23,8 @@ import org.junit.runners.Suite;
         TestBlockade.class,
         TestNeutralTerritory.class,
         TestAirlift.class,
-        TestBomb.class
+        TestBomb.class,
+        TestAdjacent.class
 })
 
 /**
