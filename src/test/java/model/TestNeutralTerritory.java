@@ -33,7 +33,7 @@ public class TestNeutralTerritory {
         d_Players.add(d_Player1);
         d_Players.add(d_Player2);
         d_GamePhase = InternalPhase.ISSUE_ORDERS;
-        l_checkOwnedCountry = false;
+        l_checkOwnedCountry = true;
     }
 
     /**
@@ -54,7 +54,7 @@ public class TestNeutralTerritory {
         System.out.println("Countries assigned to "+d_Player1.getPlayerName()+" : "+d_Player1.getOwnedCountries());
         //Check if country owned by player 1
         l_checkOwnedCountry = d_Player1.getOwnedCountries().containsKey(d_CountryId.toLowerCase());
-
+        System.out.println(l_checkOwnedCountry);
         //testing if above territory is neutral
         assertFalse(l_checkOwnedCountry);
     }
