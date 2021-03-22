@@ -259,7 +259,7 @@ public class GameEngine {
             }
             System.out.println("Total Armies left with all Players in Pool: "+l_counter);
             //case when atleast one player has any army/armies left
-            if(l_counter > 0){
+            if(l_counter >= 0){
                 switch (l_commandName) {
                     case "deploy":
                         try {
@@ -429,6 +429,10 @@ public class GameEngine {
                     case "showmap":
                         d_Phase.showMap(d_Players, d_Map);
                         break;
+
+                    case "stop":
+                        d_GamePhase = InternalPhase.EXECUTE_ORDERS;
+                        return d_GamePhase;
 
                     default:
                         System.out.println("Invalid command - either use deploy | pass | showmap commands in ISSUE_ORDERS InternalPhase");
