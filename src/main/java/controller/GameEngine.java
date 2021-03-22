@@ -317,6 +317,43 @@ public class GameEngine {
                         }
                         break;
 
+                    case "bomb":
+                        try {
+                            if (!(l_data[1] == null)) {
+                                if (this.isAlphabetic(l_data[1])) {
+                                    l_countryId = l_data[1];
+                                    //checks if countryId is not of current player
+                                    boolean l_checkOwnedCountryNotOfCurrent = !p_player.getOwnedCountries().containsKey(l_countryId.toLowerCase());
+                                    boolean targetCountryNeighbour = false;
+                                    //checks if target country id is neighbour to one of current player's country
+                                    for(CountryDetails cD : p_player.getOwnedCountries().values()){
+                                        if( cD.getNeighbours().containsKey(l_countryId.toLowerCase()) && !p_player.getOwnedCountries().containsKey(l_countryId.toLowerCase())){
+                                            targetCountryNeighbour= true;
+                                        }
+                                        else{
+                                            targetCountryNeighbour = false;
+                                        }
+                                    }
+
+                                    if(l_checkOwnedCountryNotOfCurrent && targetCountryNeighbour){
+                                        //need to send target player instead of current player
+                                        p_player.addOrder(new Bomb(p_player, l_countryId));
+                                        p_player.issue_order();
+                                    }
+                                    else{
+                                        System.out.println("Country owned by player or target Country not adjacent | please pass to next player");
+                                    }
+                                    d_GamePhase = InternalPhase.TURN;
+                                    break;
+                                }
+                            } else
+                                System.out.println("Invalid Command");
+
+                        }catch (Exception e) {
+                            System.out.println("Country owned by player or target Country not adjacent | please pass to next player");
+                        }
+                        break;
+
                     case "pass":
                         try {
                             d_GamePhase = InternalPhase.TURN;
