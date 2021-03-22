@@ -22,8 +22,8 @@ public class Bomb implements Order{
     public boolean execute() {
         CountryDetails l_c= d_Player.getOwnedCountries().get(d_CountryId.toLowerCase());
         int l_existingArmies = l_c.getNumberOfArmies();
-        l_existingArmies /= 2;
-        l_c.setNumberOfArmies(l_existingArmies);
+        double armies = Double.valueOf(l_existingArmies / 2);
+        l_c.setNumberOfArmies((int)armies);
 
         return true;
     }
