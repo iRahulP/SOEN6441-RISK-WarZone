@@ -1,18 +1,33 @@
 package model;
 
-
+/**
+ * Class containing logic for implementation of advance order
+ * @author Rucha
+ *
+ */
 public class Advance implements Order{
 
 	private int d_NumArmies;
 	private String d_SourceCountryId, d_TargetCountryId;
 	private Player d_Player;
-	 
+	
+	/**
+	 * Constructor of advance class  
+	 * @param p_player player
+	 * @param p_sourceCountryId source country Id
+	 * @param p_targetCountryId target country Id
+	 * @param p_numArmies number of armies
+	 */
 	public Advance(Player p_player,String p_sourceCountryId,String p_targetCountryId,int p_numArmies){
 		d_Player= p_player;
 		d_SourceCountryId= p_sourceCountryId;
 		d_TargetCountryId= p_targetCountryId;
 		d_NumArmies= p_numArmies;
 	}
+	
+	/**
+	 * Contain the implementation logic of advance order
+	 */
 	@Override
 	public boolean execute() {
 		
@@ -36,6 +51,29 @@ public class Advance implements Order{
 				System.out.println(d_TargetCountryId + " is not owned by the player");
 				System.out.println("Attack Occur between: "+ d_TargetCountryId+ " and "+ d_SourceCountryId);
 				//d_Player.performAttack(d_SourceCountryId, d_TargetCountryId);
+				
+				//fetching the countries and its armies
+				CountryDetails attackingCountry= d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase());
+				CountryDetails defendingCountry= attackingCountry.getNeighbours().get(d_TargetCountryId.toLowerCase());
+				int attackArmy= attackingCountry.getNumberOfArmies() - 1;
+				int defendArmy= defendingCountry.getNumberOfArmies(); 
+				
+				//logic to kill the opponent country armies
+				int armyToAttack = (attackArmy * 60)/100;
+				int armyForDefend = (defendArmy * 70/100);
+				
+				int defenderArmyLeft= defendArmy - armyToAttack;
+				int attackerArmyLeft= attackArmy - armyForDefend;
+				
+				if(defenderArmyLeft <= 0) {
+					d_Player.getOwnedCountries().put(d_TargetCountryId, defendingCountry);
+					defendingCountry.setNumberOfArmies(attackerArmyLeft);
+					attackingCountry.setNumberOfArmies(1);
+				}
+				else {
+					defendingCountry.setNumberOfArmies(defenderArmyLeft);
+					attackingCountry.setNumberOfArmies(attackerArmyLeft + 1);
+				}
 				return true;
 			}
 		}
