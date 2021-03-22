@@ -30,7 +30,9 @@ public class TestNeighbor {
         d_Map = d_RunGame.editMap("dummy.map");
         
     }
-    
+    /**
+     * It's the after method for test.
+     */
     @After
     public void after() {
     	System.out.println("functionality check done");
