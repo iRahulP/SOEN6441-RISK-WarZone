@@ -21,7 +21,8 @@ import org.junit.runners.Suite;
         TestOrderCapability.class,
         TestDeploy.class,
         TestBlockade.class,
-        TestNeutralTerritory.class
+        TestNeutralTerritory.class,
+        TestAirlift.class
 })
 
 /**
