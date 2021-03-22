@@ -360,6 +360,30 @@ public class GameEngine {
                         }
                         break;
 
+                    case "blockade":
+                        try {
+                            if (!(l_data[1] == null)) {
+                                if (this.isAlphabetic(l_data[1])) {
+                                    l_countryId = l_data[1];
+                                    boolean l_checkOwnedCountry = p_player.getOwnedCountries().containsKey(l_countryId.toLowerCase());
+                                    if(l_checkOwnedCountry){
+                                        p_player.addOrder(new Blockade(p_player, l_countryId));
+                                        p_player.issue_order();
+                                    }
+                                    else{
+                                        System.out.println("Country not owned by current player | please pass to next player");
+                                    }
+                                    d_GamePhase = InternalPhase.TURN;
+                                    break;
+                                }
+                            } else
+                                System.out.println("Invalid Command");
+
+                        }catch (Exception e) {
+                            System.out.println("Country not owned by current player | please pass to next player");
+                        }
+                        break;
+
                     case "pass":
                         try {
                             d_GamePhase = InternalPhase.TURN;
