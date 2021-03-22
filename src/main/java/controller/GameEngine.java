@@ -331,16 +331,15 @@ public class GameEngine {
                                     for(CountryDetails cD : p_player.getOwnedCountries().values()){
                                         if( cD.getNeighbours().containsKey(l_countryId.toLowerCase()) && !p_player.getOwnedCountries().containsKey(l_countryId.toLowerCase())){
                                             targetCountryNeighbour= true;
-                                        }
-                                        else{
-                                            targetCountryNeighbour = false;
-                                        }
+                                            break;
+                                       }
                                     }
                                     Player targetPlayer = null;
                                     for(Player temp : d_Players){
                                         //check which player has target countryID
                                         if(temp.getOwnedCountries().containsKey(l_countryId.toLowerCase())){
                                             targetPlayer = temp;
+                                            break;
                                         }
                                     }
                                     if(l_checkOwnedCountryNotOfCurrent && targetCountryNeighbour){

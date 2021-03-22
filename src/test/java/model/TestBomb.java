@@ -84,7 +84,7 @@ public class TestBomb{
         for (CountryDetails cD : d_Player2.getOwnedCountries().values()) {
             //System.out.println(cD.getCountryId());
             //System.out.println(cD.getNeighbours().containsKey(d_TargetCountryId));
-            if (cD.getNeighbours().containsKey(d_TargetCountryId.toLowerCase())) {
+            if (cD.getNeighbours().containsKey(d_TargetCountryId.toLowerCase()) && l_checkOwnedCountryNotOfCurrent ) {
                 targetCountryNeighbour = true;
                 break;
             }
