@@ -334,14 +334,20 @@ public class GameEngine {
                                             targetCountryNeighbour = false;
                                         }
                                     }
-
+                                    Player targetPlayer = null;
+                                    for(Player temp : d_Players){
+                                        //check which player has target countryID
+                                        if(temp.getOwnedCountries().containsKey(l_countryId.toLowerCase())){
+                                            targetPlayer = temp;
+                                        }
+                                    }
                                     if(l_checkOwnedCountryNotOfCurrent && targetCountryNeighbour){
-                                        //need to send target player instead of current player
-                                        p_player.addOrder(new Bomb(p_player, l_countryId));
+                                        //need to send target player instead of current player as param
+                                        p_player.addOrder(new Bomb(targetPlayer, l_countryId));
                                         p_player.issue_order();
                                     }
                                     else{
-                                        System.out.println("Country owned by player or target Country not adjacent | please pass to next player");
+                                        System.out.println("Country owned by current player or target Country not adjacent | please pass to next player");
                                     }
                                     d_GamePhase = InternalPhase.TURN;
                                     break;
@@ -350,7 +356,7 @@ public class GameEngine {
                                 System.out.println("Invalid Command");
 
                         }catch (Exception e) {
-                            System.out.println("Country owned by player or target Country not adjacent | please pass to next player");
+                            System.out.println("Country owned by current player or target Country not adjacent | please pass to next player");
                         }
                         break;
 
