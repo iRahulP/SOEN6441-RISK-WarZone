@@ -67,7 +67,7 @@ public class TestNeighbor {
         assertEquals(true,l_check);
         
         System.out.println("checking of "+ d_CountryName+ " and " + d_NeighborCountryName2 );
-        l_check = d_RunGame.removeNeighbor(d_Map, d_CountryName, d_NeighborCountryName2);
+        l_check = d_RunGame.addNeighbor(d_Map, d_CountryName, d_NeighborCountryName2);
         System.out.println("not neighbors so added as neighbor");
         assertEquals(true,l_check);
     }

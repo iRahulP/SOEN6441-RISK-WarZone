@@ -19,6 +19,10 @@ import org.junit.runners.Suite;
         TestValidateMap.class,
         TestConnectedMap.class,
         TestOrderCapability.class,
+        TestDeploy.class,
+        TestBlockade.class,
+        TestNeutralTerritory.class,
+        TestAirlift.class
 })
 
 /**

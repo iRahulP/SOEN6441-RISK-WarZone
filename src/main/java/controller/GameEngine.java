@@ -100,6 +100,10 @@ public class GameEngine {
         int l_numberOfArmies = 0;
         String l_mapName = null;
         String l_continentId = null;
+        String l_countryNameFrom = null;
+        String l_countryNameTo = null;
+        String l_sourceCountryId = null;
+        String l_targetCountryId = null;
         String l_countryId = null;
         String l_neighborCountryId = null;
         String l_playerName = null;
@@ -255,7 +259,7 @@ public class GameEngine {
             }
             System.out.println("Total Armies left with all Players in Pool: "+l_counter);
             //case when atleast one player has any army/armies left
-            if(l_counter > 0){
+            if(l_counter >= 0){
                 switch (l_commandName) {
                     case "deploy":
                         try {
@@ -285,6 +289,135 @@ public class GameEngine {
                         }
                         break;
 
+                    case "advance":
+                        try {
+                            if (!(l_data[1] == null) || !(l_data[2] == null) || !(l_data[3] == null)) {
+                                if (this.isAlphabetic(l_data[1]) || this.isAlphabetic(l_data[2]) || this.isNumeric(l_data[3])) {
+                                    l_countryNameFrom = l_data[1];
+                                    l_countryNameTo = l_data[2];
+                                    l_numberOfArmies = Integer.parseInt(l_data[3]);
+                                    boolean l_checkOwnedCountry = p_player.getOwnedCountries().containsKey(l_countryNameFrom.toLowerCase());
+                                    CountryDetails attackingCountry = p_player.getOwnedCountries().get(l_countryNameFrom.toLowerCase());
+                                    CountryDetails defendingCountry = attackingCountry.getNeighbours().get(l_countryNameTo.toLowerCase());
+                                    boolean l_checkNeighbourCountry = (l_countryNameTo.equals(defendingCountry.getCountryId()));
+                                    boolean l_checkArmies = (p_player.getOwnedArmies() >= l_numberOfArmies);
+                                    if(l_checkOwnedCountry && l_checkNeighbourCountry && l_checkArmies){
+                                        p_player.addOrder(new Advance(p_player, l_countryNameFrom,l_countryNameTo, l_numberOfArmies));
+                                        p_player.issue_order();
+                                    }
+                                    else{
+                                        System.out.println("Country not owned by player or target Country not adjacent or insufficient Army units | please pass to next player");
+                                    }
+                                    d_GamePhase = InternalPhase.TURN;
+                                    break;
+                                }
+                            } else
+                                System.out.println("Invalid Command");
+
+                        }catch (Exception e) {
+                            System.out.println("Country not owned by player or target Country not adjacent or insufficient Army units | please pass to next player");
+                        }
+                        break;
+
+                    case "bomb":
+                        try {
+                            if (!(l_data[1] == null)) {
+                                if (this.isAlphabetic(l_data[1])) {
+                                    l_countryId = l_data[1];
+                                    //checks if countryId is not of current player
+                                    boolean l_checkOwnedCountryNotOfCurrent = !p_player.getOwnedCountries().containsKey(l_countryId.toLowerCase());
+                                    boolean targetCountryNeighbour = false;
+                                    //checks if target country id is neighbour to one of current player's country
+                                    for(CountryDetails cD : p_player.getOwnedCountries().values()){
+                                        if( cD.getNeighbours().containsKey(l_countryId.toLowerCase()) && !p_player.getOwnedCountries().containsKey(l_countryId.toLowerCase())){
+                                            targetCountryNeighbour= true;
+                                        }
+                                        else{
+                                            targetCountryNeighbour = false;
+                                        }
+                                    }
+                                    Player targetPlayer = null;
+                                    for(Player temp : d_Players){
+                                        //check which player has target countryID
+                                        if(temp.getOwnedCountries().containsKey(l_countryId.toLowerCase())){
+                                            targetPlayer = temp;
+                                        }
+                                    }
+                                    if(l_checkOwnedCountryNotOfCurrent && targetCountryNeighbour){
+                                        //need to send target player instead of current player as param
+                                        p_player.addOrder(new Bomb(targetPlayer, l_countryId));
+                                        p_player.issue_order();
+                                    }
+                                    else{
+                                        System.out.println("Country owned by current player or target Country not adjacent | please pass to next player");
+                                    }
+                                    d_GamePhase = InternalPhase.TURN;
+                                    break;
+                                }
+                            } else
+                                System.out.println("Invalid Command");
+
+                        }catch (Exception e) {
+                            System.out.println("Country owned by current player or target Country not adjacent | please pass to next player");
+                        }
+                        break;
+
+                    case "blockade":
+                        try {
+                            if (!(l_data[1] == null)) {
+                                if (this.isAlphabetic(l_data[1])) {
+                                    l_countryId = l_data[1];
+                                    boolean l_checkOwnedCountry = p_player.getOwnedCountries().containsKey(l_countryId.toLowerCase());
+                                    if(l_checkOwnedCountry){
+                                        p_player.addOrder(new Blockade(p_player, l_countryId));
+                                        p_player.issue_order();
+                                    }
+                                    else{
+                                        System.out.println("Country not owned by current player | please pass to next player");
+                                    }
+                                    d_GamePhase = InternalPhase.TURN;
+                                    break;
+                                }
+                            } else
+                                System.out.println("Invalid Command");
+
+                        }catch (Exception e) {
+                            System.out.println("Country not owned by current player | please pass to next player");
+                        }
+                        break;
+
+                    case "airlift":
+                        try {
+                            if (!(l_data[1] == null) || !(l_data[2] == null) || !(l_data[3] == null)) {
+                                if (this.isAlphabetic(l_data[1]) || this.isAlphabetic(l_data[2]) || this.isNumeric(l_data[3])) {
+                                    l_sourceCountryId = l_data[1];
+                                    l_targetCountryId = l_data[2];
+                                    l_numberOfArmies = Integer.parseInt(l_data[3]);
+                                    boolean l_checkOwnedCountry = p_player.getOwnedCountries().containsKey(l_sourceCountryId.toLowerCase());
+                                    boolean l_checkTargetOwnedCountry = p_player.getOwnedCountries().containsKey(l_targetCountryId.toLowerCase());
+
+                                    //check armies from map which are deployed on source Country
+                                    CountryDetails l_c= p_player.getOwnedCountries().get(l_sourceCountryId.toLowerCase());
+                                    int l_existingArmies = l_c.getNumberOfArmies();
+                                    boolean l_checkArmies = (l_existingArmies >= l_numberOfArmies);
+                                    if(l_checkOwnedCountry && l_checkTargetOwnedCountry && l_checkArmies){
+                                        p_player.addOrder(new Airlift(p_player, l_sourceCountryId, l_targetCountryId, l_numberOfArmies));
+                                        p_player.issue_order();
+                                    }
+                                    else{
+                                        System.out.println("Source Country or Target Country not owned by player insufficient Army units | please pass to next player");
+                                    }
+                                    d_GamePhase = InternalPhase.TURN;
+                                    break;
+                                }
+                            } else
+                                System.out.println("Invalid Command");
+
+                        }catch (Exception e) {
+                            System.out.println("Source Country or Target Country not owned by player insufficient Army units | please pass to next player");
+                        }
+                        break;
+
                     case "pass":
                         try {
                             d_GamePhase = InternalPhase.TURN;
@@ -296,6 +429,10 @@ public class GameEngine {
                     case "showmap":
                         d_Phase.showMap(d_Players, d_Map);
                         break;
+
+                    case "stop":
+                        d_GamePhase = InternalPhase.EXECUTE_ORDERS;
+                        return d_GamePhase;
 
                     default:
                         System.out.println("Invalid command - either use deploy | pass | showmap commands in ISSUE_ORDERS InternalPhase");
