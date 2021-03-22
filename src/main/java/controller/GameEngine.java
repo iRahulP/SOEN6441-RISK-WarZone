@@ -100,6 +100,8 @@ public class GameEngine {
         int l_numberOfArmies = 0;
         String l_mapName = null;
         String l_continentId = null;
+        String l_countryNameFrom = null;
+        String l_countryNameTo = null;
         String l_countryId = null;
         String l_neighborCountryId = null;
         String l_playerName = null;
@@ -282,6 +284,36 @@ public class GameEngine {
 
                         }catch (Exception e) {
                             System.out.println("Country not owned by player or insufficient Army units | please pass to next player");
+                        }
+                        break;
+
+                    case "advance":
+                        try {
+                            if (!(l_data[1] == null) || !(l_data[2] == null) || !(l_data[3] == null)) {
+                                if (this.isAlphabetic(l_data[1]) || this.isAlphabetic(l_data[2]) || this.isNumeric(l_data[3])) {
+                                    l_countryNameFrom = l_data[1];
+                                    l_countryNameTo = l_data[2];
+                                    l_numberOfArmies = Integer.parseInt(l_data[3]);
+                                    boolean l_checkOwnedCountry = p_player.getOwnedCountries().containsKey(l_countryNameFrom.toLowerCase());
+                                    CountryDetails attackingCountry = p_player.getOwnedCountries().get(l_countryNameFrom.toLowerCase());
+                                    CountryDetails defendingCountry = attackingCountry.getNeighbours().get(l_countryNameTo.toLowerCase());
+                                    boolean l_checkNeighbourCountry = (l_countryNameTo.equals(defendingCountry.getCountryId()));
+                                    boolean l_checkArmies = (p_player.getOwnedArmies() >= l_numberOfArmies);
+                                    if(l_checkOwnedCountry && l_checkNeighbourCountry && l_checkArmies){
+                                        p_player.addOrder(new Advance(p_player, l_countryNameFrom,l_countryNameTo, l_numberOfArmies));
+                                        p_player.issue_order();
+                                    }
+                                    else{
+                                        System.out.println("Country not owned by player or target Country not adjacent or insufficient Army units | please pass to next player");
+                                    }
+                                    d_GamePhase = InternalPhase.TURN;
+                                    break;
+                                }
+                            } else
+                                System.out.println("Invalid Command");
+
+                        }catch (Exception e) {
+                            System.out.println("Country not owned by player or target Country not adjacent or insufficient Army units | please pass to next player");
                         }
                         break;
 
