@@ -11,9 +11,8 @@ import java.util.Queue;
 
 import static org.junit.Assert.assertEquals;
 
-public class TestBlockade{
+public class TestDeploy{
     Order d_DOrder;
-    Order d_BOrder;
     Queue<Order> d_OrderList;
     Player d_Player1;
     Player d_Player2;
@@ -31,8 +30,8 @@ public class TestBlockade{
      */
     @Before
     public void before() {
-        d_Player1 = new Player("Yash");
-        d_Player2 = new Player("Rahul");
+        d_Player1 = new Player("Rahul");
+        d_Player2 = new Player("Yash");
         d_Map = new GameMap("dummy.map");
         d_CountryId = "pero";
         d_Rge = new RunGameEngine();
@@ -42,7 +41,6 @@ public class TestBlockade{
         d_GamePhase = InternalPhase.ISSUE_ORDERS;
         l_checkOwnedCountry = true;
         d_DOrder = new Deploy(d_Player1,d_CountryId,d_NumberOfArmies);
-        d_BOrder = new Blockade(d_Player1,d_CountryId);
         d_OrderList = new ArrayDeque<>();
     }
 
@@ -51,7 +49,7 @@ public class TestBlockade{
      * Sample reinforcements assigned for Player1 and tested with unassigned reinforcements for Player2
      */
     @Test
-    public void testBlockadeEffect() {
+    public void testDeployEffect() {
         d_Stup = new StartUp(d_Ge);
         d_Ge = new GameEngine();
         d_Map = d_Rge.loadMap("dummy.map");
@@ -66,7 +64,7 @@ public class TestBlockade{
             d_Player1.addOrder(d_DOrder);
             d_Player1.issue_order();
             d_Player1.setOwnedArmies(d_Player1.getOwnedArmies()-d_NumberOfArmies);
-            System.out.println("After :"+d_Player1.getOwnedArmies());
+            System.out.println("After Deploy reinforcement Pool:"+d_Player1.getOwnedArmies());
         }
         else{
             System.out.println("Country not owned by player or insufficient Army units | please pass to next player");
@@ -79,21 +77,8 @@ public class TestBlockade{
 
         CountryDetails l_c= d_Player1.getOwnedCountries().get(d_CountryId.toLowerCase());
         System.out.println(l_c.getNumberOfArmies());
-
-        d_Player1.addOrder(d_BOrder);
-        d_Player1.issue_order();
-        System.out.println(d_Player1.getD_orderList());
-
-        Order l_toRemoveB = d_Player1.next_order();
-        System.out.println(d_Player1.getD_orderList());
-        l_toRemoveB.execute();
-
-        d_Player1.getOwnedCountries().put(l_c.getCountryId().toLowerCase(),l_c);
-
-        CountryDetails l_cB= d_Player1.getOwnedCountries().get(d_CountryId.toLowerCase());
-        System.out.println(l_cB.getNumberOfArmies());
-
-        assertEquals(12 ,l_cB.getNumberOfArmies());
+        //Check if num of armies deployed correctly
+        assertEquals(d_NumberOfArmies ,l_c.getNumberOfArmies());
     }
 
 }
