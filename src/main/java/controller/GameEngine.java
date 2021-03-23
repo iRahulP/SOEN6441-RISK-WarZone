@@ -142,6 +142,7 @@ public class GameEngine {
                     break;
                 default:
                     System.out.println("try LoadMap or EditMap first using commands: loadmap sample.map or editmap sample.map");
+                    d_LogEntry.setMessage("try LoadMap or EditMap first using commands: loadmap sample.map or editmap sample.map");
                     break;
             }
         }
@@ -222,16 +223,18 @@ public class GameEngine {
                     break;
 
                 case "validatemap":
-                    if(d_RunG.validateMap(d_Map)) {
-                        System.out.println("Map is Validated and Correct!");
-                    }
-                    else {
-                        System.out.println("Invalid map");
-                    }
+                    setPhase(new PreLoad(this));
+                    d_LogEntry.setGamePhase(d_Phase);
+                    d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                    d_Phase.validatemap();
+                    String strValidate=d_Phase.getD_PhaseName();
+                    System.out.println(strValidate);
+
                     break;
 
                 default:
                     System.out.println("Invalid command - either use edit commands(editcontinent/editcountry/editneighbor) or savemap/validatemap/editmap/loadmap/showmap command");
+                    d_LogEntry.setMessage("Invalid command - either use edit commands(editcontinent/editcountry/editneighbor) or savemap/validatemap/editmap/loadmap/showmap command");
                     break;
             }
         }
@@ -253,6 +256,7 @@ public class GameEngine {
                     boolean l_check = d_Phase.assignCountries(d_Map, d_Players);
                     if (l_check) {
                         System.out.println("Countries allocated randomly amongst Players");
+                        d_LogEntry.setMessage("Countries allocated randomly amongst Players");
                         setPhase(new MainPlay(this));
                         d_LogEntry.setGamePhase(d_Phase);
                         d_LogEntry.setCommand(l_commandName+"Command is being executed");
@@ -275,6 +279,7 @@ public class GameEngine {
 
                 default:
                     System.out.println("Invalid command - use gameplayer command/assigncountries command/showmap command in start up InternalPhase!");
+                    d_LogEntry.setMessage("Invalid command - use gameplayer command/assigncountries command/showmap command in start up InternalPhase!");
                     break;
             }
         }
@@ -294,6 +299,7 @@ public class GameEngine {
                 }
             }
             System.out.println("Total Armies left with all Players in Pool: "+l_counter);
+            d_LogEntry.setMessage("Total Armies left with all Players in Pool: "+l_counter);
             //case when atleast one player has any army/armies left
             if(l_counter >= 0){
                 switch (l_commandName) {
@@ -310,19 +316,23 @@ public class GameEngine {
                                         p_player.addOrder(new Deploy(p_player, l_countryId, l_numberOfArmies));
                                         p_player.issue_order();
                                         p_player.setOwnedArmies(p_player.getOwnedArmies()-l_numberOfArmies);
+                                        d_LogEntry.setMessage("deply order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]+" "+l_data[2]);
                                         System.out.println("Player "+p_player.getPlayerName()+" now has "+p_player.getOwnedArmies()+" Army units left!");
+                                        d_LogEntry.setMessage("Player "+p_player.getPlayerName()+" now has "+p_player.getOwnedArmies()+" Army units left!");
                                     }
                                     else{
                                         System.out.println("Country not owned by player or insufficient Army units | please pass to next player");
+                                        d_LogEntry.setMessage("Country not owned by player or insufficient Army units | please pass to next player");
                                     }
                                     d_GamePhase = InternalPhase.TURN;
                                     break;
                                 }
                             } else
                                 System.out.println("Invalid Command");
-
+                                d_LogEntry.setMessage("Invalid Command");
                         }catch (Exception e) {
                             System.out.println("Country not owned by player or insufficient Army units | please pass to next player");
+                            d_LogEntry.setMessage("Country not owned by player or insufficient Army units | please pass to next player");
                         }
                         break;
 
@@ -356,18 +366,21 @@ public class GameEngine {
                                     if(l_checkOwnedCountry && l_checkNeighbourCountry && l_checkArmies){
                                         p_player.addOrder(new Advance(p_player, l_countryNameFrom,l_countryNameTo, l_numberOfArmies,l_targetPlayer));
                                         p_player.issue_order();
+                                        d_LogEntry.setMessage("advance order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]+" "+l_data[2]);
                                     }
                                     else{
                                         System.out.println("Country not owned by player or target Country not adjacent or insufficient Army units | please pass to next player");
+                                        d_LogEntry.setMessage("Country not owned by player or target Country not adjacent or insufficient Army units | please pass to next player");
                                     }
                                     d_GamePhase = InternalPhase.TURN;
                                     break;
                                 }
                             } else
                                 System.out.println("Invalid Command");
-
+                                d_LogEntry.setMessage("Invalid Command");
                         }catch (Exception e) {
                             System.out.println("Country not owned by player or target Country not adjacent or insufficient Army units | please pass to next player");
+                            d_LogEntry.setMessage("Country not owned by player or target Country not adjacent or insufficient Army units | please pass to next player");
                         }
                         break;
 
@@ -401,19 +414,23 @@ public class GameEngine {
                                         //need to send target player instead of current player as param
                                         p_player.addOrder(new Bomb(p_player,targetPlayer, l_countryId));
                                         p_player.issue_order();
+                                        d_LogEntry.setMessage("Bomb order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]);
                                         p_player.removeCard("Bomb");
+                                        d_LogEntry.setMessage("Bomb card removed from players card list");
                                     }
                                     else{
                                         System.out.println("Country owned by current player or target Country not adjacent | please pass to next player");
+                                        d_LogEntry.setMessage("Country owned by current player or target Country not adjacent | please pass to next player");
                                     }
                                     d_GamePhase = InternalPhase.TURN;
                                     break;
                                 }
                             } else
                                 System.out.println("Invalid Command");
-
+                                d_LogEntry.setMessage("Invalid Command");
                         }catch (Exception e) {
                             System.out.println("Country owned by current player or target Country not adjacent | please pass to next player");
+                            d_LogEntry.setMessage("Country owned by current player or target Country not adjacent | please pass to next player");
                         }
                         break;
 
@@ -428,19 +445,23 @@ public class GameEngine {
                                     if(l_checkOwnedCountry && checkCard){
                                         p_player.addOrder(new Blockade(p_player, l_countryId));
                                         p_player.issue_order();
+                                        d_LogEntry.setMessage("Blockade order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]);
                                         p_player.removeCard("Blockade");
+                                        d_LogEntry.setMessage("Bloackade card removed from Player's cardList ");
                                     }
                                     else{
                                         System.out.println("Country not owned by current player | please pass to next player");
+                                        d_LogEntry.setMessage("Country not owned by current player | please pass to next player");
                                     }
                                     d_GamePhase = InternalPhase.TURN;
                                     break;
                                 }
                             } else
                                 System.out.println("Invalid Command");
-
+                                d_LogEntry.setMessage("Invalid Command");
                         }catch (Exception e) {
                             System.out.println("Country not owned by current player | please pass to next player");
+                            d_LogEntry.setMessage("Country not owned by current player | please pass to next player");
                         }
                         break;
 
@@ -463,19 +484,23 @@ public class GameEngine {
                                     if(l_checkOwnedCountry && l_checkTargetOwnedCountry && l_checkArmies && checkCard){
                                         p_player.addOrder(new Airlift(p_player, l_sourceCountryId, l_targetCountryId, l_numberOfArmies));
                                         p_player.issue_order();
+                                        d_LogEntry.setMessage("Airlift order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]+" "+l_data[2]+" "+l_data[3]);
                                         p_player.removeCard("Airlift");
+                                        d_LogEntry.setMessage("Airlift card removed from Player's cardList ");
                                     }
                                     else{
                                         System.out.println("Source Country or Target Country not owned by player insufficient Army units | please pass to next player");
+                                        d_LogEntry.setMessage("Source Country or Target Country not owned by player insufficient Army units | please pass to next player");
                                     }
                                     d_GamePhase = InternalPhase.TURN;
                                     break;
                                 }
                             } else
                                 System.out.println("Invalid Command");
-
+                                d_LogEntry.setMessage("Invalid Command");
                         }catch (Exception e) {
                             System.out.println("Source Country or Target Country not owned by player insufficient Army units | please pass to next player");
+                            d_LogEntry.setMessage("Source Country or Target Country not owned by player insufficient Army units | please pass to next player");
                         }
                         break;
 
@@ -486,12 +511,14 @@ public class GameEngine {
                                 if (this.isAlphabetic(l_data[1])) {
                                     Player l_NegPlayer = getPlayerByName(l_data[1]);
                                     p_player.addOrder(new Diplomacy(p_player, l_NegPlayer));
+                                    d_LogEntry.setMessage("Diplomacy order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]+" "+l_data[2]+" "+l_data[3]);
                                 }
                             } else
                                 System.out.println("Invalid Command");
-
+                                d_LogEntry.setMessage("Invalid Command");
                         }catch (Exception e) {
                             System.out.println("Invalid Player name");
+                            d_LogEntry.setMessage("Invalid Player name");
                         }
                         break;
 
@@ -501,6 +528,7 @@ public class GameEngine {
                             d_GamePhase = InternalPhase.TURN;
                         }catch (Exception e) {
                             System.out.println("Invalid Command - it should be of the form -> deploy countryID num | pass");
+                            d_LogEntry.setMessage("Invalid Command - it should be of the form -> deploy countryID num | pass");
                         }
                         break;
 
@@ -514,12 +542,14 @@ public class GameEngine {
 
                     default:
                         System.out.println("Invalid command - either use deploy | pass | showmap commands in ISSUE_ORDERS InternalPhase");
+                        d_LogEntry.setMessage("Invalid command - either use deploy | pass | showmap commands in ISSUE_ORDERS InternalPhase");
                         break;
                 }
             }
             else{
                 //no armies left to deploy, so execute orders
                 System.out.println("press ENTER to continue to execute InternalPhase..");
+                d_LogEntry.setMessage("No more armies left,move to execute Phase");
                 d_GamePhase = InternalPhase.EXECUTE_ORDERS;
                 return d_GamePhase;
             }
@@ -532,6 +562,7 @@ public class GameEngine {
             switch (l_commandName) {
                 case "execute":
                     d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                    d_LogEntry.setMessage("Executing orders in round robin way:");
                     int l_count = 0;
                     for (Player l_p : d_Players) {
                         Queue<Order> l_temp = l_p.getD_orderList();
@@ -540,12 +571,14 @@ public class GameEngine {
 
                     if(l_count == 0){
                         System.out.println("Orders already executed!");
+                        d_LogEntry.setMessage("Orders already executed!");
                         d_Phase.showMap(d_Players, d_Map);
                         d_GamePhase = InternalPhase.ISSUE_ORDERS;
                         return d_GamePhase;
                     }
                     else{
                         System.out.println("Total Orders  :" + l_count);
+                        d_LogEntry.setMessage("Total Orders  :" + l_count);
                         while (l_count != 0) {
                             for (Player l_p : d_Players) {
 
@@ -553,6 +586,7 @@ public class GameEngine {
                                 if (l_temp.size() > 0) {
                                     Order l_toRemove = l_p.next_order();
                                     System.out.println("Order: " +l_toRemove+ " executed for player: "+l_p.getPlayerName());
+                                    d_LogEntry.setMessage("Order: " +l_toRemove+ " executed for player: "+l_p.getPlayerName());
                                     l_toRemove.execute();
                                 }
                             }
@@ -560,12 +594,14 @@ public class GameEngine {
                         }
 
                         System.out.println("Orders executed!");
+                        d_LogEntry.setMessage("Orders executed!");
                         d_Phase.showMap(d_Players, d_Map);
                         d_Phase.reinforce();
                         //Check if any Player owns all Countries
                         for (Player l_p : d_Players){
                             if(l_p.getOwnedCountries().size() == d_Map.getCountries().size()){
                                 System.out.println(l_p.getPlayerName()+" has Won the Game!");
+                                d_LogEntry.setMessage(l_p.getPlayerName()+" has Won the Game!");
                                 System.exit(0);
                             }
                         }
@@ -573,6 +609,7 @@ public class GameEngine {
                         for (Iterator<Player> iterator = d_Players.iterator(); iterator.hasNext();) {
                             if (iterator.next().getOwnedCountries().size() == 0) {
                                 System.out.println(((Player) iterator).getPlayerName()+"has lost all its territories and is no longer part of the game");
+                                d_LogEntry.setMessage(((Player) iterator).getPlayerName()+"has lost all its territories and is no longer part of the game");
                                 iterator.remove();
                             }
                         }
@@ -580,6 +617,10 @@ public class GameEngine {
                         System.out.println("Current Orders were executed,Starting again with assigning Reinforcements!");
                         System.out.println("Reinforcements assigned! Players can provide deploy Orders now!");
                         System.out.println("\nPlayer 1 can provide deploy | pass order..");
+                        d_LogEntry.setMessage("Current Orders were executed,Starting again with assigning Reinforcements!");
+                        d_LogEntry.setMessage("Reinforcements assigned! Players can provide deploy Orders now!");
+                        d_LogEntry.setMessage("\nPlayer 1 can provide deploy | pass order..");
+
                         d_GamePhase = InternalPhase.ISSUE_ORDERS;
                     }
                     break;
@@ -591,6 +632,7 @@ public class GameEngine {
 
                 default:
                     System.out.println("Execute Order InternalPhase has commenced, either use showmap | execute");
+                    d_LogEntry.setMessage("Execute Order InternalPhase has commenced, either use showmap | execute");
                     break;
             }
         }
