@@ -13,6 +13,7 @@ public class Diplomacy implements Order{
     public boolean execute() {
         this.d_currentPlayer.addPlayerNegList(d_targetPlayer);
         this.d_targetPlayer.addPlayerNegList(d_currentPlayer);
+       
         return true;
     }
 }

@@ -37,12 +37,13 @@ public class Player {
         this.d_OwnedArmies = 0;
         d_OrderList = new ArrayDeque<>();
         d_Deck = new ArrayList<>();
+        d_NegotiateList= new ArrayList<Player>();
     }
 
     void addPlayerNegList(Player p_player) {
     	d_NegotiateList.add(p_player);
     }
-   public void flushNegotiators() {
+    public void flushNegotiators() {
     	d_NegotiateList.clear();
     }
     /**
