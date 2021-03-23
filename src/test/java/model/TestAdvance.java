@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 public class TestAdvance{
     Order d_DOrder;
     Queue<Order> d_OrderList;
-    Player d_Player1, d_Player2;
+    Player d_Player1, d_Player2, d_TargetPlayer;
     GameMap d_Map;
     ArrayList<Player> d_Players;
     StartUp d_Stup;
@@ -46,7 +46,7 @@ public class TestAdvance{
         d_Players.add(d_Player1);
         d_GamePhase = InternalPhase.ISSUE_ORDERS;
         l_checkOwnedCountry = true;
-        d_DOrder = new Advance(d_Player1,d_SourceCountryId,d_TargetCountryId,d_NumberOfArmies);
+        d_DOrder = new Advance(d_Player1,d_SourceCountryId,d_TargetCountryId,d_NumberOfArmies,d_TargetPlayer);
         d_OrderList = new ArrayDeque<>();
     }
 
@@ -59,6 +59,12 @@ public class TestAdvance{
         d_Ge = new GameEngine();
         d_Map = d_Rge.loadMap("dummy.map");
         d_Stup.assignCountries(d_Map, d_Players);
+        for(Player tmp: d_Players) {
+        	if(tmp.getOwnedCountries().containsKey(d_TargetCountryId)) {
+        		d_TargetPlayer= tmp;
+        		break;
+        	}
+        }
         AssignReinforcement.assignReinforcementArmies(d_Player1);
 
         //performed checks for owned country and allowed army units.
@@ -71,7 +77,7 @@ public class TestAdvance{
         boolean l_checkNeighbourCountry = (d_TargetCountryId.equals(defendingCountry.getCountryId()));
         boolean l_checkExistingArmies= attackingCountry.getNumberOfArmies()>= d_NumberOfArmies;
         if(l_checkOwnedCountry && l_checkNeighbourCountry && l_checkExistingArmies){
-            d_Player1.addOrder(new Advance(d_Player1,d_SourceCountryId,d_TargetCountryId, d_NumberOfArmies ));
+            d_Player1.addOrder(new Advance(d_Player1,d_SourceCountryId,d_TargetCountryId, d_NumberOfArmies,d_TargetPlayer ));
             d_Player1.issue_order();
         }
         else{

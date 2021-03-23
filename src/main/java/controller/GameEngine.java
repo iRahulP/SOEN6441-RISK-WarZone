@@ -24,9 +24,13 @@ public class GameEngine {
     public ArrayList<Player> d_Players;
     public PlayRisk d_Play;
     public Phase d_Phase;
+    public Card d_Card;
     public LogEntryBuffer d_LogEntry;
     public WriteLogEntry d_WriteLog;
 
+    /**
+     * Initializes the variables and objects required to play the game and act on user commands
+     */
     public GameEngine()  {
         d_Map = new GameMap();
         d_RunG = new RunGameEngine();
@@ -121,13 +125,12 @@ public class GameEngine {
         if (d_GamePhase.equals(InternalPhase.NULL)) {
             switch (l_commandName) {
                 case "editmap":
-                    d_LogEntry.setCommand(l_commandName+"Command is being executed");
                     setPhase(new PreLoad(this));
                     d_LogEntry.setGamePhase(d_Phase);
+                    d_LogEntry.setCommand(l_commandName+"Command is being executed");
                     d_Phase.editMap(l_data, l_mapName);
                     String str=d_Phase.getD_PhaseName();
                     System.out.println(str);
-
 //
                     break;
 
@@ -161,8 +164,8 @@ public class GameEngine {
                 case "editcountry":
                     setPhase(new PreLoad(this));
                     d_LogEntry.setGamePhase(d_Phase);
-                    d_Phase.editCountry(l_data, l_continentId, l_countryId) ;
                     d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                    d_Phase.editCountry(l_data, l_continentId, l_countryId) ;
                     String str1=d_Phase.getD_PhaseName();
                     System.out.println(str1);
 //
@@ -339,9 +342,19 @@ public class GameEngine {
                                     //Checks if required armies present on Source territory
                                     CountryDetails l_c= p_player.getOwnedCountries().get(l_countryNameFrom.toLowerCase());
                                     int l_existingArmies = l_c.getNumberOfArmies();
+
+                                    Player l_targetPlayer = null;
+                                    for(Player temp : d_Players){
+                                        //check which player has target countryID
+                                        if(temp.getOwnedCountries().containsKey(l_countryNameTo.toLowerCase())){
+                                            l_targetPlayer = temp;
+                                            break;
+                                        }
+                                    }
+
                                     boolean l_checkArmies = (l_existingArmies >= l_numberOfArmies);
                                     if(l_checkOwnedCountry && l_checkNeighbourCountry && l_checkArmies){
-                                        p_player.addOrder(new Advance(p_player, l_countryNameFrom,l_countryNameTo, l_numberOfArmies));
+                                        p_player.addOrder(new Advance(p_player, l_countryNameFrom,l_countryNameTo, l_numberOfArmies,l_targetPlayer));
                                         p_player.issue_order();
                                     }
                                     else{
@@ -382,10 +395,12 @@ public class GameEngine {
                                             break;
                                         }
                                     }
-                                    if(l_checkOwnedCountryNotOfCurrent && targetCountryNeighbour){
+                                    boolean checkCard = p_player.doesCardExists("Bomb");
+                                    if(l_checkOwnedCountryNotOfCurrent && targetCountryNeighbour && checkCard){
                                         //need to send target player instead of current player as param
-                                        p_player.addOrder(new Bomb(targetPlayer, l_countryId));
+                                        p_player.addOrder(new Bomb(p_player,targetPlayer, l_countryId));
                                         p_player.issue_order();
+                                        p_player.removeCard("Bomb");
                                     }
                                     else{
                                         System.out.println("Country owned by current player or target Country not adjacent | please pass to next player");
@@ -408,9 +423,11 @@ public class GameEngine {
                                 if (this.isAlphabetic(l_data[1])) {
                                     l_countryId = l_data[1];
                                     boolean l_checkOwnedCountry = p_player.getOwnedCountries().containsKey(l_countryId.toLowerCase());
-                                    if(l_checkOwnedCountry){
+                                    boolean checkCard = p_player.doesCardExists("Blockade");
+                                    if(l_checkOwnedCountry && checkCard){
                                         p_player.addOrder(new Blockade(p_player, l_countryId));
                                         p_player.issue_order();
+                                        p_player.removeCard("Blockade");
                                     }
                                     else{
                                         System.out.println("Country not owned by current player | please pass to next player");
@@ -441,9 +458,11 @@ public class GameEngine {
                                     CountryDetails l_c= p_player.getOwnedCountries().get(l_sourceCountryId.toLowerCase());
                                     int l_existingArmies = l_c.getNumberOfArmies();
                                     boolean l_checkArmies = (l_existingArmies >= l_numberOfArmies);
-                                    if(l_checkOwnedCountry && l_checkTargetOwnedCountry && l_checkArmies){
+                                    boolean checkCard = p_player.doesCardExists("Airlift");
+                                    if(l_checkOwnedCountry && l_checkTargetOwnedCountry && l_checkArmies && checkCard){
                                         p_player.addOrder(new Airlift(p_player, l_sourceCountryId, l_targetCountryId, l_numberOfArmies));
                                         p_player.issue_order();
+                                        p_player.removeCard("Airlift");
                                     }
                                     else{
                                         System.out.println("Source Country or Target Country not owned by player insufficient Army units | please pass to next player");
@@ -534,6 +553,13 @@ public class GameEngine {
                             if(l_p.getOwnedCountries().size() == d_Map.getCountries().size()){
                                 System.out.println(l_p.getPlayerName()+" has Won the Game!");
                                 System.exit(0);
+                            }
+                        }
+                        //check if any player does not has lost its all territories
+                        for (Iterator<Player> iterator = d_Players.iterator(); iterator.hasNext();) {
+                            if (iterator.next().getOwnedCountries().size() == 0) {
+                            	System.out.println(((Player) iterator).getPlayerName()+"has lost all its territories and is no longer part of the game");
+                                iterator.remove();
                             }
                         }
 

@@ -9,7 +9,7 @@ public class Advance implements Order{
 
 	private int d_NumArmies;
 	private String d_SourceCountryId, d_TargetCountryId;
-	private Player d_Player;
+	private Player d_Player,d_TargetPlayer;
 	
 	/**
 	 * Constructor of advance class  
@@ -18,11 +18,12 @@ public class Advance implements Order{
 	 * @param p_targetCountryId target country Id
 	 * @param p_numArmies number of armies
 	 */
-	public Advance(Player p_player,String p_sourceCountryId,String p_targetCountryId,int p_numArmies){
+	public Advance(Player p_player,String p_sourceCountryId,String p_targetCountryId,int p_numArmies, Player p_targetPlayer){
 		d_Player= p_player;
 		d_SourceCountryId= p_sourceCountryId;
 		d_TargetCountryId= p_targetCountryId;
 		d_NumArmies= p_numArmies;
+		d_TargetPlayer= p_targetPlayer;
 	}
 	
 	/**
@@ -68,6 +69,7 @@ public class Advance implements Order{
 				//if defending country has no armies
 				if(defenderArmyLeft <= 0) {
 					d_Player.getOwnedCountries().put(d_TargetCountryId, defendingCountry);
+					d_TargetPlayer.getOwnedCountries().remove(d_TargetCountryId);
 					defendingCountry.setNumberOfArmies(attackerArmyLeft);
 					attackingCountry.setNumberOfArmies(1);
 					//If Attack Successful and new territory added to Player

@@ -8,14 +8,16 @@ package model;
 public class Bomb implements Order{
     private String d_CountryId;
     private Player d_Player;
+    private Player d_CPlayer;
 
     /**
      * This constructor will initialize the order object with deploy details.
      * @param p_player target player where bomb will effect
      * @param p_countryId adjacent opponent country where bomb card will take effect
      */
-    public Bomb(Player p_player,String p_countryId) {
+    public Bomb(Player p_cplayer, Player p_player,String p_countryId) {
         d_Player = p_player;
+        d_CPlayer = p_cplayer;
         d_CountryId = p_countryId;
     }
 
