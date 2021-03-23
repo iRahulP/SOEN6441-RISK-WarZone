@@ -154,16 +154,6 @@ public class Player {
     }
 
     /**
-     * If a player issues a card Order,he can use cards from his cards deck.
-     * @param p_cardOrder card order command as input
-     * @param p_card string representation of card to be used
-     */
-    public void useCard(Order p_cardOrder, String p_card) {
-        addOrder(p_cardOrder);
-        removeCard(p_card);
-    }
-
-    /**
      * If a player uses a card,it will be removed from deck of cards.
      * @param p_card String representation of card to be used
      */
