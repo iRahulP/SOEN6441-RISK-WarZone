@@ -493,6 +493,13 @@ public class GameEngine {
                                 System.exit(0);
                             }
                         }
+                        //check if any player does not has lost its all territories
+                        for (Iterator<Player> iterator = d_Players.iterator(); iterator.hasNext();) {
+                            if (iterator.next().getOwnedCountries().size() == 0) {
+                            	System.out.println(((Player) iterator).getPlayerName()+"has lost all its territories and is no longer part of the game");
+                                iterator.remove();
+                            }
+                        }
 
                         System.out.println("Current Orders were executed,Starting again with assigning Reinforcements!");
                         System.out.println("Reinforcements assigned! Players can provide deploy Orders now!");
