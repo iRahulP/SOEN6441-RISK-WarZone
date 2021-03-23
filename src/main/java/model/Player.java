@@ -35,6 +35,7 @@ public class Player {
         d_OwnedCountries = new HashMap<>();
         this.d_OwnedArmies = 0;
         d_OrderList = new ArrayDeque<>();
+        d_Deck = new ArrayList<>();
     }
 
     /**
