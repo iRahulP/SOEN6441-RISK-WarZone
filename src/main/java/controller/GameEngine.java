@@ -25,7 +25,8 @@ public class GameEngine {
     public PlayRisk d_Play;
     public Phase d_Phase;
     public Card d_Card;
-
+    public LogEntryBuffer d_LogEntry;
+    public WriteLogEntry d_WriteLog;
     /**
      * Initializes the variables and objects required to play the game and act on user commands
      */
@@ -37,6 +38,9 @@ public class GameEngine {
         d_Players = new ArrayList<Player>();
         d_GamePhase = InternalPhase.NULL;
         d_Play = new PlayRisk();
+        d_LogEntry = new LogEntryBuffer();
+        d_WriteLog = new WriteLogEntry();
+        d_LogEntry.attach(d_WriteLog);
     }
 
     /**
@@ -120,6 +124,8 @@ public class GameEngine {
             switch (l_commandName) {
                 case "editmap":
                     setPhase(new PreLoad(this));
+                    d_LogEntry.setGamePhase(d_Phase);
+                    d_LogEntry.setCommand(l_commandName+"Command is being executed");
                     d_Phase.editMap(l_data, l_mapName);
                     String str=d_Phase.getD_PhaseName();
                     System.out.println(str);
@@ -128,6 +134,8 @@ public class GameEngine {
 
                 case "loadmap":
                     setPhase(new PreLoad(this));
+                    d_LogEntry.setGamePhase(d_Phase);
+                    d_LogEntry.setCommand(l_commandName+"Command is being executed");
                     d_Phase.loadMap(l_data,l_mapName);
                     String str1=d_Phase.getD_PhaseName();
                     System.out.println(str1);
@@ -143,6 +151,8 @@ public class GameEngine {
             switch (l_commandName) {
                 case "editcontinent":
                     setPhase(new PreLoad(this));
+                    d_LogEntry.setGamePhase(d_Phase);
+                    d_LogEntry.setCommand(l_commandName+"Command is being executed");
                     d_Phase.editContinent(l_data, l_continentId, l_controlValue);
                     String str=d_Phase.getD_PhaseName();
                     System.out.println(str);
@@ -152,6 +162,8 @@ public class GameEngine {
                 case "editcountry":
                     setPhase(new PreLoad(this));
                     d_Phase.editCountry(l_data, l_continentId, l_countryId) ;
+                    d_LogEntry.setGamePhase(d_Phase);
+                    d_LogEntry.setCommand(l_commandName+"Command is being executed");
                     String str1=d_Phase.getD_PhaseName();
                     System.out.println(str1);
 //
