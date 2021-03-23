@@ -27,6 +27,7 @@ public class TestBomb{
     String d_TargetCountryId = null;
     boolean l_checkOwnedCountry;
     int d_NumberOfArmies = 4;
+    //ArrayList<Player> d_NegotiateList;
     /**
      * initial setup
      */
@@ -45,6 +46,7 @@ public class TestBomb{
         l_checkOwnedCountry = true;
         d_DOrder = new Deploy(d_Player1,d_SourceCountryId,d_NumberOfArmies);
         d_OrderList = new ArrayDeque<>();
+        //d_NegotiateList = new ArrayList<Player>();
     }
 
     /**
@@ -58,6 +60,9 @@ public class TestBomb{
         d_Map = d_Rge.loadMap("dummy.map");
         d_Stup.assignCountries(d_Map, d_Players);
         AssignReinforcement.assignReinforcementArmies(d_Player1);
+//        System.out.println(d_Player1.getD_NegotiateList());
+//        d_Player1.addPlayerNegList(d_Player2);
+//        System.out.println(d_Player1.getD_NegotiateList());
 
         //System.out.println("Countries assigned to " + d_Player1.getPlayerName() + " : " + d_Player1.getOwnedCountries()); //egypt, japan
         //System.out.println("Countries assigned to " + d_Player2.getPlayerName() + " : " + d_Player2.getOwnedCountries()); //albania, afghanistan
@@ -98,7 +103,10 @@ public class TestBomb{
                 break;
             }
         }
-
+//        System.out.println(targetPlayer);
+//        System.out.println("Check");
+//        d_Player2.addPlayerNegList(targetPlayer);
+//        System.out.println(d_Player2.d_NegotiateList);
         if (l_checkOwnedCountryNotOfCurrent && targetCountryNeighbour && !d_Player2.getOwnedCountries().containsKey(d_TargetCountryId.toLowerCase())){
             //need to send target player instead of current player as param
             d_Player2.addOrder(new Bomb(d_Player2,targetPlayer, d_TargetCountryId));

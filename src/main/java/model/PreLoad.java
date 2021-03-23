@@ -335,7 +335,7 @@ public class PreLoad extends Edit{
 
 	@Override
 	public void gamePlayer(String[] p_data, ArrayList<Player> p_players, String p_playerName) {
-		// TODO Auto-generated method stub
+		System.out.println("not allowed in preload state");
 		
 	}
 

@@ -18,6 +18,7 @@ public class Player {
     private Order d_Order;
     private Queue<Order> d_OrderList;
 
+    ArrayList<Player> d_NegotiateList;
     /**
      * list of cards owned by player is stored in d_Deck
      */
@@ -36,8 +37,31 @@ public class Player {
         this.d_OwnedArmies = 0;
         d_OrderList = new ArrayDeque<>();
         d_Deck = new ArrayList<>();
+        d_NegotiateList= new ArrayList<Player>();
     }
 
+    /**
+     * Getter for Negotiators
+     * @return d_NegotiateList
+     */
+    public ArrayList<Player> getD_NegotiateList() {
+        return d_NegotiateList;
+    }
+
+    /**
+     * Adds Player to Negotiator list
+     * @param p_player target player to be added
+     */
+    void addPlayerNegList(Player p_player) {
+    	d_NegotiateList.add(p_player);
+    }
+
+    /**
+     * flush lists after Turn
+     */
+    public void flushNegotiators() {
+    	d_NegotiateList.clear();
+    }
     /**
      * This method sets the name of the player.
      *
@@ -190,7 +214,9 @@ public class Player {
             return false;
     }
 
-
+    /**
+     * show the particular card owned by player
+     */
     public void showCards()
     {
         Iterator l_iter = d_Deck.iterator();
