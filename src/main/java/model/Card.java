@@ -1,10 +1,8 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Card {
-
     String d_CardType;
     String d_Card;
     String[] cardsList = {"Bomb","Airlift","Blockade","Diplomacy"};
@@ -27,5 +25,4 @@ public class Card {
         int index = randomGenerator.nextInt(cardsList.length);
         return cardsList[index];
     }
-
 }
