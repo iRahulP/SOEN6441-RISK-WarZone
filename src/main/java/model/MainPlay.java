@@ -78,7 +78,8 @@ public class MainPlay extends Play{
 
 	@Override
 	public void reinforce() {
-		 Iterator<Player> itr = d_Ge.d_Players.listIterator();
+		d_Ge.d_LogEntry.setMessage("Assign Reinforcements:");
+		Iterator<Player> itr = d_Ge.d_Players.listIterator();
 	        while(itr.hasNext()) {
 	            Player p = itr.next();
 	            AssignReinforcement.assignReinforcementArmies(p);
