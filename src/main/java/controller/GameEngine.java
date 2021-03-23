@@ -300,7 +300,11 @@ public class GameEngine {
                                     CountryDetails attackingCountry = p_player.getOwnedCountries().get(l_countryNameFrom.toLowerCase());
                                     CountryDetails defendingCountry = attackingCountry.getNeighbours().get(l_countryNameTo.toLowerCase());
                                     boolean l_checkNeighbourCountry = (l_countryNameTo.equals(defendingCountry.getCountryId()));
-                                    boolean l_checkArmies = (p_player.getOwnedArmies() >= l_numberOfArmies);
+
+                                    //Checks if required armies present on Source territory
+                                    CountryDetails l_c= p_player.getOwnedCountries().get(l_sourceCountryId.toLowerCase());
+                                    int l_existingArmies = l_c.getNumberOfArmies();
+                                    boolean l_checkArmies = (l_existingArmies >= l_numberOfArmies);
                                     if(l_checkOwnedCountry && l_checkNeighbourCountry && l_checkArmies){
                                         p_player.addOrder(new Advance(p_player, l_countryNameFrom,l_countryNameTo, l_numberOfArmies));
                                         p_player.issue_order();
