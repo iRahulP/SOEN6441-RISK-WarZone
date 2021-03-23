@@ -257,6 +257,7 @@ public class GameEngine {
             Iterator<Player> l_itr = d_Players.listIterator();
             while(l_itr.hasNext()) {
                 Player l_p = l_itr.next();
+                l_p.flushNegotiators();
                 if (l_p.getOwnedArmies() > 0) {
                     l_counter = l_counter + l_p.getOwnedArmies();
                 }
@@ -354,6 +355,7 @@ public class GameEngine {
                                     }
                                     Player targetPlayer = null;
                                     for(Player temp : d_Players){
+
                                         //check which player has target countryID
                                         if(temp.getOwnedCountries().containsKey(l_countryId.toLowerCase())){
                                             targetPlayer = temp;
@@ -438,6 +440,21 @@ public class GameEngine {
 
                         }catch (Exception e) {
                             System.out.println("Source Country or Target Country not owned by player insufficient Army units | please pass to next player");
+                        }
+                        break;
+
+                    case "negotiate":
+                        try {
+                            if (!(l_data[1] == null)){
+                                if (this.isAlphabetic(l_data[1])) {
+                                    Player l_NegPlayer = getPlayerByName(l_data[1]);
+                                    p_player.addOrder(new Diplomacy(p_player, l_NegPlayer));
+                                }
+                            } else
+                                System.out.println("Invalid Command");
+
+                        }catch (Exception e) {
+                            System.out.println("Invalid Player name");
                         }
                         break;
 
@@ -537,6 +554,14 @@ public class GameEngine {
             }
         }
         return d_GamePhase;
+    }
+
+    private Player getPlayerByName(String p_playerName) {
+        for(Player l_player:d_Players) {
+            if(l_player.getPlayerName().equals(p_playerName))
+                return l_player;
+        }
+        return null;
     }
 }
 
