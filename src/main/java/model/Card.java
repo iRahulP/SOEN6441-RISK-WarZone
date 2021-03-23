@@ -16,7 +16,6 @@ public class Card {
 
     /**
      *The method gives type of a card.
-     *
      * @return string card type
      */
     String getCardType()
@@ -34,7 +33,6 @@ public class Card {
 
     /**
      * Picks a random card from the Cards List using random generator
-     *
      * @return The index of the Cards List
      */
     String randomCard()
