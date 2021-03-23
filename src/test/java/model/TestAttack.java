@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 public class TestAttack{
     Order d_DOrder;
     Queue<Order> d_OrderList;
-    Player d_Player1, d_Player2;
+    Player d_Player1, d_Player2, d_TargetPlayer;
     GameMap d_Map;
     ArrayList<Player> d_Players;
     StartUp d_Stup;
@@ -46,7 +46,7 @@ public class TestAttack{
         d_Players.add(d_Player2);
         d_GamePhase = InternalPhase.ISSUE_ORDERS;
         l_checkOwnedCountry = true;
-        d_DOrder = new Advance(d_Player1,d_SourceCountryId,d_TargetCountryId,d_NumberOfArmies);
+        d_DOrder = new Advance(d_Player1,d_SourceCountryId,d_TargetCountryId,d_NumberOfArmies, d_TargetPlayer);
         d_OrderList = new ArrayDeque<>();
     }
 
@@ -60,6 +60,12 @@ public class TestAttack{
         d_Ge = new GameEngine();
         d_Map = d_Rge.loadMap("dummy.map");
         d_Stup.assignCountries(d_Map, d_Players);
+        for(Player tmp: d_Players) {
+        	if(tmp.getOwnedCountries().containsKey(d_TargetCountryId)) {
+        		d_TargetPlayer= tmp;
+        		break;
+        	}
+        }
         AssignReinforcement.assignReinforcementArmies(d_Player1);
 
         //performed checks for owned country and allowed army units.
@@ -72,12 +78,16 @@ public class TestAttack{
         boolean l_checkNeighbourCountry = (d_TargetCountryId.equals(defendingCountry.getCountryId()));
         boolean l_checkExistingArmies= attackingCountry.getNumberOfArmies()>= d_NumberOfArmies;
         if(l_checkOwnedCountry && l_checkNeighbourCountry && l_checkExistingArmies){
-            d_Player1.addOrder(new Advance(d_Player1,d_SourceCountryId,d_TargetCountryId, d_NumberOfArmies ));
+            d_Player1.addOrder(new Advance(d_Player1,d_SourceCountryId,d_TargetCountryId, d_NumberOfArmies, d_TargetPlayer ));
             d_Player1.issue_order();
         }
         else{
             System.out.println("Country not owned by player or sufficient army not present | please pass to next player");
         }
+        
+        System.out.println(d_Player1.getOwnedCountries().size());
+        System.out.println(d_TargetPlayer.getOwnedCountries().size());
+        
         System.out.println(d_Player1.getD_orderList());
         Order l_toRemove = d_Player1.next_order();
         System.out.println("Order: " +l_toRemove+ " executed for player: "+d_Player1.getPlayerName());
@@ -89,6 +99,9 @@ public class TestAttack{
         					+ d_TargetCountryId + " is not owned by "+ d_Player1 );
         assertEquals(1 ,attackingCountry.getNumberOfArmies()); //((7-1)*60/100) = 3 //6-2=4 //1 remain
         assertEquals(4, defendingCountry.getNumberOfArmies()); //3*70/100= 2  // 3-3=0 //4 deploy
+        
+        System.out.println(d_Player1.getOwnedCountries().size());
+        System.out.println(d_TargetPlayer.getOwnedCountries().size());
         
         System.out.println("Winning country is added to player countrylist");
         boolean l_checkWinningCountryOwned= d_Player1.getOwnedCountries().containsKey(d_TargetCountryId);
