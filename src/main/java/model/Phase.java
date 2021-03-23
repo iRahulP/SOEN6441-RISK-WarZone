@@ -26,6 +26,8 @@ public abstract class Phase {
 	abstract public void reinforce() ;
 	abstract public void gamePlayer(String[] p_data, ArrayList<Player> p_players, String p_playerName) ;
 	abstract public void showMap(ArrayList<Player> p_players, GameMap p_map);
+	abstract public void validatemap();
+
 	public void printInvalidCommandMessage(){
 		System.out.println("Invalid command in state "
 				+ this.getClass().getSimpleName() );
