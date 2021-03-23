@@ -26,7 +26,11 @@ import org.junit.runners.Suite;
         TestBomb.class,
         TestAdjacent.class,
         TestPhase.class,
-        TestNotNeighbour.class
+        TestNotNeighbour.class,
+        TestCard.class,
+        TestPhase.class,
+        TestAdvance.class,
+        TestAttack.class
 })
 
 /**
