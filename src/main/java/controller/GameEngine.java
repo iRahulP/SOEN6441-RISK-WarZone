@@ -485,6 +485,15 @@ public class GameEngine {
                         System.out.println("Orders executed!");
                         d_Phase.showMap(d_Players, d_Map);
                         d_Phase.reinforce();
+
+                        //Check if any Player owns all Countries
+                        for (Player l_p : d_Players){
+                            if(l_p.getOwnedCountries().size() == d_Map.getCountries().size()){
+                                System.out.println(l_p.getPlayerName()+" has Won the Game!");
+                                System.exit(0);
+                            }
+                        }
+
                         System.out.println("Current Orders were executed,Starting again with assigning Reinforcements!");
                         System.out.println("Reinforcements assigned! Players can provide deploy Orders now!");
                         System.out.println("\nPlayer 1 can provide deploy | pass order..");
@@ -495,10 +504,6 @@ public class GameEngine {
                 case "showmap":
                     d_Phase.showMap(d_Players, d_Map);
                     break;
-
-                case "exit":
-                    System.out.println("Build 1 ENDS HERE!");
-                    exit(0);
 
                 default:
                     System.out.println("Execute Order InternalPhase has commenced, either use showmap | execute");
