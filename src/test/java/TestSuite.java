@@ -25,6 +25,7 @@ import org.junit.runners.Suite;
         TestAirlift.class,
         TestBomb.class,
         TestAdjacent.class,
+        TestPhase.class,
         TestNotNeighbour.class
 })
 
