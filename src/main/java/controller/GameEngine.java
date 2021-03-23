@@ -350,7 +350,7 @@ public class GameEngine {
                                     boolean checkCard = p_player.doesCardExists("Bomb");
                                     if(l_checkOwnedCountryNotOfCurrent && targetCountryNeighbour && checkCard){
                                         //need to send target player instead of current player as param
-                                        p_player.addOrder(new Bomb(targetPlayer, l_countryId));
+                                        p_player.addOrder(new Bomb(p_player,targetPlayer, l_countryId));
                                         p_player.issue_order();
                                         p_player.removeCard("Bomb");
                                     }
