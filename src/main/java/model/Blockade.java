@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * Class containing logic for implementation of blockade order
+ * @author Rahul
+ *
+ */
 public class Blockade implements Order{
     private String d_CountryId;
     private Player d_Player;

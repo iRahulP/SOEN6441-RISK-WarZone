@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * Class containing logic for implementation of bomb order
+ * @author Rahul
+ *
+ */
 public class Bomb implements Order{
     private String d_CountryId;
     private Player d_Player;
