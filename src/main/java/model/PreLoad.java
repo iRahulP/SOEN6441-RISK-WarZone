@@ -21,6 +21,7 @@ public class PreLoad extends Edit{
      */
     public void editContinent(String[] p_data, String p_continentId, int p_controlValue) {
         try {
+            d_Ge.d_LogEntry.setMessage("Command given by user:"+p_data);
             for (int i = 1; i < p_data.length; i++) {
                 if (p_data[i].equals("-add")) {
                     if (d_Ge.isAlphabetic(p_data[i + 1])) {
@@ -69,6 +70,7 @@ public class PreLoad extends Edit{
      */
     public void editCountry(String[] p_data, String p_continentId, String p_countryId) {
         try {
+            d_Ge.d_LogEntry.setMessage("Command given by user:"+p_data);
             for (int i = 1; i < p_data.length; i++) {
                 if (p_data[i].equals("-add")) {
                     if (d_Ge.isAlphabetic(p_data[i + 1]) || d_Ge.isAlphabetic(p_data[i + 2])) {
@@ -117,6 +119,7 @@ public class PreLoad extends Edit{
      */
     public void editNeighbour(String[] p_data, String p_countryId, String p_neighborCountryId) {
         try {
+            d_Ge.d_LogEntry.setMessage("Command given by user:"+p_data);
             for (int i = 1; i < p_data.length; i++) {
                 if (p_data[i].equals("-add")) {
                     if (d_Ge.isAlphabetic(p_data[i + 1]) || d_Ge.isAlphabetic(p_data[i + 2])) {
@@ -164,6 +167,7 @@ public class PreLoad extends Edit{
      */
     public void savemap(String[] p_data, String p_mapName) {
         try {
+            d_Ge.d_LogEntry.setMessage("Command given by user:"+p_data);
             if (p_data[1] != "") {
                 if (d_Ge.isMapNameValid(p_data[1])) {
                     p_mapName = p_data[1];
@@ -192,6 +196,7 @@ public class PreLoad extends Edit{
      */
     public void editMap(String[] p_data, String p_mapName) {
         try {
+            d_Ge.d_LogEntry.setMessage("Command given by user:"+p_data);
             if (p_data[1] != null) {
                 if (d_Ge.isMapNameValid(p_data[1])) {
                     p_mapName = p_data[1];
@@ -214,6 +219,7 @@ public class PreLoad extends Edit{
     @Override
     public void loadMap(String[] p_data,String p_mapName) {
         try {
+            d_Ge.d_LogEntry.setMessage("Command given by user: "+ p_data[0] + " " +p_data[1]);
             if (p_data[1] != null) {
                 if (d_Ge.isMapNameValid(p_data[1])) {
                     p_mapName = p_data[1];
@@ -221,12 +227,12 @@ public class PreLoad extends Edit{
                     if (d_Ge.d_Map != null) {
                         if (!d_Ge.d_Map.getValid()) {
                             System.out.println("Map is not valid");
-                            //d_Ge.d_LogObject.setMessage("Map is not valid");
+                            d_Ge.d_LogEntry.setMessage("Map is not valid");
                             d_Ge.d_GamePhase = InternalPhase.NULL;
                             d_Ge.setGamePhase(d_Ge.d_GamePhase);
                         } else {
                             System.out.println("Map is valid. Please Add players -> ");
-                            //d_LogObject.setMessage("Map is valid. Please Add players -> ");
+                            d_Ge.d_LogEntry.setMessage("Map is valid. Please Add players -> ");
                             d_Ge.d_GamePhase = InternalPhase.STARTUP;
                             d_Ge.setGamePhase(d_Ge.d_GamePhase);
                         }
@@ -236,11 +242,12 @@ public class PreLoad extends Edit{
                     }
                 } else {
                     System.out.println("Map name not valid");
-                    //d_LogObject.setMessage("Map name not valid");
+                    d_Ge.d_LogEntry.setMessage("Map name not valid");
                 }
             }
         } catch (Exception e) {
             System.out.println("Invalid command - try -> loadmap sample.map");
+            d_Ge.d_LogEntry.setMessage("Invalid command - try -> loadmap sample.map");
         }
         d_Ge.setPhase(new PostLoad(d_Ge));
     }
@@ -249,7 +256,7 @@ public class PreLoad extends Edit{
 	
 	@Override
 	public void showMap(GameMap p_map) {
-		if(p_map==null)
+        if(p_map==null)
 			return;
 		System.out.printf("%85s\n", "-------------------------------------------------------------------------------------------");
 		System.out.printf("%25s%25s%35s\n", "Continents", "Country", "Country's neighbors");
