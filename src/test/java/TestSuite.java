@@ -24,7 +24,8 @@ import org.junit.runners.Suite;
         TestNeutralTerritory.class,
         TestAirlift.class,
         TestBomb.class,
-        TestAdjacent.class
+        TestAdjacent.class,
+        TestNotNeighbour.class
 })
 
 /**
