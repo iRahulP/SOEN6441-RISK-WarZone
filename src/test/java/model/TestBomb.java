@@ -101,7 +101,7 @@ public class TestBomb{
 
         if (l_checkOwnedCountryNotOfCurrent && targetCountryNeighbour && !d_Player2.getOwnedCountries().containsKey(d_TargetCountryId.toLowerCase())){
             //need to send target player instead of current player as param
-            d_Player2.addOrder(new Bomb(targetPlayer, d_TargetCountryId));
+            d_Player2.addOrder(new Bomb(d_Player2,targetPlayer, d_TargetCountryId));
             d_Player2.issue_order();
         }
 
