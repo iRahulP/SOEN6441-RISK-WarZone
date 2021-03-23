@@ -51,6 +51,7 @@ public class LogEntryBuffer extends Observable {
         d_Map = new GameMap();
         d_Players = new ArrayList<Player>();
         d_ActivePlayer = null;
+        d_GamePhase = null;
         d_PhaseValue = "";
         d_Command = "";
         d_Message = "";
@@ -109,7 +110,7 @@ public class LogEntryBuffer extends Observable {
      */
     public void setGamePhase(Phase p_gamePhase) {
        
-    	if(this.d_GamePhase==p_gamePhase)
+    	if(d_GamePhase!=null && this.d_GamePhase.getD_PhaseName()==p_gamePhase.getD_PhaseName())
             return;
     	else
     	    d_GamePhase = p_gamePhase;
