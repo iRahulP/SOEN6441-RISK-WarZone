@@ -198,6 +198,17 @@ public class Player {
         else
             return false;
     }
+
+
+    void showCard()
+    {
+        Iterator l_iter = d_Deck.iterator();
+        while (l_iter.hasNext()) {
+            Card l_card = (Card) l_iter.next();
+            System.out.println("Player now owns card:"+l_card.getCardType());
+        }
+
+    }
 }
 
 
