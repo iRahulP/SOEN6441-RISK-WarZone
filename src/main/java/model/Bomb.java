@@ -30,6 +30,10 @@ public class Bomb implements Order{
         double armies = Double.valueOf(l_existingArmies / 2);
         l_c.setNumberOfArmies((int)armies);
 
+        if(l_c.getNumberOfArmies() == 0){
+            //set territory as neutral
+            d_Player.getOwnedCountries().remove(l_c.getCountryId().toLowerCase());
+        }
         return true;
     }
 
