@@ -119,7 +119,6 @@ public class Player {
 
     /**
      * getter for order queue
-     *
      * @return d_OrderList
      */
     public Queue<Order> getD_orderList() {
