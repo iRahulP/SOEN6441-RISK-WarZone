@@ -27,11 +27,9 @@ public class StartUp extends Play {
 	public boolean addPlayer(ArrayList<Player> p_players, String p_playerName){
 		if(p_players.size()==6) {
 			System.out.println("Can not add any more player. Maximum no. of players allowed is 6.");
-			d_Ge.d_LogEntry.setMessage("Can not add any more player. Maximum no. of players allowed is 6.");
 			return false;
 		}
 		p_players.add(new Player(p_playerName));
-		d_Ge.d_LogEntry.setMessage("Player added: "+ p_playerName);
 		return true;
 	}
 
@@ -48,11 +46,9 @@ public class StartUp extends Play {
 			Player l_p = itr.next();
 			if(l_p.getPlayerName().equals(p_playerName)) {
 				p_players.remove(l_p);
-				d_Ge.d_LogEntry.setMessage("Player removed: "+ p_playerName);
 				return true;
 			}
 		}
-		d_Ge.d_LogEntry.setMessage("Player not in list,hence cannot be removed: "+ p_playerName);
 		return false;
 	}
 
@@ -66,7 +62,6 @@ public class StartUp extends Play {
 		int l_numberOfPlayers = p_players.size();
 		if(p_players.size()<2) {
 			System.out.println("Minimum two players are required to play the game.");
-			d_Ge.d_LogEntry.setMessage("Minimum two players are required to play the game.");
 			return false;
 		}
 		int l_counter = 0;
@@ -78,7 +73,6 @@ public class StartUp extends Play {
 			else
 				l_counter++;
 		}
-		d_Ge.d_LogEntry.setMessage("Countries assigned to players.");
 		return true;
 	}
 
@@ -198,12 +192,10 @@ public class StartUp extends Play {
 							System.out.println("Player added!");
 						} else {
 							System.out.println("Can not add any more player. Max pool of 6 Satisfied!");
-							d_Ge.d_LogEntry.setMessage("Can not add any more player. Max pool of 6 Satisfied!");
 						}
 						d_Ge.d_GamePhase = InternalPhase.STARTUP;
 					} else {
 						System.out.println("Invalid Player Name");
-						d_Ge.d_LogEntry.setMessage("Invalid Player Name");
 					}
 				} else if (p_data[i].equals("-remove")) {
 					if (d_Ge.isPlayerNameValid(p_data[i + 1])) {
@@ -216,17 +208,14 @@ public class StartUp extends Play {
 						d_Ge.d_GamePhase = InternalPhase.STARTUP;
 					} else
 						System.out.println("Invalid Player Name");
-					    d_Ge.d_LogEntry.setMessage("Invalid Player Name");
 				}
 			}
 		}
 		catch(ArrayIndexOutOfBoundsException e) {
 			System.out.println("Invalid command - it should be of the form gameplayer -add playername -remove playername");
-			d_Ge.d_LogEntry.setMessage("Invalid command - it should be of the form gameplayer -add playername -remove playername");
 		}
 		catch(Exception e) {
 			System.out.println("Invalid command - it should be of the form gameplayer -add playername -remove playername");
-			d_Ge.d_LogEntry.setMessage("Invalid command - it should be of the form gameplayer -add playername -remove playername");
 		}
 
 	}

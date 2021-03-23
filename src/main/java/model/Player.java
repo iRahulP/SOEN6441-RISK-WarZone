@@ -53,14 +53,14 @@ public class Player {
      * @param p_player target player to be added
      */
     void addPlayerNegList(Player p_player) {
-    	d_NegotiateList.add(p_player);
+        d_NegotiateList.add(p_player);
     }
 
     /**
      * flush lists after Turn
      */
     public void flushNegotiators() {
-    	d_NegotiateList.clear();
+        d_NegotiateList.clear();
     }
     /**
      * This method sets the name of the player.

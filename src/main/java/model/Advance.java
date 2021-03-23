@@ -34,66 +34,66 @@ public class Advance implements Order {
 	 */
 	@Override
 	public boolean execute() {
-			if(d_Player.d_NegotiateList.contains(d_TargetPlayer)){
-				//skip execute
-				return false;
-			}else {
-				if (d_Player.getOwnedCountries().containsKey(d_SourceCountryId.toLowerCase())) {
-					if (d_Player.getOwnedCountries().containsKey(d_TargetCountryId.toLowerCase())) {
-						if ((d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase()).getNumberOfArmies()) > d_NumArmies) {
-							int fromArmies = d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase()).getNumberOfArmies();
-							fromArmies -= d_NumArmies;
-							d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase()).setNumberOfArmies(fromArmies);
-							int toArmies = d_Player.getOwnedCountries().get(d_TargetCountryId.toLowerCase()).getNumberOfArmies();
-							toArmies += d_NumArmies;
-							d_Player.getOwnedCountries().get(d_TargetCountryId.toLowerCase()).setNumberOfArmies(toArmies);
-							return true;
-						} else {
-							System.out.println("player don't have enough armies.");
-							return false;
-						}
-					} else {
-						System.out.println(d_TargetCountryId + " is not owned by the player");
-						System.out.println("Attack Occur between: " + d_TargetCountryId + " and " + d_SourceCountryId);
-
-						//fetching the countries and its armies
-						CountryDetails attackingCountry = d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase());
-						CountryDetails defendingCountry = attackingCountry.getNeighbours().get(d_TargetCountryId.toLowerCase());
-						int attackArmy = attackingCountry.getNumberOfArmies() - 1;
-						int defendArmy = defendingCountry.getNumberOfArmies();
-
-						//logic to kill the opponent country armies
-						int armyToAttack = (attackArmy * 60) / 100;
-						int armyForDefend = (defendArmy * 70 / 100);
-
-						//after attack
-						int defenderArmyLeft = defendArmy - armyToAttack;
-						int attackerArmyLeft = attackArmy - armyForDefend;
-
-						//if defending country has no armies
-						if (defenderArmyLeft <= 0) {
-							d_Player.getOwnedCountries().put(d_TargetCountryId, defendingCountry);
-							d_TargetPlayer.getOwnedCountries().remove(d_TargetCountryId);
-							defendingCountry.setNumberOfArmies(attackerArmyLeft);
-							attackingCountry.setNumberOfArmies(1);
-							//If Attack Successful and new territory added to Player
-							//Generate a random Card from {'BOMB', 'AIRLIFT', 'BLOCKADE', 'DIPLOMACY'}
-							d_Player.addCard();
-
-						}
-						//if defending coutry has armies
-						else {
-							defendingCountry.setNumberOfArmies(defenderArmyLeft);
-							attackingCountry.setNumberOfArmies(attackerArmyLeft + 1);
-						}
+		if(d_Player.d_NegotiateList.contains(d_TargetPlayer)){
+			//skip execute
+			return false;
+		}else {
+			if (d_Player.getOwnedCountries().containsKey(d_SourceCountryId.toLowerCase())) {
+				if (d_Player.getOwnedCountries().containsKey(d_TargetCountryId.toLowerCase())) {
+					if ((d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase()).getNumberOfArmies()) > d_NumArmies) {
+						int fromArmies = d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase()).getNumberOfArmies();
+						fromArmies -= d_NumArmies;
+						d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase()).setNumberOfArmies(fromArmies);
+						int toArmies = d_Player.getOwnedCountries().get(d_TargetCountryId.toLowerCase()).getNumberOfArmies();
+						toArmies += d_NumArmies;
+						d_Player.getOwnedCountries().get(d_TargetCountryId.toLowerCase()).setNumberOfArmies(toArmies);
 						return true;
+					} else {
+						System.out.println("player don't have enough armies.");
+						return false;
 					}
 				} else {
-					System.out.println(d_SourceCountryId + " is not owned by the player");
-					return false;
+					System.out.println(d_TargetCountryId + " is not owned by the player");
+					System.out.println("Attack Occur between: " + d_TargetCountryId + " and " + d_SourceCountryId);
+
+					//fetching the countries and its armies
+					CountryDetails attackingCountry = d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase());
+					CountryDetails defendingCountry = attackingCountry.getNeighbours().get(d_TargetCountryId.toLowerCase());
+					int attackArmy = attackingCountry.getNumberOfArmies() - 1;
+					int defendArmy = defendingCountry.getNumberOfArmies();
+
+					//logic to kill the opponent country armies
+					int armyToAttack = (attackArmy * 60) / 100;
+					int armyForDefend = (defendArmy * 70 / 100);
+
+					//after attack
+					int defenderArmyLeft = defendArmy - armyToAttack;
+					int attackerArmyLeft = attackArmy - armyForDefend;
+
+					//if defending country has no armies
+					if (defenderArmyLeft <= 0) {
+						d_Player.getOwnedCountries().put(d_TargetCountryId, defendingCountry);
+						d_TargetPlayer.getOwnedCountries().remove(d_TargetCountryId);
+						defendingCountry.setNumberOfArmies(attackerArmyLeft);
+						attackingCountry.setNumberOfArmies(1);
+						//If Attack Successful and new territory added to Player
+						//Generate a random Card from {'BOMB', 'AIRLIFT', 'BLOCKADE', 'DIPLOMACY'}
+						d_Player.addCard();
+
+					}
+					//if defending coutry has armies
+					else {
+						defendingCountry.setNumberOfArmies(defenderArmyLeft);
+						attackingCountry.setNumberOfArmies(attackerArmyLeft + 1);
+					}
+					return true;
 				}
+			} else {
+				System.out.println(d_SourceCountryId + " is not owned by the player");
+				return false;
 			}
 		}
+	}
 
 
 

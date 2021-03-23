@@ -7,8 +7,8 @@ import controller.GameEngine;
 
 public class MainPlay extends Play{
 	public MainPlay(GameEngine p_ge) {
-		 d_Ge = p_ge;
-		 d_PhaseName = "MainPlay";
+		d_Ge = p_ge;
+		d_PhaseName = "MainPlay";
 	}
 //	@Override
 //	public boolean addPlayer(ArrayList<Player> p_players, String p_playerName) {
@@ -78,42 +78,41 @@ public class MainPlay extends Play{
 
 	@Override
 	public void reinforce() {
-		d_Ge.d_LogEntry.setMessage("Assign Reinforcements:");
 		Iterator<Player> itr = d_Ge.d_Players.listIterator();
-	        while(itr.hasNext()) {
-	            Player p = itr.next();
-	            AssignReinforcement.assignReinforcementArmies(p);
+		while(itr.hasNext()) {
+			Player p = itr.next();
+			AssignReinforcement.assignReinforcementArmies(p);
+		}
 	}
- }
 	@Override
 	public void editContinent(String[] p_data, String p_continentId, int p_controlValue) {
 		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public void editCountry(String[] p_data, String p_continentId, String p_countryId) {
 		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public void editNeighbour(String[] p_data, String p_countryId, String p_neighborCountryId) {
 		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public void savemap(String[] p_data, String p_mapName) {
 		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public void editMap(String[] p_data, String p_mapName) {
 		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public void gamePlayer(String[] p_data, ArrayList<Player> p_players, String p_playerName) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
 
