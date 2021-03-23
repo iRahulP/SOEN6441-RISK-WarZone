@@ -114,6 +114,11 @@ public class MainPlay extends Play{
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public void validatemap(){
+		// TODO Auto-generated method stub
+	}
 }
 
 
