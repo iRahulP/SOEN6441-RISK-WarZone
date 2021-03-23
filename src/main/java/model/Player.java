@@ -190,7 +190,9 @@ public class Player {
             return false;
     }
 
-
+    /**
+     * show the particular card owned by player
+     */
     public void showCards()
     {
         Iterator l_iter = d_Deck.iterator();
