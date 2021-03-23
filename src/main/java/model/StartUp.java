@@ -173,8 +173,10 @@ public class StartUp extends Play {
 
 	}
 
-
-
+	@Override
+	public void validatemap(){
+		// TODO Auto-generated method stub
+	}
 
 	@Override
 	public void gamePlayer(String[] p_data,ArrayList<Player> p_players, String p_playerName) {
@@ -219,4 +221,5 @@ public class StartUp extends Play {
 		}
 
 	}
+
 }
