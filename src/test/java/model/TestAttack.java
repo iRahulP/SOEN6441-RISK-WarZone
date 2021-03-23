@@ -93,6 +93,7 @@ public class TestAttack{
         System.out.println("Winning country is added to player countrylist");
         boolean l_checkWinningCountryOwned= d_Player1.getOwnedCountries().containsKey(d_TargetCountryId);
         assertEquals(true, l_checkWinningCountryOwned);
+        d_Player1.showCards();
     }
 
 }
