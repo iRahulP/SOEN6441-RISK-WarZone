@@ -17,7 +17,7 @@ public class LogEntryBuffer extends Observable {
     /**
      * Stores the current phase of the game.
      */
-    private InternalPhase d_GamePhase;
+    private Phase d_GamePhase;
 
     /**
      * Stores the list of players playing the game.
@@ -76,7 +76,7 @@ public class LogEntryBuffer extends Observable {
      * Get the current phase of the game.
      * @return returns the current phase of the game.
      */
-    public InternalPhase getGamePhase() {
+    public Phase getGamePhase() {
         return this.d_GamePhase;
     }
 
@@ -107,27 +107,14 @@ public class LogEntryBuffer extends Observable {
      * Set the phase of the game with the input argument.
      * @param p_gamePhase new phase of the game.
      */
-    public void setGamePhase(InternalPhase p_gamePhase) {
+    public void setGamePhase(Phase p_gamePhase) {
        
-    	if(this.d_GamePhase==p_gamePhase){
+    	if(this.d_GamePhase==p_gamePhase)
             return;
-        }
-    	 if(p_gamePhase==InternalPhase.NULL){
-             setPhaseValue("In NULL Phase:");
-         }
-         else if(p_gamePhase==InternalPhase.EDITMAP){
-             setPhaseValue("In EDITMAP Phase:");
-         }
-         else if(p_gamePhase==InternalPhase.STARTUP){
-             setPhaseValue("In STARTUP Phase:");
-         }
-         else if (p_gamePhase == InternalPhase.ISSUE_ORDERS) {
-             setPhaseValue("In ISSUE_ORDERS Phase:");
-         }
-         else if (p_gamePhase == InternalPhase.EXECUTE_ORDERS) {
-             setPhaseValue("In EXECUTE_ORDERS Phase:");
-         }
+    	else
+    	    d_GamePhase = p_gamePhase;
 
+    	setPhaseValue("In "+d_GamePhase.getD_PhaseName()+" Phase:");
          d_IsGamePhaseSet = true;
          notifyObservers(this);
     }
