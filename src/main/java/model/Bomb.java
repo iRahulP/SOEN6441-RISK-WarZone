@@ -27,6 +27,12 @@ public class Bomb implements Order{
      */
     @Override
     public boolean execute() {
+        //Check if Source player negotiating target Player
+        if(d_CPlayer.d_NegotiateList.contains(d_Player)){
+            System.out.println("YAsh");
+            //skip execute
+            return false;
+        }
         CountryDetails l_c= d_Player.getOwnedCountries().get(d_CountryId.toLowerCase());
         int l_existingArmies = l_c.getNumberOfArmies();
         double armies = Double.valueOf(l_existingArmies / 2);

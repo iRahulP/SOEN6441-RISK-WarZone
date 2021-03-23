@@ -40,9 +40,25 @@ public class Player {
         d_NegotiateList= new ArrayList<Player>();
     }
 
+    /**
+     * Getter for Negotiators
+     * @return d_NegotiateList
+     */
+    public ArrayList<Player> getD_NegotiateList() {
+        return d_NegotiateList;
+    }
+
+    /**
+     * Adds Player to Negotiator list
+     * @param p_player target player to be added
+     */
     void addPlayerNegList(Player p_player) {
     	d_NegotiateList.add(p_player);
     }
+
+    /**
+     * flush lists after Turn
+     */
     public void flushNegotiators() {
     	d_NegotiateList.clear();
     }

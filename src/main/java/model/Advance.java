@@ -34,13 +34,10 @@ public class Advance implements Order {
 	 */
 	@Override
 	public boolean execute() {
-
-		Iterator l_iter = d_Player.d_NegotiateList.iterator();
-		while (l_iter.hasNext()) {
-			Player l_player = (Player) l_iter.next();
-			if (l_player.d_NegotiateList.equals(d_TargetPlayer)) {
+			if(d_Player.d_NegotiateList.contains(d_TargetPlayer)){
+				//skip execute
 				return false;
-			} else {
+			}else {
 				if (d_Player.getOwnedCountries().containsKey(d_SourceCountryId.toLowerCase())) {
 					if (d_Player.getOwnedCountries().containsKey(d_TargetCountryId.toLowerCase())) {
 						if ((d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase()).getNumberOfArmies()) > d_NumArmies) {
@@ -97,8 +94,7 @@ public class Advance implements Order {
 				}
 			}
 		}
-		return false;
-	}
+
 
 
 	/**
