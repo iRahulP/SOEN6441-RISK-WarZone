@@ -26,6 +26,9 @@ public class GameEngine {
     public Phase d_Phase;
     public Card d_Card;
 
+    /**
+     * Initializes the variables and objects required to play the game and act on user commands
+     */
     public GameEngine()  {
         d_Map = new GameMap();
         d_RunG = new RunGameEngine();
