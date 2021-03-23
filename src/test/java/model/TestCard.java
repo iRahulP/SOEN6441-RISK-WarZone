@@ -14,7 +14,7 @@ public class TestCard {
 
     @Before
     public void before(){
-        d_Deck = new ArrayList<Card>();
+        d_Deck = new ArrayList<>();
         d_CardType="Bomb";
         d_Card=new Card(d_CardType);
     }
@@ -22,6 +22,6 @@ public class TestCard {
     @Test
     public void TestCard(){
         d_Deck.add(d_Card);
-        assertEquals(d_Deck.get(0),d_Card);
+        assertEquals(d_Deck.get(0).getCardType(),d_CardType);
     }
 }
