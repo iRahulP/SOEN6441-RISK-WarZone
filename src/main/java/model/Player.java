@@ -200,7 +200,7 @@ public class Player {
     }
 
 
-    void showCard()
+    void showCards()
     {
         Iterator l_iter = d_Deck.iterator();
         while (l_iter.hasNext()) {
