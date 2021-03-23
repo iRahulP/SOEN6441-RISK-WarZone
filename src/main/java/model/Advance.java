@@ -72,11 +72,8 @@ public class Advance implements Order{
 					attackingCountry.setNumberOfArmies(1);
 					//If Attack Successful and new territory added to Player
 					//Generate a random Card from {'BOMB', 'AIRLIFT', 'BLOCKADE', 'DIPLOMACY'}
-					//Card d_Card;
-					//String d_CardType;
-					//d_CardType="Bomb"; for example
-					//d_Card=new Card(d_CardType);
-					//d_Player.addCard();
+				    d_Player.addCard();
+
 				}
 				//if defending coutry has armies
 				else {
