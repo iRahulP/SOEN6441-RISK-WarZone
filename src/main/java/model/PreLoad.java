@@ -332,5 +332,15 @@ public class PreLoad extends Edit{
 
     }
 
+    public void validatemap()
+    {
+        if(d_Ge.d_RunG.validateMap(d_Ge.d_Map)) {
+            System.out.println("Map is Validated and Correct!");
+        }
+        else {
+            System.out.println("Invalid map");
+        }
+
+    }
 
 }
