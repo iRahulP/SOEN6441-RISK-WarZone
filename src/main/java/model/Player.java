@@ -19,6 +19,12 @@ public class Player {
     private Queue<Order> d_OrderList;
 
     /**
+     * list of cards owned by player is stored in d_Deck
+     */
+    ArrayList<Card> d_Deck;
+
+
+    /**
      * This constructor assigns name to the player.
      *
      * @param p_playerName name of the player
@@ -113,6 +119,7 @@ public class Player {
 
     /**
      * getter for order queue
+     *
      * @return d_OrderList
      */
     public Queue<Order> getD_orderList() {
@@ -137,4 +144,61 @@ public class Player {
         return d_OrderList.poll();
     }
 
+    /**
+     * If a player conquers a territory,a card will be added to that player
+     */
+    public void addCard() {
+        Card l_card = new Card();
+        l_card.createCard();
+        d_Deck.add(l_card);
+    }
+
+    /**
+     * If a player issues a card Order,he can use cards from his cards deck.
+     * @param p_cardOrder card order command as input
+     * @param p_card string representation of card to be used
+     */
+    public void use_card(Order p_cardOrder, String p_card) {
+        addOrder(p_cardOrder);
+        removeCard(p_card);
+    }
+
+    /**
+     * If a player uses a card,it will be removed from deck of cards.
+     * @param p_card String representation of card to be used
+     */
+    void removeCard(String p_card)
+    {
+        //remove card from deck
+        Iterator iter = d_Deck.iterator();
+        while (iter.hasNext()) {
+            Card l_card = (Card) iter.next();
+            if (l_card.getCardType() == p_card) {
+                d_Deck.remove(l_card);
+                break;
+            }
+        }
+    }
+
+    /**
+     * Before using a card, we can check if player has that card
+     * @param p_card String representation of card to be used
+     * @return true if card exists else false
+     */
+    boolean doesCardExists(String p_card) {
+
+        int existsCount = 0;
+        Iterator iter = d_Deck.iterator();
+        while (iter.hasNext()) {
+            Card l_card = (Card) iter.next();
+            if (l_card.getCardType() == p_card)
+                existsCount++;
+        }
+        if(existsCount>0)
+            return true;
+        else
+            return false;
+    }
 }
+
+
