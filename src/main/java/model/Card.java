@@ -5,7 +5,7 @@ import java.util.Random;
 public class Card {
     String d_CardType;
     String d_Card;
-    String[] cardsList = {"Bomb","Airlift","Blockade","Diplomacy"};
+    String[] d_CardsList = {"Bomb","Airlift","Blockade","Diplomacy"};
 
 
     String getCardType()
@@ -22,7 +22,7 @@ public class Card {
     {
 
         Random randomGenerator = new Random();
-        int index = randomGenerator.nextInt(cardsList.length);
-        return cardsList[index];
+        int index = randomGenerator.nextInt(d_CardsList.length);
+        return d_CardsList[index];
     }
 }
