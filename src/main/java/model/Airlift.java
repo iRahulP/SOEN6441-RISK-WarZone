@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * Class containing logic for implementation of airlift order
+ * @author Rahul
+ *
+ */
 public class Airlift implements Order{
     private int d_NumArmies;
     private String d_SourceCountryId;

@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * Class containing logic for implementation of deploy order
+ * @author Rahul
+ *
+ */
 public class Deploy implements Order{
 
     private int d_NumArmies;
