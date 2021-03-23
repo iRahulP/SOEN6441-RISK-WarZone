@@ -39,7 +39,7 @@ public class Card {
     /**
      * Stores the random card picked in the CardType String
      */
-    void createCard()
+    public void createCard()
     {
         d_CardType = randomCard();
     }
@@ -48,10 +48,11 @@ public class Card {
      * Picks a random card from the Cards List using random generator
      * @return The index of the Cards List
      */
-    String randomCard()
+    public String randomCard()
     {
         Random randomGenerator = new Random();
         int index = randomGenerator.nextInt(d_CardsList.length);
         return d_CardsList[index];
     }
+
 }
