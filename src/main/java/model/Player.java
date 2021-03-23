@@ -169,9 +169,9 @@ public class Player {
     void removeCard(String p_card)
     {
         //remove card from deck
-        Iterator iter = d_Deck.iterator();
-        while (iter.hasNext()) {
-            Card l_card = (Card) iter.next();
+        Iterator l_iter = d_Deck.iterator();
+        while (l_iter.hasNext()) {
+            Card l_card = (Card) l_iter.next();
             if (l_card.getCardType() == p_card) {
                 d_Deck.remove(l_card);
                 break;
@@ -186,14 +186,14 @@ public class Player {
      */
     boolean doesCardExists(String p_card) {
 
-        int existsCount = 0;
-        Iterator iter = d_Deck.iterator();
-        while (iter.hasNext()) {
-            Card l_card = (Card) iter.next();
+        int l_existsCount = 0;
+        Iterator l_iter = d_Deck.iterator();
+        while (l_iter.hasNext()) {
+            Card l_card = (Card) l_iter.next();
             if (l_card.getCardType() == p_card)
-                existsCount++;
+                l_existsCount++;
         }
-        if(existsCount>0)
+        if(l_existsCount>0)
             return true;
         else
             return false;
