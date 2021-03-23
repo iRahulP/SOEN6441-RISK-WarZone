@@ -41,7 +41,7 @@ public class TestPhase {
 	     d_MapName= "dummy.map";
 	    }
 	 /**
-	     * Test if the Reinforcements is allowed in preload or postload phase as it is part of startup phase.
+	     * Test if the Reinforcements is allowed in pre-load or post-load phase as it is part of startup phase.
 	     */
 	 @Test
 	 public void testPhase(){
