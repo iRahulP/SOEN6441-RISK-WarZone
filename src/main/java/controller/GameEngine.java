@@ -137,7 +137,7 @@ public class GameEngine {
                 case "loadmap":
                     setPhase(new PreLoad(this));
                     d_LogEntry.setGamePhase(d_Phase);
-                    d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                    d_LogEntry.setCommand(l_commandName+" Command is being executed");
                     d_Phase.loadMap(l_data,l_mapName);
                     String str1=d_Phase.getD_PhaseName();
                     System.out.println(str1);
