@@ -69,6 +69,7 @@ public class Advance implements Order{
 					d_Player.getOwnedCountries().put(d_TargetCountryId, defendingCountry);
 					defendingCountry.setNumberOfArmies(attackerArmyLeft);
 					attackingCountry.setNumberOfArmies(1);
+					d_Player.addCard();
 				}
 				else {
 					defendingCountry.setNumberOfArmies(defenderArmyLeft);
