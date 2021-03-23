@@ -18,6 +18,7 @@ public class Player {
     private Order d_Order;
     private Queue<Order> d_OrderList;
 
+    ArrayList<Player> d_NegotiateList;
     /**
      * list of cards owned by player is stored in d_Deck
      */
@@ -38,6 +39,12 @@ public class Player {
         d_Deck = new ArrayList<>();
     }
 
+    void addPlayerNegList(Player p_player) {
+    	d_NegotiateList.add(p_player);
+    }
+   public void flushNegotiators() {
+    	d_NegotiateList.clear();
+    }
     /**
      * This method sets the name of the player.
      *
