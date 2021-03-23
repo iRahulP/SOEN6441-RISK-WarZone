@@ -32,10 +32,9 @@ public class PlayRisk {
 
         //initial command reader from cli
         Scanner sc = new Scanner(System.in);
-        String l_cmd = sc.nextLine();
+        String l_cmd;
         InternalPhase l_gamePhase = InternalPhase.NULL;
         GameEngine cmd = new GameEngine();
-        l_gamePhase = cmd.parseCommand(null, l_cmd);
 
         //looping for commands until initial Phases where Player iteration not required!
         while(l_gamePhase!= InternalPhase.ISSUE_ORDERS) {
