@@ -133,4 +133,9 @@ public class PostLoad extends Edit {
 		
 	}
 
+	@Override
+	public void validatemap(){
+		// TODO Auto-generated method stub
+	}
+
 }
