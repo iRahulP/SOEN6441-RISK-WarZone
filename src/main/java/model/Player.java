@@ -157,7 +157,7 @@ public class Player {
      * @param p_cardOrder card order command as input
      * @param p_card string representation of card to be used
      */
-    public void use_card(Order p_cardOrder, String p_card) {
+    public void useCard(Order p_cardOrder, String p_card) {
         addOrder(p_cardOrder);
         removeCard(p_card);
     }
