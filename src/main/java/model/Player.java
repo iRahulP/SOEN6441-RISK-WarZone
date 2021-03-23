@@ -157,7 +157,7 @@ public class Player {
      * If a player uses a card,it will be removed from deck of cards.
      * @param p_card String representation of card to be used
      */
-    void removeCard(String p_card)
+    public void removeCard(String p_card)
     {
         //remove card from deck
         Iterator l_iter = d_Deck.iterator();
@@ -175,7 +175,7 @@ public class Player {
      * @param p_card String representation of card to be used
      * @return true if card exists else false
      */
-    boolean doesCardExists(String p_card) {
+    public boolean doesCardExists(String p_card) {
 
         int l_existsCount = 0;
         Iterator l_iter = d_Deck.iterator();
@@ -191,7 +191,7 @@ public class Player {
     }
 
 
-    void showCards()
+    public void showCards()
     {
         Iterator l_iter = d_Deck.iterator();
         while (l_iter.hasNext()) {
