@@ -24,6 +24,19 @@ public class Card {
     }
 
     /**
+     * Default constructor of Card to access the methods of this class.
+     */
+    public Card(){
+    }
+
+    /**
+     * This constructor will assign type of cards
+     * @param p_cardType Card Type that is assigned
+     */
+    public Card(String p_cardType){
+        this.d_CardType=p_cardType;
+    }
+    /**
      * Stores the random card picked in the CardType String
      */
     void createCard()
