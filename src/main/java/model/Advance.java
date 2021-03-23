@@ -50,7 +50,6 @@ public class Advance implements Order{
 			else{
 				System.out.println(d_TargetCountryId + " is not owned by the player");
 				System.out.println("Attack Occur between: "+ d_TargetCountryId+ " and "+ d_SourceCountryId);
-				//d_Player.performAttack(d_SourceCountryId, d_TargetCountryId);
 				
 				//fetching the countries and its armies
 				CountryDetails attackingCountry= d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase());
@@ -62,15 +61,18 @@ public class Advance implements Order{
 				int armyToAttack = (attackArmy * 60)/100;
 				int armyForDefend = (defendArmy * 70/100);
 				
+				//after attack
 				int defenderArmyLeft= defendArmy - armyToAttack;
 				int attackerArmyLeft= attackArmy - armyForDefend;
 				
+				//if defending country has no armies
 				if(defenderArmyLeft <= 0) {
 					d_Player.getOwnedCountries().put(d_TargetCountryId, defendingCountry);
 					defendingCountry.setNumberOfArmies(attackerArmyLeft);
 					attackingCountry.setNumberOfArmies(1);
 					d_Player.addCard();
 				}
+				//if defending coutry has armies
 				else {
 					defendingCountry.setNumberOfArmies(defenderArmyLeft);
 					attackingCountry.setNumberOfArmies(attackerArmyLeft + 1);
