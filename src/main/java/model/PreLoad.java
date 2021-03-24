@@ -3,9 +3,16 @@ package model;
 import java.util.ArrayList;
 
 import controller.GameEngine;
+import model.PreLoad;
 //concreteState
+/**
+ * Implementation of Preload phase of the game.
+ */
 public class PreLoad extends Edit{
-
+	/**
+	 * it is constructor to initialize values
+	 * @param p_ge is the reference of gameEngine class 
+	 */
     public PreLoad(GameEngine p_Ge)
     {
         d_Ge = p_Ge;
@@ -45,22 +52,20 @@ public class PreLoad extends Edit{
                 } else if (p_data[i].equals("-remove")) {
                     if (d_Ge.isAlphabetic(p_data[i + 1])) {
                         p_continentId = p_data[i + 1];
-                    } else {
-                    	 System.out.println("Invalid Continent Id");
-                    	 d_Ge.d_LogEntry.setMessage("Invalid Continent ID");
-                    }
-                       
+                    } else
+                        System.out.println("Invalid Continent Id");
+                    d_Ge.d_LogEntry.setMessage("Invalid Continent ID");
+
                     boolean l_check = d_Ge.d_RunG.removeContinent(d_Ge.d_Map, p_continentId);
                     if (l_check) {
-                        System.out.println(p_continentId+" Continent removed from Map");
+                        System.out.println("Continent removed from Map");
                         d_Ge.d_LogEntry.setMessage(p_continentId+" Continent removed from Map");
                         d_Ge.d_GamePhase = InternalPhase.EDITMAP;
                         d_Ge.setGamePhase(d_Ge.d_GamePhase);
-                    } else {
+                    } else
                         System.out.println("Continent doesn't exist - Please enter valid Continent ID");
-                    	d_Ge.d_LogEntry.setMessage("Continent doesn't exist - Please enter valid Continent ID");
-                    }
-                 }
+                 	d_Ge.d_LogEntry.setMessage("Continent doesn't exist - Please enter valid Continent ID");
+                  }
             }
         } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
             System.out.println("Invalid command - It should be of the form editcontinent -add continentID controlvalue -remove continentID");
@@ -252,6 +257,12 @@ public class PreLoad extends Edit{
         d_Ge.d_LogEntry.setGamePhase(d_Ge.d_Phase);
 
     }
+    /**
+	 * Load map for playing the game.
+	 * It checks whether map file exist or not.
+	 * @param p_mapName name of the map to be used for playing the game.
+	 * @param p_data it is string array passed as command.
+	 */
 
     @Override
     public void loadMap(String[] p_data,String p_mapName) {
@@ -292,9 +303,11 @@ public class PreLoad extends Edit{
         d_Ge.setPhase(new PostLoad(d_Ge));
         d_Ge.d_LogEntry.setGamePhase(d_Ge.d_Phase);
     }
-
-
-
+    
+    /**
+	 * print the continents, countries and each country's neighbor in the map
+	 * @param p_map the map to be shown.
+	 */
     @Override
     public void showMap(GameMap p_map) {
     	d_Ge.d_LogEntry.setMessage("Command given by user: showmap");
@@ -340,47 +353,10 @@ public class PreLoad extends Edit{
             l_PrintContinentName = true;
             l_PrintCountryName = true;
         }
-
-
     }
-
-//	@Override
-//	public boolean addPlayer(ArrayList<Player> p_players, String p_playerName) {
-//		// TODO Auto-generated method stub
-//		return false;
-//	}
-//
-//	@Override
-//	public boolean removePlayer(ArrayList<Player> p_players, String p_playerName) {
-//		// TODO Auto-generated method stub
-//		return false;
-//	}
-
-    @Override
-    public boolean assignCountries(GameMap p_map, ArrayList<Player> p_players) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-
-    @Override
-    public	void showMap(ArrayList<Player> p_players, GameMap p_map) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void reinforce() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void gamePlayer(String[] p_data, ArrayList<Player> p_players, String p_playerName) {
-        System.out.println("not allowed in preload state");
-        d_Ge.d_LogEntry.setMessage("not allowed in preload state");
-    }
-
+  /**
+   * this function checks whether map is valid or not.
+   */
     public void validatemap()
     {
         if(d_Ge.d_RunG.validateMap(d_Ge.d_Map)) {
@@ -391,7 +367,5 @@ public class PreLoad extends Edit{
             System.out.println("Invalid map");
             d_Ge.d_LogEntry.setMessage("Invalid map");
         }
-
     }
-
 }
