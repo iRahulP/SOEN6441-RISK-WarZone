@@ -9,12 +9,14 @@ import controller.GameEngine;
  *
  */
 public class StartUp extends Play {
+	/**
+	 * it is constructor to initialize values
+	 * @param p_ge is the reference of gameEngine class 
+	 */
 	public StartUp(GameEngine p_ge) {
 		d_Ge = p_ge;
 		d_PhaseName = "StartUp";
 	}
-
-
 
 	/**
 	 * Addition of players to the game
@@ -127,55 +129,9 @@ public class StartUp extends Play {
 			l_printNumberOfArmies = true;
 		}
 	}
-
-
-
-
 	@Override
 	public void reinforce(){
-
-	}
-
-
-
-
-	@Override
-	public void editContinent(String[] p_data, String p_continentId, int p_controlValue) {
-		// TODO Auto-generated method stub
-
-	}
-
-
-
-	@Override
-	public void editCountry(String[] p_data, String p_continentId, String p_countryId) {
-		// TODO Auto-generated method stub
-
-	}
-
-
-	@Override
-	public void editNeighbour(String[] p_data, String p_countryId, String p_neighborCountryId) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void savemap(String[] p_data, String p_mapName) {
-		// TODO Auto-generated method stub
-
-	}
-
-
-	@Override
-	public void editMap(String[] p_data, String p_mapName) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void validatemap(){
-		// TODO Auto-generated method stub
+		printInvalidCommandMessage();
 	}
 
 	@Override

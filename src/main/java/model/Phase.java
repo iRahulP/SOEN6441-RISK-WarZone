@@ -29,9 +29,7 @@ public abstract class Phase {
 	abstract public void validatemap();
 
 	public void printInvalidCommandMessage(){
-		System.out.println("Invalid command in state "
-				+ this.getClass().getSimpleName() );
-
+		System.out.println("Invalid command in "+getD_PhaseName()+" state " );
 	}
 }
 

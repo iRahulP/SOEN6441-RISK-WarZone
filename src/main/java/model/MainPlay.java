@@ -5,27 +5,17 @@ import java.util.Iterator;
 
 import controller.GameEngine;
 
+/**
+ * Implementation of MainPlay phase of the game.
+ */
 public class MainPlay extends Play{
+	/**
+	 * it is constructor to initialize values
+	 * @param p_ge is the reference of gameEngine class 
+	 */
 	public MainPlay(GameEngine p_ge) {
 		d_Ge = p_ge;
 		d_PhaseName = "MainPlay";
-	}
-//	@Override
-//	public boolean addPlayer(ArrayList<Player> p_players, String p_playerName) {
-//		// TODO Auto-generated method stub
-//		return false;
-//	}
-//
-//	@Override
-//	public boolean removePlayer(ArrayList<Player> p_players, String p_playerName) {
-//		// TODO Auto-generated method stub
-//		return false;
-//	}
-
-	@Override
-	public boolean assignCountries(GameMap p_map, ArrayList<Player> p_players) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
@@ -84,40 +74,16 @@ public class MainPlay extends Play{
 			AssignReinforcement.assignReinforcementArmies(p);
 		}
 	}
-	@Override
-	public void editContinent(String[] p_data, String p_continentId, int p_controlValue) {
-		// TODO Auto-generated method stub
 
-	}
-	@Override
-	public void editCountry(String[] p_data, String p_continentId, String p_countryId) {
-		// TODO Auto-generated method stub
-
-	}
-	@Override
-	public void editNeighbour(String[] p_data, String p_countryId, String p_neighborCountryId) {
-		// TODO Auto-generated method stub
-
-	}
-	@Override
-	public void savemap(String[] p_data, String p_mapName) {
-		// TODO Auto-generated method stub
-
-	}
-	@Override
-	public void editMap(String[] p_data, String p_mapName) {
-		// TODO Auto-generated method stub
-
-	}
 	@Override
 	public void gamePlayer(String[] p_data, ArrayList<Player> p_players, String p_playerName) {
-		// TODO Auto-generated method stub
-
+		printInvalidCommandMessage();
 	}
 
 	@Override
-	public void validatemap(){
-		// TODO Auto-generated method stub
+	public boolean assignCountries(GameMap p_map, ArrayList<Player> p_players) {
+		printInvalidCommandMessage();
+		return false;
 	}
 }
 

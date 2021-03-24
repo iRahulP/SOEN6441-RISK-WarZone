@@ -120,9 +120,9 @@ public class GameEngine {
         //initial command line commands
         //NULL : editmap / loadmap
         if (d_GamePhase.equals(InternalPhase.NULL)) {
+        	setPhase(new PreLoad(this));
             switch (l_commandName) {
                 case "editmap":
-                    setPhase(new PreLoad(this));
                     d_LogEntry.setGamePhase(d_Phase);
                     d_LogEntry.setCommand(l_commandName+"Command is being executed");
                     d_Phase.editMap(l_data, l_mapName);
@@ -132,7 +132,7 @@ public class GameEngine {
                     break;
 
                 case "loadmap":
-                    setPhase(new PreLoad(this));
+                    
                     d_LogEntry.setGamePhase(d_Phase);
                     d_LogEntry.setCommand(l_commandName+"Command is being executed");
                     d_Phase.loadMap(l_data,l_mapName);
@@ -513,7 +513,6 @@ public class GameEngine {
                                     	 p_player.addOrder(new Diplomacy(p_player, l_NegPlayer));
                                         p_player.issue_order();
                                         d_LogEntry.setMessage("Diplomacy order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]+" "+l_data[2]+" "+l_data[3]);
-                                        
                                         p_player.removeCard("Diplomacy");
                                         d_LogEntry.setMessage("Diplomacy card removed from Player's cardList ");
                                     }
