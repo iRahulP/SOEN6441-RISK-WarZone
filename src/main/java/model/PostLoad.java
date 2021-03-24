@@ -21,6 +21,7 @@ public class PostLoad extends Edit {
 
 	@Override
 	public void showMap(GameMap p_map) {
+		d_Ge.d_LogEntry.setMessage("Command given by user: showmap");
 		if(p_map==null)
 			return;
 		System.out.printf("%85s\n", "-------------------------------------------------------------------------------------------");
