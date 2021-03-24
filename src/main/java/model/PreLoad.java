@@ -21,42 +21,53 @@ public class PreLoad extends Edit{
      */
     public void editContinent(String[] p_data, String p_continentId, int p_controlValue) {
         try {
+        	d_Ge.d_LogEntry.setMessage("Command given by user:"+p_data[0] + " " +p_data[1]+ " "+ p_data[2]+ " "+ p_data[3]);
             for (int i = 1; i < p_data.length; i++) {
                 if (p_data[i].equals("-add")) {
                     if (d_Ge.isAlphabetic(p_data[i + 1])) {
                         p_continentId = p_data[i + 1];
                     } else {
                         System.out.println("Invalid Continent ID");
+                        d_Ge.d_LogEntry.setMessage("Invalid Continent ID");
                     }
                     p_controlValue = Integer.parseInt(p_data[i + 2]);
 
                     boolean l_check = d_Ge.d_RunG.addContinent(d_Ge.d_Map, p_continentId, p_controlValue);
                     if (l_check) {
                         System.out.println(p_continentId + " continent added to the map");
+                        d_Ge.d_LogEntry.setMessage(p_continentId + " continent added to the map");
                         d_Ge.d_GamePhase = InternalPhase.EDITMAP;
                         d_Ge.setGamePhase(d_Ge.d_GamePhase); //TODO not needed
                     } else {
                         System.out.println("Continent already exists - Please add valid Continent ID");
+                        d_Ge.d_LogEntry.setMessage("Continent already exists - Please add valid Continent ID");
                     }
                 } else if (p_data[i].equals("-remove")) {
                     if (d_Ge.isAlphabetic(p_data[i + 1])) {
                         p_continentId = p_data[i + 1];
-                    } else
-                        System.out.println("Invalid Continent Id");
-
+                    } else {
+                    	 System.out.println("Invalid Continent Id");
+                    	 d_Ge.d_LogEntry.setMessage("Invalid Continent ID");
+                    }
+                       
                     boolean l_check = d_Ge.d_RunG.removeContinent(d_Ge.d_Map, p_continentId);
                     if (l_check) {
-                        System.out.println("Continent removed from Map");
+                        System.out.println(p_continentId+" Continent removed from Map");
+                        d_Ge.d_LogEntry.setMessage(p_continentId+" Continent removed from Map");
                         d_Ge.d_GamePhase = InternalPhase.EDITMAP;
                         d_Ge.setGamePhase(d_Ge.d_GamePhase);
-                    } else
+                    } else {
                         System.out.println("Continent doesn't exist - Please enter valid Continent ID");
-                }
+                    	d_Ge.d_LogEntry.setMessage("Continent doesn't exist - Please enter valid Continent ID");
+                    }
+                 }
             }
         } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
             System.out.println("Invalid command - It should be of the form editcontinent -add continentID controlvalue -remove continentID");
+            d_Ge.d_LogEntry.setMessage("Invalid command - It should be of the form editcontinent -add continentID controlvalue -remove continentID");
         } catch (Exception e) {
             System.out.println("Invalid command - it should be of the form editcontinent -add continentID controlvalue -remove continentID");
+            d_Ge.d_LogEntry.setMessage("Invalid command - it should be of the form editcontinent -add continentID controlvalue -remove continentID");
         }
     }
 
@@ -69,6 +80,7 @@ public class PreLoad extends Edit{
      */
     public void editCountry(String[] p_data, String p_continentId, String p_countryId) {
         try {
+        	d_Ge.d_LogEntry.setMessage("Command given by user:"+p_data[0] + " " +p_data[1]+ " "+ p_data[2]+ " "+ p_data[3]);
             for (int i = 1; i < p_data.length; i++) {
                 if (p_data[i].equals("-add")) {
                     if (d_Ge.isAlphabetic(p_data[i + 1]) || d_Ge.isAlphabetic(p_data[i + 2])) {
@@ -76,35 +88,43 @@ public class PreLoad extends Edit{
                         p_continentId = p_data[i + 2];
                     } else {
                         System.out.println("Invalid country name");
+                        d_Ge.d_LogEntry.setMessage("Invalid Continent ID");
                     }
                     boolean l_check = d_Ge.d_RunG.addCountry(d_Ge.d_Map, p_countryId, p_continentId);
                     if (l_check) {
-                        System.out.println("Country added to the map");
+                        System.out.println(p_countryId+" Country added to the map "+p_continentId);
+                        d_Ge.d_LogEntry.setMessage(p_countryId+" Country added to the map "+p_continentId);
                         d_Ge.d_GamePhase = InternalPhase.EDITMAP;
                         d_Ge.setGamePhase(d_Ge.d_GamePhase);
                     } else {
                         System.out.println("Country already exists - Please add valid Country ID");
+                        d_Ge.d_LogEntry.setMessage("Country already exists - Please add valid Country ID");
                     }
                 } else if (p_data[i].equals("-remove")) {
                     if (d_Ge.isAlphabetic(p_data[i + 1])) {
                         p_countryId = p_data[i + 1];
                     } else {
                         System.out.println("Invalid country name");
+                        d_Ge.d_LogEntry.setMessage("Invalid country name");
                     }
                     boolean l_check = d_Ge.d_RunG.removeCountry(d_Ge.d_Map, p_countryId);
                     if (l_check) {
-                        System.out.println("Country removed from the map");
+                        System.out.println(p_countryId+" Country removed from the map");
+                        d_Ge.d_LogEntry.setMessage(p_countryId+" Country removed from the map");
                         d_Ge.d_GamePhase = InternalPhase.EDITMAP;
                         d_Ge.setGamePhase(d_Ge.d_GamePhase);
                     } else {
                         System.out.println("Country does not exist - Please enter valid country name");
+                        d_Ge.d_LogEntry.setMessage("Country does not exist - Please enter valid country name");
                     }
                 }
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Invalid command - it should be of the form editcountry -add countryId continentId -remove countryId");
+            d_Ge.d_LogEntry.setMessage("Invalid command - it should be of the form editcountry -add countryId continentId -remove countryId");
         } catch (Exception e) {
             System.out.println("Invalid command - it should be of the form editcountry -add countryId continentId -remove countryId");
+            d_Ge.d_LogEntry.setMessage("Invalid command - it should be of the form editcountry -add countryId continentId -remove countryId");
         }
     }
 
@@ -117,6 +137,7 @@ public class PreLoad extends Edit{
      */
     public void editNeighbour(String[] p_data, String p_countryId, String p_neighborCountryId) {
         try {
+        	d_Ge.d_LogEntry.setMessage("Command given by user:"+p_data[0] + " " +p_data[1]+ " "+ p_data[2]+ " "+ p_data[3]);
             for (int i = 1; i < p_data.length; i++) {
                 if (p_data[i].equals("-add")) {
                     if (d_Ge.isAlphabetic(p_data[i + 1]) || d_Ge.isAlphabetic(p_data[i + 2])) {
@@ -124,6 +145,7 @@ public class PreLoad extends Edit{
                         p_neighborCountryId = p_data[i + 2];
                     } else {
                         System.out.println("Invalid country ID");
+                        d_Ge.d_LogEntry.setMessage("Invalid country ID");
                     }
 
                     boolean l_check = d_Ge.d_RunG.addNeighbor(d_Ge.d_Map, p_countryId, p_neighborCountryId);
@@ -132,6 +154,7 @@ public class PreLoad extends Edit{
                         d_Ge.setGamePhase(d_Ge.d_GamePhase);
                     } else {
                         System.out.println("Country does not exist - Please enter valid countryID neighborcountryID");
+                        d_Ge.d_LogEntry.setMessage("Country does not exist - Please enter valid countryID neighborcountryID");
                     }
                 } else if (p_data[i].equals("-remove")) {
                     if (d_Ge.isAlphabetic(p_data[i + 1]) || d_Ge.isAlphabetic(p_data[i + 2])) {
@@ -139,6 +162,7 @@ public class PreLoad extends Edit{
                         p_neighborCountryId = p_data[i + 2];
                     } else {
                         System.out.println("Invalid country ID");
+                        d_Ge.d_LogEntry.setMessage("Invalid country ID");
                     }
 
                     boolean l_check = d_Ge.d_RunG.removeNeighbor(d_Ge.d_Map, p_countryId, p_neighborCountryId);
@@ -147,12 +171,15 @@ public class PreLoad extends Edit{
                         d_Ge.setGamePhase(d_Ge.d_GamePhase);
                     } else
                         System.out.println("Country does not exist - Please enter valid countryID neighborcountryID");
+                    	d_Ge.d_LogEntry.setMessage("Country does not exist - Please enter valid countryID neighborcountryID");
                 }
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Invalid command - it should be of the form editneighbor -add countryID neighborcountryID -remove countryID neighborcountryID");
+            d_Ge.d_LogEntry.setMessage("Invalid command - it should be of the form editneighbor -add countryID neighborcountryID -remove countryID neighborcountryID");
         } catch (Exception e) {
             System.out.println("Invalid command - it should be of the form editneighbor -add countryID neighborcountryID -remove countryID neighborcountryID");
+            d_Ge.d_LogEntry.setMessage("Invalid command - it should be of the form editneighbor -add countryID neighborcountryID -remove countryID neighborcountryID");
         }
     }
 
@@ -164,23 +191,31 @@ public class PreLoad extends Edit{
      */
     public void savemap(String[] p_data, String p_mapName) {
         try {
+        	d_Ge.d_LogEntry.setMessage("Command given by user:"+p_data[0] + " " +p_data[1]);
             if (p_data[1] != "") {
                 if (d_Ge.isMapNameValid(p_data[1])) {
                     p_mapName = p_data[1];
                     boolean l_check = d_Ge.d_RunG.saveMap(d_Ge.d_Map, p_mapName);
                     if (l_check) {
                         System.out.println("Map file saved successfully");
+                        d_Ge.d_LogEntry.setMessage("Map file saved successfully");
                         d_Ge.d_GamePhase = InternalPhase.EDITMAP;
                         d_Ge.setGamePhase(d_Ge.d_GamePhase);
-                    } else
+                    } else {
                         System.out.println("Error in saving - invalid map");
-                } else
-                    System.out.println("Map name not valid!");
+                    	d_Ge.d_LogEntry.setMessage("Error in saving - invalid map");
+                    }
+                } else {
+                	System.out.println("Map name not valid!");
+                	d_Ge.d_LogEntry.setMessage("Map name not valid!");
+                }
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Invalid command - it should be of the form(without extension) savemap filename");
+            d_Ge.d_LogEntry.setMessage("Invalid command - it should be of the form(without extension) savemap filename");
         } catch (Exception e) {
             System.out.println("Invalid command - it should be of the form(without extension) savemap filename");
+            d_Ge.d_LogEntry.setMessage("Invalid command - it should be of the form(without extension) savemap filename");
         }
     }
 
@@ -192,28 +227,36 @@ public class PreLoad extends Edit{
      */
     public void editMap(String[] p_data, String p_mapName) {
         try {
+        	d_Ge.d_LogEntry.setMessage("Command given by user:"+p_data[0] + " " +p_data[1]);
             if (p_data[1] != null) {
                 if (d_Ge.isMapNameValid(p_data[1])) {
                     p_mapName = p_data[1];
                     d_Ge.d_Map = d_Ge.d_RunG.editMap(p_mapName);
                     System.out.println("Start editing " + p_mapName);
+                    d_Ge.d_LogEntry.setMessage("Start editing " + p_mapName);
                     d_Ge.d_GamePhase = InternalPhase.EDITMAP;
                     d_Ge.setGamePhase(d_Ge.d_GamePhase);
-                } else
-                    System.out.println("Map name is invalid!");
+                } else {
+                	 System.out.println("Map name is invalid!");
+                	 d_Ge.d_LogEntry.setMessage("Map name is invalid!");
+                }
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Invalid command - it should be of the form editmap sample.map");
+            d_Ge.d_LogEntry.setMessage("Invalid command - it should be of the form editmap sample.map");
         } catch (Exception e) {
             System.out.println("Invalid command - it should be of the form editmap sample.map");
+            d_Ge.d_LogEntry.setMessage("Invalid command - it should be of the form editmap sample.map");
         }
         d_Ge.setPhase(new PreLoad(d_Ge));
+        d_Ge.d_LogEntry.setGamePhase(d_Ge.d_Phase);
 
     }
 
     @Override
     public void loadMap(String[] p_data,String p_mapName) {
         try {
+        	d_Ge.d_LogEntry.setMessage("Command given by user:"+ p_data[0] + " " +p_data[1]);
             if (p_data[1] != null) {
                 if (d_Ge.isMapNameValid(p_data[1])) {
                     p_mapName = p_data[1];
@@ -221,11 +264,13 @@ public class PreLoad extends Edit{
                     if (d_Ge.d_Map != null) {
                         if (!d_Ge.d_Map.getValid()) {
                             System.out.println("Map is not valid");
+                            d_Ge.d_LogEntry.setMessage("Map is not valid");
                             //d_Ge.d_LogObject.setMessage("Map is not valid");
                             d_Ge.d_GamePhase = InternalPhase.NULL;
                             d_Ge.setGamePhase(d_Ge.d_GamePhase);
                         } else {
-                            System.out.println("Map is valid. Please Add players -> ");
+                            System.out.println(p_mapName+" Map is valid. Please Add players -> ");
+                            d_Ge.d_LogEntry.setMessage(p_mapName+" Map is valid. Please Add players -> ");
                             //d_LogObject.setMessage("Map is valid. Please Add players -> ");
                             d_Ge.d_GamePhase = InternalPhase.STARTUP;
                             d_Ge.setGamePhase(d_Ge.d_GamePhase);
@@ -236,19 +281,23 @@ public class PreLoad extends Edit{
                     }
                 } else {
                     System.out.println("Map name not valid");
+                    d_Ge.d_LogEntry.setMessage("Map name not valid");
                     //d_LogObject.setMessage("Map name not valid");
                 }
             }
         } catch (Exception e) {
             System.out.println("Invalid command - try -> loadmap sample.map");
+            d_Ge.d_LogEntry.setMessage("Invalid command - try -> loadmap sample.map");
         }
         d_Ge.setPhase(new PostLoad(d_Ge));
+        d_Ge.d_LogEntry.setGamePhase(d_Ge.d_Phase);
     }
 
 
 
     @Override
     public void showMap(GameMap p_map) {
+    	d_Ge.d_LogEntry.setMessage("Command given by user: showmap");
         if(p_map==null)
             return;
         System.out.printf("%85s\n", "-------------------------------------------------------------------------------------------");
@@ -329,16 +378,18 @@ public class PreLoad extends Edit{
     @Override
     public void gamePlayer(String[] p_data, ArrayList<Player> p_players, String p_playerName) {
         System.out.println("not allowed in preload state");
-
+        d_Ge.d_LogEntry.setMessage("not allowed in preload state");
     }
 
     public void validatemap()
     {
         if(d_Ge.d_RunG.validateMap(d_Ge.d_Map)) {
             System.out.println("Map is Validated and Correct!");
+            d_Ge.d_LogEntry.setMessage("Map is Validated and Correct!");
         }
         else {
             System.out.println("Invalid map");
+            d_Ge.d_LogEntry.setMessage("Invalid map");
         }
 
     }
