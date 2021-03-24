@@ -11,6 +11,10 @@ import java.util.Queue;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Test deploy operation for a specific player in Game
+ * @author Rahul
+ */
 public class TestDeploy{
     Order d_DOrder;
     Queue<Order> d_OrderList;

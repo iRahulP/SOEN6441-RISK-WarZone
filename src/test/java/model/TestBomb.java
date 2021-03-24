@@ -12,6 +12,10 @@ import java.util.Queue;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Test bomb operation for a specific player in Game
+ * @author Rahul
+ */
 public class TestBomb{
     Order d_DOrder;
     Queue<Order> d_OrderList;

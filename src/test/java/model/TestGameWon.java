@@ -13,6 +13,10 @@ import java.util.Queue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * Test if a specific player won the Game
+ * @author Rahul
+ */
 public class TestGameWon{
     Player d_Player1;
     Player d_Player2;

@@ -12,7 +12,10 @@ import java.util.Queue;
 
 import static org.junit.Assert.*;
 
-
+/**
+ * Test if a territory is not neighbour for a specific player in Game
+ * @author Rahul
+ */
 public class TestNotNeighbour{
     Player d_Player1;
     Player d_Player2;

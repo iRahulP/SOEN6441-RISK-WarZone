@@ -8,6 +8,10 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
+/**
+ * Test if a territory became neutral for a specifc player
+ * @author Rahul
+ */
 public class TestNeutralTerritory {
     Player d_Player1;
     Player d_Player2;
