@@ -650,12 +650,12 @@ public class GameEngine {
                                 System.exit(0);
                             }
                         }
-                        //check if any player does not has lost its all territories
-                        for (Iterator<Player> iterator = d_Players.iterator(); iterator.hasNext();) {
-                            if (iterator.next().getOwnedCountries().size() == 0) {
-                                System.out.println(((Player) iterator).getPlayerName()+" has lost all its territories and is no longer part of the game");
-                                d_LogEntry.setMessage(((Player) iterator).getPlayerName()+" has lost all its territories and is no longer part of the game");
-                                iterator.remove();
+                        //check if any player needs to be removed as of losing all territories
+                        for (Player l_p : d_Players){
+                            if(l_p.getOwnedCountries().size() == 0){
+                                System.out.println(l_p.getPlayerName()+" has lost all its territories and is no longer part of the game");
+                                d_LogEntry.setMessage(l_p.getPlayerName()+" has lost all its territories and is no longer part of the game");
+                                d_Players.remove(l_p);
                             }
                         }
 
