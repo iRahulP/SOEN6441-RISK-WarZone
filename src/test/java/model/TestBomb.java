@@ -29,7 +29,6 @@ public class TestBomb{
     int d_NumberOfArmies = 4;
     Card d_Card;
     String[] d_CardsList;
-    //ArrayList<Player> d_NegotiateList;
     /**
      * initial setup
      */
@@ -50,7 +49,6 @@ public class TestBomb{
         d_OrderList = new ArrayDeque<>();
         d_Card = new Card();
         d_CardsList = new String[]{"Bomb", "Airlift", "Blockade", "Diplomacy"};
-        //d_NegotiateList = new ArrayList<Player>();
     }
 
     /**
@@ -64,13 +62,6 @@ public class TestBomb{
         d_Map = d_Rge.loadMap("dummy.map");
         d_Stup.assignCountries(d_Map, d_Players);
         AssignReinforcement.assignReinforcementArmies(d_Player1);
-//        System.out.println(d_Player1.getD_NegotiateList());
-//        d_Player1.addPlayerNegList(d_Player2);
-//        System.out.println(d_Player1.getD_NegotiateList());
-
-        //System.out.println("Countries assigned to " + d_Player1.getPlayerName() + " : " + d_Player1.getOwnedCountries()); //egypt, japan
-        //System.out.println("Countries assigned to " + d_Player2.getPlayerName() + " : " + d_Player2.getOwnedCountries()); //albania, afghanistan
-        //performed checks for owned country and allowed army units.
         boolean l_checkOwnedCountry = d_Player1.getOwnedCountries().containsKey(d_SourceCountryId);
         boolean l_checkArmies = (d_Player1.getOwnedArmies() >= d_NumberOfArmies);
 
@@ -91,8 +82,6 @@ public class TestBomb{
         boolean targetCountryNeighbour = false;
         //checks if target country id is neighbour to one of current player's country
         for (CountryDetails cD : d_Player2.getOwnedCountries().values()) {
-            //System.out.println(cD.getCountryId());
-            //System.out.println(cD.getNeighbours().containsKey(d_TargetCountryId));
             if (cD.getNeighbours().containsKey(d_TargetCountryId.toLowerCase()) && l_checkOwnedCountryNotOfCurrent ) {
                 targetCountryNeighbour = true;
                 break;
@@ -107,20 +96,16 @@ public class TestBomb{
                 break;
             }
         }
-//        System.out.println(targetPlayer);
-//        System.out.println("Check");
-//        d_Player2.addPlayerNegList(targetPlayer);
-//        System.out.println(d_Player2.d_NegotiateList);
+
         d_Player2.addCard("Bomb");
         d_Player2.showCards();
-        System.out.println();
         boolean checkCard = d_Player2.doesCardExists("Bomb");
         if (l_checkOwnedCountryNotOfCurrent && targetCountryNeighbour && !d_Player2.getOwnedCountries().containsKey(d_TargetCountryId.toLowerCase()) && checkCard){
             //need to send target player instead of current player as param
             d_Player2.addOrder(new Bomb(d_Player2,targetPlayer, d_TargetCountryId));
             d_Player2.issue_order();
+            d_Player2.removeCard("Bomb");
         }
-
         //Execute Bomb order
         Order l_toRemoveB = d_Player2.next_order();
         l_toRemoveB.execute();

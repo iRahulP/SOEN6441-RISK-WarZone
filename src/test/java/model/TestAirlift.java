@@ -12,6 +12,9 @@ import java.util.Queue;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ *
+ */
 public class TestAirlift{
     Order d_DOrder;
     Order d_AOrder;
@@ -64,8 +67,8 @@ public class TestAirlift{
         //performed checks for owned country and allowed army units.
         boolean l_checkOwnedCountry = d_Player1.getOwnedCountries().containsKey(d_SourceCountryId);
         boolean l_checkArmies = (d_Player1.getOwnedArmies() >= d_NumberOfArmies);
-        System.out.println("Countries assigned to "+d_Player1.getPlayerName()+" : "+d_Player1.getOwnedCountries());
-        System.out.println("Countries assigned to "+d_Player2.getPlayerName()+" : "+d_Player2.getOwnedCountries());
+        //System.out.println("Countries assigned to "+d_Player1.getPlayerName()+" : "+d_Player1.getOwnedCountries());
+        //System.out.println("Countries assigned to "+d_Player2.getPlayerName()+" : "+d_Player2.getOwnedCountries());
         if(l_checkOwnedCountry && l_checkArmies){
             d_Player1.addOrder(d_DOrder);
             d_Player1.issue_order();
@@ -78,24 +81,29 @@ public class TestAirlift{
         System.out.println(d_Player1.getD_orderList());
         Order l_toRemove = d_Player1.next_order();
         System.out.println("Order: " +l_toRemove+ " executed for player: "+d_Player1.getPlayerName());
-        System.out.println(d_Player1.getD_orderList());
         l_toRemove.execute();
 
         CountryDetails l_c= d_Player1.getOwnedCountries().get(d_SourceCountryId.toLowerCase());
+        //Check if deployed
         System.out.println(l_c.getNumberOfArmies());
-
-        d_Player1.addOrder(d_AOrder);
-        d_Player1.issue_order();
-        System.out.println(d_Player1.getD_orderList());
+        boolean l_checkTargetOwnedCountry = d_Player1.getOwnedCountries().containsKey(d_TargetCountryId.toLowerCase());
+        int l_existingArmies = l_c.getNumberOfArmies();
+        boolean l_checkArmiesD = (l_existingArmies >= d_NumberOfArmies);
+        d_Player1.addCard("Airlift");
+        d_Player1.showCards();
+        boolean checkCard = d_Player1.doesCardExists("Airlift");
+        if(l_checkOwnedCountry && l_checkTargetOwnedCountry && l_checkArmiesD && checkCard){
+            d_Player1.addOrder(d_AOrder);
+            d_Player1.issue_order();
+            d_Player1.removeCard("Airlift");
+        }
 
         Order l_toRemoveB = d_Player1.next_order();
-        System.out.println(d_Player1.getD_orderList());
         l_toRemoveB.execute();
 
-
         CountryDetails l_cB= d_Player1.getOwnedCountries().get(d_TargetCountryId.toLowerCase());
+        //Check if airlifted to target
         System.out.println(l_cB.getNumberOfArmies());
-        System.out.println(l_cB);
         assertEquals(4 ,l_cB.getNumberOfArmies());
     }
 
