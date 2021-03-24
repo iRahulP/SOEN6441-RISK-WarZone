@@ -337,6 +337,9 @@ public class GameEngine {
             }
             System.out.println("Total Armies left with all Players in Pool: "+l_counter);
             d_LogEntry.setMessage("Total Armies left with all Players in Pool: "+l_counter);
+            if(!p_player.getD_Deck().isEmpty()){
+                p_player.showCards();
+            }
             //case when atleast one player has any army/armies left
             if(l_counter >= 0){
                 switch (l_commandName) {
