@@ -48,8 +48,8 @@ public class TestOrderCapability {
      */
     @Test
     public void testOrderCapability() {
-        d_Stup = new StartUp(d_Ge);
         d_Ge = new GameEngine();
+        d_Stup = new StartUp(d_Ge);
         d_Map = d_Rge.loadMap("dummy.map");
         boolean l_check = d_Stup.assignCountries(d_Map, d_Players);
         System.out.println(d_Player1.getOwnedCountries());
