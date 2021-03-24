@@ -145,7 +145,7 @@ public class LoadMap {
     /**
      * Reads the borders from the ".map" files.
 	 * Exits the programming error if attempted to add invalid neighbor or to an invalid country.
-     * @param p_reader
+     * @param p_reader buffer data from file to be parsed
      * @return p_reader
      */
     private BufferedReader readBorders(BufferedReader p_reader) {
@@ -195,7 +195,7 @@ public class LoadMap {
     /**
      *  Registers this new country as part of its continent.
 	 * If duplicate country, exits the program throwing error.
-     * @param l_newCountry
+     * @param l_newCountry new Country
      */
     private void addToContinentMap(CountryDetails l_newCountry) {
 
