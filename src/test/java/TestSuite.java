@@ -32,7 +32,8 @@ import org.junit.runners.Suite;
         TestDiplomacy.class,
         TestAttack.class,
         TestGameWon.class,
-        TestLogEntryBuffer.class
+        TestLogEntryBuffer.class,
+        TestRemoveCard.class
 })
 
 /**
