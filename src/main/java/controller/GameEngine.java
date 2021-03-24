@@ -292,7 +292,6 @@ public class GameEngine {
             Iterator<Player> l_itr = d_Players.listIterator();
             while(l_itr.hasNext()) {
                 Player l_p = l_itr.next();
-                l_p.flushNegotiators();
                 if (l_p.getOwnedArmies() > 0) {
                     l_counter = l_counter + l_p.getOwnedArmies();
                 }
