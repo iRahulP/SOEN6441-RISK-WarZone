@@ -46,8 +46,8 @@ public class TestNeutralTerritory {
      */
     @Test
     public void testNeutralTerritory() {
-        d_Stup = new StartUp(d_Ge);
         d_Ge = new GameEngine();
+        d_Stup = new StartUp(d_Ge);
         d_Map = d_Rge.loadMap("dummy.map");
         d_Stup.assignCountries(d_Map, d_Players);
         System.out.println("Countries assigned to "+d_Player1.getPlayerName()+" : "+d_Player1.getOwnedCountries());
