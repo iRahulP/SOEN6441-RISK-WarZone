@@ -4,7 +4,9 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
-
+/**
+ * Test Class checks the loading of the map.
+ */
 public class TestLoadMap {
 
     RunGameEngine d_RunGame;

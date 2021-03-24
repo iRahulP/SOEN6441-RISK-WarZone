@@ -8,12 +8,18 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ *class to implement the logging of events. 
+ */
 public class WriteLogEntry implements Observer {
     String d_fileName="log.txt";
     private static String d_Store;
     private FileWriter d_WriteFile;
     private BufferedWriter d_Bwr ;
 
+    /**
+     * Constructor for initializing writers   
+     */
     public WriteLogEntry() {
 
         try{

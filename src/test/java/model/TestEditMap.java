@@ -5,6 +5,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * TestClass checks edit functionality of the map.
+ */
 public class TestEditMap {
 	
 	RunGameEngine d_RunGame;

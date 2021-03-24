@@ -11,6 +11,9 @@ import org.junit.Test;
 
 import controller.GameEngine;
 
+/**
+ * Test Class for diplomacy card working properly or not.
+ */
 public class TestDiplomacy {
 	    Order d_DOrder;
 	    Queue<Order> d_OrderList;

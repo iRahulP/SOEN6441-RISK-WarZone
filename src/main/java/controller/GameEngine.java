@@ -14,18 +14,56 @@ import static java.lang.System.exit;
  *
  */
 public class GameEngine {
-
+	
+	/**
+	 * @param d_Map It is reference for GameMap
+	 */
     public GameMap d_Map;
+    
+    /**
+	 * @param d_RunG It is reference for RunGameEngine
+	 */
     public RunGameEngine d_RunG;
-    //public StartUp d_StartUp;
+    /**
+	 * @param d_Arfc It is reference for AssignReinforcement 
+	 */
     public AssignReinforcement d_Arfc;
+    
+    /**
+	 * @param d_GamePhase It is reference for InternalPhase
+	 */
     public InternalPhase d_GamePhase;
+    
+    /**
+	 * @param d_Players It is reference for players list
+	 */
     public ArrayList<Player> d_Players;
+    
+    /**
+	 * @param d_Play It is reference for PlayRisk
+	 */
     public PlayRisk d_Play;
+    
+    /**
+	 * @param d_Phase It is reference for Phase
+	 */
     public Phase d_Phase;
+    
+    /**
+	 * @param d_Card It is reference for Card
+	 */
     public Card d_Card;
+    
+    /**
+	 * @param d_LogEntry It is reference for LogEntryBuffer
+	 */
     public LogEntryBuffer d_LogEntry;
+    
+    /**
+	 * @param d_WriteLog It is reference for WriteLogEntry
+	 */
     public WriteLogEntry d_WriteLog;
+    
     /**
      * Initializes the variables and objects required to play the game and act on user commands
      */

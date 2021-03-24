@@ -14,7 +14,10 @@ import controller.GameEngine;
  *it does not allow to call any other state functionality. 
  */
 public class TestPhase {
-	public GameEngine p_Ge;
+	/**
+	 * @param d_Ge is reference for gameEngine
+	 */
+	public GameEngine d_Ge;
 	  Player d_Player1;
 	    Player d_Player2;
 	    GameMap d_Map;
@@ -30,7 +33,7 @@ public class TestPhase {
 	     */
 	 @Before
 	 public void before(){
-		 p_Ge = new GameEngine();
+		 d_Ge = new GameEngine();
 		 d_Rge = new RunGameEngine();
 		 d_Players = new ArrayList<Player>();
 		 d_Map = new GameMap("dummy.map");
@@ -46,16 +49,16 @@ public class TestPhase {
 	 @Test
 	 public void testPhase(){
 		 
-		 p_Ge.setPhase(new PreLoad(p_Ge));
+		 d_Ge.setPhase(new PreLoad(d_Ge));
 		 d_MapName= "world.map";
-	 	 p_Ge.setPhase(new PreLoad(p_Ge));
-		 String str=p_Ge.d_Phase.getD_PhaseName();
+	 	 d_Ge.setPhase(new PreLoad(d_Ge));
+		 String str=d_Ge.d_Phase.getD_PhaseName();
          System.out.println(str);  
-	     p_Ge.d_Phase.loadMap(d_Data1,d_MapName);
-		 boolean a=p_Ge.d_Phase.assignCountries(d_Map,d_Players );
+	     d_Ge.d_Phase.loadMap(d_Data1,d_MapName);
+		 boolean a=d_Ge.d_Phase.assignCountries(d_Map,d_Players );
 		 System.out.println(a);
 		 assertEquals(false, a); 
-		 String str1=p_Ge.d_Phase.getD_PhaseName();
+		 String str1=d_Ge.d_Phase.getD_PhaseName();
          System.out.println("Game is in "+str1+" state");
 		
 	    }

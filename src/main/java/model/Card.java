@@ -1,7 +1,9 @@
 package model;
 
 import java.util.Random;
-
+/**
+ * Class handles implementation related to cards.
+ */
 public class Card {
 
     /**
