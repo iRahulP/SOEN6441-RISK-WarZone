@@ -29,7 +29,7 @@ public class TestAttack{
     String d_SourceCountryId = null;
     String d_TargetCountryId = null;
     boolean l_checkOwnedCountry;
-    int d_NumberOfArmies = 4;
+    int d_NumberOfArmies = 7;
     /**
      * initial setup
      */
@@ -72,8 +72,8 @@ public class TestAttack{
         boolean l_checkOwnedCountry = d_Player1.getOwnedCountries().containsKey(d_SourceCountryId);
         CountryDetails attackingCountry = d_Player1.getOwnedCountries().get(d_SourceCountryId.toLowerCase());
         CountryDetails defendingCountry = attackingCountry.getNeighbours().get(d_TargetCountryId.toLowerCase());
-        attackingCountry.setNumberOfArmies(7);
-        defendingCountry.setNumberOfArmies(3);
+        attackingCountry.setNumberOfArmies(8);
+        defendingCountry.setNumberOfArmies(4);
         
         boolean l_checkNeighbourCountry = (d_TargetCountryId.equals(defendingCountry.getCountryId()));
         boolean l_checkExistingArmies= attackingCountry.getNumberOfArmies()>= d_NumberOfArmies;
@@ -99,10 +99,9 @@ public class TestAttack{
         //Check if attack happen correctly and attacker win
         System.out.println(d_SourceCountryId + " and "+ d_TargetCountryId + " are neighbour to each other \n"
         					+ d_TargetCountryId + " is not owned by "+ d_Player1 );
-        assertEquals(1 ,attackingCountry.getNumberOfArmies()); //((7-1)*60/100) = 3 //6-2=4 //1 remain
-        assertEquals(4, defendingCountry.getNumberOfArmies()); //3*70/100= 2  // 3-3=0 //4 deploy
+        assertEquals(1 ,attackingCountry.getNumberOfArmies()); 
+        assertEquals(5, defendingCountry.getNumberOfArmies()); 
         
-
         int l_sourceArmyAfterAttack= d_Player1.getOwnedCountries().size();
         int l_targetArmyAfterAttack= d_TargetPlayer.getOwnedCountries().size();
         System.out.println("attacker's country after attack: "+d_Player1.getOwnedCountries().size());

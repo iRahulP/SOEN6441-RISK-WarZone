@@ -57,35 +57,44 @@ public class Advance implements Order {
 					System.out.println(d_TargetCountryId + " is not owned by the player");
 					System.out.println("Attack Occur between: " + d_TargetCountryId + " and " + d_SourceCountryId);
 
-					//fetching the countries and its armies
-					CountryDetails attackingCountry = d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase());
-					CountryDetails defendingCountry = attackingCountry.getNeighbours().get(d_TargetCountryId.toLowerCase());
-					int attackArmy = attackingCountry.getNumberOfArmies() - 1;
-					int defendArmy = defendingCountry.getNumberOfArmies();
+					if (((d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase()).getNumberOfArmies())- d_NumArmies)>=1) {
+						//fetching the countries and its armies
+						CountryDetails attackingCountry = d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase());
+						CountryDetails defendingCountry = attackingCountry.getNeighbours().get(d_TargetCountryId.toLowerCase());
+						//int attackArmy = attackingCountry.getNumberOfArmies() - 1;
+						int defendArmy = defendingCountry.getNumberOfArmies();
 
-					//logic to kill the opponent country armies
-					int armyToAttack = (attackArmy * 60) / 100;
-					int armyForDefend = (defendArmy * 70 / 100);
+						//logic to kill the opponent country armies
+						int armyToAttack = (d_NumArmies * 60) / 100;
+						int armyForDefend = (defendArmy * 70 / 100);
 
-					//after attack
-					int defenderArmyLeft = defendArmy - armyToAttack;
-					int attackerArmyLeft = attackArmy - armyForDefend;
+						//after attack
+						int defenderArmyLeft = defendArmy - armyToAttack;
+						int attackerArmyLeft = d_NumArmies - armyForDefend;
+						
 
-					//if defending country has no armies
-					if (defenderArmyLeft <= 0) {
-						d_Player.getOwnedCountries().put(d_TargetCountryId, defendingCountry);
-						d_TargetPlayer.getOwnedCountries().remove(d_TargetCountryId);
-						defendingCountry.setNumberOfArmies(attackerArmyLeft);
-						attackingCountry.setNumberOfArmies(1);
-						//If Attack Successful and new territory added to Player
-						//Generate a random Card from {'BOMB', 'AIRLIFT', 'BLOCKADE', 'DIPLOMACY'}
-						d_Player.addCard();
+						//if defending country has no armies
+						if (defenderArmyLeft <= 0) {
+							d_Player.getOwnedCountries().put(d_TargetCountryId, defendingCountry);
+							d_TargetPlayer.getOwnedCountries().remove(d_TargetCountryId);
+							defendingCountry.setNumberOfArmies(attackerArmyLeft);
+							attackingCountry.setNumberOfArmies(((d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase()).getNumberOfArmies())- d_NumArmies));
+							//If Attack Successful and new territory added to Player
+							//Generate a random Card from {'BOMB', 'AIRLIFT', 'BLOCKADE', 'DIPLOMACY'}
+							d_Player.addCard();
 
-					}
-					//if defending coutry has armies
-					else {
-						defendingCountry.setNumberOfArmies(defenderArmyLeft);
-						attackingCountry.setNumberOfArmies(attackerArmyLeft + 1);
+						}
+						//if defending coutry has armies
+						else {
+							if(attackerArmyLeft<0) {
+								attackingCountry.setNumberOfArmies(((d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase()).getNumberOfArmies())- d_NumArmies));
+							}
+							else {
+								attackingCountry.setNumberOfArmies(((d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase()).getNumberOfArmies())- d_NumArmies)+attackerArmyLeft);
+							}
+							defendingCountry.setNumberOfArmies(defenderArmyLeft);
+							
+						}
 					}
 					return true;
 				}
