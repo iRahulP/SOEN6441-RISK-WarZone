@@ -14,6 +14,7 @@ public class Bomb implements Order{
      * This constructor will initialize the order object with deploy details.
      * @param p_player target player where bomb will effect
      * @param p_countryId adjacent opponent country where bomb card will take effect
+     * @param p_cplayer souce player who will bomb
      */
     public Bomb(Player p_cplayer, Player p_player,String p_countryId) {
         d_Player = p_player;

@@ -16,10 +16,11 @@ public class Advance implements Order {
 	/**
 	 * Constructor of advance class
 	 *
-	 * @param p_player          player
+	 * @param p_player          source player who is advancing armies
 	 * @param p_sourceCountryId source country Id
 	 * @param p_targetCountryId target country Id
 	 * @param p_numArmies       number of armies
+	 * @param p_targetPlayer    target player on whom advance is to be performed
 	 */
 	public Advance(Player p_player, String p_sourceCountryId, String p_targetCountryId, int p_numArmies, Player p_targetPlayer) {
 		d_Player = p_player;

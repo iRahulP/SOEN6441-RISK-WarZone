@@ -13,6 +13,7 @@ public class Observable {
 
     /**
      * Attaches an observer.
+     * @param p_observer is the observer's reference
      */
     public void attach(Observer p_observer){
         this.d_Observers.add(p_observer);
@@ -20,6 +21,7 @@ public class Observable {
 
     /**
      * Detach an observer.
+     * @param p_observer is the observer's reference
      */
     public void detach(Observer p_observer){
         if(!d_Observers.isEmpty()){
@@ -29,6 +31,7 @@ public class Observable {
 
     /**
      * Notifies the observers.
+     * @param p_observers is the observable reference
      */
     public void notifyObservers(Observable p_observers){
         for(Observer l_observer : d_Observers){

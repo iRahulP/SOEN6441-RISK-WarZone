@@ -11,8 +11,8 @@ public class PostLoad extends Edit {
 	 * it is constructor to initialize values
 	 * @param p_ge is the reference of gameEngine class 
 	 */
-	public PostLoad(GameEngine p_Ge) {
-		 d_Ge = p_Ge;
+	public PostLoad(GameEngine p_ge) {
+		 d_Ge = p_ge;
 		 d_PhaseName = "PostLoad";
 	}
 	

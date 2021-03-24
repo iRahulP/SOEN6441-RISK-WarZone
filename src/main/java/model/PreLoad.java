@@ -13,9 +13,9 @@ public class PreLoad extends Edit{
 	 * it is constructor to initialize values
 	 * @param p_ge is the reference of gameEngine class 
 	 */
-    public PreLoad(GameEngine p_Ge)
+    public PreLoad(GameEngine p_ge)
     {
-        d_Ge = p_Ge;
+        d_Ge = p_ge;
         d_PhaseName = "PreLoad";
     }
 

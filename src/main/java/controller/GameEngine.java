@@ -88,7 +88,8 @@ public class GameEngine {
     }
 
     /**
-     *Sets the current phase
+     * Sets the current phase
+     * @param p_Phase is the phase that is to be set
      */
     public void setPhase(Phase p_Phase)
     {
