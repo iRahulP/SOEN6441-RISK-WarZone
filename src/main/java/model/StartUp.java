@@ -63,6 +63,7 @@ public class StartUp extends Play {
 	 * @return true if successful, else false
 	 */
 	public boolean assignCountries(GameMap p_map, ArrayList<Player> p_players) {
+		d_Ge.d_LogEntry.setMessage("Assigning Countries to players");
 		int l_numberOfPlayers = p_players.size();
 		if(p_players.size()<2) {
 			System.out.println("Minimum two players are required to play the game.");
