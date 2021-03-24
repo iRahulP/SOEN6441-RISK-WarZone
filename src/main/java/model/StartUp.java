@@ -29,6 +29,7 @@ public class StartUp extends Play {
 	public boolean addPlayer(ArrayList<Player> p_players, String p_playerName){
 		if(p_players.size()==6) {
 			System.out.println("Can not add any more player. Maximum no. of players allowed is 6.");
+			d_Ge.d_LogEntry.setMessage("Can not add any more player. Maximum no. of players allowed is 6.");
 			return false;
 		}
 		p_players.add(new Player(p_playerName));
@@ -47,6 +48,7 @@ public class StartUp extends Play {
 		while(itr.hasNext()) {
 			Player l_p = itr.next();
 			if(l_p.getPlayerName().equals(p_playerName)) {
+				d_Ge.d_LogEntry.setMessage("Player removed "+l_p.getPlayerName());
 				p_players.remove(l_p);
 				return true;
 			}
@@ -70,6 +72,7 @@ public class StartUp extends Play {
 		for(CountryDetails l_c : p_map.getCountries().values()) {
 			Player l_p = p_players.get(l_counter);
 			l_p.getOwnedCountries().put(l_c.getCountryId().toLowerCase(), l_c);
+			d_Ge.d_LogEntry.setMessage("Country: "+l_c.getCountryId().toLowerCase()+" assigned to player: "+l_p.getPlayerName());
 			if(l_counter>=l_numberOfPlayers-1)
 				l_counter = 0;
 			else
@@ -84,6 +87,7 @@ public class StartUp extends Play {
 	 * @param p_map Game map
 	 */
 	public void showMap(ArrayList<Player> p_players, GameMap p_map) {
+		d_Ge.d_LogEntry.setMessage("Command given by user: showmap");
 		if(p_map==null)
 			return;
 		if(p_players.size()==0 || p_players.get(0).getOwnedCountries().size()==0) {
@@ -141,39 +145,44 @@ public class StartUp extends Play {
 				if (p_data[i].equals("-add")) {
 					if (d_Ge.isPlayerNameValid(p_data[i + 1])) {
 						p_playerName = p_data[i + 1];
-						// setPhase(new StartUp(this));
 						boolean l_check = addPlayer(p_players, p_playerName);
 
-//                          String str=d_Phase.getD_PhaseName();
-//                         System.out.println(str);
 						if (l_check) {
 							System.out.println("Player added!");
+							d_Ge.d_LogEntry.setMessage("Player added! "+p_playerName);
 						} else {
 							System.out.println("Can not add any more player. Max pool of 6 Satisfied!");
+							d_Ge.d_LogEntry.setMessage("Can not add any more player. Max pool of 6 Satisfied!");
 						}
 						d_Ge.d_GamePhase = InternalPhase.STARTUP;
 					} else {
 						System.out.println("Invalid Player Name");
+						d_Ge.d_LogEntry.setMessage("Invalid Player Name");
 					}
 				} else if (p_data[i].equals("-remove")) {
 					if (d_Ge.isPlayerNameValid(p_data[i + 1])) {
 						p_playerName = p_data[i + 1];
 						boolean l_check = removePlayer(p_players, p_playerName);
-						if (l_check)
+						if (l_check) {
 							System.out.println("Player removed!");
-						else
+							d_Ge.d_LogEntry.setMessage("Player removed! " +p_playerName);
+						}else {
 							System.out.println("Player doesn't exist");
-						d_Ge.d_GamePhase = InternalPhase.STARTUP;
+							d_Ge.d_LogEntry.setMessage("Player doesn't exist");
+						}d_Ge.d_GamePhase = InternalPhase.STARTUP;
 					} else
 						System.out.println("Invalid Player Name");
+					    d_Ge.d_LogEntry.setMessage("Invalid Player Name");
 				}
 			}
 		}
 		catch(ArrayIndexOutOfBoundsException e) {
 			System.out.println("Invalid command - it should be of the form gameplayer -add playername -remove playername");
+			d_Ge.d_LogEntry.setMessage("Invalid command - it should be of the form gameplayer -add playername -remove playername");
 		}
 		catch(Exception e) {
 			System.out.println("Invalid command - it should be of the form gameplayer -add playername -remove playername");
+			d_Ge.d_LogEntry.setMessage("Invalid command - it should be of the form gameplayer -add playername -remove playername");
 		}
 
 	}
