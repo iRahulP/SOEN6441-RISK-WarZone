@@ -9,7 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- *class to implement the logging of events. 
+ *class to implement the logging of events to a log file.
  */
 public class WriteLogEntry implements Observer {
     String d_fileName="log.txt";
@@ -18,7 +18,7 @@ public class WriteLogEntry implements Observer {
     private BufferedWriter d_Bwr ;
 
     /**
-     * Constructor for initializing writers   
+     * Constructor for initializing FileWriter and BufferedWriter
      */
     public WriteLogEntry() {
 
@@ -31,6 +31,12 @@ public class WriteLogEntry implements Observer {
 
     }
 
+    /**
+     * On change of state in Observable ,the observer function is called.
+     * Tracks changes of phase,command and command effect and updates them in a log file
+     * using filewriter.
+     * @param o Observable,in this game it is LogEntryBuffer
+     */
     @Override
     public void update(Observable o) {
 
