@@ -55,8 +55,8 @@ public class TestBlockade{
      */
     @Test
     public void testBlockadeEffect() {
-        d_Stup = new StartUp(d_Ge);
         d_Ge = new GameEngine();
+        d_Stup = new StartUp(d_Ge);
         d_Map = d_Rge.loadMap("dummy.map");
         d_Stup.assignCountries(d_Map, d_Players);
         AssignReinforcement.assignReinforcementArmies(d_Player1);
