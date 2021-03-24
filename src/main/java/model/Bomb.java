@@ -29,7 +29,7 @@ public class Bomb implements Order{
     public boolean execute() {
         //Check if Source player negotiating target Player
         if(d_CPlayer.d_NegotiateList.contains(d_Player)){
-            System.out.println("YAsh");
+            System.out.println(d_CPlayer.getPlayerName()+" has negotiated "+d_Player.getPlayerName());
             //skip execute
             return false;
         }
