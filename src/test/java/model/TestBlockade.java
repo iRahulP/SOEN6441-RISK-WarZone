@@ -1,4 +1,4 @@
-package model;
+ package model;
 
 import controller.GameEngine;
 import org.junit.Assert;
@@ -83,12 +83,18 @@ public class TestBlockade{
         CountryDetails l_c= d_Player1.getOwnedCountries().get(d_CountryId.toLowerCase());
         System.out.println(l_c.getNumberOfArmies());
 
-        d_Player1.addOrder(d_BOrder);
-        d_Player1.issue_order();
-        System.out.println(d_Player1.getD_orderList());
-
+        d_Player1.addCard("Blockade");
+        d_Player1.showCards();
+        boolean checkCard = d_Player1.doesCardExists("Blockade");
+        if(l_checkOwnedCountry && checkCard){
+            d_Player1.addOrder(d_BOrder);
+            d_Player1.issue_order();
+            d_Player1.removeCard("Blockade");
+        }
+        else{
+            System.out.println("Country not owned by player or Card not owned | please pass to next player");
+        }
         Order l_toRemoveB = d_Player1.next_order();
-        System.out.println(d_Player1.getD_orderList());
         l_toRemoveB.execute();
 
         d_Player1.getOwnedCountries().put(l_c.getCountryId().toLowerCase(),l_c);

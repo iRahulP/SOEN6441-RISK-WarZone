@@ -13,7 +13,9 @@ import java.util.Queue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-
+/**
+ * Tests if target country id is neighbour to one of current player's country
+ */
 public class TestAdjacent{
     Player d_Player1;
     Player d_Player2;
