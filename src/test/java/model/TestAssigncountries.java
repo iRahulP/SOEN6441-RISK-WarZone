@@ -29,7 +29,6 @@ public class TestAssigncountries {
      */
     @Before
     public void before() {
-
         d_Player1 = new Player("yash");
         d_Player2 = new Player("rahul");
         d_Map = new GameMap("dummy.map");
@@ -45,8 +44,8 @@ public class TestAssigncountries {
      */
     @Test
     public void testPopulateCountries() {
-        d_Stup = new StartUp(d_Ge);
         d_Ge = new GameEngine();
+        d_Stup = new StartUp(d_Ge);
         d_Map = d_Rge.loadMap("dummy.map");
         boolean l_check = d_Stup.assignCountries(d_Map, d_Players);
         assertEquals(true,l_check);
