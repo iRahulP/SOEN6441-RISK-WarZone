@@ -20,6 +20,7 @@ public class MainPlay extends Play{
 
 	@Override
 	public void showMap(ArrayList<Player> p_players, GameMap p_map) {
+		d_Ge.d_LogEntry.setMessage("command given by user : showmap");
 		if(p_map==null)
 			return;
 		if(p_players.size()==0 || p_players.get(0).getOwnedCountries().size()==0) {
@@ -72,6 +73,7 @@ public class MainPlay extends Play{
 		while(itr.hasNext()) {
 			Player p = itr.next();
 			AssignReinforcement.assignReinforcementArmies(p);
+			d_Ge.d_LogEntry.setMessage("Assign reinforcement armies to player "+p.getPlayerName());
 		}
 	}
 
