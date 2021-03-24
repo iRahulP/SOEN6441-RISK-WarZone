@@ -6,7 +6,6 @@ import view.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Queue;
-
 import static java.lang.System.exit;
 
 /**
@@ -510,9 +509,16 @@ public class GameEngine {
                             if (!(l_data[1] == null)){
                                 if (this.isAlphabetic(l_data[1])) {
                                     Player l_NegPlayer = getPlayerByName(l_data[1]);
-                                    p_player.addOrder(new Diplomacy(p_player, l_NegPlayer));
-                                    d_LogEntry.setMessage("Diplomacy order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]+" "+l_data[2]+" "+l_data[3]);
-                                }
+                                    boolean checkCard = p_player.doesCardExists("Diplomacy");
+                                    if(checkCard){
+                                    	 p_player.addOrder(new Diplomacy(p_player, l_NegPlayer));
+                                        p_player.issue_order();
+                                        d_LogEntry.setMessage("Diplomacy order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]+" "+l_data[2]+" "+l_data[3]);
+                                        
+                                        p_player.removeCard("Diplomacy");
+                                        d_LogEntry.setMessage("Diplomacy card removed from Player's cardList ");
+                                    }
+                                         }
                             } else
                                 System.out.println("Invalid Command");
                                 d_LogEntry.setMessage("Invalid Command");
@@ -592,7 +598,9 @@ public class GameEngine {
                             }
                             l_count--;
                         }
-
+                        for(Player l_p : d_Players) {
+                        	l_p.flushNegotiators();
+                        }
                         System.out.println("Orders executed!");
                         d_LogEntry.setMessage("Orders executed!");
                         d_Phase.showMap(d_Players, d_Map);
