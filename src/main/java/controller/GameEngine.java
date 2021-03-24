@@ -163,7 +163,7 @@ public class GameEngine {
             switch (l_commandName) {
                 case "editmap":
                     d_LogEntry.setGamePhase(d_Phase);
-                    d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                    d_LogEntry.setCommand(l_commandName+" Command is being executed");
                     d_Phase.editMap(l_data, l_mapName);
                     String str=d_Phase.getD_PhaseName();
                     System.out.println(str);
@@ -173,7 +173,7 @@ public class GameEngine {
                 case "loadmap":
                     
                     d_LogEntry.setGamePhase(d_Phase);
-                    d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                    d_LogEntry.setCommand(l_commandName+" Command is being executed");
                     d_Phase.loadMap(l_data,l_mapName);
                     String str1=d_Phase.getD_PhaseName();
                     System.out.println(str1);
@@ -191,7 +191,7 @@ public class GameEngine {
                 case "editcontinent":
                     setPhase(new PreLoad(this));
                     d_LogEntry.setGamePhase(d_Phase);
-                    d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                    d_LogEntry.setCommand(l_commandName+" Command is being executed");
                     d_Phase.editContinent(l_data, l_continentId, l_controlValue);
                     String str=d_Phase.getD_PhaseName();
                     System.out.println(str);
@@ -201,10 +201,10 @@ public class GameEngine {
                 case "editcountry":
                     setPhase(new PreLoad(this));
                     d_LogEntry.setGamePhase(d_Phase);
-                    d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                    d_LogEntry.setCommand(l_commandName+" Command is being executed");
                     d_Phase.editCountry(l_data, l_continentId, l_countryId) ;
                     d_LogEntry.setGamePhase(d_Phase);
-                    d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                    d_LogEntry.setCommand(l_commandName+" Command is being executed");
                     String str1=d_Phase.getD_PhaseName();
                     System.out.println(str1);
 //
@@ -213,7 +213,7 @@ public class GameEngine {
                 case "editneighbor":
                     setPhase(new PreLoad(this));
                     d_LogEntry.setGamePhase(d_Phase);
-                    d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                    d_LogEntry.setCommand(l_commandName+" Command is being executed");
                     d_Phase.editNeighbour(l_data, l_countryId, l_neighborCountryId);
                     String str2=d_Phase.getD_PhaseName();
                     System.out.println(str2);
@@ -223,7 +223,7 @@ public class GameEngine {
                 case "savemap":
                     setPhase(new PreLoad(this));
                     d_LogEntry.setGamePhase(d_Phase);
-                    d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                    d_LogEntry.setCommand(l_commandName+" Command is being executed");
                     d_Phase.savemap(l_data, l_mapName);
                     String str3=d_Phase.getD_PhaseName();
                     System.out.println(str3);
@@ -233,7 +233,7 @@ public class GameEngine {
                 case "showmap":
                     setPhase(new PreLoad(this));
                     d_LogEntry.setGamePhase(d_Phase);
-                    d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                    d_LogEntry.setCommand(l_commandName+" Command is being executed");
                     d_Phase.showMap(d_Map);
                     String str4=d_Phase.getD_PhaseName();
                     System.out.println(str4);
@@ -244,7 +244,7 @@ public class GameEngine {
                 case "editmap":
                     setPhase(new PreLoad(this));
                     d_LogEntry.setGamePhase(d_Phase);
-                    d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                    d_LogEntry.setCommand(l_commandName+" Command is being executed");
                     d_Phase.editMap(l_data, l_mapName);
                     String str5=d_Phase.getD_PhaseName();
                     System.out.println(str5);
@@ -253,7 +253,7 @@ public class GameEngine {
                 case "loadmap":
                     setPhase(new PreLoad(this));
                     d_LogEntry.setGamePhase(d_Phase);
-                    d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                    d_LogEntry.setCommand(l_commandName+" Command is being executed");
                     d_Phase.loadMap(l_data,l_mapName);
                     String str6=d_Phase.getD_PhaseName();
                     System.out.println(str6);
@@ -263,7 +263,7 @@ public class GameEngine {
                 case "validatemap":
                     setPhase(new PreLoad(this));
                     d_LogEntry.setGamePhase(d_Phase);
-                    d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                    d_LogEntry.setCommand(l_commandName+" Command is being executed");
                     d_Phase.validatemap();
                     String strValidate=d_Phase.getD_PhaseName();
                     System.out.println(strValidate);
@@ -283,7 +283,7 @@ public class GameEngine {
                 case "gameplayer":
                     setPhase(new StartUp(this));
                     d_LogEntry.setGamePhase(d_Phase);
-                    d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                    d_LogEntry.setCommand(l_commandName+" Command is being executed");
                     d_Phase.gamePlayer(l_data,d_Players, l_playerName);
                     String str=d_Phase.getD_PhaseName();
                     System.out.println(str);
@@ -297,7 +297,7 @@ public class GameEngine {
                         d_LogEntry.setMessage("Countries allocated randomly amongst Players");
                         setPhase(new MainPlay(this));
                         d_LogEntry.setGamePhase(d_Phase);
-                        d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                        d_LogEntry.setCommand(l_commandName+" Command is being executed");
                         d_Phase.reinforce();
                         String str1=d_Phase.getD_PhaseName();
                         System.out.println(str1);
@@ -312,7 +312,7 @@ public class GameEngine {
                     String str2=d_Phase.getD_PhaseName();
                     System.out.println(str2);
                     d_LogEntry.setGamePhase(d_Phase);
-                    d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                    d_LogEntry.setCommand(l_commandName+" Command is being executed");
                     break;
 
                 default:
@@ -341,7 +341,7 @@ public class GameEngine {
             if(l_counter >= 0){
                 switch (l_commandName) {
                     case "deploy":
-                        d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                        d_LogEntry.setCommand(l_commandName+" Command is being executed");
                         try {
                             if (!(l_data[1] == null) || !(l_data[2] == null)) {
                                 if (this.isNumeric(l_data[1]) || this.isNumeric(l_data[2])) {
@@ -374,7 +374,7 @@ public class GameEngine {
                         break;
 
                     case "advance":
-                        d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                        d_LogEntry.setCommand(l_commandName+" Command is being executed");
                         try {
                             if (!(l_data[1] == null) || !(l_data[2] == null) || !(l_data[3] == null)) {
                                 if (this.isAlphabetic(l_data[1]) || this.isAlphabetic(l_data[2]) || this.isNumeric(l_data[3])) {
@@ -422,7 +422,7 @@ public class GameEngine {
                         break;
 
                     case "bomb":
-                        d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                        d_LogEntry.setCommand(l_commandName+" Command is being executed");
                         try {
                             if (!(l_data[1] == null)) {
                                 if (this.isAlphabetic(l_data[1])) {
@@ -472,7 +472,7 @@ public class GameEngine {
                         break;
 
                     case "blockade":
-                        d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                        d_LogEntry.setCommand(l_commandName+" Command is being executed");
                         try {
                             if (!(l_data[1] == null)) {
                                 if (this.isAlphabetic(l_data[1])) {
@@ -503,7 +503,7 @@ public class GameEngine {
                         break;
 
                     case "airlift":
-                        d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                        d_LogEntry.setCommand(l_commandName+" Command is being executed");
                         try {
                             if (!(l_data[1] == null) || !(l_data[2] == null) || !(l_data[3] == null)) {
                                 if (this.isAlphabetic(l_data[1]) || this.isAlphabetic(l_data[2]) || this.isNumeric(l_data[3])) {
@@ -542,7 +542,7 @@ public class GameEngine {
                         break;
 
                     case "negotiate":
-                        d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                        d_LogEntry.setCommand(l_commandName+" Command is being executed");
                         try {
                             if (!(l_data[1] == null)){
                                 if (this.isAlphabetic(l_data[1])) {
@@ -566,7 +566,7 @@ public class GameEngine {
                         break;
 
                     case "pass":
-                        d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                        d_LogEntry.setCommand(l_commandName+" Command is being executed");
                         try {
                             d_GamePhase = InternalPhase.TURN;
                         }catch (Exception e) {
@@ -604,7 +604,7 @@ public class GameEngine {
             d_LogEntry.setMessage("In Ecxecute Orders Phase:");
             switch (l_commandName) {
                 case "execute":
-                    d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                    d_LogEntry.setCommand(l_commandName+" Command is being executed");
                     d_LogEntry.setMessage("Executing orders in round robin way:");
                     int l_count = 0;
                     for (Player l_p : d_Players) {
@@ -671,7 +671,7 @@ public class GameEngine {
                     break;
 
                 case "showmap":
-                    d_LogEntry.setCommand(l_commandName+"Command is being executed");
+                    d_LogEntry.setCommand(l_commandName+" Command is being executed");
                     d_Phase.showMap(d_Players, d_Map);
                     break;
 
