@@ -80,11 +80,13 @@ public class MainPlay extends Play{
 	@Override
 	public void gamePlayer(String[] p_data, ArrayList<Player> p_players, String p_playerName) {
 		printInvalidCommandMessage();
+		d_Ge.d_LogEntry.setMessage("Invalid command in phase "+d_Ge.d_Phase.getD_PhaseName());
 	}
 
 	@Override
 	public boolean assignCountries(GameMap p_map, ArrayList<Player> p_players) {
 		printInvalidCommandMessage();
+		d_Ge.d_LogEntry.setMessage("Invalid command in phase "+d_Ge.d_Phase.getD_PhaseName());
 		return false;
 	}
 }
