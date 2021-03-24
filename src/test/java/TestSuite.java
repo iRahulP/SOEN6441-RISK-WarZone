@@ -29,6 +29,7 @@ import org.junit.runners.Suite;
         TestCard.class,
         TestPhase.class,
         TestAdvance.class,
+        TestDiplomacy.class,
         TestAttack.class
 })
 
