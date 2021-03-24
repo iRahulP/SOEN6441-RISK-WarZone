@@ -85,8 +85,10 @@ public class TestAttack{
             System.out.println("Country not owned by player or sufficient army not present | please pass to next player");
         }
         
-        System.out.println(d_Player1.getOwnedCountries().size());
-        System.out.println(d_TargetPlayer.getOwnedCountries().size());
+        int l_sourceArmyBeforeAttack= d_Player1.getOwnedCountries().size();
+        int l_targetArmyBeforeAttack= d_TargetPlayer.getOwnedCountries().size();
+        System.out.println("attacker's country before attack: "+d_Player1.getOwnedCountries().size());
+        System.out.println("defender's country before attack: "+d_TargetPlayer.getOwnedCountries().size());
         
         System.out.println(d_Player1.getD_orderList());
         Order l_toRemove = d_Player1.next_order();
@@ -100,12 +102,17 @@ public class TestAttack{
         assertEquals(1 ,attackingCountry.getNumberOfArmies()); //((7-1)*60/100) = 3 //6-2=4 //1 remain
         assertEquals(4, defendingCountry.getNumberOfArmies()); //3*70/100= 2  // 3-3=0 //4 deploy
         
-        System.out.println(d_Player1.getOwnedCountries().size());
-        System.out.println(d_TargetPlayer.getOwnedCountries().size());
+
+        int l_sourceArmyAfterAttack= d_Player1.getOwnedCountries().size();
+        int l_targetArmyAfterAttack= d_TargetPlayer.getOwnedCountries().size();
+        System.out.println("attacker's country after attack: "+d_Player1.getOwnedCountries().size());
+        System.out.println("defender's country after attack: "+d_TargetPlayer.getOwnedCountries().size());
         
         System.out.println("Winning country is added to player countrylist");
         boolean l_checkWinningCountryOwned= d_Player1.getOwnedCountries().containsKey(d_TargetCountryId);
         assertEquals(true, l_checkWinningCountryOwned);
+        assertEquals(l_targetArmyBeforeAttack-1,l_targetArmyAfterAttack);
+        assertEquals(l_sourceArmyBeforeAttack+1,l_sourceArmyAfterAttack);
         d_Player1.showCards();
     }
 
