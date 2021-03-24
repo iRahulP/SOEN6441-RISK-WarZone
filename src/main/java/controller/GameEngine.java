@@ -16,51 +16,51 @@ import static java.lang.System.exit;
 public class GameEngine {
 	
 	/**
-	 * @param d_Map It is reference for GameMap
+	 * d_Map It is reference for GameMap
 	 */
     public GameMap d_Map;
     
     /**
-	 * @param d_RunG It is reference for RunGameEngine
+	 * d_RunG It is reference for RunGameEngine
 	 */
     public RunGameEngine d_RunG;
     /**
-	 * @param d_Arfc It is reference for AssignReinforcement 
+	 * d_Arfc It is reference for AssignReinforcement 
 	 */
     public AssignReinforcement d_Arfc;
     
     /**
-	 * @param d_GamePhase It is reference for InternalPhase
+	 * d_GamePhase It is reference for InternalPhase
 	 */
     public InternalPhase d_GamePhase;
     
     /**
-	 * @param d_Players It is reference for players list
+	 * d_Players It is reference for players list
 	 */
     public ArrayList<Player> d_Players;
     
     /**
-	 * @param d_Play It is reference for PlayRisk
+	 * d_Play It is reference for PlayRisk
 	 */
     public PlayRisk d_Play;
     
     /**
-	 * @param d_Phase It is reference for Phase
+	 * d_Phase It is reference for Phase
 	 */
     public Phase d_Phase;
     
     /**
-	 * @param d_Card It is reference for Card
+	 * d_Card It is reference for Card
 	 */
     public Card d_Card;
     
     /**
-	 * @param d_LogEntry It is reference for LogEntryBuffer
+	 * d_LogEntry It is reference for LogEntryBuffer
 	 */
     public LogEntryBuffer d_LogEntry;
     
     /**
-	 * @param d_WriteLog It is reference for WriteLogEntry
+	 * d_WriteLog It is reference for WriteLogEntry
 	 */
     public WriteLogEntry d_WriteLog;
     

@@ -15,7 +15,7 @@ import controller.GameEngine;
  */
 public class TestPhase {
 	/**
-	 * @param d_Ge is reference for gameEngine
+	 * d_Ge is reference for gameEngine
 	 */
 	public GameEngine d_Ge;
 	  Player d_Player1;

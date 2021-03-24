@@ -23,7 +23,7 @@ public abstract class Phase {
 	 * Method to randomly assign countries to players
 	 * @param p_map map being loaded.
 	 * @param p_players list of the players in game
-	 * @return
+	 * @return returns boolean value
 	 */
 	abstract public boolean assignCountries(GameMap p_map, ArrayList<Player> p_players);
 	
