@@ -236,6 +236,14 @@ public class Player {
         }
 
     }
+
+    /**
+     * Getter for Player's Cards Deck
+     * @return d_Deck
+     */
+    public ArrayList<Card> getD_Deck() {
+        return d_Deck;
+    }
 }
 
 
