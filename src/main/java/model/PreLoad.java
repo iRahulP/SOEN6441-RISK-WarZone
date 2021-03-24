@@ -204,7 +204,7 @@ public class PreLoad extends Edit{
                     if (l_check) {
                         System.out.println("Map file saved successfully");
                         d_Ge.d_LogEntry.setMessage("Map file saved successfully");
-                        d_Ge.d_GamePhase = InternalPhase.EDITMAP;
+                        d_Ge.d_GamePhase = InternalPhase.NULL;
                         d_Ge.setGamePhase(d_Ge.d_GamePhase);
                     } else {
                         System.out.println("Error in saving - invalid map");
