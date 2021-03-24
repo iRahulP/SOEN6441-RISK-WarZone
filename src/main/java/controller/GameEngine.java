@@ -647,6 +647,7 @@ public class GameEngine {
                             if(l_p.getOwnedCountries().size() == d_Map.getCountries().size()){
                                 System.out.println(l_p.getPlayerName()+" has Won the Game!");
                                 d_LogEntry.setMessage(l_p.getPlayerName()+" has Won the Game!");
+                                d_LogEntry.detach(d_WriteLog);
                                 System.exit(0);
                             }
                         }
