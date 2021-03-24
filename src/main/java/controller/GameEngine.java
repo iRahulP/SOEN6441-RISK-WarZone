@@ -353,7 +353,7 @@ public class GameEngine {
                                         p_player.addOrder(new Deploy(p_player, l_countryId, l_numberOfArmies));
                                         p_player.issue_order();
                                         p_player.setOwnedArmies(p_player.getOwnedArmies()-l_numberOfArmies);
-                                        d_LogEntry.setMessage("deply order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]+" "+l_data[2]);
+                                        d_LogEntry.setMessage(p_player.getPlayerName()+" deploy order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]+" "+l_data[2]);
                                         System.out.println("Player "+p_player.getPlayerName()+" now has "+p_player.getOwnedArmies()+" Army units left!");
                                         d_LogEntry.setMessage("Player "+p_player.getPlayerName()+" now has "+p_player.getOwnedArmies()+" Army units left!");
                                     }
@@ -403,7 +403,7 @@ public class GameEngine {
                                     if(l_checkOwnedCountry && l_checkNeighbourCountry && l_checkArmies){
                                         p_player.addOrder(new Advance(p_player, l_countryNameFrom,l_countryNameTo, l_numberOfArmies,l_targetPlayer));
                                         p_player.issue_order();
-                                        d_LogEntry.setMessage("advance order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]+" "+l_data[2]);
+                                        d_LogEntry.setMessage(p_player.getPlayerName()+" advance order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]+" "+l_data[2]);
                                     }
                                     else{
                                         System.out.println("Country not owned by player or target Country not adjacent or insufficient Army units | please pass to next player");
@@ -451,7 +451,7 @@ public class GameEngine {
                                         //need to send target player instead of current player as param
                                         p_player.addOrder(new Bomb(p_player,targetPlayer, l_countryId));
                                         p_player.issue_order();
-                                        d_LogEntry.setMessage("Bomb order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]);
+                                        d_LogEntry.setMessage(p_player.getPlayerName()+" Bomb order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]);
                                         p_player.removeCard("Bomb");
                                         d_LogEntry.setMessage("Bomb card removed from players card list");
                                     }
@@ -482,7 +482,7 @@ public class GameEngine {
                                     if(l_checkOwnedCountry && checkCard){
                                         p_player.addOrder(new Blockade(p_player, l_countryId));
                                         p_player.issue_order();
-                                        d_LogEntry.setMessage("Blockade order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]);
+                                        d_LogEntry.setMessage(p_player.getPlayerName()+" Blockade order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]);
                                         p_player.removeCard("Blockade");
                                         d_LogEntry.setMessage("Bloackade card removed from Player's cardList ");
                                     }
@@ -521,7 +521,7 @@ public class GameEngine {
                                     if(l_checkOwnedCountry && l_checkTargetOwnedCountry && l_checkArmies && checkCard){
                                         p_player.addOrder(new Airlift(p_player, l_sourceCountryId, l_targetCountryId, l_numberOfArmies));
                                         p_player.issue_order();
-                                        d_LogEntry.setMessage("Airlift order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]+" "+l_data[2]+" "+l_data[3]);
+                                        d_LogEntry.setMessage(p_player.getPlayerName()+" Airlift order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]+" "+l_data[2]+" "+l_data[3]);
                                         p_player.removeCard("Airlift");
                                         d_LogEntry.setMessage("Airlift card removed from Player's cardList ");
                                     }
@@ -551,7 +551,7 @@ public class GameEngine {
                                     if(checkCard){
                                     	 p_player.addOrder(new Diplomacy(p_player, l_NegPlayer));
                                         p_player.issue_order();
-                                        d_LogEntry.setMessage("Diplomacy order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]+" "+l_data[2]+" "+l_data[3]);
+                                        d_LogEntry.setMessage(p_player.getPlayerName()+" Diplomacy order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]+" "+l_data[2]+" "+l_data[3]);
                                         p_player.removeCard("Diplomacy");
                                         d_LogEntry.setMessage("Diplomacy card removed from Player's cardList ");
                                     }
@@ -653,8 +653,8 @@ public class GameEngine {
                         //check if any player does not has lost its all territories
                         for (Iterator<Player> iterator = d_Players.iterator(); iterator.hasNext();) {
                             if (iterator.next().getOwnedCountries().size() == 0) {
-                                System.out.println(((Player) iterator).getPlayerName()+"has lost all its territories and is no longer part of the game");
-                                d_LogEntry.setMessage(((Player) iterator).getPlayerName()+"has lost all its territories and is no longer part of the game");
+                                System.out.println(((Player) iterator).getPlayerName()+" has lost all its territories and is no longer part of the game");
+                                d_LogEntry.setMessage(((Player) iterator).getPlayerName()+" has lost all its territories and is no longer part of the game");
                                 iterator.remove();
                             }
                         }
