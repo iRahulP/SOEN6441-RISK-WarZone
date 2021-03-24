@@ -178,6 +178,16 @@ public class Player {
     }
 
     /**
+     * Added a clone of addCard inorder to test custom cards
+     * @param test custom card
+     */
+    public void addCard(String test){
+        Card l_card = new Card();
+        l_card.createCard(test);
+        d_Deck.add(l_card);
+    }
+
+    /**
      * If a player uses a card,it will be removed from deck of cards.
      * @param p_card String representation of card to be used
      */

@@ -27,6 +27,8 @@ public class TestBomb{
     String d_TargetCountryId = null;
     boolean l_checkOwnedCountry;
     int d_NumberOfArmies = 4;
+    Card d_Card;
+    String[] d_CardsList;
     //ArrayList<Player> d_NegotiateList;
     /**
      * initial setup
@@ -46,6 +48,8 @@ public class TestBomb{
         l_checkOwnedCountry = true;
         d_DOrder = new Deploy(d_Player1,d_SourceCountryId,d_NumberOfArmies);
         d_OrderList = new ArrayDeque<>();
+        d_Card = new Card();
+        d_CardsList = new String[]{"Bomb", "Airlift", "Blockade", "Diplomacy"};
         //d_NegotiateList = new ArrayList<Player>();
     }
 
@@ -107,7 +111,11 @@ public class TestBomb{
 //        System.out.println("Check");
 //        d_Player2.addPlayerNegList(targetPlayer);
 //        System.out.println(d_Player2.d_NegotiateList);
-        if (l_checkOwnedCountryNotOfCurrent && targetCountryNeighbour && !d_Player2.getOwnedCountries().containsKey(d_TargetCountryId.toLowerCase())){
+        d_Player2.addCard("Bomb");
+        d_Player2.showCards();
+        System.out.println();
+        boolean checkCard = d_Player2.doesCardExists("Bomb");
+        if (l_checkOwnedCountryNotOfCurrent && targetCountryNeighbour && !d_Player2.getOwnedCountries().containsKey(d_TargetCountryId.toLowerCase()) && checkCard){
             //need to send target player instead of current player as param
             d_Player2.addOrder(new Bomb(d_Player2,targetPlayer, d_TargetCountryId));
             d_Player2.issue_order();

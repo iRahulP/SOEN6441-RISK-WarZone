@@ -45,6 +45,11 @@ public class Card {
     }
 
     /**
+     * Stores the temp card picked in the CardType String
+     * @param temp specific card
+     */
+    public void createCard(String temp) { d_CardType = temp; }
+    /**
      * Picks a random card from the Cards List using random generator
      * @return The index of the Cards List
      */
