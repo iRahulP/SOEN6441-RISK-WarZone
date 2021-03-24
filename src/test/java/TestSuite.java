@@ -30,7 +30,8 @@ import org.junit.runners.Suite;
         TestPhase.class,
         TestAdvance.class,
         TestDiplomacy.class,
-        TestAttack.class
+        TestAttack.class,
+        TestGameWon.class
 })
 
 /**
