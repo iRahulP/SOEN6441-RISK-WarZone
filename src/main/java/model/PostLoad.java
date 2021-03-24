@@ -1,24 +1,25 @@
 package model;
 
-
-
 import java.util.ArrayList;
 
 import controller.GameEngine;
-
+/**
+ * Implementation of PostLoad phase of the game.
+ */
 public class PostLoad extends Edit {
-
+	/**
+	 * it is constructor to initialize values
+	 * @param p_ge is the reference of gameEngine class 
+	 */
 	public PostLoad(GameEngine p_Ge) {
 		 d_Ge = p_Ge;
 		 d_PhaseName = "PostLoad";
 	}
-
-	@Override
-	public void loadMap(String[] p_data, String p_mapName) {
-		// TODO Auto-generated method stub
-
-	}
-
+	
+	/**
+	 * print the continents, countries and each country's neighbor in the map
+	 * @param p_map the map to be shown.
+	 */
 	@Override
 	public void showMap(GameMap p_map) {
 		d_Ge.d_LogEntry.setMessage("Command given by user: showmap");
@@ -66,77 +67,39 @@ public class PostLoad extends Edit {
 		}
 
 	}
-
-//	@Override
-//	public boolean addPlayer(ArrayList<Player> p_players, String p_playerName) {
-//		// TODO Auto-generated method stub
-//		return false;
-//	}
-//
-//	@Override
-//	public boolean removePlayer(ArrayList<Player> p_players, String p_playerName) {
-//		// TODO Auto-generated method stub
-//		return false;
-//	}
-
 	@Override
-	public boolean assignCountries(GameMap p_map, ArrayList<Player> p_players) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	
-
-	@Override
-	public void showMap(ArrayList<Player> p_players, GameMap p_map) {
+	public void loadMap(String[] p_data, String p_mapName) {
 		printInvalidCommandMessage();
 	}
 
 	@Override
-	public void reinforce() {
-	
-		
-	}
-
-	@Override
 	public void editContinent(String[] p_data, String p_continentId, int p_controlValue) {
-		// TODO Auto-generated method stub
-		
+		printInvalidCommandMessage();
 	}
 
 	@Override
 	public void editCountry(String[] p_data, String p_continentId, String p_countryId) {
-		// TODO Auto-generated method stub
-		
+		printInvalidCommandMessage();
 	}
 
 	@Override
 	public void editNeighbour(String[] p_data, String p_countryId, String p_neighborCountryId) {
-		// TODO Auto-generated method stub
-		
+		printInvalidCommandMessage();
 	}
-
+	
 	@Override
 	public void savemap(String[] p_data, String p_mapName) {
-		// TODO Auto-generated method stub
-		
+		printInvalidCommandMessage();
 	}
 
 	@Override
 	public void editMap(String[] p_data, String p_mapName) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void gamePlayer(String[] p_data, ArrayList<Player> p_players, String p_playerName) {
-		// TODO Auto-generated method stub
-		
+		printInvalidCommandMessage();
 	}
 
 	@Override
 	public void validatemap(){
-		// TODO Auto-generated method stub
+		printInvalidCommandMessage();
 	}
 
 }
