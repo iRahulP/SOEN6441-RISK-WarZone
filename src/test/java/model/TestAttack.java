@@ -56,8 +56,8 @@ public class TestAttack{
      */
     @Test
     public void testAdvanceEffect() {
-        d_Stup = new StartUp(d_Ge);
         d_Ge = new GameEngine();
+        d_Stup = new StartUp(d_Ge);
         d_Map = d_Rge.loadMap("dummy.map");
         d_Stup.assignCountries(d_Map, d_Players);
         for(Player tmp: d_Players) {
