@@ -1,7 +1,5 @@
 package model;
 
-import model.Observable;
-
 /**
  * Updates the observing classes on getting notification from Observable.
  */
