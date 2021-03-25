@@ -39,6 +39,7 @@ public class Load extends Edit{
                 if (p_data[i].equals("-add")) {
                     if (d_Ge.isAlphabetic(p_data[i + 1])) {
                         p_continentId = p_data[i + 1];
+                        d_Ge.d_LogEntry.setMessage(" "+p_data[i]+" "+p_continentId);
                     } else {
                         System.out.println("Invalid Continent ID");
                         d_Ge.d_LogEntry.setMessage("Invalid Continent ID");
@@ -99,7 +100,7 @@ public class Load extends Edit{
                     if (d_Ge.isAlphabetic(p_data[i + 1]) || d_Ge.isAlphabetic(p_data[i + 2])) {
                         p_countryId = p_data[i + 1];
                         p_continentId = p_data[i + 2];
-                        d_Ge.d_LogEntry.setMessage(" "+p_data[i]);
+                        d_Ge.d_LogEntry.setMessage(" "+p_data[i]+" "+p_countryId+" "+p_continentId);
                     } else {
                         System.out.println("Invalid country name");
                         d_Ge.d_LogEntry.setMessage("Invalid Continent ID");
@@ -117,7 +118,7 @@ public class Load extends Edit{
                 } else if (p_data[i].equals("-remove")) {
                     if (d_Ge.isAlphabetic(p_data[i + 1])) {
                         p_countryId = p_data[i + 1];
-                        d_Ge.d_LogEntry.setMessage(" "+p_data[i]);
+                        d_Ge.d_LogEntry.setMessage(" "+p_data[i]+" "+p_countryId);
                     } else {
                         System.out.println("Invalid country name");
                         d_Ge.d_LogEntry.setMessage("Invalid country name");
@@ -158,7 +159,7 @@ public class Load extends Edit{
                     if (d_Ge.isAlphabetic(p_data[i + 1]) || d_Ge.isAlphabetic(p_data[i + 2])) {
                         p_countryId = p_data[i + 1];
                         p_neighborCountryId = p_data[i + 2];
-                        d_Ge.d_LogEntry.setMessage(" "+p_data[i]);
+                        d_Ge.d_LogEntry.setMessage(" "+p_data[i]+" "+p_countryId+" "+p_neighborCountryId);
                     } else {
                         System.out.println("Invalid country ID");
                         d_Ge.d_LogEntry.setMessage("Invalid country ID");
@@ -176,7 +177,7 @@ public class Load extends Edit{
                     if (d_Ge.isAlphabetic(p_data[i + 1]) || d_Ge.isAlphabetic(p_data[i + 2])) {
                         p_countryId = p_data[i + 1];
                         p_neighborCountryId = p_data[i + 2];
-                        d_Ge.d_LogEntry.setMessage(" "+p_data[i]);
+                        d_Ge.d_LogEntry.setMessage(" "+p_data[i]+" "+p_countryId+" "+p_neighborCountryId);
                     } else {
                         System.out.println("Invalid country ID");
                         d_Ge.d_LogEntry.setMessage("Invalid country ID");
