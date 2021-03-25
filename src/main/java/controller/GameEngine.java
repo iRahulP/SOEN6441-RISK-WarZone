@@ -458,8 +458,8 @@ public class GameEngine {
                                         d_LogEntry.setMessage("Bomb card removed from players card list");
                                     }
                                     else{
-                                        System.out.println("Country owned by current player or target Country not adjacent | please pass to next player");
-                                        d_LogEntry.setMessage("Country owned by current player or target Country not adjacent | please pass to next player");
+                                        System.out.println("Bomb Card not Owned or Country owned by current player or target Country not adjacent | please pass to next player");
+                                        d_LogEntry.setMessage("Bomb Card not Owned or Country owned by current player or target Country not adjacent | please pass to next player");
                                     }
                                     d_GamePhase = InternalPhase.TURN;
                                     break;
@@ -468,8 +468,8 @@ public class GameEngine {
                                 System.out.println("Invalid Command");
                                 d_LogEntry.setMessage("Invalid Command");
                         }catch (Exception e) {
-                            System.out.println("Country owned by current player or target Country not adjacent | please pass to next player");
-                            d_LogEntry.setMessage("Country owned by current player or target Country not adjacent | please pass to next player");
+                            System.out.println("Bomb Card not Owned or Country owned by current player or target Country not adjacent | please pass to next player");
+                            d_LogEntry.setMessage("Bomb Card not Owned or Country owned by current player or target Country not adjacent | please pass to next player");
                         }
                         break;
 
@@ -489,8 +489,8 @@ public class GameEngine {
                                         d_LogEntry.setMessage("Bloackade card removed from Player's cardList ");
                                     }
                                     else{
-                                        System.out.println("Country not owned by current player | please pass to next player");
-                                        d_LogEntry.setMessage("Country not owned by current player | please pass to next player");
+                                        System.out.println("Blockade Card not Owned or Country not owned by current player | please pass to next player");
+                                        d_LogEntry.setMessage("Blockade Card not Owned or Country not owned by current player | please pass to next player");
                                     }
                                     d_GamePhase = InternalPhase.TURN;
                                     break;
@@ -499,8 +499,8 @@ public class GameEngine {
                                 System.out.println("Invalid Command");
                                 d_LogEntry.setMessage("Invalid Command");
                         }catch (Exception e) {
-                            System.out.println("Country not owned by current player | please pass to next player");
-                            d_LogEntry.setMessage("Country not owned by current player | please pass to next player");
+                            System.out.println("Blockade Card not Owned or Country not owned by current player | please pass to next player");
+                            d_LogEntry.setMessage("Blockade Card not Owned or Country not owned by current player | please pass to next player");
                         }
                         break;
 
@@ -528,8 +528,8 @@ public class GameEngine {
                                         d_LogEntry.setMessage("Airlift card removed from Player's cardList ");
                                     }
                                     else{
-                                        System.out.println("Source Country or Target Country not owned by player insufficient Army units | please pass to next player");
-                                        d_LogEntry.setMessage("Source Country or Target Country not owned by player insufficient Army units | please pass to next player");
+                                        System.out.println("Airlift Card not Owned or Source Country or Target Country not owned by player insufficient Army units | please pass to next player");
+                                        d_LogEntry.setMessage("Airlift Card not Owned or Source Country or Target Country not owned by player insufficient Army units | please pass to next player");
                                     }
                                     d_GamePhase = InternalPhase.TURN;
                                     break;
@@ -538,8 +538,8 @@ public class GameEngine {
                                 System.out.println("Invalid Command");
                                 d_LogEntry.setMessage("Invalid Command");
                         }catch (Exception e) {
-                            System.out.println("Source Country or Target Country not owned by player insufficient Army units | please pass to next player");
-                            d_LogEntry.setMessage("Source Country or Target Country not owned by player insufficient Army units | please pass to next player");
+                            System.out.println("Airlift Card not Owned or Source Country or Target Country not owned by player insufficient Army units | please pass to next player");
+                            d_LogEntry.setMessage("Airlift Card not Owned or Source Country or Target Country not owned by player insufficient Army units | please pass to next player");
                         }
                         break;
 
@@ -559,11 +559,11 @@ public class GameEngine {
                                     }
                                          }
                             } else
-                                System.out.println("Invalid Command");
-                                d_LogEntry.setMessage("Invalid Command");
+                                System.out.println("Diplomacy Card not Owned or Invalid Command");
+                                d_LogEntry.setMessage("Diplomacy Card not Owned or Invalid Command");
                         }catch (Exception e) {
-                            System.out.println("Invalid Player name");
-                            d_LogEntry.setMessage("Invalid Player name");
+                            System.out.println("Diplomacy Card not Owned or Invalid Player name");
+                            d_LogEntry.setMessage("Diplomacy Card not Owned or Invalid Player name");
                         }
                         break;
 
