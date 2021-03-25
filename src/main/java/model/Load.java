@@ -5,9 +5,10 @@ import model.Load;
 import view.MapView;
 //concreteState
 /**
- * Implementation of Preload phase of the game.
+ * Implementation of Pre-load phase of the game.
  */
 public class Load extends Edit{
+	
 	/**
 	 * mv Reference for MapView.
 	 */
