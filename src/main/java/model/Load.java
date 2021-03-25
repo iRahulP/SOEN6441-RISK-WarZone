@@ -12,7 +12,7 @@ public class Load extends Edit{
 	/**
 	 * mv Reference for MapView.
 	 */
-	MapView mv;
+	  MapView mv;
 	
 	/**
 	 * it is constructor to initialize values
