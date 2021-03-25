@@ -240,25 +240,6 @@ public class GameEngine {
                     d_GamePhase = InternalPhase.EDITMAP;
                     break;
 
- /*               case "editmap":
-                    setPhase(new PreLoad(this));
-                    d_LogEntry.setGamePhase(d_Phase);
-                    d_LogEntry.setCommand(l_commandName+" Command is being executed");
-                    d_Phase.editMap(l_data, l_mapName);
-                    String str5=d_Phase.getD_PhaseName();
-                    System.out.println(str5);
-                    break;
-
-                case "loadmap":
-                    setPhase(new PreLoad(this));
-                    d_LogEntry.setGamePhase(d_Phase);
-                    d_LogEntry.setCommand(l_commandName+" Command is being executed");
-                    d_Phase.loadMap(l_data,l_mapName);
-                    String str6=d_Phase.getD_PhaseName();
-                    System.out.println(str6);
-//
-                    break;*/
-
                 case "validatemap":
                     setPhase(new Load(this));
                     d_LogEntry.setGamePhase(d_Phase);
