@@ -563,18 +563,13 @@ public class GameEngine {
                         break;
 
                     case "stop":
-                    	int l_totalrmies=0;
-                    	Iterator<Player> l_itr1 = d_Players.listIterator();
-                        while(l_itr1.hasNext()) {
-                            Player l_p = l_itr1.next();
-                            if (l_p.getOwnedArmies() > 0) {
-                            	l_totalrmies = l_totalrmies + l_p.getOwnedArmies();
-                            }
-                        }
-                    	if(l_totalrmies>0) {
-                    	d_GamePhase = InternalPhase.ISSUE_ORDERS;
+                    	if(l_counter > 0) {
+                    	    System.out.println("There are still some armies left to be deployed!");
+                    	    d_GamePhase = InternalPhase.ISSUE_ORDERS;
                     	}else {
-                        d_GamePhase = InternalPhase.EXECUTE_ORDERS;}
+                    	    System.out.println("Getting you to Execution Phase");
+                            d_GamePhase = InternalPhase.EXECUTE_ORDERS;
+                    	}
                         return d_GamePhase;
 
                     default:
