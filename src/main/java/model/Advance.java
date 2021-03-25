@@ -33,33 +33,34 @@ public class Advance implements Order {
 	 */
 	@Override
 	public boolean execute() {
-		if(d_Player.d_NegotiateList.contains(d_TargetPlayer)){
-			//skip execute
-			return false;
-		}else {
-			if (d_Player.getOwnedCountries().containsKey(d_SourceCountryId.toLowerCase())) {
+			
+		if (d_Player.getOwnedCountries().containsKey(d_SourceCountryId.toLowerCase())) {
+			if (((d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase()).getNumberOfArmies())- d_NumArmies)>=1) {
 				if (d_Player.getOwnedCountries().containsKey(d_TargetCountryId.toLowerCase())) {
-					if ((d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase()).getNumberOfArmies()) > d_NumArmies) {
-						int fromArmies = d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase()).getNumberOfArmies();
-						fromArmies -= d_NumArmies;
-						d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase()).setNumberOfArmies(fromArmies);
-						int toArmies = d_Player.getOwnedCountries().get(d_TargetCountryId.toLowerCase()).getNumberOfArmies();
-						toArmies += d_NumArmies;
-						d_Player.getOwnedCountries().get(d_TargetCountryId.toLowerCase()).setNumberOfArmies(toArmies);
-						return true;
-					} else {
-						System.out.println("player don't have enough armies.");
-						return false;
-					}
-				} else {
+					
+					//advance logic
+					int fromArmies = d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase()).getNumberOfArmies();
+					fromArmies -= d_NumArmies;
+					d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase()).setNumberOfArmies(fromArmies);
+					int toArmies = d_Player.getOwnedCountries().get(d_TargetCountryId.toLowerCase()).getNumberOfArmies();
+					toArmies += d_NumArmies;
+					d_Player.getOwnedCountries().get(d_TargetCountryId.toLowerCase()).setNumberOfArmies(toArmies);
+					return true;
+					
+				}else {
 					System.out.println(d_TargetCountryId + " is not owned by the player");
-					System.out.println("Attack Occur between: " + d_TargetCountryId + " and " + d_SourceCountryId);
-
-					if (((d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase()).getNumberOfArmies())- d_NumArmies)>=1) {
+					
+					if(d_Player.d_NegotiateList.contains(d_TargetPlayer)) {
+						//skip execute
+						return false;
+					}else {
+						//attack logic
+						System.out.println("Attack Occur between: " + d_TargetCountryId + " and " + d_SourceCountryId);
+						
 						//fetching the countries and its armies
 						CountryDetails attackingCountry = d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase());
 						CountryDetails defendingCountry = attackingCountry.getNeighbours().get(d_TargetCountryId.toLowerCase());
-						//int attackArmy = attackingCountry.getNumberOfArmies() - 1;
+						
 						int defendArmy = defendingCountry.getNumberOfArmies();
 
 						//logic to kill the opponent country armies
@@ -84,26 +85,25 @@ public class Advance implements Order {
 						}
 						//if defending coutry has armies
 						else {
-							if(attackerArmyLeft<0) {
-								attackingCountry.setNumberOfArmies(((d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase()).getNumberOfArmies())- d_NumArmies));
-							}
-							else {
-								attackingCountry.setNumberOfArmies(((d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase()).getNumberOfArmies())- d_NumArmies)+attackerArmyLeft);
-							}
 							defendingCountry.setNumberOfArmies(defenderArmyLeft);
-							
+							if(attackerArmyLeft<0) 
+								attackingCountry.setNumberOfArmies(((d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase()).getNumberOfArmies())- d_NumArmies));
+							else 
+								attackingCountry.setNumberOfArmies(((d_Player.getOwnedCountries().get(d_SourceCountryId.toLowerCase()).getNumberOfArmies())- d_NumArmies)+attackerArmyLeft);	
 						}
+						return true;
 					}
-					return true;
 				}
-			} else {
-				System.out.println(d_SourceCountryId + " is not owned by the player");
+			}else {
+				System.out.println("player don't have enough armies.");
 				return false;
 			}
+		}else {
+			System.out.println(d_SourceCountryId + " is not owned by the player");
+			return false;
 		}
-	}
-
-
+			
+	}	
 
 	/**
 	 * Getter for current player
