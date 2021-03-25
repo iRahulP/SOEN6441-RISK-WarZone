@@ -674,6 +674,11 @@ public class GameEngine {
         return d_GamePhase;
     }
 
+    /**
+     * Gets Player Name of Current player
+     * @param p_playerName player object
+     * @return player name
+     */
     private Player getPlayerByName(String p_playerName) {
         for(Player l_player:d_Players) {
             if(l_player.getPlayerName().equals(p_playerName))
