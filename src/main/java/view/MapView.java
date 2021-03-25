@@ -14,16 +14,12 @@ import model.Player;
  *
  */
 public class MapView {
-	/**
-	 * d_Ge is reference of gameEngine.
-	 */
-	GameEngine d_Ge;
+
 	
 	/**
 	 * Constructor to initialize object.
 	 */
 	public MapView(){
-		d_Ge=new GameEngine();
 	}
 	
 	 /**
@@ -32,7 +28,6 @@ public class MapView {
 		 */
 	 public void showMap(GameMap p_map) {
 	    	
-			d_Ge.d_LogEntry.setMessage("Command given by user: showmap");
 	        if(p_map==null)
 	            return;
 	        System.out.printf("%85s\n", "-------------------------------------------------------------------------------------------");
@@ -83,7 +78,7 @@ public class MapView {
 		 * @param p_map Game map
 		 */
 		public void showMap(ArrayList<Player> p_players, GameMap p_map) {
-			d_Ge.d_LogEntry.setMessage("Command given by user: showmap");
+
 			if(p_map==null)
 				return;
 			if(p_players.size()==0 || p_players.get(0).getOwnedCountries().size()==0) {
