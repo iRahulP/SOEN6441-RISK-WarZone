@@ -37,7 +37,7 @@ import org.junit.runners.Suite;
 })
 
 /**
- *  It runs a collection of test cases.
+ * It runs a collection of test cases.
  */
 public class TestSuite {
     //Driver for All Test Cases

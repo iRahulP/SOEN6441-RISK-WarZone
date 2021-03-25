@@ -8,11 +8,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import view.MapView;
+
 /**
  * It contains logic for executing GameEngine
  * @author Rucha
  */
 public class RunGameEngine {
+	
+	/**
+	 * mv Reference for MapView.
+	 */
+	MapView mv;
 	
 	/**
 	 * Load map for playing the game.
@@ -258,48 +265,8 @@ public class RunGameEngine {
 	 * @param p_map the map to be shown.
 	 */
 	public void showMap(GameMap p_map) {
-		if(p_map==null)
-			return;
-		System.out.printf("%85s\n", "-------------------------------------------------------------------------------------------");
-		System.out.printf("%25s%25s%35s\n", "Continents", "Country", "Country's neighbors");
-		System.out.printf("%85s\n", "-------------------------------------------------------------------------------------------");
-		boolean l_PrintContinentName = true;
-		boolean l_PrintCountryName = true;
-		for(Continent l_continent : p_map.getContinents().values()) {
-			if(l_continent.getCountries().size()==0) {
-				System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentId(), "", "");
-			}
-			for(CountryDetails l_country : l_continent.getCountries().values()) {
-				if(l_country.getNeighbours().size()==0) {
-					if(l_PrintContinentName && l_PrintCountryName) {
-						System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentId(), l_country.getCountryId(), "");
-						l_PrintContinentName = false;
-						l_PrintCountryName = false;
-					}
-					else if(l_PrintCountryName) {
-						System.out.printf("\n%25s%25s%25s\n", "", l_country.getCountryId(), "");
-						l_PrintCountryName =  false;
-					}
-				}
-				for(CountryDetails l_neighbor : l_country.getNeighbours().values()) {
-					if(l_PrintContinentName && l_PrintCountryName) {
-						System.out.printf("\n%25s%25s%25s\n", l_continent.getContinentId(), l_country.getCountryId(), l_neighbor.getCountryId());
-						l_PrintContinentName = false;
-						l_PrintCountryName = false;
-					}
-					else if(l_PrintCountryName) {
-						System.out.printf("\n%25s%25s%25s\n", "", l_country.getCountryId(), l_neighbor.getCountryId());
-						l_PrintCountryName = false;
-					}
-					else {
-						System.out.printf("%25s%25s%25s\n", "", "", l_neighbor.getCountryId());
-					}
-				}
-				l_PrintCountryName = true;
-			}
-			l_PrintContinentName = true;
-			l_PrintCountryName = true;
-		}
+		mv.showMap(p_map);
+		mv=new MapView();
 	}
 	
 	/**

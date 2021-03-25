@@ -6,7 +6,6 @@ import view.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Queue;
-import static java.lang.System.exit;
 
 /**
  * Class responsible to interpret different commands as provided by User over Command Line Interface

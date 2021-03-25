@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Iterator;
-
 /**
  * Class containing logic for implementation of advance order
  * @author Rucha

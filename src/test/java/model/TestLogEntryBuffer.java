@@ -7,7 +7,10 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
-
+/**
+ *Test if LogEntryBuffer(observable) updates the WriteLogEntry(observer)
+ *  to write to log file log.txt*
+ */
 public class TestLogEntryBuffer {
 
     /**
