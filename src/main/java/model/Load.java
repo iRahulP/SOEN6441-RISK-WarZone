@@ -5,7 +5,7 @@ import model.Load;
 import view.MapView;
 //concreteState
 /**
- * Implementation of Pre-load phase of the game.
+ * Implementation of load phase of the game.
  */
 public class Load extends Edit{
 	
@@ -21,7 +21,7 @@ public class Load extends Edit{
     public Load(GameEngine p_ge)
     {
         d_Ge = p_ge;
-        d_PhaseName = "PreLoad";
+        d_PhaseName = "Load";
         mv=new MapView();
     }
 
