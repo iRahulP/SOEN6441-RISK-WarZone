@@ -1,13 +1,13 @@
 package model;
 
 import controller.GameEngine;
-import model.PreLoad;
+import model.Load;
 import view.MapView;
 //concreteState
 /**
  * Implementation of Preload phase of the game.
  */
-public class PreLoad extends Edit{
+public class Load extends Edit{
 	/**
 	 * mv Reference for MapView.
 	 */
@@ -17,7 +17,7 @@ public class PreLoad extends Edit{
 	 * it is constructor to initialize values
 	 * @param p_ge is the reference of gameEngine class 
 	 */
-    public PreLoad(GameEngine p_ge)
+    public Load(GameEngine p_ge)
     {
         d_Ge = p_ge;
         d_PhaseName = "PreLoad";
@@ -258,7 +258,7 @@ public class PreLoad extends Edit{
             System.out.println("Invalid command - it should be of the form editmap sample.map");
             d_Ge.d_LogEntry.setMessage("Invalid command - it should be of the form editmap sample.map");
         }
-        d_Ge.setPhase(new PreLoad(d_Ge));
+        d_Ge.setPhase(new Load(d_Ge));
         d_Ge.d_LogEntry.setGamePhase(d_Ge.d_Phase);
 
     }
@@ -298,14 +298,13 @@ public class PreLoad extends Edit{
                 } else {
                     System.out.println("Map name not valid");
                     d_Ge.d_LogEntry.setMessage("Map name not valid");
-                    //d_LogObject.setMessage("Map name not valid");
                 }
             }
         } catch (Exception e) {
             System.out.println("Invalid command - try -> loadmap sample.map");
             d_Ge.d_LogEntry.setMessage("Invalid command - try -> loadmap sample.map");
         }
-        d_Ge.setPhase(new PostLoad(d_Ge));
+        d_Ge.setPhase(new StartUp(d_Ge));
         d_Ge.d_LogEntry.setGamePhase(d_Ge.d_Phase);
     }
     

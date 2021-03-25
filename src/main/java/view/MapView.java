@@ -7,7 +7,7 @@ import model.Continent;
 import model.CountryDetails;
 import model.GameMap;
 import model.Player;
-import model.PostLoad;
+
 /**
  *Class to show map. 
  * @author yashs
@@ -87,8 +87,7 @@ public class MapView {
 			if(p_map==null)
 				return;
 			if(p_players.size()==0 || p_players.get(0).getOwnedCountries().size()==0) {
-				PostLoad l_rc = new PostLoad(d_Ge);
-				l_rc.showMap(p_map);
+				showMap(p_map);
 				return;
 			}
 			System.out.format("%25s%25s%35s%25s%10s\n", "Owner", "Country", "Neighbors", "Continent", "#Armies");

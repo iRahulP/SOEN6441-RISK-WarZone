@@ -50,7 +50,7 @@ public class TestLogEntryBuffer {
     public void testLogEntryBuffer(){
 
         //Testing preload phase logs are stored in log file or not
-        d_Ge.setPhase(new PreLoad(d_Ge));
+        d_Ge.setPhase(new Load(d_Ge));
         d_MapName= "world.map";
         d_Ge.d_LogEntry.setGamePhase(d_Ge.d_Phase);
         d_Ge.d_Phase.loadMap(d_Data1,d_MapName);

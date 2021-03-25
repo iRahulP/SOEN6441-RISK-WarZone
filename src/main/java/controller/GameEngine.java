@@ -158,7 +158,7 @@ public class GameEngine {
         //initial command line commands
         //NULL : editmap / loadmap
         if (d_GamePhase.equals(InternalPhase.NULL)) {
-        	setPhase(new PreLoad(this));
+        	setPhase(new Load(this));
             switch (l_commandName) {
                 case "editmap":
                     d_LogEntry.setGamePhase(d_Phase);
@@ -188,7 +188,7 @@ public class GameEngine {
         else if (d_GamePhase.equals(InternalPhase.EDITMAP)) {
             switch (l_commandName) {
                 case "editcontinent":
-                    setPhase(new PreLoad(this));
+                    setPhase(new Load(this));
                     d_LogEntry.setGamePhase(d_Phase);
                     d_LogEntry.setCommand(l_commandName+" Command is being executed");
                     d_Phase.editContinent(l_data, l_continentId, l_controlValue);
@@ -198,7 +198,7 @@ public class GameEngine {
                     break;
 
                 case "editcountry":
-                    setPhase(new PreLoad(this));
+                    setPhase(new Load(this));
                     d_LogEntry.setGamePhase(d_Phase);
                     d_LogEntry.setCommand(l_commandName+" Command is being executed");
                     d_Phase.editCountry(l_data, l_continentId, l_countryId) ;
@@ -210,7 +210,7 @@ public class GameEngine {
                     break;
 
                 case "editneighbor":
-                    setPhase(new PreLoad(this));
+                    setPhase(new Load(this));
                     d_LogEntry.setGamePhase(d_Phase);
                     d_LogEntry.setCommand(l_commandName+" Command is being executed");
                     d_Phase.editNeighbour(l_data, l_countryId, l_neighborCountryId);
@@ -220,7 +220,7 @@ public class GameEngine {
                     break;
 
                 case "savemap":
-                    setPhase(new PreLoad(this));
+                    setPhase(new Load(this));
                     d_LogEntry.setGamePhase(d_Phase);
                     d_LogEntry.setCommand(l_commandName+" Command is being executed");
                     d_Phase.savemap(l_data, l_mapName);
@@ -230,7 +230,7 @@ public class GameEngine {
                     break;
 
                 case "showmap":
-                    setPhase(new PreLoad(this));
+                   setPhase(new Load(this));
                     d_LogEntry.setGamePhase(d_Phase);
                     d_LogEntry.setCommand(l_commandName+" Command is being executed");
                     d_Phase.showMap(d_Map);
@@ -260,7 +260,7 @@ public class GameEngine {
                     break;*/
 
                 case "validatemap":
-                    setPhase(new PreLoad(this));
+                    setPhase(new Load(this));
                     d_LogEntry.setGamePhase(d_Phase);
                     d_LogEntry.setCommand(l_commandName+" Command is being executed");
                     d_Phase.validatemap();

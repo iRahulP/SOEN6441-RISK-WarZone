@@ -25,7 +25,7 @@ public class TestPhase {
 	    String d_PlayerName="xyz";
 	    RunGameEngine d_Rge;
 	    String[] d_Data={"gameplayer", "-add", "xyz"};
-	    String[] d_Data1 = new String[]{"loadmap","world.map"};
+	    String[] d_Data1 = new String[]{"edit","world.map"};
 	    String d_MapName;
 	    
 	    /**
@@ -34,14 +34,13 @@ public class TestPhase {
 	 @Before
 	 public void before(){
 		 d_Ge = new GameEngine();
-		 d_Rge = new RunGameEngine();
 		 d_Players = new ArrayList<Player>();
-		 d_Map = new GameMap("dummy.map");
+		 d_Map = new GameMap("world.map");
 		 d_Player1 = new Player("Yash");
 	     d_Player2 = new Player("Rahul");
 		 d_Players.add(d_Player1);
 	     d_Players.add(d_Player2);
-	     d_MapName= "dummy.map";
+	     d_MapName= "world.map";
 	    }
 	 /**
 	     * Test if the Reinforcements is allowed in pre-load or post-load phase as it is part of startup phase.
@@ -49,18 +48,16 @@ public class TestPhase {
 	 @Test
 	 public void testPhase(){
 		 
-		 d_Ge.setPhase(new PreLoad(d_Ge));
-		 d_MapName= "world.map";
-	 	 d_Ge.setPhase(new PreLoad(d_Ge));
+		 d_Ge.setPhase(new Load(d_Ge));
+		 
+	 	 d_Ge.setPhase(new Load(d_Ge));
 		 String str=d_Ge.d_Phase.getD_PhaseName();
          System.out.println(str);  
-	     d_Ge.d_Phase.loadMap(d_Data1,d_MapName);
+	     d_Ge.d_Phase.editMap(d_Data1,d_MapName);
 		 boolean a=d_Ge.d_Phase.assignCountries(d_Map,d_Players );
 		 System.out.println(a);
 		 assertEquals(false, a); 
 		 String str1=d_Ge.d_Phase.getD_PhaseName();
          System.out.println("Game is in "+str1+" state");
-		
 	    }
-	 
 }
