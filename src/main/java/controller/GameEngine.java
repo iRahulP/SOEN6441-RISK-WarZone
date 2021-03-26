@@ -573,8 +573,8 @@ public class GameEngine {
                         return d_GamePhase;
 
                     default:
-                        System.out.println("Invalid command - either use deploy | pass | showmap commands in ISSUE_ORDERS InternalPhase");
-                        d_LogEntry.setMessage("Invalid command - either use deploy | pass | showmap commands in ISSUE_ORDERS InternalPhase");
+                        System.out.println("Invalid command - either use deploy | advance | pass | special commands | showmap commands in ISSUE_ORDERS InternalPhase");
+                        d_LogEntry.setMessage("Invalid command - either use deploy | advance | pass | special commands | showmap commands in ISSUE_ORDERS InternalPhase");
                         break;
                 }
             }
