@@ -95,4 +95,18 @@ public class PlayRisk {
         }
         System.out.println();
     }
+
+    /**
+     * Shows names of existing game files under Resources.
+     */
+    private void printSavedGames(){
+        File d_Folder = new File("src/main/resources/games/");
+        File[] d_Files = d_Folder.listFiles();
+
+        for(int i = 0; i< d_Files.length; i++) {
+            if(d_Files[i].isFile())
+                System.out.print(d_Files[i].getName()+" | ");
+        }
+        System.out.println();
+    }
 }
