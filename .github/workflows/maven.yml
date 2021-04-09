@@ -23,6 +23,6 @@ jobs:
     - name: Build Risk Project
       run: mvn install
     - name: Javadoc Generation
-      run: mvn javadoc:javadoc-Xdoclint
+      run: mvn javadoc:javadoc
     - name: Unit Tests
       run: mvn test
