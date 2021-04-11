@@ -2,11 +2,17 @@ package model;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+
 
 import view.MapView;
 
@@ -346,6 +352,52 @@ public class RunGameEngine {
 			return false;
 		}
 	}
+	
+	/**
+     * Saves risk game.
+     * @param p_game Represents the state of the game.
+     * @param p_fileName Name of the file saving the game.
+     */
+    public void saveGame(GameData  p_game, String p_fileName){
+        GameDataBuilder l_gameDataBuilder = new GameDataBuilder();
+        l_gameDataBuilder.setMap(p_game.getMap());
+        l_gameDataBuilder.setMapType(p_game.getMapType());
+        l_gameDataBuilder.setGamePhase(p_game.getGamePhase());
+        l_gameDataBuilder.setPlayers(p_game.getPlayers());
+        l_gameDataBuilder.setActivePlayer(p_game.getActivePlayer());
+        l_gameDataBuilder.setDeck(p_game.getDeck());
+        l_gameDataBuilder.setCardsDealt((p_game.getCardsDealt()));
+
+        try{
+            FileOutputStream l_f = new FileOutputStream(new File("src/main/resources/game/" + p_fileName));
+            ObjectOutputStream l_o = new ObjectOutputStream((l_f));
+            l_o.writeObject(l_gameDataBuilder);
+        } catch(FileNotFoundException e){
+            e.printStackTrace();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * Loads risk game.
+     * @param p_fileName Name of the file to be loaded.
+     * @return GameDataBuilder object to build GameData object.
+     */
+    public GameDataBuilder loadGame(String p_fileName){
+        GameDataBuilder l_gameDataBuilder;
+        try{
+            FileInputStream l_f = new FileInputStream((new File("src/main/resources/game/" + p_fileName)));
+            ObjectInputStream l_o = new ObjectInputStream((l_f));
+            l_gameDataBuilder = (GameDataBuilder) l_o.readObject();
+        } catch(FileNotFoundException e){
+            return null;
+        } catch(IOException e) {
+            return null;
+        } catch (ClassNotFoundException e){
+            return null;
+        }
+        return l_gameDataBuilder;
+    }
 	
 	/**
 	 * It consist of various validity checks to ensure that map is suitable for playing the game.
