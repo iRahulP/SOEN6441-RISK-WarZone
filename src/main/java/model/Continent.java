@@ -30,7 +30,7 @@ public class Continent {
         d_ContinentId = p_continentId;
         d_ControlValue = Integer.parseInt(p_controlValue);
         d_ContinentColor = p_continentColor;
-        d_InMapIndex = LoadMap.d_InMapIndex;
+        d_InMapIndex = DominationMap.d_InMapIndex;
         d_Countries = new HashMap<>();
     }
 

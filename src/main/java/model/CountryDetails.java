@@ -18,6 +18,7 @@ public class CountryDetails {
 	private int d_XCoOrdinate;
 	private int d_YCoOrdinate;
 	private int d_NumberOfArmies;
+	Player ownerPlayer;
 
 	/**
 	 * Set CountryDetails object with default values.
@@ -59,6 +60,17 @@ public class CountryDetails {
 		this.d_XCoOrdinate = Integer.parseInt(p_xCoOrdinate);
 		this.d_YCoOrdinate = Integer.parseInt(p_yCoOrdinate);
 		this.d_NumberOfArmies = 0;
+	}
+	
+	public CountryDetails(String countryName, String xCoOrdinate, String yCoOrdinate, String inContinent){
+		this.d_Index = 0;
+		this.d_CountryId = countryName;
+		this.d_InContinent = inContinent;
+		this.d_Neighbours = new HashMap<String, CountryDetails>();
+		this.d_XCoOrdinate = Integer.parseInt(xCoOrdinate);
+		this.d_YCoOrdinate = Integer.parseInt(yCoOrdinate);
+		this.d_NumberOfArmies = 0;
+		this.ownerPlayer = null;
 	}
 
 	/**
@@ -160,4 +172,19 @@ public class CountryDetails {
 				+ "]";
 	}
 	
+	/**
+	 * Gets the player owning the country currently.
+	 * @return Player owning this country.
+	 */
+	public Player getOwnerPlayer() {
+		return ownerPlayer;
+	}
+
+	/**
+	 * Sets the player owning this country currently
+	 * @param ownerPlayer Player owning this country.
+	 */
+	public void setOwnerPlayer(Player ownerPlayer) {
+		this.ownerPlayer = ownerPlayer;
+	}
 }

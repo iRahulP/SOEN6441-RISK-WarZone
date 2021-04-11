@@ -37,11 +37,21 @@ public class RunGameEngine {
 		//check if file exists
 		String l_filePath = "src/main/resources/maps/" + p_mapName;
 		GameMap l_gameMap;
+		String l_MapType;
+		DominationMap l_domMap;
 		File l_file = new File(l_filePath);
 		if(l_file.exists())
 		{
 			LoadMap l_loadMap = new LoadMap();
-			l_gameMap = l_loadMap.readMap(l_filePath);
+			l_MapType = l_loadMap.readMap(l_filePath);
+			System.out.println("MapType: "+ l_MapType);
+			if(l_MapType.equals("domination")) {
+				l_domMap= new DominationMap();
+			}
+			else {
+				l_domMap= new MapAdapter(new ConquestMap());
+			}
+			l_gameMap= l_domMap.readMap(l_filePath);
 			l_gameMap.setMapName(p_mapName);
 			if(validateMap(l_gameMap)) {
 				l_gameMap.setValid(true);
@@ -67,11 +77,12 @@ public class RunGameEngine {
 		//check if file exists
 		String l_filePath = "src/main/resources/maps/" + p_mapName;
 		GameMap l_gameMap;
+		DominationMap dm = new DominationMap();
 		File l_file = new File(l_filePath);
 		if(l_file.exists()) {
 			System.out.println(p_mapName+" exist and you can edit it.");
 			LoadMap l_loadMap = new LoadMap();
-			l_gameMap = l_loadMap.readMap(l_filePath);
+			l_gameMap = dm.readMap(l_filePath);
 			l_gameMap.setMapName(p_mapName);
 		}
 		else {

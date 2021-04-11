@@ -17,39 +17,40 @@ public class LoadMap {
 	 *  Tracks the index value of continents, new or existing, to later facilitate writing them to
 	 * map files following domination's conventions.
 	 */
-    public static int d_InMapIndex = 1;
+   // public static int d_InMapIndex = 1;
     private GameMap d_Map;
     private HashMap<Integer, CountryDetails> d_ListOfCountries;
+    String d_MapType;
     
     /**
      * The main method asking for name of the map file want to run.
      * Calls readMap function to read file.
      * @param args argument for main
      */
-    public static void main(String[] args) {
+  /*  public static void main(String[] args) {
         Scanner l_in = new Scanner(System.in);
         System.out.println("ENTER THE NAME OF MAP FILE:");
         String l_mapName = l_in.nextLine();
         LoadMap l_loadedMap = new LoadMap();
         l_loadedMap.readMap(l_mapName);
         l_in.close();
-    }
+    }*/
     
     /**
      * getter for Map
      * @return d_Map
      */
-    public GameMap getMap() {
+ /*   public GameMap getMap() {
         return this.d_Map;
-    }
+    }*/
     
     /**
      *  setter method for map
      * @param p_map is the reference to GameMap class   
      */
-    public void setMap(GameMap p_map) {
+ /*   public void setMap(GameMap p_map) {
         this.d_Map = p_map;
-    }
+    }*/
 
     /**
      * Reads the ".map" file and creates a GameMap object accordingly.
@@ -57,7 +58,7 @@ public class LoadMap {
      * @param p_mapName Name of the map file to be read
      * @return d_Map GameMap object representing the map just read
      */
-    public GameMap readMap(String p_mapName) {
+    public String readMap(String p_mapName) {
         d_Map = new GameMap(p_mapName);
         d_ListOfCountries = new HashMap<Integer, CountryDetails>();
 
@@ -65,12 +66,18 @@ public class LoadMap {
             BufferedReader l_reader = new BufferedReader(new FileReader(p_mapName));
             String l_s;
             while ((l_s = l_reader.readLine()) != null) {
-                if (l_s.equals("[continents]"))
-                    l_reader = readContinents(l_reader);
-                if (l_s.equals("[countries]"))
-                    l_reader = readCountries(l_reader);
-                if (l_s.equals("[borders]"))
-                    l_reader = readBorders(l_reader);
+                /*if (l_s.equals("[continents]"))
+                    l_reader = readContinents(l_reader);*/
+                if (l_s.equals("[countries]")) {
+                	//l_reader = readCountries(l_reader);
+                	setMapType("domination");
+                }
+                if (l_s.equals("[Territories]")) {
+                	//l_reader = readCountries(l_reader);
+                	setMapType("conquest");
+                }
+                /*if (l_s.equals("[borders]"))
+                    l_reader = readBorders(l_reader);*/
             }
             l_reader.close();
         } catch (FileNotFoundException e) {
@@ -80,17 +87,24 @@ public class LoadMap {
             System.out.println("IOException");
             System.out.println(e.getMessage());
         }
-        return d_Map;
+        return d_MapType;
     }
     
     
-    /**
+    public void setMapType(String p_mapType) {
+    	 d_MapType = p_mapType;
+    }
+
+    public String getMapType() {
+   	  return d_MapType;
+   }
+	/**
      * Reads the countries from the ".map" files.
 	 * Exits the program if duplicate country or in non-existent country.
      * @param p_reader Stream starting from countries section of ".map" file
      * @return p_reader BufferedReader stream at the point where it has finished reading countries
      */
-    private BufferedReader readCountries(BufferedReader p_reader) {
+ /*   private BufferedReader readCountries(BufferedReader p_reader) {
         String l_s;
         try {
             while (!((l_s = p_reader.readLine()).equals(""))) {
@@ -111,7 +125,7 @@ public class LoadMap {
             e.printStackTrace();
         }
         return p_reader;
-    }
+    }*/
   
     /**
      *  Reads the continents from the ".map" files.
@@ -119,7 +133,7 @@ public class LoadMap {
      * @param p_reader Stream starting from continents section of ".map" file
      * @return  p_reader BufferedReader stream at the point where it has finished reading continents
      */
-    private BufferedReader readContinents(BufferedReader p_reader) {
+ /*   private BufferedReader readContinents(BufferedReader p_reader) {
         String l_s;
         try {
             while (!((l_s = p_reader.readLine()).equals(""))) {
@@ -139,7 +153,7 @@ public class LoadMap {
         d_InMapIndex = 1;
         return p_reader;
 
-    }
+    }*/
     
     
     /**
@@ -148,7 +162,7 @@ public class LoadMap {
      * @param p_reader buffer data from file to be parsed
      * @return p_reader
      */
-    private BufferedReader readBorders(BufferedReader p_reader) {
+ /*   private BufferedReader readBorders(BufferedReader p_reader) {
         String l_s;
         try {
             while ((l_s = p_reader.readLine()) != null) {
@@ -168,7 +182,7 @@ public class LoadMap {
             e.printStackTrace();
         }
         return p_reader;
-    }
+    }*/
    
     
     /**
@@ -177,7 +191,7 @@ public class LoadMap {
      * @param p_argumentCountry Country to which neighbor is to be registered.
      * @param p_stringIndex Index of the country to be added as a neighbor to the argument country
      */
-    private void addNeighbour(CountryDetails p_argumentCountry, String p_stringIndex) {
+  /*  private void addNeighbour(CountryDetails p_argumentCountry, String p_stringIndex) {
         int l_borderIndex = Integer.parseInt(p_stringIndex);
         CountryDetails l_neighbourCountry = new CountryDetails();
         try {
@@ -189,7 +203,7 @@ public class LoadMap {
         }
         if (!p_argumentCountry.getNeighbours().containsKey(l_neighbourCountry.getCountryId().toLowerCase()))
             p_argumentCountry.getNeighbours().put(l_neighbourCountry.getCountryId().toLowerCase(), l_neighbourCountry);
-    }
+    }*/
 
     
     /**
@@ -197,7 +211,7 @@ public class LoadMap {
 	 * If duplicate country, exits the program throwing error.
      * @param l_newCountry new Country
      */
-    private void addToContinentMap(CountryDetails l_newCountry) {
+ /*   private void addToContinentMap(CountryDetails l_newCountry) {
 
         if (!MapValidator.doesCountryExist(d_Map, l_newCountry.getCountryId())) {
             //newCountry.printCountry();
@@ -211,7 +225,7 @@ public class LoadMap {
             System.out.println("Two countries of same name exists in the same continent.");
             System.exit(-1);
         }
-    }
+    }*/
 
 }
 
