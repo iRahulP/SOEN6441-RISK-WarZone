@@ -6,6 +6,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 
+/**
+ * Target class of Adapter pattern
+ * Responsible for reading and saving Domination map
+ * 
+ * @author Rucha
+ *
+ */
 class DominationMap {
 
 	 public static int d_InMapIndex = 1;

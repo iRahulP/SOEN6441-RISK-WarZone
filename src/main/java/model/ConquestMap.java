@@ -8,6 +8,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 
+/**
+ * Adaptee class of adapter pattern
+ * Responsible for reading and saving conquest map
+ * 
+ * @author Rucha
+ *
+ */
 public class ConquestMap {
 	
 	GameMap  d_ConquestMap;

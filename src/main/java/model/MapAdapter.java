@@ -2,6 +2,7 @@ package model;
 
 /**
  * Adapter class provide the bridge between DominationMap and ConquestMap
+ * 
  * @author Rucha
  *
  */
