@@ -64,6 +64,11 @@ public class GameEngine {
     public WriteLogEntry d_WriteLog;
     
     /**
+     * Holds the data related to the game.
+     */
+    public GameData d_Game;
+    
+    /**
      * Initializes the variables and objects required to play the game and act on user commands
      */
     public GameEngine()  {
@@ -76,6 +81,7 @@ public class GameEngine {
         d_Play = new PlayRisk();
         d_LogEntry = new LogEntryBuffer();
         d_WriteLog = new WriteLogEntry();
+        d_Game= new GameData();
         d_LogEntry.attach(d_WriteLog);
     }
 
@@ -555,6 +561,26 @@ public class GameEngine {
                         }catch (Exception e) {
                             System.out.println("Invalid Command - it should be of the form -> deploy countryID num | pass");
                             d_LogEntry.setMessage("Invalid Command - it should be of the form -> deploy countryID num | pass");
+                        }
+                        break;
+                        
+                    case "savegame":
+                        try{
+                            if(l_data.length == 2){
+                                if(isAlphabetic(l_data[1])) {
+                                    String fileName = l_data[1];
+                                    d_RunG.saveGame(this.d_Game, fileName);
+                                    System.out.println("current Game saved is saved ");
+                                    d_LogEntry.setMessage("current Game saved is saved");
+                                }
+                            }else{
+                                String message = "Invalid command. enter file name to save a game.";
+                                d_LogEntry.setMessage("Invalid command. enter file name to save a game.");
+                            }
+
+                        }catch (ArrayIndexOutOfBoundsException e){
+                        	String message = "Invalid Command, It should be 'savegame filename'";
+                        	d_LogEntry.setMessage("Invalid Command, It should be 'savegame filename'");
                         }
                         break;
 
