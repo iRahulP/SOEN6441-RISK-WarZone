@@ -18,11 +18,20 @@ public class Player {
     private Order d_Order;
     private Queue<Order> d_OrderList;
 
+    /**
+     * Negotiators list
+     */
     ArrayList<Player> d_NegotiateList;
+
     /**
      * list of cards owned by player is stored in d_Deck
      */
     ArrayList<Card> d_Deck;
+
+    /**
+     * Strategy object for PlayerStrategy
+     */
+    PlayerStrategy d_Strategy;
 
 
     /**
@@ -39,6 +48,14 @@ public class Player {
         d_Deck = new ArrayList<>();
         d_NegotiateList= new ArrayList<Player>();
     }
+
+    /**
+     * Sets strategy for a specific player
+     * @param p_strategy
+     */
+    public void setStrategy(PlayerStrategy p_strategy) {
+        d_Strategy = p_strategy;
+    };
 
     /**
      * Getter for Negotiators
