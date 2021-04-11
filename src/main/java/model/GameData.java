@@ -200,7 +200,7 @@ public class GameData extends Observable implements Serializable {
 
     /**
      * Sets the deck of card.
-     * @param deck Deck of card for the game.
+     * @param p_card Card of card for the game.
      */
     public void setDeck(Card p_card) {
         this.d_Card = p_card;
