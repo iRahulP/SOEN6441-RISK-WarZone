@@ -51,7 +51,7 @@ public class RunGameEngine {
 			else {
 				l_domMap= new MapAdapter(new ConquestMap());
 			}
-			l_gameMap= l_domMap.readMap(l_filePath);
+			l_gameMap= l_domMap.readDominationMap(l_filePath);
 			l_gameMap.setMapName(p_mapName);
 			if(validateMap(l_gameMap)) {
 				l_gameMap.setValid(true);
@@ -82,7 +82,7 @@ public class RunGameEngine {
 		if(l_file.exists()) {
 			System.out.println(p_mapName+" exist and you can edit it.");
 			LoadMap l_loadMap = new LoadMap();
-			l_gameMap = dm.readMap(l_filePath);
+			l_gameMap = dm.readDominationMap(l_filePath);
 			l_gameMap.setMapName(p_mapName);
 		}
 		else {

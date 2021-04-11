@@ -1,7 +1,7 @@
 package model;
 
 /**
- * Class provide the bridge between DominationMap and ConquestMap
+ * Adapter class provide the bridge between DominationMap and ConquestMap
  * @author Rucha
  *
  */
@@ -21,8 +21,8 @@ public class MapAdapter extends DominationMap{
     * Read the conquest map
     * @return return map to read
     */
-    public GameMap readMap(String p_mapName) {
-        return d_ConquestMap.readMap(p_mapName);
+    public GameMap readDominationMap(String p_mapName) {
+        return d_ConquestMap.readConquestMap(p_mapName);
     }
 
     /**
