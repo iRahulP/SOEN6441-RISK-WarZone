@@ -126,21 +126,26 @@ public class StartUp extends Play {
 									switch (playerStrategy) {
 										case "human":
 											l_p.setD_isHuman(true);
-											//System.out.println(l_p.getD_isHuman());
+											break;
 										case "aggressive":
 											l_p.setStrategy(new AggresivePlayer(l_p, d_Ge.d_Map));
 											l_p.setD_isHuman(false);
+											break;
 										case "benevolent":
-											//l_p.setStrategy(new AggresivePlayer(l_p, d_Ge.d_Map));
+											l_p.setStrategy(new BenevolentPlayer(l_p, d_Ge.d_Map));
 											l_p.setD_isHuman(false);
+											break;
 										case "random":
 											l_p.setStrategy(new RandomPlayer(l_p, d_Ge.d_Map));
 											l_p.setD_isHuman(false);
+											break;
 										case "cheater":
 											l_p.setStrategy(new CheaterPlayer(l_p, d_Ge.d_Map));
 											l_p.setD_isHuman(false);
+											break;
 										default:
 											l_p.setD_isHuman(true);
+											break;
 									}
 								}
 							}
