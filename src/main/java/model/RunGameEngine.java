@@ -410,10 +410,8 @@ public class RunGameEngine {
             ObjectOutputStream l_o = new ObjectOutputStream(new FileOutputStream(new File("src/main/resources/game/" + p_fileName)));
             l_o.writeObject(l_gameDataBuilder);
         } catch(FileNotFoundException e){
-        	System.out.println("hello");
             e.printStackTrace();
         } catch(IOException e) {
-        	System.out.println("hello 2");
             e.printStackTrace();
         }
     }
@@ -427,17 +425,12 @@ public class RunGameEngine {
         try{
         	 FileInputStream l_f = new FileInputStream((new File("src/main/resources/game/" + p_fileName)));
              ObjectInputStream l_o = new ObjectInputStream((l_f));
-             System.out.println("qqq");
              l_gameDataBuilder = (GameDataBuilder) l_o.readObject();
-             System.out.println("qqqqqqq");
         } catch(FileNotFoundException e){
-        	System.out.println("hiii");
             return null;
         } catch(IOException e) {
-        	System.out.println("hiii 2");
             return null;
         } catch (ClassNotFoundException e){
-        	System.out.println("hiii 3");
             return null;
         }
         return l_gameDataBuilder;

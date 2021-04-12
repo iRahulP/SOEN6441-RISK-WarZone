@@ -27,6 +27,7 @@ public class PlayRisk {
     public static void main(String[] args) {
         PlayRisk l_game = new PlayRisk();
         System.out.println("Welcome to Risk Game based on Warzone!");
+        System.out.println("Enter 1 to play single-game mode or 2 to play tournament mode.");
         System.out.println("try, Selecting a map from the below mentioned sample maps or create a new one: ");
         l_game.sampleMaps();
 
