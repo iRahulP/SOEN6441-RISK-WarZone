@@ -17,6 +17,7 @@ public class Player {
     private String d_CountryId;
     private Order d_Order;
     private Queue<Order> d_OrderList;
+    private boolean d_isHuman;
 
     /**
      * Negotiators list
@@ -47,6 +48,23 @@ public class Player {
         d_OrderList = new ArrayDeque<>();
         d_Deck = new ArrayList<>();
         d_NegotiateList= new ArrayList<Player>();
+        this.d_isHuman = false;
+    }
+
+    /**
+     * Sets Player as human
+     * @param d_isHuman true if human else false
+     */
+    public void setD_isHuman(boolean d_isHuman) {
+        this.d_isHuman = d_isHuman;
+    }
+
+    /**
+     * Getter for User Player
+     * @return true if human else false
+     */
+    public boolean getD_isHuman(){
+        return this.d_isHuman;
     }
 
     /**
