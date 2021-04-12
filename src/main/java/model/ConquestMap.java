@@ -19,7 +19,7 @@ public class ConquestMap {
 	
 	GameMap  d_ConquestMap;
 	HashMap<Integer, CountryDetails> d_ListOfCountries;
-	RunGameEngine d_RunGE;
+	RunGameEngine d_RunGE= new RunGameEngine();
     
 	/**
 	 * Reads the ".map" file and creates a GameMap object accordingly.
@@ -32,26 +32,26 @@ public class ConquestMap {
         d_ListOfCountries = new HashMap<Integer, CountryDetails>();
         
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(p_mapName));
-            String s;
-            while ((s = reader.readLine()) != null) {
-                if(s.equals("[Continents]")) {
-                	 reader = readContinents(reader, d_ConquestMap);
+            BufferedReader l_reader = new BufferedReader(new FileReader(p_mapName));
+            String l_s;
+            while ((l_s = l_reader.readLine()) != null) {
+                if(l_s.equals("[Continents]")) {
+                	 l_reader = readContinents(l_reader, d_ConquestMap);
                 }
                    // reader = readContinents(reader, d_Map);
-                if(s.equals("[Territories]")) {
-                    reader = readTerritories(reader, d_ConquestMap);
+                if(l_s.equals("[Territories]")) {
+                    l_reader = readTerritories(l_reader, d_ConquestMap);
                 }
             }
-            reader.close();
+            l_reader.close();
             //make sure valid countries exists as neighbors
-            for(CountryDetails country : d_ConquestMap.getCountries().values()){
-                for(String neighbor : country.getNeighbours().keySet()){
-                    if(country.getNeighbours().get(neighbor.toLowerCase())==null){
-                        if(d_ConquestMap.getCountries().get(neighbor.toLowerCase())==null){
+            for(CountryDetails l_country : d_ConquestMap.getCountries().values()){
+                for(String l_neighbor : l_country.getNeighbours().keySet()){
+                    if(l_country.getNeighbours().get(l_neighbor.toLowerCase())==null){
+                        if(d_ConquestMap.getCountries().get(l_neighbor.toLowerCase())==null){
                             return null;
                         }
-                        country.getNeighbours().put(neighbor.toLowerCase(), d_ConquestMap.getCountries().get(neighbor.toLowerCase()));
+                        l_country.getNeighbours().put(l_neighbor.toLowerCase(), d_ConquestMap.getCountries().get(l_neighbor.toLowerCase()));
                     }
                 }
             }
@@ -75,11 +75,11 @@ public class ConquestMap {
 	 * @return BufferedReader stream at the point where it has finished reading continents
 	 */
 	public BufferedReader readContinents(BufferedReader p_reader, GameMap p_map){
-        String s;
+        String l_s;
         //boolean continentExists = false;
         try {
-            while(!((s = p_reader.readLine()).equals(""))) {
-                String[] continentString = s.split("=");
+            while(!((l_s = p_reader.readLine()).equals(""))) {
+                String[] continentString = l_s.split("=");
 
                 //Check if continent already exists in the map
                 if(Integer.parseInt(continentString[1])>=0) {
@@ -108,31 +108,31 @@ public class ConquestMap {
 	 * @return BufferedReader stream at the point where it has finished reading countries
 	 */
 	public BufferedReader readTerritories(BufferedReader p_reader, GameMap p_map){
-        String s;
+        String l_s;
         try {
-            while((s = p_reader.readLine()) != null) {
-                if(s.equals("")){
+            while((l_s = p_reader.readLine()) != null) {
+                if(l_s.equals("")){
                     continue;
                 }
-                String[] countryString = s.split(",");
-                CountryDetails newCountry = new CountryDetails(countryString[0], countryString[1], countryString[2], countryString[3]);
+                String[] l_countryString = l_s.split(",");
+                CountryDetails l_newCountry = new CountryDetails(l_countryString[0], l_countryString[1], l_countryString[2], l_countryString[3]);
               //  CountryDetails newCountry = new CountryDetails(countryString[0], countryString[1], countryString[2], countryString[3], countryString[4], map);
                 try {
-                    if(newCountry.getInContinent()==null)
+                    if(l_newCountry.getInContinent()==null)
                     {
                         System.out.println("Error reading the file.");
                         System.out.println("This continent does not exist.");
                         System.exit(-1);
                     }
-                    addToContinentMap(newCountry, p_map);	//Add country to the appropriate continent in the map. Terminate if duplicate entry.
+                    addToContinentMap(l_newCountry, p_map);	//Add country to the appropriate continent in the map. Terminate if duplicate entry.
 
                     //add neighbors
-                    for(int i=4; i<countryString.length; i++){
-                        if(p_map.getCountries().containsKey(countryString[i].toLowerCase())){
-                            newCountry.getNeighbours().put(countryString[i].toLowerCase(), p_map.getCountries().get(countryString[i].toLowerCase()));
-                            p_map.getCountries().get(countryString[i].toLowerCase()).getNeighbours().put(newCountry.getCountryId().toLowerCase(), newCountry);
+                    for(int i=4; i<l_countryString.length; i++){
+                        if(p_map.getCountries().containsKey(l_countryString[i].toLowerCase())){
+                            l_newCountry.getNeighbours().put(l_countryString[i].toLowerCase(), p_map.getCountries().get(l_countryString[i].toLowerCase()));
+                            p_map.getCountries().get(l_countryString[i].toLowerCase()).getNeighbours().put(l_newCountry.getCountryId().toLowerCase(), l_newCountry);
                         } else {
-                            newCountry.getNeighbours().put(countryString[i].toLowerCase(), null);
+                            l_newCountry.getNeighbours().put(l_countryString[i].toLowerCase(), null);
                         }
                     }
                 }
@@ -176,36 +176,36 @@ public class ConquestMap {
 	public boolean saveMap(GameMap p_map, String p_fileName) {
 		if(d_RunGE.validateMap(p_map)) {
             try{
-                BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/othermaps/" + p_fileName + ".map"));
+                BufferedWriter l_writer = new BufferedWriter(new FileWriter("src/main/resources/maps/" + p_fileName + ".map"));
 
                 //write preliminary information
-                writer.write("[Map]");
-                writer.newLine();
-                writer.newLine();
-                writer.flush();
+                l_writer.write("[Map]");
+                l_writer.newLine();
+                l_writer.newLine();
+                l_writer.flush();
 
                 //write information about all the continents
-                writer.write("[Continents]");
-                writer.newLine();
+                l_writer.write("[Continents]");
+                l_writer.newLine();
                 for (Continent continent : p_map.getContinents().values()) {
-                    writer.write(continent.getContinentId() + "=" + continent.getControlValue());
-                    writer.newLine();
-                    writer.flush();
+                    l_writer.write(continent.getContinentId() + "=" + continent.getControlValue());
+                    l_writer.newLine();
+                    l_writer.flush();
                 }
-                writer.newLine();
+                l_writer.newLine();
 
                 //write information about countries and its neighbors
-                writer.write("[Territories]");
-                writer.newLine();
+                l_writer.write("[Territories]");
+                l_writer.newLine();
                 String s;
                 for(CountryDetails country : p_map.getCountries().values()){
                     s = country.getCountryId() + "," + country.getxCoOrdinate() + "," + country.getyCoOrdinate() + "," + country.getInContinent();
                     for(CountryDetails  neighbor : country.getNeighbours().values()){
                         s += "," + neighbor.getCountryId();
                     }
-                    writer.write(s);
-                    writer.newLine();
-                    writer.flush();
+                    l_writer.write(s);
+                    l_writer.newLine();
+                    l_writer.flush();
                 }
 
             } catch (IOException e) {
