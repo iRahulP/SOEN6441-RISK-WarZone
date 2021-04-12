@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
@@ -8,7 +9,7 @@ import java.util.HashMap;
  * @author Rucha
  *
  */
-public class GameMap {
+public class GameMap implements Serializable{
 	private String d_MapName;
 	private boolean d_Valid;
 	private HashMap<String,Continent> d_Continents;

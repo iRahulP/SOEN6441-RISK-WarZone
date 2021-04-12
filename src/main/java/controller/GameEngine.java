@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Queue;
 
+
 /**
  * Class responsible to interpret different commands as provided by User over Command Line Interface
  * Call required methods as appropriate, also update game phases based on method responses.
@@ -138,6 +139,21 @@ public class GameEngine {
     {
         d_Phase = p_Phase;
     }
+    
+    /**
+     * Creates a game data object.
+     * @param p_gameDataBuilder Helps build GameData object.
+     */
+    public void createGameData(GameDataBuilder p_gameDataBuilder){
+        this.d_Game = p_gameDataBuilder.buildGameData();
+    }
+    /**
+     * Returns the game state.
+     * @return returns the game state as GameData object.
+     */
+    public GameData getGame() {
+        return this.d_Game;
+    }
 
     /**
      * Function responsible for parsing user commands passed on Command line interface.
@@ -160,12 +176,36 @@ public class GameEngine {
         String l_playerName = null;
         String[] l_data = p_newCommand.split("\\s+");
         String l_commandName = l_data[0];
+        String l_fileName;
 
         //initial command line commands
         //NULL : editmap / loadmap
         if (d_GamePhase.equals(InternalPhase.NULL)) {
         	setPhase(new Load(this));
             switch (l_commandName) {
+            
+            case "loadgame":
+                try{
+                    if(l_data.length == 2){
+                        if(isAlphabetic(l_data[1])) {
+                            l_fileName = l_data[1];
+                            GameDataBuilder l_gameDataBuilder = d_RunG.loadGame(l_fileName);
+                            createGameData(l_gameDataBuilder);
+                            System.out.println("Loaded successfully");
+                            d_LogEntry.setMessage("Game loaded successfully.");
+                        }
+                        //method call for load game and parse this filename as argument
+                    }else{
+                         System.out.println("Invalid command. Enter file name to load a game.");
+                        d_LogEntry.setMessage(" - Invalid command. Enter file name to load a game.");
+                    }
+
+                }catch (ArrayIndexOutOfBoundsException e){
+                	System.out.println("Invalid Command. It should be 'loadgame filename'");
+                     
+                    d_LogEntry.setMessage(" - Invalid command. It should be 'loadgame filename'");
+                }
+                break;
                 case "editmap":
                     d_LogEntry.setGamePhase(d_Phase);
                     d_LogEntry.setCommand(l_commandName+" Command is being executed");
@@ -299,6 +339,26 @@ public class GameEngine {
                     System.out.println(str2);
                     d_LogEntry.setGamePhase(d_Phase);
                     d_LogEntry.setCommand(l_commandName+" Command is being executed");
+                    break;
+                    
+                case "savegame":
+                    try{
+                        if(l_data.length == 2){
+                            if(isAlphabetic(l_data[1])) {
+                                String fileName = l_data[1];
+                                d_RunG.saveGame(this.d_Game, fileName);
+                                System.out.println("current Game saved is saved ");
+                                d_LogEntry.setMessage("current Game saved is saved");
+                            }
+                        }else{
+                            String message = "Invalid command. enter file name to save a game.";
+                            d_LogEntry.setMessage("Invalid command. enter file name to save a game.");
+                        }
+
+                    }catch (ArrayIndexOutOfBoundsException e){
+                    	String message = "Invalid Command, It should be 'savegame filename'";
+                    	d_LogEntry.setMessage("Invalid Command, It should be 'savegame filename'");
+                    }
                     break;
 
                 default:
@@ -713,4 +773,3 @@ public class GameEngine {
         return null;
     }
 }
-

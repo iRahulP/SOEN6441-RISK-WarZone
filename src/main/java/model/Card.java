@@ -1,10 +1,11 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Random;
 /**
  * Class handles implementation related to cards.
  */
-public class Card {
+public class Card implements Serializable {
 
     /**
      * Represents type of Card from Bomb, Airlift, Blockade and Diplomacy

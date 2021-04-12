@@ -364,51 +364,6 @@ public class RunGameEngine {
 		}
 	}
 	
-	/**
-     * Saves risk game.
-     * @param p_game Represents the state of the game.
-     * @param p_fileName Name of the file saving the game.
-     */
-    public void saveGame(GameData  p_game, String p_fileName){
-        GameDataBuilder l_gameDataBuilder = new GameDataBuilder();
-        l_gameDataBuilder.setMap(p_game.getMap());
-        l_gameDataBuilder.setMapType(p_game.getMapType());
-        l_gameDataBuilder.setGamePhase(p_game.getGamePhase());
-        l_gameDataBuilder.setPlayers(p_game.getPlayers());
-        l_gameDataBuilder.setActivePlayer(p_game.getActivePlayer());
-        l_gameDataBuilder.setDeck(p_game.getDeck());
-        l_gameDataBuilder.setCardsDealt((p_game.getCardsDealt()));
-
-        try{
-            FileOutputStream l_f = new FileOutputStream(new File("src/main/resources/game/" + p_fileName));
-            ObjectOutputStream l_o = new ObjectOutputStream((l_f));
-            l_o.writeObject(l_gameDataBuilder);
-        } catch(FileNotFoundException e){
-            e.printStackTrace();
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-    }
-    /**
-     * Loads risk game.
-     * @param p_fileName Name of the file to be loaded.
-     * @return GameDataBuilder object to build GameData object.
-     */
-    public GameDataBuilder loadGame(String p_fileName){
-        GameDataBuilder l_gameDataBuilder;
-        try{
-            FileInputStream l_f = new FileInputStream((new File("src/main/resources/game/" + p_fileName)));
-            ObjectInputStream l_o = new ObjectInputStream((l_f));
-            l_gameDataBuilder = (GameDataBuilder) l_o.readObject();
-        } catch(FileNotFoundException e){
-            return null;
-        } catch(IOException e) {
-            return null;
-        } catch (ClassNotFoundException e){
-            return null;
-        }
-        return l_gameDataBuilder;
-    }
 	
 	/**
 	 * It consist of various validity checks to ensure that map is suitable for playing the game.
@@ -435,5 +390,56 @@ public class RunGameEngine {
 		}
 		return true;
 	}
-	
+	/**
+     * Saves risk game.
+     * @param p_game Represents the state of the game.
+     * @param p_fileName Name of the file saving the game.
+     */
+    public void saveGame(GameData  p_game, String p_fileName){
+        GameDataBuilder l_gameDataBuilder = new GameDataBuilder();
+        l_gameDataBuilder.setMap(p_game.getMap());
+        l_gameDataBuilder.setMapType(p_game.getMapType());
+        l_gameDataBuilder.setGamePhase(p_game.getGamePhase());
+        l_gameDataBuilder.setPlayers(p_game.getPlayers());
+        l_gameDataBuilder.setActivePlayer(p_game.getActivePlayer());
+        l_gameDataBuilder.setDeck(p_game.getDeck());
+        l_gameDataBuilder.setCardsDealt((p_game.getCardsDealt()));
+
+        try{
+           // FileOutputStream l_f = new FileOutputStream(new File("src/main/resources/game/" + p_fileName));
+            ObjectOutputStream l_o = new ObjectOutputStream(new FileOutputStream(new File("src/main/resources/game/" + p_fileName)));
+            l_o.writeObject(l_gameDataBuilder);
+        } catch(FileNotFoundException e){
+        	System.out.println("hello");
+            e.printStackTrace();
+        } catch(IOException e) {
+        	System.out.println("hello 2");
+            e.printStackTrace();
+        }
+    }
+    /**
+     * Loads risk game.
+     * @param p_fileName Name of the file to be loaded.
+     * @return GameDataBuilder object to build GameData object.
+     */
+    public GameDataBuilder loadGame(String p_fileName){
+        GameDataBuilder l_gameDataBuilder;
+        try{
+        	 FileInputStream l_f = new FileInputStream((new File("src/main/resources/game/" + p_fileName)));
+             ObjectInputStream l_o = new ObjectInputStream((l_f));
+             System.out.println("qqq");
+             l_gameDataBuilder = (GameDataBuilder) l_o.readObject();
+             System.out.println("qqqqqqq");
+        } catch(FileNotFoundException e){
+        	System.out.println("hiii");
+            return null;
+        } catch(IOException e) {
+        	System.out.println("hiii 2");
+            return null;
+        } catch (ClassNotFoundException e){
+        	System.out.println("hiii 3");
+            return null;
+        }
+        return l_gameDataBuilder;
+    }	
 }
