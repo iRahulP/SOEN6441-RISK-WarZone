@@ -134,10 +134,10 @@ public class StartUp extends Play {
 											//l_p.setStrategy(new AggresivePlayer(l_p, d_Ge.d_Map));
 											l_p.setD_isHuman(false);
 										case "random":
-											//l_p.setStrategy(new AggresivePlayer(l_p, d_Ge.d_Map));
+											l_p.setStrategy(new RandomPlayer(l_p, d_Ge.d_Map));
 											l_p.setD_isHuman(false);
 										case "cheater":
-											//l_p.setStrategy(new AggresivePlayer(l_p, d_Ge.d_Map));
+											l_p.setStrategy(new CheaterPlayer(l_p, d_Ge.d_Map));
 											l_p.setD_isHuman(false);
 										default:
 											l_p.setD_isHuman(true);
