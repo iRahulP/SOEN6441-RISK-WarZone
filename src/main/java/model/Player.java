@@ -52,6 +52,20 @@ public class Player {
     }
 
     /**
+     * This function adds Order object to the list of Orders for a non-human Player
+     * @return true if Order added else false
+     */
+    public boolean issueOrder() {
+        Order order;
+        order = d_Strategy.createOrder();
+        if (order != null) {
+            this.d_OrderList.add(order);
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Sets Player as human
      * @param d_isHuman true if human else false
      */
