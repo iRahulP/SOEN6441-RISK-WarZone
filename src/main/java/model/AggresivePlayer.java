@@ -9,6 +9,7 @@ import java.util.Random;
  */
 public class AggresivePlayer extends PlayerStrategy{
 
+    private int d_OrderVal;
     CountryDetails d_StrongestCountry,d_DefendingCountry;
     /**
      * default Constructor for PlayerStrategy
@@ -76,22 +77,42 @@ public class AggresivePlayer extends PlayerStrategy{
         return d_StrongestCountry;
     }
 
+    /**
+     *  This function  sets  the randomOrderValue which can be 0,1,2
+     *  These values 0,1,2 will be used for creating orders
+     */
+    public void setRandomOrderValue(int p_randomValue)
+    {
+        d_OrderVal = p_randomValue;
+    }
+
     @Override
     public Order createOrder() {
 
-        findStrongestCountryDetails();
-
+        CountryDetails l_attackingCountry,l_defendingCountry;
+        l_attackingCountry = toAttackFrom();
+        l_defendingCountry = toAttack();
         Random l_random = new Random();
-        if (l_random.nextInt(5) != 0) {
-            return new Deploy(d_Player,d_StrongestCountry.getCountryId(), l_random.nextInt(20));
+
+        switch(d_OrderVal) {
+            case 0:
+            if (l_random.nextInt(5) != 0) {
+                return new Deploy(d_Player, d_StrongestCountry.getCountryId(), l_random.nextInt(20));
+            }
+            break;
+
+            case 1:
+            //create attack Order
+            if(l_defendingCountry!=null)
+              return new Advance(d_Player, l_attackingCountry.getCountryId(), l_defendingCountry.getCountryId(), l_random.nextInt(6), d_DefendingCountry.getOwnerPlayer());
+            else
+                System.out.println("Neighbor does not exist for this country");
+            break;
+
+            case 2:
+            //move armies
         }
-
-        //create attack Order
-        return new Advance(d_Player,toAttackFrom().getCountryId(),toAttack().getCountryId(),l_random.nextInt(6),d_DefendingCountry.getOwnerPlayer());
-
-        //move armies
-
-       // return null;
+        return null;
 
     }
 }
