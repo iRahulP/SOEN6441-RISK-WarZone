@@ -174,6 +174,7 @@ public class GameEngine {
         String l_countryId = null;
         String l_neighborCountryId = null;
         String l_playerName = null;
+        String l_playerStrategy = null;
         String[] l_data = p_newCommand.split("\\s+");
         String l_commandName = l_data[0];
         String l_fileName;
@@ -386,290 +387,294 @@ public class GameEngine {
             if(!p_player.getD_Deck().isEmpty()){
                 p_player.showCards();
             }
-            //case when atleast one player has any army/armies left
-            if(l_counter >= 0){
-                switch (l_commandName) {
-                    case "deploy":
-                        d_LogEntry.setCommand(l_commandName+" Command is being executed");
-                        try {
-                            if (!(l_data[1] == null) || !(l_data[2] == null)) {
-                                if (this.isNumeric(l_data[1]) || this.isNumeric(l_data[2])) {
-                                    l_countryId = l_data[1];
-                                    l_numberOfArmies = Integer.parseInt(l_data[2]);
-                                    boolean l_checkOwnedCountry = p_player.getOwnedCountries().containsKey(l_countryId.toLowerCase());
-                                    boolean l_checkArmies = (p_player.getOwnedArmies() >= l_numberOfArmies);
-                                    if(l_checkOwnedCountry && l_checkArmies){
-                                        p_player.addOrder(new Deploy(p_player, l_countryId, l_numberOfArmies));
-                                        p_player.issue_order();
-                                        p_player.setOwnedArmies(p_player.getOwnedArmies()-l_numberOfArmies);
-                                        d_LogEntry.setMessage(p_player.getPlayerName()+" deploy order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]+" "+l_data[2]);
-                                        System.out.println("Player "+p_player.getPlayerName()+" now has "+p_player.getOwnedArmies()+" Army units left!");
-                                        d_LogEntry.setMessage("Player "+p_player.getPlayerName()+" now has "+p_player.getOwnedArmies()+" Army units left!");
-                                    }
-                                    else{
-                                        System.out.println("Country not owned by player or insufficient Army units | please pass to next player");
-                                        d_LogEntry.setMessage("Country not owned by player or insufficient Army units | please pass to next player");
-                                    }
-                                    d_GamePhase = InternalPhase.TURN;
-                                    break;
-                                }
-                            } else
-                                System.out.println("Invalid Command");
-                                d_LogEntry.setMessage("Invalid Command");
-                        }catch (Exception e) {
-                            System.out.println("Country not owned by player or insufficient Army units | please pass to next player");
-                            d_LogEntry.setMessage("Country not owned by player or insufficient Army units | please pass to next player");
-                        }
-                        break;
 
-                    case "advance":
-                        d_LogEntry.setCommand(l_commandName+" Command is being executed");
-                        try {
-                            if (!(l_data[1] == null) || !(l_data[2] == null) || !(l_data[3] == null)) {
-                                if (this.isAlphabetic(l_data[1]) || this.isAlphabetic(l_data[2]) || this.isNumeric(l_data[3])) {
-                                    l_countryNameFrom = l_data[1];
-                                    l_countryNameTo = l_data[2];
-                                    l_numberOfArmies = Integer.parseInt(l_data[3]);
-                                    boolean l_checkOwnedCountry = p_player.getOwnedCountries().containsKey(l_countryNameFrom.toLowerCase());
-                                    CountryDetails attackingCountry = p_player.getOwnedCountries().get(l_countryNameFrom.toLowerCase());
-                                    CountryDetails defendingCountry = attackingCountry.getNeighbours().get(l_countryNameTo.toLowerCase());
-                                    boolean l_checkNeighbourCountry = (l_countryNameTo.equals(defendingCountry.getCountryId()));
-
-                                    //Checks if required armies present on Source territory
-                                    CountryDetails l_c= p_player.getOwnedCountries().get(l_countryNameFrom.toLowerCase());
-                                    int l_existingArmies = l_c.getNumberOfArmies();
-
-                                    Player l_targetPlayer = null;
-                                    for(Player temp : d_Players){
-                                        //check which player has target countryID
-                                        if(temp.getOwnedCountries().containsKey(l_countryNameTo.toLowerCase())){
-                                            l_targetPlayer = temp;
-                                            break;
-                                        }
-                                    }
-
-                                    boolean l_checkArmies = (l_existingArmies >= l_numberOfArmies);
-                                    if(l_checkOwnedCountry && l_checkNeighbourCountry && l_checkArmies){
-                                        p_player.addOrder(new Advance(p_player, l_countryNameFrom,l_countryNameTo, l_numberOfArmies,l_targetPlayer));
-                                        p_player.issue_order();
-                                        d_LogEntry.setMessage(p_player.getPlayerName()+" advance order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]+" "+l_data[2]);
-                                    }
-                                    else{
-                                        System.out.println("Country not owned by player or target Country not adjacent or insufficient Army units | please pass to next player");
-                                        d_LogEntry.setMessage("Country not owned by player or target Country not adjacent or insufficient Army units | please pass to next player");
-                                    }
-                                    d_GamePhase = InternalPhase.TURN;
-                                    break;
-                                }
-                            } else
-                                System.out.println("Invalid Command");
-                                d_LogEntry.setMessage("Invalid Command");
-                        }catch (Exception e) {
-                            System.out.println("Country not owned by player or target Country not adjacent or insufficient Army units | please pass to next player");
-                            d_LogEntry.setMessage("Country not owned by player or target Country not adjacent or insufficient Army units | please pass to next player");
-                        }
-                        break;
-
-                    case "bomb":
-                        d_LogEntry.setCommand(l_commandName+" Command is being executed");
-                        try {
-                            if (!(l_data[1] == null)) {
-                                if (this.isAlphabetic(l_data[1])) {
-                                    l_countryId = l_data[1];
-                                    //checks if countryId is not of current player
-                                    boolean l_checkOwnedCountryNotOfCurrent = !p_player.getOwnedCountries().containsKey(l_countryId.toLowerCase());
-                                    boolean targetCountryNeighbour = false;
-                                    //checks if target country id is neighbour to one of current player's country
-                                    for(CountryDetails cD : p_player.getOwnedCountries().values()){
-                                        if( cD.getNeighbours().containsKey(l_countryId.toLowerCase()) && !p_player.getOwnedCountries().containsKey(l_countryId.toLowerCase())){
-                                            targetCountryNeighbour= true;
-                                            break;
-                                        }
-                                    }
-                                    Player targetPlayer = null;
-                                    for(Player temp : d_Players){
-
-                                        //check which player has target countryID
-                                        if(temp.getOwnedCountries().containsKey(l_countryId.toLowerCase())){
-                                            targetPlayer = temp;
-                                            break;
-                                        }
-                                    }
-                                    boolean checkCard = p_player.doesCardExists("Bomb");
-                                    if(l_checkOwnedCountryNotOfCurrent && targetCountryNeighbour && checkCard){
-                                        //need to send target player instead of current player as param
-                                        p_player.addOrder(new Bomb(p_player,targetPlayer, l_countryId));
-                                        p_player.issue_order();
-                                        d_LogEntry.setMessage(p_player.getPlayerName()+" Bomb order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]);
-                                        p_player.removeCard("Bomb");
-                                        d_LogEntry.setMessage("Bomb card removed from players card list");
-                                    }
-                                    else{
-                                        System.out.println("Bomb Card not Owned or Country owned by current player or target Country not adjacent | please pass to next player");
-                                        d_LogEntry.setMessage("Bomb Card not Owned or Country owned by current player or target Country not adjacent | please pass to next player");
-                                    }
-                                    d_GamePhase = InternalPhase.TURN;
-                                    break;
-                                }
-                            } else
-                                System.out.println("Invalid Command");
-                                d_LogEntry.setMessage("Invalid Command");
-                        }catch (Exception e) {
-                            System.out.println("Bomb Card not Owned or Country owned by current player or target Country not adjacent | please pass to next player");
-                            d_LogEntry.setMessage("Bomb Card not Owned or Country owned by current player or target Country not adjacent | please pass to next player");
-                        }
-                        break;
-
-                    case "blockade":
-                        d_LogEntry.setCommand(l_commandName+" Command is being executed");
-                        try {
-                            if (!(l_data[1] == null)) {
-                                if (this.isAlphabetic(l_data[1])) {
-                                    l_countryId = l_data[1];
-                                    boolean l_checkOwnedCountry = p_player.getOwnedCountries().containsKey(l_countryId.toLowerCase());
-                                    boolean checkCard = p_player.doesCardExists("Blockade");
-                                    if(l_checkOwnedCountry && checkCard){
-                                        p_player.addOrder(new Blockade(p_player, l_countryId));
-                                        p_player.issue_order();
-                                        d_LogEntry.setMessage(p_player.getPlayerName()+" Blockade order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]);
-                                        p_player.removeCard("Blockade");
-                                        d_LogEntry.setMessage("Bloackade card removed from Player's cardList ");
-                                    }
-                                    else{
-                                        System.out.println("Blockade Card not Owned or Country not owned by current player | please pass to next player");
-                                        d_LogEntry.setMessage("Blockade Card not Owned or Country not owned by current player | please pass to next player");
-                                    }
-                                    d_GamePhase = InternalPhase.TURN;
-                                    break;
-                                }
-                            } else
-                                System.out.println("Invalid Command");
-                                d_LogEntry.setMessage("Invalid Command");
-                        }catch (Exception e) {
-                            System.out.println("Blockade Card not Owned or Country not owned by current player | please pass to next player");
-                            d_LogEntry.setMessage("Blockade Card not Owned or Country not owned by current player | please pass to next player");
-                        }
-                        break;
-
-                    case "airlift":
-                        d_LogEntry.setCommand(l_commandName+" Command is being executed");
-                        try {
-                            if (!(l_data[1] == null) || !(l_data[2] == null) || !(l_data[3] == null)) {
-                                if (this.isAlphabetic(l_data[1]) || this.isAlphabetic(l_data[2]) || this.isNumeric(l_data[3])) {
-                                    l_sourceCountryId = l_data[1];
-                                    l_targetCountryId = l_data[2];
-                                    l_numberOfArmies = Integer.parseInt(l_data[3]);
-                                    boolean l_checkOwnedCountry = p_player.getOwnedCountries().containsKey(l_sourceCountryId.toLowerCase());
-                                    boolean l_checkTargetOwnedCountry = p_player.getOwnedCountries().containsKey(l_targetCountryId.toLowerCase());
-
-                                    //check armies from map which are deployed on source Country
-                                    CountryDetails l_c= p_player.getOwnedCountries().get(l_sourceCountryId.toLowerCase());
-                                    int l_existingArmies = l_c.getNumberOfArmies();
-                                    boolean l_checkArmies = (l_existingArmies >= l_numberOfArmies);
-                                    boolean checkCard = p_player.doesCardExists("Airlift");
-                                    if(l_checkOwnedCountry && l_checkTargetOwnedCountry && l_checkArmies && checkCard){
-                                        p_player.addOrder(new Airlift(p_player, l_sourceCountryId, l_targetCountryId, l_numberOfArmies));
-                                        p_player.issue_order();
-                                        d_LogEntry.setMessage(p_player.getPlayerName()+" Airlift order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]+" "+l_data[2]+" "+l_data[3]);
-                                        p_player.removeCard("Airlift");
-                                        d_LogEntry.setMessage("Airlift card removed from Player's cardList ");
-                                    }
-                                    else{
-                                        System.out.println("Airlift Card not Owned or Source Country or Target Country not owned by player insufficient Army units | please pass to next player");
-                                        d_LogEntry.setMessage("Airlift Card not Owned or Source Country or Target Country not owned by player insufficient Army units | please pass to next player");
-                                    }
-                                    d_GamePhase = InternalPhase.TURN;
-                                    break;
-                                }
-                            } else
-                                System.out.println("Invalid Command");
-                                d_LogEntry.setMessage("Invalid Command");
-                        }catch (Exception e) {
-                            System.out.println("Airlift Card not Owned or Source Country or Target Country not owned by player insufficient Army units | please pass to next player");
-                            d_LogEntry.setMessage("Airlift Card not Owned or Source Country or Target Country not owned by player insufficient Army units | please pass to next player");
-                        }
-                        break;
-
-                    case "negotiate":
-                        d_LogEntry.setCommand(l_commandName+" Command is being executed");
-                        try {
-                            if (!(l_data[1] == null)){
-                                if (this.isAlphabetic(l_data[1])) {
-                                    Player l_NegPlayer = getPlayerByName(l_data[1]);
-                                    boolean checkCard = p_player.doesCardExists("Diplomacy");
-                                    if(checkCard){
-                                    	 p_player.addOrder(new Diplomacy(p_player, l_NegPlayer));
-                                        p_player.issue_order();
-                                        d_LogEntry.setMessage(p_player.getPlayerName()+" Diplomacy order added to Players OrdersList: "+l_data[0]+"  "+l_data[1]+" "+l_data[2]+" "+l_data[3]);
-                                        p_player.removeCard("Diplomacy");
-                                        d_LogEntry.setMessage("Diplomacy card removed from Player's cardList ");
-                                    }
-                                         }
-                            } else
-                                System.out.println("Diplomacy Card not Owned or Invalid Command");
-                                d_LogEntry.setMessage("Diplomacy Card not Owned or Invalid Command");
-                        }catch (Exception e) {
-                            System.out.println("Diplomacy Card not Owned or Invalid Player name");
-                            d_LogEntry.setMessage("Diplomacy Card not Owned or Invalid Player name");
-                        }
-                        break;
-
-                    case "pass":
-                        d_LogEntry.setCommand(l_commandName+" Command is being executed");
-                        try {
-                            d_GamePhase = InternalPhase.TURN;
-                        }catch (Exception e) {
-                            System.out.println("Invalid Command - it should be of the form -> deploy countryID num | pass");
-                            d_LogEntry.setMessage("Invalid Command - it should be of the form -> deploy countryID num | pass");
-                        }
-                        break;
-                        
-                    case "savegame":
-                        try{
-                            if(l_data.length == 2){
-                                if(isAlphabetic(l_data[1])) {
-                                    String fileName = l_data[1];
-                                    d_RunG.saveGame(this.d_Game, fileName);
-                                    System.out.println("current Game saved is saved ");
-                                    d_LogEntry.setMessage("current Game saved is saved");
-                                }
-                            }else{
-                                String message = "Invalid command. enter file name to save a game.";
-                                d_LogEntry.setMessage("Invalid command. enter file name to save a game.");
-                            }
-
-                        }catch (ArrayIndexOutOfBoundsException e){
-                        	String message = "Invalid Command, It should be 'savegame filename'";
-                        	d_LogEntry.setMessage("Invalid Command, It should be 'savegame filename'");
-                        }
-                        break;
-
-                    case "showmap":
-                        d_Phase.showMap(d_Players, d_Map);
-                        break;
-
-                    case "stop":
-                    	if(l_counter > 0) {
-                    	    System.out.println("There are still some armies left to be deployed!");
-                    	    d_GamePhase = InternalPhase.ISSUE_ORDERS;
-                    	}else {
-                    	    System.out.println("Getting you to Execution Phase");
-                            d_GamePhase = InternalPhase.EXECUTE_ORDERS;
-                    	}
-                        return d_GamePhase;
-
-                    default:
-                        System.out.println("Invalid command - either use deploy | advance | pass | special commands | showmap commands in ISSUE_ORDERS InternalPhase");
-                        d_LogEntry.setMessage("Invalid command - either use deploy | advance | pass | special commands | showmap commands in ISSUE_ORDERS InternalPhase");
-                        break;
-                }
-            }
-            else{
-                //no armies left to deploy, so execute orders
-                System.out.println("press ENTER to continue to execute InternalPhase..");
-                d_LogEntry.setMessage("No more armies left,move to execute Phase");
-                d_GamePhase = InternalPhase.EXECUTE_ORDERS;
+            if(!p_player.getD_isHuman()){
+                //Call for issueOrder() of non human Player
+                p_player.issueOrder();
+                d_GamePhase = InternalPhase.TURN;
                 return d_GamePhase;
+            }
+            else {
+                //Case for Human Player
+                //case when atleast one player has any army/armies left
+                if (l_counter >= 0) {
+                    switch (l_commandName) {
+                        case "deploy":
+                            d_LogEntry.setCommand(l_commandName + " Command is being executed");
+                            try {
+                                if (!(l_data[1] == null) || !(l_data[2] == null)) {
+                                    if (this.isNumeric(l_data[1]) || this.isNumeric(l_data[2])) {
+                                        l_countryId = l_data[1];
+                                        l_numberOfArmies = Integer.parseInt(l_data[2]);
+                                        boolean l_checkOwnedCountry = p_player.getOwnedCountries().containsKey(l_countryId.toLowerCase());
+                                        boolean l_checkArmies = (p_player.getOwnedArmies() >= l_numberOfArmies);
+                                        if (l_checkOwnedCountry && l_checkArmies) {
+                                            p_player.addOrder(new Deploy(p_player, l_countryId, l_numberOfArmies));
+                                            p_player.issue_order();
+                                            p_player.setOwnedArmies(p_player.getOwnedArmies() - l_numberOfArmies);
+                                            d_LogEntry.setMessage(p_player.getPlayerName() + " deploy order added to Players OrdersList: " + l_data[0] + "  " + l_data[1] + " " + l_data[2]);
+                                            System.out.println("Player " + p_player.getPlayerName() + " now has " + p_player.getOwnedArmies() + " Army units left!");
+                                            d_LogEntry.setMessage("Player " + p_player.getPlayerName() + " now has " + p_player.getOwnedArmies() + " Army units left!");
+                                        } else {
+                                            System.out.println("Country not owned by player or insufficient Army units | please pass to next player");
+                                            d_LogEntry.setMessage("Country not owned by player or insufficient Army units | please pass to next player");
+                                        }
+                                        d_GamePhase = InternalPhase.TURN;
+                                        break;
+                                    }
+                                } else
+                                    System.out.println("Invalid Command");
+                                d_LogEntry.setMessage("Invalid Command");
+                            } catch (Exception e) {
+                                System.out.println("Country not owned by player or insufficient Army units | please pass to next player");
+                                d_LogEntry.setMessage("Country not owned by player or insufficient Army units | please pass to next player");
+                            }
+                            break;
+
+                        case "advance":
+                            d_LogEntry.setCommand(l_commandName + " Command is being executed");
+                            try {
+                                if (!(l_data[1] == null) || !(l_data[2] == null) || !(l_data[3] == null)) {
+                                    if (this.isAlphabetic(l_data[1]) || this.isAlphabetic(l_data[2]) || this.isNumeric(l_data[3])) {
+                                        l_countryNameFrom = l_data[1];
+                                        l_countryNameTo = l_data[2];
+                                        l_numberOfArmies = Integer.parseInt(l_data[3]);
+                                        boolean l_checkOwnedCountry = p_player.getOwnedCountries().containsKey(l_countryNameFrom.toLowerCase());
+                                        CountryDetails attackingCountry = p_player.getOwnedCountries().get(l_countryNameFrom.toLowerCase());
+                                        CountryDetails defendingCountry = attackingCountry.getNeighbours().get(l_countryNameTo.toLowerCase());
+                                        boolean l_checkNeighbourCountry = (l_countryNameTo.equals(defendingCountry.getCountryId()));
+
+                                        //Checks if required armies present on Source territory
+                                        CountryDetails l_c = p_player.getOwnedCountries().get(l_countryNameFrom.toLowerCase());
+                                        int l_existingArmies = l_c.getNumberOfArmies();
+
+                                        Player l_targetPlayer = null;
+                                        for (Player temp : d_Players) {
+                                            //check which player has target countryID
+                                            if (temp.getOwnedCountries().containsKey(l_countryNameTo.toLowerCase())) {
+                                                l_targetPlayer = temp;
+                                                break;
+                                            }
+                                        }
+
+                                        boolean l_checkArmies = (l_existingArmies >= l_numberOfArmies);
+                                        if (l_checkOwnedCountry && l_checkNeighbourCountry && l_checkArmies) {
+                                            p_player.addOrder(new Advance(p_player, l_countryNameFrom, l_countryNameTo, l_numberOfArmies, l_targetPlayer));
+                                            p_player.issue_order();
+                                            d_LogEntry.setMessage(p_player.getPlayerName() + " advance order added to Players OrdersList: " + l_data[0] + "  " + l_data[1] + " " + l_data[2]);
+                                        } else {
+                                            System.out.println("Country not owned by player or target Country not adjacent or insufficient Army units | please pass to next player");
+                                            d_LogEntry.setMessage("Country not owned by player or target Country not adjacent or insufficient Army units | please pass to next player");
+                                        }
+                                        d_GamePhase = InternalPhase.TURN;
+                                        break;
+                                    }
+                                } else
+                                    System.out.println("Invalid Command");
+                                d_LogEntry.setMessage("Invalid Command");
+                            } catch (Exception e) {
+                                System.out.println("Country not owned by player or target Country not adjacent or insufficient Army units | please pass to next player");
+                                d_LogEntry.setMessage("Country not owned by player or target Country not adjacent or insufficient Army units | please pass to next player");
+                            }
+                            break;
+
+                        case "bomb":
+                            d_LogEntry.setCommand(l_commandName + " Command is being executed");
+                            try {
+                                if (!(l_data[1] == null)) {
+                                    if (this.isAlphabetic(l_data[1])) {
+                                        l_countryId = l_data[1];
+                                        //checks if countryId is not of current player
+                                        boolean l_checkOwnedCountryNotOfCurrent = !p_player.getOwnedCountries().containsKey(l_countryId.toLowerCase());
+                                        boolean targetCountryNeighbour = false;
+                                        //checks if target country id is neighbour to one of current player's country
+                                        for (CountryDetails cD : p_player.getOwnedCountries().values()) {
+                                            if (cD.getNeighbours().containsKey(l_countryId.toLowerCase()) && !p_player.getOwnedCountries().containsKey(l_countryId.toLowerCase())) {
+                                                targetCountryNeighbour = true;
+                                                break;
+                                            }
+                                        }
+                                        Player targetPlayer = null;
+                                        for (Player temp : d_Players) {
+
+                                            //check which player has target countryID
+                                            if (temp.getOwnedCountries().containsKey(l_countryId.toLowerCase())) {
+                                                targetPlayer = temp;
+                                                break;
+                                            }
+                                        }
+                                        boolean checkCard = p_player.doesCardExists("Bomb");
+                                        if (l_checkOwnedCountryNotOfCurrent && targetCountryNeighbour && checkCard) {
+                                            //need to send target player instead of current player as param
+                                            p_player.addOrder(new Bomb(p_player, targetPlayer, l_countryId));
+                                            p_player.issue_order();
+                                            d_LogEntry.setMessage(p_player.getPlayerName() + " Bomb order added to Players OrdersList: " + l_data[0] + "  " + l_data[1]);
+                                            p_player.removeCard("Bomb");
+                                            d_LogEntry.setMessage("Bomb card removed from players card list");
+                                        } else {
+                                            System.out.println("Bomb Card not Owned or Country owned by current player or target Country not adjacent | please pass to next player");
+                                            d_LogEntry.setMessage("Bomb Card not Owned or Country owned by current player or target Country not adjacent | please pass to next player");
+                                        }
+                                        d_GamePhase = InternalPhase.TURN;
+                                        break;
+                                    }
+                                } else
+                                    System.out.println("Invalid Command");
+                                d_LogEntry.setMessage("Invalid Command");
+                            } catch (Exception e) {
+                                System.out.println("Bomb Card not Owned or Country owned by current player or target Country not adjacent | please pass to next player");
+                                d_LogEntry.setMessage("Bomb Card not Owned or Country owned by current player or target Country not adjacent | please pass to next player");
+                            }
+                            break;
+
+                        case "blockade":
+                            d_LogEntry.setCommand(l_commandName + " Command is being executed");
+                            try {
+                                if (!(l_data[1] == null)) {
+                                    if (this.isAlphabetic(l_data[1])) {
+                                        l_countryId = l_data[1];
+                                        boolean l_checkOwnedCountry = p_player.getOwnedCountries().containsKey(l_countryId.toLowerCase());
+                                        boolean checkCard = p_player.doesCardExists("Blockade");
+                                        if (l_checkOwnedCountry && checkCard) {
+                                            p_player.addOrder(new Blockade(p_player, l_countryId));
+                                            p_player.issue_order();
+                                            d_LogEntry.setMessage(p_player.getPlayerName() + " Blockade order added to Players OrdersList: " + l_data[0] + "  " + l_data[1]);
+                                            p_player.removeCard("Blockade");
+                                            d_LogEntry.setMessage("Bloackade card removed from Player's cardList ");
+                                        } else {
+                                            System.out.println("Blockade Card not Owned or Country not owned by current player | please pass to next player");
+                                            d_LogEntry.setMessage("Blockade Card not Owned or Country not owned by current player | please pass to next player");
+                                        }
+                                        d_GamePhase = InternalPhase.TURN;
+                                        break;
+                                    }
+                                } else
+                                    System.out.println("Invalid Command");
+                                d_LogEntry.setMessage("Invalid Command");
+                            } catch (Exception e) {
+                                System.out.println("Blockade Card not Owned or Country not owned by current player | please pass to next player");
+                                d_LogEntry.setMessage("Blockade Card not Owned or Country not owned by current player | please pass to next player");
+                            }
+                            break;
+
+                        case "airlift":
+                            d_LogEntry.setCommand(l_commandName + " Command is being executed");
+                            try {
+                                if (!(l_data[1] == null) || !(l_data[2] == null) || !(l_data[3] == null)) {
+                                    if (this.isAlphabetic(l_data[1]) || this.isAlphabetic(l_data[2]) || this.isNumeric(l_data[3])) {
+                                        l_sourceCountryId = l_data[1];
+                                        l_targetCountryId = l_data[2];
+                                        l_numberOfArmies = Integer.parseInt(l_data[3]);
+                                        boolean l_checkOwnedCountry = p_player.getOwnedCountries().containsKey(l_sourceCountryId.toLowerCase());
+                                        boolean l_checkTargetOwnedCountry = p_player.getOwnedCountries().containsKey(l_targetCountryId.toLowerCase());
+
+                                        //check armies from map which are deployed on source Country
+                                        CountryDetails l_c = p_player.getOwnedCountries().get(l_sourceCountryId.toLowerCase());
+                                        int l_existingArmies = l_c.getNumberOfArmies();
+                                        boolean l_checkArmies = (l_existingArmies >= l_numberOfArmies);
+                                        boolean checkCard = p_player.doesCardExists("Airlift");
+                                        if (l_checkOwnedCountry && l_checkTargetOwnedCountry && l_checkArmies && checkCard) {
+                                            p_player.addOrder(new Airlift(p_player, l_sourceCountryId, l_targetCountryId, l_numberOfArmies));
+                                            p_player.issue_order();
+                                            d_LogEntry.setMessage(p_player.getPlayerName() + " Airlift order added to Players OrdersList: " + l_data[0] + "  " + l_data[1] + " " + l_data[2] + " " + l_data[3]);
+                                            p_player.removeCard("Airlift");
+                                            d_LogEntry.setMessage("Airlift card removed from Player's cardList ");
+                                        } else {
+                                            System.out.println("Airlift Card not Owned or Source Country or Target Country not owned by player insufficient Army units | please pass to next player");
+                                            d_LogEntry.setMessage("Airlift Card not Owned or Source Country or Target Country not owned by player insufficient Army units | please pass to next player");
+                                        }
+                                        d_GamePhase = InternalPhase.TURN;
+                                        break;
+                                    }
+                                } else
+                                    System.out.println("Invalid Command");
+                                d_LogEntry.setMessage("Invalid Command");
+                            } catch (Exception e) {
+                                System.out.println("Airlift Card not Owned or Source Country or Target Country not owned by player insufficient Army units | please pass to next player");
+                                d_LogEntry.setMessage("Airlift Card not Owned or Source Country or Target Country not owned by player insufficient Army units | please pass to next player");
+                            }
+                            break;
+
+                        case "negotiate":
+                            d_LogEntry.setCommand(l_commandName + " Command is being executed");
+                            try {
+                                if (!(l_data[1] == null)) {
+                                    if (this.isAlphabetic(l_data[1])) {
+                                        Player l_NegPlayer = getPlayerByName(l_data[1]);
+                                        boolean checkCard = p_player.doesCardExists("Diplomacy");
+                                        if (checkCard) {
+                                            p_player.addOrder(new Diplomacy(p_player, l_NegPlayer));
+                                            p_player.issue_order();
+                                            d_LogEntry.setMessage(p_player.getPlayerName() + " Diplomacy order added to Players OrdersList: " + l_data[0] + "  " + l_data[1] + " " + l_data[2] + " " + l_data[3]);
+                                            p_player.removeCard("Diplomacy");
+                                            d_LogEntry.setMessage("Diplomacy card removed from Player's cardList ");
+                                        }
+                                    }
+                                } else
+                                    System.out.println("Diplomacy Card not Owned or Invalid Command");
+                                d_LogEntry.setMessage("Diplomacy Card not Owned or Invalid Command");
+                            } catch (Exception e) {
+                                System.out.println("Diplomacy Card not Owned or Invalid Player name");
+                                d_LogEntry.setMessage("Diplomacy Card not Owned or Invalid Player name");
+                            }
+                            break;
+
+                        case "pass":
+                            d_LogEntry.setCommand(l_commandName + " Command is being executed");
+                            try {
+                                d_GamePhase = InternalPhase.TURN;
+                            } catch (Exception e) {
+                                System.out.println("Invalid Command - it should be of the form -> deploy countryID num | pass");
+                                d_LogEntry.setMessage("Invalid Command - it should be of the form -> deploy countryID num | pass");
+                            }
+                            break;
+
+                        case "savegame":
+                            try {
+                                if (l_data.length == 2) {
+                                    if (isAlphabetic(l_data[1])) {
+                                        String fileName = l_data[1];
+                                        d_RunG.saveGame(this.d_Game, fileName);
+                                        System.out.println("current Game saved is saved ");
+                                        d_LogEntry.setMessage("current Game saved is saved");
+                                    }
+                                } else {
+                                    String message = "Invalid command. enter file name to save a game.";
+                                    d_LogEntry.setMessage("Invalid command. enter file name to save a game.");
+                                }
+
+                            } catch (ArrayIndexOutOfBoundsException e) {
+                                String message = "Invalid Command, It should be 'savegame filename'";
+                                d_LogEntry.setMessage("Invalid Command, It should be 'savegame filename'");
+                            }
+                            break;
+
+                        case "showmap":
+                            d_Phase.showMap(d_Players, d_Map);
+                            break;
+
+                        case "stop":
+                            if (l_counter > 0) {
+                                System.out.println("There are still some armies left to be deployed!");
+                                d_GamePhase = InternalPhase.ISSUE_ORDERS;
+                            } else {
+                                System.out.println("Getting you to Execution Phase");
+                                d_GamePhase = InternalPhase.EXECUTE_ORDERS;
+                            }
+                            return d_GamePhase;
+
+                        default:
+                            System.out.println("Invalid command - either use deploy | advance | pass | special commands | showmap commands in ISSUE_ORDERS InternalPhase");
+                            d_LogEntry.setMessage("Invalid command - either use deploy | advance | pass | special commands | showmap commands in ISSUE_ORDERS InternalPhase");
+                            break;
+                    }
+                } else {
+                    //no armies left to deploy, so execute orders
+                    System.out.println("press ENTER to continue to execute InternalPhase..");
+                    d_LogEntry.setMessage("No more armies left,move to execute Phase");
+                    d_GamePhase = InternalPhase.EXECUTE_ORDERS;
+                    return d_GamePhase;
+                }
             }
         }
 
