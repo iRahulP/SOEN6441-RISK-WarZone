@@ -20,7 +20,7 @@ public class CheaterPlayer extends PlayerStrategy{
      * @param p_player player that will be cheater player
      * @param p_map map that is going to be loaded.
      */
-    CheaterPlayer(Player p_player, GameMap p_map) {
+    public CheaterPlayer(Player p_player, GameMap p_map) {
 		super(p_player, p_map);
 		d_RnGe = new RunGameEngine();
 		

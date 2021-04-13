@@ -17,7 +17,7 @@ public class RandomPlayer extends PlayerStrategy{
      * @param p_player player object
      * @param p_map    map object
      */
-    RandomPlayer(Player p_player, GameMap p_map) {
+    public RandomPlayer(Player p_player, GameMap p_map) {
         super(p_player, p_map);
         d_RandomCountry = null;
         d_RandomNeighbour = null;

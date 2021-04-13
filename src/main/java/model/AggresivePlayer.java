@@ -17,7 +17,7 @@ public class AggresivePlayer extends PlayerStrategy{
      * @param p_player player object
      * @param p_map    map object
      */
-    AggresivePlayer(Player p_player, GameMap p_map) {
+    public AggresivePlayer(Player p_player, GameMap p_map) {
         super(p_player, p_map);
         d_StrongestCountry = null;
         d_DefendingCountry = null;

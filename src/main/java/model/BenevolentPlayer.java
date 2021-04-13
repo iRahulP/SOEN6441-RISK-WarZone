@@ -13,7 +13,7 @@ public class BenevolentPlayer extends PlayerStrategy{
      * @param p_player player object
      * @param p_map    map object
      */
-    BenevolentPlayer(Player p_player, GameMap p_map) {
+    public BenevolentPlayer(Player p_player, GameMap p_map) {
         super(p_player, p_map);
         d_SourceCountry = null;
         d_WeakCountry = null;
