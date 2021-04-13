@@ -4,6 +4,7 @@ import model.*;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Manages Tournament
@@ -148,6 +149,70 @@ public class TournamentEngine extends GameEngine{
             return "Comand has to be in form of 'tournament -M listofmapfiles -P listofplayerstrategies -G numberofgames -D maxnumberofturns'";
         }
 
+    }
+
+    /**
+     * Conducts the tournament as per the mentioned arguments.
+     * @param mapFiles  List of map files to play on
+     * @param strategies    List of player strategies
+     * @param numberOfGames Number of games to play
+     * @param numberOfTurns Number of turns to play
+     */
+    public void playTournament(ArrayList<String> mapFiles, ArrayList<String> strategies, int numberOfGames, int numberOfTurns){
+        int numberOfPlayers = strategies.size();
+        int traversalCounter = 0;
+        int gameNumber = 0;
+
+        GameEngine d_Ge;
+        StartUp d_Stup;
+        HashMap<Integer, String> winner = new HashMap<Integer, String>();
+
+        //Start playing on each map
+        for(String mapName : mapFiles) {
+            //Start playing each game
+            for (int i = 1; i <= numberOfGames; i++) {
+                gameNumber++;
+
+                //load the map
+                d_Ge = new GameEngine();
+                d_Stup = new StartUp(d_Ge);
+                d_Map = d_RunG.loadMap(mapName);
+
+                //Create player objects
+                for (String strategy : strategies) {
+                    d_Stup.addPlayer(d_Players, strategy);
+                }
+
+                //Setting strategies as same as Player Names
+                for (Player l_p : d_Players) {
+                    switch (l_p.getPlayerName().toLowerCase()) {
+                        case "aggressive":
+                            l_p.setStrategy(new AggresivePlayer(l_p, d_Ge.d_Map));
+                            l_p.setD_isHuman(false);
+                            break;
+                        case "benevolent":
+                            l_p.setStrategy(new BenevolentPlayer(l_p, d_Ge.d_Map));
+                            l_p.setD_isHuman(false);
+                            break;
+                        case "random":
+                            l_p.setStrategy(new RandomPlayer(l_p, d_Ge.d_Map));
+                            l_p.setD_isHuman(false);
+                            break;
+                        case "cheater":
+                            l_p.setStrategy(new CheaterPlayer(l_p, d_Ge.d_Map));
+                            l_p.setD_isHuman(false);
+                            break;
+                        default:
+                            l_p.setD_isHuman(true);
+                            break;
+                    }
+                }
+
+                d_Stup.assignCountries(d_Map, d_Players);
+
+                //rest of Implementation remains
+            }
+        }
     }
 
     /**
