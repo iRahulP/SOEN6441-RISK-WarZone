@@ -24,6 +24,34 @@ public class RandomPlayer extends PlayerStrategy{
         d_RandomCountryWithArmies = null;
     }
 
+    /**
+     * Finds random Country to Bomb from map which is not owned by current player
+     * @return random CountryID
+     */
+    private CountryDetails targetCountryNeighbour()
+    {
+        CountryDetails temp = null;
+        boolean t = true;
+        while(t){
+            //gets a random Map from Map
+            Object[] values = d_Map.getCountries().values().toArray();
+            Object randomValue = values[rand.nextInt(values.length)];
+            d_RandomCountry = (CountryDetails) randomValue;
+            if(!d_Player.getOwnedCountries().containsValue(d_RandomCountry)){
+                //get a random Country not owned by current player
+                for (CountryDetails cD : d_Player.getOwnedCountries().values()) {
+                    //check if target country neighbour to one of current occupied territories of source Player
+                    if (cD.getNeighbours().containsKey(d_RandomCountry.getCountryId().toLowerCase()) && !d_Player.getOwnedCountries().containsKey(d_RandomCountry.getCountryId().toLowerCase())) {
+                        temp = d_RandomCountry;
+                        t = false;
+                        break;
+                    }
+                }
+                t = false;
+            }
+        }
+        return temp;
+    }
 
     /**
      * Finds random Country to deploy
@@ -193,8 +221,7 @@ public class RandomPlayer extends PlayerStrategy{
                     }
                 case (6):
                     if(d_Player.doesCardExists("Bomb")){
-                        //Yet to Implement
-                        return null;
+                        return new Bomb(d_Player, targetCountryNeighbour().getOwnerPlayer(), targetCountryNeighbour().getCountryId());
                     }else {
                         System.out.println("Player doesn't own Card Bomb");
                         return null;
