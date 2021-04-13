@@ -95,7 +95,7 @@ public class RandomPlayer extends PlayerStrategy{
         while(t){
             for(CountryDetails l_neighborCountry : d_RandomCountryWithArmies.getNeighbours().values())
             {
-                if(!this.d_Player.getOwnedCountries().containsKey(l_neighborCountry))
+                if(!this.d_Player.getOwnedCountries().containsKey(l_neighborCountry.getCountryId()))
                 {
                     d_RandomNeighbour = l_neighborCountry;
                     t = false;
@@ -118,7 +118,7 @@ public class RandomPlayer extends PlayerStrategy{
         while(t){
             for(CountryDetails l_neighborCountry : d_RandomCountryWithArmies.getNeighbours().values())
             {
-                if(this.d_Player.getOwnedCountries().containsKey(l_neighborCountry))
+                if(this.d_Player.getOwnedCountries().containsKey(l_neighborCountry.getCountryId()))
                 {
                     d_RandomNeighbour = l_neighborCountry;
                     t = false;
