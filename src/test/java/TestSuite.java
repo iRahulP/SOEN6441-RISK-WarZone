@@ -35,7 +35,8 @@ import org.junit.runners.Suite;
         TestGameWon.class,
         TestLogEntryBuffer.class,
         TestRemoveCard.class,
-        TournamentEngineTest.class
+        TournamentEngineTest.class,
+        TestRandomStrategy.class
 })
 
 /**
