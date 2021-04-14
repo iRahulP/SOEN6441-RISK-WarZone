@@ -30,28 +30,19 @@ public class RandomPlayer extends PlayerStrategy {
      *
      * @return random CountryID
      */
-    private CountryDetails targetCountryNeighbour() {
+    private CountryDetails targetCountryNeighbour(CountryDetails d_RandomCountryWithArmies) {
         CountryDetails temp = null;
-        boolean t = true;
-        while (t) {
-            //gets a random Map from Map
-            Object[] values = d_Map.getCountries().values().toArray();
-            Object randomValue = values[rand.nextInt(values.length)];
-            d_RandomCountry = (CountryDetails) randomValue;
-            if (!d_Player.getOwnedCountries().containsValue(d_RandomCountry)) {
-                //get a random Country not owned by current player
-                for (CountryDetails cD : d_Player.getOwnedCountries().values()) {
-                    //check if target country neighbour to one of current occupied territories of source Player
-                    if (cD.getNeighbours().containsKey(d_RandomCountry.getCountryId().toLowerCase()) && !d_Player.getOwnedCountries().containsKey(d_RandomCountry.getCountryId().toLowerCase())) {
-                        temp = d_RandomCountry;
-                        t = false;
-                        break;
-                    }
+        if(d_RandomCountryWithArmies == null){
+            return null;
+        }else {
+            for (CountryDetails l_neighborCountry : d_RandomCountryWithArmies.getNeighbours().values()) {
+                if (!this.d_Player.getOwnedCountries().containsKey(l_neighborCountry.getCountryId())) {
+                    temp = l_neighborCountry;
+                    return temp;
                 }
-                t = false;
             }
         }
-        return temp;
+        return null;
     }
 
     /**
@@ -197,6 +188,7 @@ public class RandomPlayer extends PlayerStrategy {
         l_defendingCountry = toAttack(l_attackingCountry);
         //System.out.println(l_defendingCountry);
         l_advanceCountry = toAdvance(l_attackingCountry);
+        //System.out.println(targetCountryNeighbour(l_attackingCountry));
 
         //Random value from 0-6
         int rndOrder = rand.nextInt(7);
@@ -261,9 +253,10 @@ public class RandomPlayer extends PlayerStrategy {
 
             default:
                 //System.out.println("Issuing Bomb");
-                if (d_Player.doesCardExists("Bomb")) {
+                CountryDetails tmp = targetCountryNeighbour(l_attackingCountry);
+                if (d_Player.doesCardExists("Bomb") && l_attackingCountry != null && tmp != null) {
                     d_Player.removeCard("Bomb");
-                    return new Bomb(d_Player, targetCountryNeighbour().getOwnerPlayer(), targetCountryNeighbour().getCountryId());
+                    return new Bomb(d_Player, tmp.getOwnerPlayer(), tmp.getCountryId());
                 } else
                     System.out.println("Player doesn't own Card Bomb");
                 return null;

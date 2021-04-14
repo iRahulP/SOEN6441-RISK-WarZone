@@ -88,4 +88,32 @@ public class TestRandomStrategy{
             assertEquals(1, d_Player1.getD_orderList().size());
         }
     }
+
+    /**
+     * Tests Random Country Owner
+     */
+    @Test
+    public void testRandomCountryPlayerOwner() {
+        d_Stup.assignCountries(d_Map, d_Players);
+        AssignReinforcement.assignReinforcementArmies(d_Player1);
+        AssignReinforcement.assignReinforcementArmies(d_Player2);
+
+        Random rand = new Random();
+        Object[] values = d_Map.getCountries().values().toArray();
+        Object randomValue = values[rand.nextInt(values.length)];
+        CountryDetails d_RandomCountry = (CountryDetails) randomValue;
+        System.out.println(d_RandomCountry.getCountryId());
+
+        Player l_targetPlayer = null;
+        for (Player temp : d_Players) {
+            //check which player has target countryID
+            if (temp.getOwnedCountries().containsKey(d_RandomCountry.getCountryId().toLowerCase())) {
+                l_targetPlayer = temp;
+                break;
+            }
+        }
+        System.out.println(d_RandomCountry.getOwnerPlayer().getPlayerName());
+        assertEquals(l_targetPlayer, d_RandomCountry.getOwnerPlayer());
+
+    }
 }
