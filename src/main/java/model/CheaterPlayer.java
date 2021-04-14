@@ -2,9 +2,6 @@ package model;
 
 import java.util.HashMap;
 
-
-
-
 /**
  * CheaterPlayerStrategy class is ConcreteStrategy.
  * This strategy focuses on player who does illegal moves for its benefits.
@@ -29,8 +26,8 @@ public class CheaterPlayer extends PlayerStrategy{
 	public Order createOrder() {
 	
 		HashMap<String, CountryDetails> l_countryList = new HashMap<String, CountryDetails>();
-        for(String str : this.d_Player.getOwnedCountries().keySet()){
-            l_countryList.put(str, this.d_Player.getOwnedCountries().get(str));
+        for(String l_s : this.d_Player.getOwnedCountries().keySet()){
+            l_countryList.put(l_s, this.d_Player.getOwnedCountries().get(l_s));
         }
         
         //conquering the enemy neighbor
@@ -52,6 +49,7 @@ public class CheaterPlayer extends PlayerStrategy{
             }
         }
         
+        //double the armies that have neighbor enemy country
 		for(CountryDetails l_newcountries : this.d_Player.getOwnedCountries().values()){
             for(CountryDetails l_newneighbours : l_newcountries.getNeighbours().values()){
             	//if(!(l_newneighbours.getOwnerPlayer().equals(d_Player))) {
