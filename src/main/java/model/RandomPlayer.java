@@ -8,10 +8,10 @@ import java.util.Random;
  * randomly between its countries
  * @author  Rahul
  */
-public class RandomPlayer extends PlayerStrategy{
+public class RandomPlayer extends PlayerStrategy {
     Random rand = new Random();
-    CountryDetails d_RandomCountry,d_RandomNeighbour, d_RandomCountryWithArmies;
-    CountryDetails l_attackingCountry,l_defendingCountry,l_advanceCountry;
+    CountryDetails d_RandomCountry, d_RandomNeighbour, d_RandomCountryWithArmies;
+    CountryDetails l_attackingCountry, l_defendingCountry, l_advanceCountry;
     /**
      * default Constructor for PlayerStrategy
      *
@@ -27,18 +27,18 @@ public class RandomPlayer extends PlayerStrategy{
 
     /**
      * Finds random Country to Bomb from map which is not owned by current player
+     *
      * @return random CountryID
      */
-    private CountryDetails targetCountryNeighbour()
-    {
+    private CountryDetails targetCountryNeighbour() {
         CountryDetails temp = null;
         boolean t = true;
-        while(t){
+        while (t) {
             //gets a random Map from Map
             Object[] values = d_Map.getCountries().values().toArray();
             Object randomValue = values[rand.nextInt(values.length)];
             d_RandomCountry = (CountryDetails) randomValue;
-            if(!d_Player.getOwnedCountries().containsValue(d_RandomCountry)){
+            if (!d_Player.getOwnedCountries().containsValue(d_RandomCountry)) {
                 //get a random Country not owned by current player
                 for (CountryDetails cD : d_Player.getOwnedCountries().values()) {
                     //check if target country neighbour to one of current occupied territories of source Player
@@ -56,28 +56,28 @@ public class RandomPlayer extends PlayerStrategy{
 
     /**
      * Finds random Country to deploy
+     *
      * @return random CountryID
      */
-    private CountryDetails findRandomCountry()
-    {
+    private CountryDetails findRandomCountry() {
         Object[] values = d_Player.getOwnedCountries().values().toArray();
         Object randomValue = values[rand.nextInt(values.length)];
-        d_RandomCountry = (CountryDetails)randomValue;
+        d_RandomCountry = (CountryDetails) randomValue;
         return d_RandomCountry;
     }
 
     /**
      * Finds random Country to deploy other than the current source Country for Airlift
+     *
      * @return random CountryID
      */
-    private CountryDetails findOtherRandomCountry()
-    {
+    private CountryDetails findOtherRandomCountry() {
         boolean t = true;
-        while(t){
+        while (t) {
             Object[] values = d_Player.getOwnedCountries().values().toArray();
             Object randomValue = values[rand.nextInt(values.length)];
             d_RandomCountry = (CountryDetails) randomValue;
-            if(d_RandomCountry != d_RandomCountryWithArmies){
+            if (d_RandomCountry != d_RandomCountryWithArmies) {
                 t = false;
             }
         }
@@ -87,14 +87,14 @@ public class RandomPlayer extends PlayerStrategy{
     /**
      * toAttack function implements attacks to the
      * neighboring country from random country
+     *
      * @return country to attack
      */
-    protected CountryDetails toAttack(CountryDetails d_RandomCountryWithArmies)
-    {
-        if(d_RandomCountryWithArmies == null){
+    protected CountryDetails toAttack(CountryDetails d_RandomCountryWithArmies) {
+        if (d_RandomCountryWithArmies == null) {
             //there was no country with armies
             return null;
-        }else {
+        } else {
             d_RandomNeighbour = null;
             for (CountryDetails l_neighborCountry : d_RandomCountryWithArmies.getNeighbours().values()) {
                 if (!this.d_Player.getOwnedCountries().containsKey(l_neighborCountry.getCountryId())) {
@@ -109,14 +109,14 @@ public class RandomPlayer extends PlayerStrategy{
     /**
      * toAdvance function implements advance to the
      * neighboring country from random owned country
+     *
      * @return country to advance
      */
-    protected CountryDetails toAdvance(CountryDetails d_RandomCountryWithArmies)
-    {
-        if(d_RandomCountryWithArmies == null){
+    protected CountryDetails toAdvance(CountryDetails d_RandomCountryWithArmies) {
+        if (d_RandomCountryWithArmies == null) {
             //there was no country with armies
             return null;
-        }else {
+        } else {
             d_RandomNeighbour = null;
             for (CountryDetails l_neighborCountry : d_RandomCountryWithArmies.getNeighbours().values()) {
                 if (this.d_Player.getOwnedCountries().containsKey(l_neighborCountry.getCountryId())) {
@@ -135,15 +135,15 @@ public class RandomPlayer extends PlayerStrategy{
 
     /**
      * finds a Random Country owned by player which has armies to be advanced
+     *
      * @return country to attack from
      */
-    protected CountryDetails toAttackFrom()
-    {
+    protected CountryDetails toAttackFrom() {
         d_RandomCountryWithArmies = null;
         int l_maxArmies = 0, l_numArmies;
-        for(CountryDetails l_countryDetails : this.d_Player.getOwnedCountries().values()) {
+        for (CountryDetails l_countryDetails : this.d_Player.getOwnedCountries().values()) {
             l_numArmies = l_countryDetails.getNumberOfArmies();
-            if( l_numArmies > l_maxArmies) {
+            if (l_numArmies > l_maxArmies) {
                 d_RandomCountryWithArmies = l_countryDetails;
                 return d_RandomCountryWithArmies;
             }
@@ -159,15 +159,15 @@ public class RandomPlayer extends PlayerStrategy{
     /**
      * Gets a random Player for negotiation
      */
-    protected Player getRandomPlayer(){
+    protected Player getRandomPlayer() {
         Player l_diffPlayer = null;
         boolean t = true;
-        while(t){
+        while (t) {
             //gets a random Map from Map
             Object[] values = d_Map.getCountries().values().toArray();
             Object randomValue = values[rand.nextInt(values.length)];
             d_RandomCountry = (CountryDetails) randomValue;
-            if(!d_Player.getOwnedCountries().containsValue(d_RandomCountry) && d_RandomCountry.getOwnerPlayer()!= null){
+            if (!d_Player.getOwnedCountries().containsValue(d_RandomCountry) && d_RandomCountry.getOwnerPlayer() != null) {
                 //get a random Country not owned by current player and also not neutral
                 //get the Player which owns this country
                 l_diffPlayer = d_RandomCountry.getOwnerPlayer();
@@ -179,20 +179,20 @@ public class RandomPlayer extends PlayerStrategy{
 
     /**
      * Creates a Random Order as per Strategy
+     *
      * @return random Order
      */
     @Override
     public Order createOrder() {
-        System.out.println(this.d_Player);
-        System.out.println(this.d_Map);
-        System.out.println(this.d_Player.getPlayerName());
-        System.out.println(this.d_Player.getOwnedArmies());
-        System.out.println(this.d_Player.getD_isHuman());
-        System.out.println(this.d_Player.getOwnedCountries());
-        System.out.println(this.d_Map.getCountries());
-        System.out.println(this.d_Map.getMapName());
-        System.out.println(this.d_Map.getValid());
-
+//        System.out.println(this.d_Player);
+//        System.out.println(this.d_Map);
+//        System.out.println(this.d_Player.getPlayerName());
+//        System.out.println(this.d_Player.getOwnedArmies());
+//        System.out.println(this.d_Player.getD_isHuman());
+//        System.out.println(this.d_Player.getOwnedCountries());
+//        System.out.println(this.d_Map.getCountries());
+//        System.out.println(this.d_Map.getMapName());
+//        System.out.println(this.d_Map.getValid());
 
         l_attackingCountry = toAttackFrom();
         System.out.println(l_attackingCountry);
@@ -200,63 +200,74 @@ public class RandomPlayer extends PlayerStrategy{
         System.out.println(l_defendingCountry);
         l_advanceCountry = toAdvance(l_attackingCountry);
 
+        //Random value from 0-6
         int rndOrder = rand.nextInt(7);
+        //Gets Armies owned
         int rnd_num_of_armies_pool = d_Player.getOwnedArmies();
-        //returns one of the orders randomly with a Probability of 80% else null
-        if (rand.nextInt(5) != 0) {
-            switch (rndOrder) {
-                case (0):
-                    int randArmies = rand.nextInt(rnd_num_of_armies_pool);
-                    d_Player.setOwnedArmies(d_Player.getOwnedArmies() - randArmies);
-                    return new Deploy(d_Player, findRandomCountry().getCountryId(), randArmies);
-                case (1):
-                    if(l_defendingCountry!=null)
-                        return new Advance(d_Player, l_attackingCountry.getCountryId(), l_defendingCountry.getCountryId(), rand.nextInt(l_attackingCountry.getNumberOfArmies()), l_defendingCountry.getOwnerPlayer());
-                    else {
-                        System.out.println("Neighbor does not exist for this country");
-                        return null;
-                    }
-                case (2):
-                    if(l_advanceCountry != null)
-                        return new Advance(d_Player, l_attackingCountry.getCountryId(), l_advanceCountry.getCountryId(), rand.nextInt(l_attackingCountry.getNumberOfArmies()), l_advanceCountry.getOwnerPlayer());
-                    else {
-                        System.out.println("Neighbor does not exist for this country");
-                        return null;
-                    }
-                case (3):
-                    if(d_Player.doesCardExists("Blockade")){
-                        d_Player.removeCard("Blockade");
-                        return new Blockade(d_Player, findRandomCountry().getCountryId());
-                    }else {
-                        System.out.println("Player doesn't own Card Blockade");
-                        return null;
-                    }
-                case (4):
-                    if(d_Player.doesCardExists("Airlift")){
-                        d_Player.removeCard("Airlift");
-                        return new Airlift(d_Player, l_attackingCountry.getCountryId(), findOtherRandomCountry().getCountryId(),rand.nextInt(l_attackingCountry.getNumberOfArmies()));
-                    }else {
-                        System.out.println("Player doesn't own Card Airlift");
-                        return null;
-                    }
-                case (5):
-                    if(d_Player.doesCardExists("Diplomacy")){
-                        d_Player.removeCard("Diplomacy");
-                        return new Diplomacy(d_Player, getRandomPlayer());
-                    }else {
-                        System.out.println("Player doesn't own Card Diplomacy");
-                        return null;
-                    }
-                case (6):
-                    if(d_Player.doesCardExists("Bomb")){
-                        d_Player.removeCard("Bomb");
-                        return new Bomb(d_Player, targetCountryNeighbour().getOwnerPlayer(), targetCountryNeighbour().getCountryId());
-                    }else {
-                        System.out.println("Player doesn't own Card Bomb");
-                        return null;
-                    }
+        //issues random Order
+        switch (rndOrder) {
+            case (0):
+                System.out.println("Issuing Deploy");
+                int randArmies = rand.nextInt(rnd_num_of_armies_pool);
+                d_Player.setOwnedArmies(d_Player.getOwnedArmies() - randArmies);
+                return new Deploy(d_Player, findRandomCountry().getCountryId(), randArmies);
+
+            case (1):
+                System.out.println("Issuing Attack");
+                if (l_defendingCountry != null)
+                    return new Advance(d_Player, l_attackingCountry.getCountryId(), l_defendingCountry.getCountryId(), rand.nextInt(l_attackingCountry.getNumberOfArmies()), l_defendingCountry.getOwnerPlayer());
+                else
+                    System.out.println("Neighbor does not exist for this country");
+                return null;
+
+
+            case (2):
+                System.out.println("Issuing Advance");
+                if (l_advanceCountry != null)
+                    return new Advance(d_Player, l_attackingCountry.getCountryId(), l_advanceCountry.getCountryId(), rand.nextInt(l_attackingCountry.getNumberOfArmies()), l_advanceCountry.getOwnerPlayer());
+                else
+                    System.out.println("Neighbor does not exist for this country");
+                return null;
+
+
+            case (3):
+                System.out.println("Issuing Blockade");
+                if (d_Player.doesCardExists("Blockade")) {
+                    d_Player.removeCard("Blockade");
+                    return new Blockade(d_Player, findRandomCountry().getCountryId());
+                } else
+                    System.out.println("Player doesn't own Card Blockade");
+                return null;
+
+
+            case (4):
+                System.out.println("Issuing Airlift");
+                if (d_Player.doesCardExists("Airlift")) {
+                    d_Player.removeCard("Airlift");
+                    return new Airlift(d_Player, l_attackingCountry.getCountryId(), findOtherRandomCountry().getCountryId(), rand.nextInt(l_attackingCountry.getNumberOfArmies()));
+                } else
+                    System.out.println("Player doesn't own Card Airlift");
+                return null;
+
+
+            case (5):
+                System.out.println("Issuing Negotiaite");
+                if (d_Player.doesCardExists("Diplomacy")) {
+                    d_Player.removeCard("Diplomacy");
+                    return new Diplomacy(d_Player, getRandomPlayer());
+                } else
+                    System.out.println("Player doesn't own Card Diplomacy");
+                return null;
+
+
+            default:
+                System.out.println("Issuing Bomb");
+                if (d_Player.doesCardExists("Bomb")) {
+                    d_Player.removeCard("Bomb");
+                    return new Bomb(d_Player, targetCountryNeighbour().getOwnerPlayer(), targetCountryNeighbour().getCountryId());
+                } else
+                    System.out.println("Player doesn't own Card Bomb");
+                return null;
             }
-    }
-        return null;
-    }
+        }
 }
