@@ -3,6 +3,12 @@ package model;
 import java.util.Collection;
 import java.util.Random;
 
+/**
+ * BenevolentPlayer class is ConcreteStrategy.
+ * This deploys it's armies on weak countries of the player
+ * and advances armies to reinforce it's weak countries
+ * @author Shravya
+ */
 public class BenevolentPlayer extends PlayerStrategy{
 
     CountryDetails d_SourceCountry,d_WeakCountry;
@@ -33,6 +39,10 @@ public class BenevolentPlayer extends PlayerStrategy{
                 d_WeakCountry = l_countryDetails;
             }
         }
+
+        if (d_WeakCountry == null) {
+            d_WeakCountry = d_Player.getOwnedCountries().get(0);
+        }
         return d_WeakCountry;
     }
 
@@ -43,7 +53,7 @@ public class BenevolentPlayer extends PlayerStrategy{
      */
     @Override
     protected CountryDetails toMoveFrom() {
-        findWeakestCountryDetails();
+        //findWeakestCountryDetails();
         return d_SourceCountry;
     }
 
@@ -54,6 +64,8 @@ public class BenevolentPlayer extends PlayerStrategy{
      */
     protected CountryDetails toAdvance()
     {
+        findWeakestCountryDetails();
+
         for(CountryDetails l_neighborCountry : d_SourceCountry.getNeighbours().values())
         {
             if(this.d_Player.getOwnedCountries().containsKey(l_neighborCountry) && (l_neighborCountry == d_WeakCountry))
@@ -83,7 +95,8 @@ public class BenevolentPlayer extends PlayerStrategy{
 
         switch(l_rndOrder) {
             case 0:
-                if (l_random.nextInt(5) != 0) {
+                int l_reinforceArmies = l_random.nextInt(d_Player.getOwnedArmies());
+                if (l_reinforceArmies!= 0) {
                     //deploy on weak country
                     return new Deploy(d_Player, d_WeakCountry.getCountryId(), l_random.nextInt(20));
                 }
@@ -91,7 +104,7 @@ public class BenevolentPlayer extends PlayerStrategy{
             case 1:
                 //create attack Order
                 if(l_advanceCountry != null)
-                    return new Advance(d_Player, d_SourceCountry.getCountryId(), l_advanceCountry.getCountryId(), l_random.nextInt(d_SourceCountry.getNumberOfArmies()), l_advanceCountry.getOwnerPlayer());
+                    return new Advance(d_Player, l_sourceCountry.getCountryId(), l_advanceCountry.getCountryId(), l_random.nextInt(l_sourceCountry.getNumberOfArmies()), l_advanceCountry.getOwnerPlayer());
                 else
                     System.out.println("Neighbor does not exist for this country");
                 break;
