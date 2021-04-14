@@ -61,8 +61,14 @@ public class PlayRisk {
                     l_gamePhase = InternalPhase.ISSUE_ORDERS;
                     cmd.setGamePhase(l_gamePhase);
                     while (l_gamePhase != InternalPhase.TURN) {
-                        l_cmd = sc.nextLine();
-                        l_gamePhase = cmd.parseCommand(l_p, l_cmd);
+                        System.out.println(l_p.getD_isHuman());
+                        if(l_p.getD_isHuman()) {
+                            l_cmd = sc.nextLine();
+                            l_gamePhase = cmd.parseCommand(l_p, l_cmd);
+                        }
+                        else{
+                            l_gamePhase = cmd.parseCommand(l_p, "");
+                        }
                     }
                     //gets to next Player
                     l_traversalCounter++;
