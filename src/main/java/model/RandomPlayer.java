@@ -11,6 +11,7 @@ import java.util.Random;
 public class RandomPlayer extends PlayerStrategy{
     Random rand = new Random();
     CountryDetails d_RandomCountry,d_RandomNeighbour, d_RandomCountryWithArmies;
+    CountryDetails l_attackingCountry,l_defendingCountry,l_advanceCountry;
     /**
      * default Constructor for PlayerStrategy
      *
@@ -88,22 +89,21 @@ public class RandomPlayer extends PlayerStrategy{
      * neighboring country from random country
      * @return country to attack
      */
-    protected CountryDetails toAttack()
+    protected CountryDetails toAttack(CountryDetails d_RandomCountryWithArmies)
     {
-        d_RandomNeighbour = null;
-        boolean t = true;
-        while(t){
-            for(CountryDetails l_neighborCountry : d_RandomCountryWithArmies.getNeighbours().values())
-            {
-                if(!this.d_Player.getOwnedCountries().containsKey(l_neighborCountry.getCountryId()))
-                {
+        if(d_RandomCountryWithArmies == null){
+            //there was no country with armies
+            return null;
+        }else {
+            d_RandomNeighbour = null;
+            for (CountryDetails l_neighborCountry : d_RandomCountryWithArmies.getNeighbours().values()) {
+                if (!this.d_Player.getOwnedCountries().containsKey(l_neighborCountry.getCountryId())) {
                     d_RandomNeighbour = l_neighborCountry;
-                    t = false;
-                    break;
+                    return d_RandomNeighbour;
                 }
             }
+            return d_RandomNeighbour;
         }
-        return  d_RandomNeighbour;
     }
 
     /**
@@ -111,22 +111,21 @@ public class RandomPlayer extends PlayerStrategy{
      * neighboring country from random owned country
      * @return country to advance
      */
-    protected CountryDetails toAdvance()
+    protected CountryDetails toAdvance(CountryDetails d_RandomCountryWithArmies)
     {
-        d_RandomNeighbour = null;
-        boolean t = true;
-        while(t){
-            for(CountryDetails l_neighborCountry : d_RandomCountryWithArmies.getNeighbours().values())
-            {
-                if(this.d_Player.getOwnedCountries().containsKey(l_neighborCountry.getCountryId()))
-                {
+        if(d_RandomCountryWithArmies == null){
+            //there was no country with armies
+            return null;
+        }else {
+            d_RandomNeighbour = null;
+            for (CountryDetails l_neighborCountry : d_RandomCountryWithArmies.getNeighbours().values()) {
+                if (this.d_Player.getOwnedCountries().containsKey(l_neighborCountry.getCountryId())) {
                     d_RandomNeighbour = l_neighborCountry;
-                    t = false;
                     break;
                 }
             }
+            return d_RandomNeighbour;
         }
-        return  d_RandomNeighbour;
     }
 
     @Override
@@ -140,6 +139,7 @@ public class RandomPlayer extends PlayerStrategy{
      */
     protected CountryDetails toAttackFrom()
     {
+        d_RandomCountryWithArmies = null;
         int l_maxArmies = 0, l_numArmies;
         for(CountryDetails l_countryDetails : this.d_Player.getOwnedCountries().values()) {
             l_numArmies = l_countryDetails.getNumberOfArmies();
@@ -148,6 +148,11 @@ public class RandomPlayer extends PlayerStrategy{
                 return d_RandomCountryWithArmies;
             }
         }
+        return d_RandomCountryWithArmies;
+    }
+
+    @Override
+    protected CountryDetails toAttack() {
         return null;
     }
 
@@ -178,10 +183,22 @@ public class RandomPlayer extends PlayerStrategy{
      */
     @Override
     public Order createOrder() {
-        CountryDetails l_attackingCountry,l_defendingCountry,l_advanceCountry;
+        System.out.println(this.d_Player);
+        System.out.println(this.d_Map);
+        System.out.println(this.d_Player.getPlayerName());
+        System.out.println(this.d_Player.getOwnedArmies());
+        System.out.println(this.d_Player.getD_isHuman());
+        System.out.println(this.d_Player.getOwnedCountries());
+        System.out.println(this.d_Map.getCountries());
+        System.out.println(this.d_Map.getMapName());
+        System.out.println(this.d_Map.getValid());
+
+
         l_attackingCountry = toAttackFrom();
-        l_defendingCountry = toAttack();
-        l_advanceCountry = toAdvance();
+        System.out.println(l_attackingCountry);
+        l_defendingCountry = toAttack(l_attackingCountry);
+        System.out.println(l_defendingCountry);
+        l_advanceCountry = toAdvance(l_attackingCountry);
 
         int rndOrder = rand.nextInt(7);
         int rnd_num_of_armies_pool = d_Player.getOwnedArmies();
