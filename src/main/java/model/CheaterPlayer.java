@@ -3,6 +3,8 @@ package model;
 import java.util.HashMap;
 
 
+
+
 /**
  * CheaterPlayerStrategy class is ConcreteStrategy.
  * This strategy focuses on player who does illegal moves for its benefits.
@@ -12,8 +14,7 @@ public class CheaterPlayer extends PlayerStrategy{
 	/**
      * Represents object of  RunGameEngine class
      */
-    RunGameEngine d_RnGe;
-  
+    Player d_OtherPlayer;
     
     /**
      * Creates a player with the argument player name and sets default value for rest of the player fields.
@@ -22,47 +23,59 @@ public class CheaterPlayer extends PlayerStrategy{
      */
     public CheaterPlayer(Player p_player, GameMap p_map) {
 		super(p_player, p_map);
-		d_RnGe = new RunGameEngine();
-		
 	}
 
-    /**
-     * Reinforcement phase for cheater player
-     * @param p_game Represents the state of the game
-     * @param p_countryName Reinforce armies here
-     * @param p_num Reinforce this many armies
-     * @return true if reinforcement is successful
-     */
-    public boolean reinforce(GameData p_game, String p_countryName, int p_num){
-        p_game.setActivePlayer(this.d_Player);
-        for(CountryDetails c : this.d_Player.getOwnedCountries().values()){
-            p_game.getLogger().info(this.d_Player.getPlayerName() + " reinforced " + c.getCountryId() + " with " + c.getNumberOfArmies());
-            c.setNumberOfArmies(c.getNumberOfArmies() * 2);
-        }
-        return true;
-    }
-    
 	@Override
 	public Order createOrder() {
-		// TODO Auto-generated method stub
+	
+		HashMap<String, CountryDetails> l_countryList = new HashMap<String, CountryDetails>();
+        for(String str : this.d_Player.getOwnedCountries().keySet()){
+            l_countryList.put(str, this.d_Player.getOwnedCountries().get(str));
+        }
+        
+        //conquering the enemy neighbor
+        for(CountryDetails l_countries : l_countryList.values()){
+            for(CountryDetails l_neighbours : l_countries.getNeighbours().values()){
+            	if(!this.d_Player.getOwnedCountries().containsKey(l_neighbours.getCountryId().toLowerCase())) {
+            		d_OtherPlayer= l_neighbours.getOwnerPlayer();
+            		this.d_Player.getOwnedCountries().put(l_neighbours.getCountryId().toLowerCase(),l_neighbours);
+            		d_OtherPlayer.getOwnedCountries().remove(l_neighbours.getCountryId().toLowerCase());
+            		d_Player.addCard();
+            		l_neighbours.setOwnerPlayer(this.d_Player);
+            		
+            		//if player owns all the countries
+            		/*if(this.d_Player.getOwnedCountries().size() == d_Map.getCountries().size()) {
+            			System.out.println(d_Player+ " has won the game");
+            			System.exit(0);
+            		}*/
+            	}
+            }
+        }
+        
+		for(CountryDetails l_newcountries : this.d_Player.getOwnedCountries().values()){
+            for(CountryDetails l_newneighbours : l_newcountries.getNeighbours().values()){
+            	//if(!(l_newneighbours.getOwnerPlayer().equals(d_Player))) {
+            	if(!(this.d_Player.getOwnedCountries().containsKey(l_newneighbours.getCountryId().toLowerCase()))) {
+            		l_newcountries.setNumberOfArmies(l_newcountries.getNumberOfArmies() * 2);
+            	}
+            }
+        }
+		
 		return null;
 	}
 
 	@Override
 	protected CountryDetails toAttackFrom() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	protected CountryDetails toAttack() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	protected CountryDetails toMoveFrom() {
-		// TODO Auto-generated method stub
 		return null;
 	}
     
