@@ -1,3 +1,4 @@
+import controller.TournamentEngineTest;
 import model.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -33,7 +34,8 @@ import org.junit.runners.Suite;
         TestAttack.class,
         TestGameWon.class,
         TestLogEntryBuffer.class,
-        TestRemoveCard.class
+        TestRemoveCard.class,
+        TournamentEngineTest.class
 })
 
 /**
