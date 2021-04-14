@@ -1,6 +1,7 @@
 package view;
 
 import controller.GameEngine;
+
 import model.AssignReinforcement;
 import model.InternalPhase;
 import model.Player;
@@ -25,20 +26,65 @@ public class PlayRisk {
      * @param args Command line arguments
      */
     public static void main(String[] args) {
-        PlayRisk l_game = new PlayRisk();
-        Scanner sc = new Scanner(System.in);
+    	  PlayRisk l_game = new PlayRisk();
+          Scanner sc = new Scanner(System.in);
+          //initial command reader from cli
+          String l_cmd;
+          String message;
+          int traversalCounter;
+          InternalPhase l_gamePhase = InternalPhase.NULL;
+          GameEngine cmd = new GameEngine();
+      	PlayRisk game = new PlayRisk();
 
-        System.out.println("Welcome to Risk Game based on Warzone!");
-        System.out.println("Enter 1 to play single-game mode or 2 to play tournament mode.");
+          boolean validCommand = false;
+  		boolean loadGame = false;
+  		
+          System.out.println("Welcome to Risk Game based on Warzone!");
+          System.out.println("Enter 1 to play single-game mode or 2 to play tournament mode.");
+          l_cmd = sc.nextLine();
+  		if (l_cmd.equals("1")) {
+  			//single-game mode
+  			//select user-choice to load game or play new game
+  			while (!validCommand) {
+  				System.out.println("Enter 1 to load a saved game or 2 to edit/load map for new game.");
+  				l_cmd = sc.nextLine();
+
+  				if (l_cmd.equals("1")) {
+
+  					//loads game
+  					validCommand = true;
+  					loadGame = true;
+  					System.out.println("To continue, select a game to load from the existing save games.");
+  					game.printSavedGames();
+  					do {
+  						l_cmd = sc.nextLine();
+  						cmd.parseCommand(null, l_cmd);
+  						System.out.println("!11");
+  					} while (cmd.parseCommand(null, l_cmd).equals("Loaded successfully"));
+
+  					System.out.println("heeeellllo");
+  					//set traversal counter by finding appropriate player
+  					traversalCounter = -1;
+  					for (Player player1 : cmd.getGame().getPlayers()) {
+  						traversalCounter++;
+  						if (player1 == cmd.getGame().getActivePlayer()) {
+  							break;
+  						}
+  					}
+  System.out.println("wasup1");
+  					//set controller to turn controller to continue playing the loaded game
+  					cmd = new GameEngine();
+
+  				} else if (l_cmd.equals("2")) {
 
 
         System.out.println("try, Selecting a map from the below mentioned sample maps or create a new one: ");
         l_game.sampleMaps();
-
-        //initial command reader from cli
-        String l_cmd;
-        InternalPhase l_gamePhase = InternalPhase.NULL;
-        GameEngine cmd = new GameEngine();
+//
+//        //initial command reader from cli
+//        String l_cmd;
+//        InternalPhase l_gamePhase = InternalPhase.NULL;
+//        GameEngine cmd = new GameEngine();
 
         //looping for commands until initial Phases where Player iteration not required!
         while(l_gamePhase!= InternalPhase.ISSUE_ORDERS) {
@@ -77,7 +123,7 @@ public class PlayRisk {
                 cmd.setGamePhase(l_gamePhase);
                 l_traversalCounter = 0;
             }
-        }
+        }}}}
 
     /**
      * assigns default reinforcements to each player based on Countries owned.
