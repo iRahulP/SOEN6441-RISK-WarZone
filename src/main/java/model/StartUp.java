@@ -85,6 +85,7 @@ public class StartUp extends Play {
 		for (CountryDetails l_c : p_map.getCountries().values()) {
 			Player l_p = p_players.get(l_counter);
 			l_p.getOwnedCountries().put(l_c.getCountryId().toLowerCase(), l_c);
+			l_c.setOwnerPlayer(l_p);
 			d_Ge.d_LogEntry.setMessage("Country: " + l_c.getCountryId().toLowerCase() + " assigned to player: " + l_p.getPlayerName());
 			if (l_counter >= l_numberOfPlayers - 1)
 				l_counter = 0;
