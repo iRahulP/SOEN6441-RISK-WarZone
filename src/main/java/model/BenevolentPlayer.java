@@ -69,7 +69,6 @@ public class BenevolentPlayer extends PlayerStrategy{
     protected CountryDetails toAdvance()
     {
         findWeakestCountryDetails();
-
         for(CountryDetails l_neighborCountry : d_SourceCountry.getNeighbours().values())
         {
             if(this.d_Player.getOwnedCountries().containsKey(l_neighborCountry) && (l_neighborCountry == d_WeakCountry))
@@ -103,6 +102,8 @@ public class BenevolentPlayer extends PlayerStrategy{
                 if (l_reinforceArmies!= 0) {
                     //deploy on weak country
                     return new Deploy(d_Player, d_WeakCountry.getCountryId(), random.nextInt(20));
+                } else {
+                    System.out.println("Cannot be deployed on weak country");
                 }
                 break;
             case 1:
