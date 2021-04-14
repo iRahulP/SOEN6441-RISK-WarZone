@@ -53,7 +53,7 @@ public class BenevolentPlayer extends PlayerStrategy{
      */
     @Override
     protected CountryDetails toMoveFrom() {
-        //findWeakestCountryDetails();
+        findWeakestCountryDetails();
         return d_SourceCountry;
     }
 
