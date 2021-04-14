@@ -68,14 +68,15 @@ public class GameEngine {
      * Holds the data related to the game.
      */
     public GameData d_Game;
-    
+    public GameEngine d_Ge;
+    public StartUp d_StartUp;
     /**
      * Initializes the variables and objects required to play the game and act on user commands
      */
     public GameEngine()  {
         d_Map = new GameMap();
         d_RunG = new RunGameEngine();
-        // d_StartUp = new StartUp();
+        d_StartUp = new StartUp(d_Ge);
         d_Arfc = new AssignReinforcement();
         d_Players = new ArrayList<Player>();
         d_GamePhase = InternalPhase.NULL;
@@ -388,16 +389,16 @@ public class GameEngine {
                 p_player.showCards();
             }
 
-            if(!p_player.getD_isHuman()){
-                //Call for issueOrder() of non human Player
-                p_player.issueOrder();
-                d_GamePhase = InternalPhase.TURN;
-                return d_GamePhase;
-            }
-            else {
+            //case when atleast one player has any army/armies left
+            if (l_counter >= 0) {
+                if(!p_player.getD_isHuman()){
+                    //Call for issueOrder() of non human Player
+                    p_player.issueOrder();
+                    d_GamePhase = InternalPhase.TURN;
+                    return d_GamePhase;
+                }
+                else {
                 //Case for Human Player
-                //case when atleast one player has any army/armies left
-                if (l_counter >= 0) {
                     switch (l_commandName) {
                         case "deploy":
                             d_LogEntry.setCommand(l_commandName + " Command is being executed");
@@ -668,7 +669,8 @@ public class GameEngine {
                             d_LogEntry.setMessage("Invalid command - either use deploy | advance | pass | special commands | showmap commands in ISSUE_ORDERS InternalPhase");
                             break;
                     }
-                } else {
+                }
+            }else {
                     //no armies left to deploy, so execute orders
                     System.out.println("press ENTER to continue to execute InternalPhase..");
                     d_LogEntry.setMessage("No more armies left,move to execute Phase");
@@ -676,12 +678,11 @@ public class GameEngine {
                     return d_GamePhase;
                 }
             }
-        }
 
         //EXECUTE_ORDERS InternalPhase
         //EXECUTE ORDERS : execute, showmap
         else if (d_GamePhase.equals(InternalPhase.EXECUTE_ORDERS)) {
-            d_LogEntry.setMessage("In Ecxecute Orders Phase:");
+            d_LogEntry.setMessage("In Execute Orders Phase:");
             switch (l_commandName) {
                 case "execute":
                     d_LogEntry.setCommand(l_commandName+" Command is being executed");
