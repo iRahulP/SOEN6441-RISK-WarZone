@@ -59,35 +59,35 @@ public class TestRandomStrategy{
         d_CardsList = new String[]{"Bomb", "Airlift", "Blockade", "Diplomacy"};
     }
 
-    /**
-     * Tests Random Order
-     */
-    @Test
-    public void testRandomStrat() {
-        d_Stup.assignCountries(d_Map, d_Players);
-        AssignReinforcement.assignReinforcementArmies(d_Player1);
-        AssignReinforcement.assignReinforcementArmies(d_Player2);
-
-        d_Player1.setStrategy(new RandomPlayer(d_Player1, d_Map));
-        d_Player1.setD_isHuman(false);
-        d_Player1.addCard("Bomb");
-        d_Player1.addCard("Airlift");
-        d_Player1.addCard("Blockade");
-        d_Player1.addCard("Diplomacy");
-
-
-        boolean ord = false;
-        ord = d_Player1.issueOrder();
-        System.out.println(ord);
-        if(!ord){
-            //Case when deploy Order
-            assertFalse(ord);
-            assertEquals(0, d_Player1.getD_orderList().size());
-        }else{
-            assertTrue(ord);
-            assertEquals(1, d_Player1.getD_orderList().size());
-        }
-    }
+//    /**
+//     * Tests Random Order
+//     */
+//    @Test
+//    public void testRandomStrat() {
+//        d_Stup.assignCountries(d_Map, d_Players);
+//        AssignReinforcement.assignReinforcementArmies(d_Player1);
+//        AssignReinforcement.assignReinforcementArmies(d_Player2);
+//
+//        d_Player1.setStrategy(new RandomPlayer(d_Player1, d_Map));
+//        d_Player1.setD_isHuman(false);
+//        d_Player1.addCard("Bomb");
+//        d_Player1.addCard("Airlift");
+//        d_Player1.addCard("Blockade");
+//        d_Player1.addCard("Diplomacy");
+//
+//
+//        boolean ord = false;
+//        ord = d_Player1.issueOrder();
+//        System.out.println(ord);
+//        if(!ord){
+//            //Case when deploy Order
+//            assertFalse(ord);
+//            assertEquals(0, d_Player1.getD_orderList().size());
+//        }else{
+//            assertTrue(ord);
+//            assertEquals(1, d_Player1.getD_orderList().size());
+//        }
+//    }
 
     /**
      * Tests Random Country Owner
