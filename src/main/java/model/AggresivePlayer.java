@@ -134,6 +134,19 @@ public class AggresivePlayer extends PlayerStrategy{
             case 1:
                 //create attack Order
                 if(l_defendingCountry!=null) {
+
+                    //check if a player has Bomb card.
+                    //If yes randomly it can be used otherwise attack order takes place
+                    if(d_Player.doesCardExists("Bomb")) {
+                        Random l_randomCard = new Random();
+                        int l_value = l_randomCard.nextInt(2);
+                        if (l_value == 0) {
+                            d_Player.removeCard("Bomb");
+                            return new Bomb(d_Player, l_defendingCountry.getOwnerPlayer(), l_defendingCountry.getCountryId());
+                        }
+                        else
+                            break;
+                    }
                     return new Advance(d_Player, l_attackingCountry.getCountryId(), l_defendingCountry.getCountryId(), l_random.nextInt(l_attackingCountry.getNumberOfArmies()), d_DefendingCountry.getOwnerPlayer());
                 }
                 else
@@ -143,9 +156,20 @@ public class AggresivePlayer extends PlayerStrategy{
 
             case 2:
                 //move maximum armies from one country to strongest country
-                if(l_moveFromCountry!=null)
-                    return new Advance(d_Player,l_moveFromCountry.getCountryId(),l_attackingCountry.getCountryId(),d_maxArmies,l_attackingCountry.getOwnerPlayer());
-                else
+                if(l_moveFromCountry!=null) {
+                    //check if a player has Airlift card.
+                    //If yes randomly it can be used otherwise advance order takes place
+                    if(d_Player.doesCardExists("Airlift")) {
+                        Random l_randomCard = new Random();
+                        int l_value = l_randomCard.nextInt(2);
+                        if (l_value == 0) {
+                            d_Player.removeCard("Airlift");
+                            return new Airlift(d_Player, l_moveFromCountry.getCountryId(), l_attackingCountry.getCountryId(), d_maxArmies);
+                        } else
+                            break;
+                    }
+                    return new Advance(d_Player, l_moveFromCountry.getCountryId(), l_attackingCountry.getCountryId(), d_maxArmies, l_attackingCountry.getOwnerPlayer());
+                } else
                     return null;
         }
         return null;
