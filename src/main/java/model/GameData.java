@@ -83,6 +83,7 @@ import java.util.ArrayList;
          * @param p_mapType Domination/Conquest type map
          * @param p_gamePhase Phase the game is currently in
          * @param p_players List of players involved in the game
+         * @param p_phase determine the phase of game
          * @param p_activePlayer Player who's turn is going on
          * @param p_card Card of cards.
          */
