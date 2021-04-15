@@ -4,10 +4,7 @@ import controller.GameEngine;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Queue;
-import java.util.Random;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -115,5 +112,56 @@ public class TestRandomStrategy{
         System.out.println(d_RandomCountry.getOwnerPlayer().getPlayerName());
         assertEquals(l_targetPlayer, d_RandomCountry.getOwnerPlayer());
 
+    }
+
+    /**
+     * Tests Random Country with Armies deployed
+     */
+    @Test
+    public void testCountryWithArmies() {
+        d_Stup.assignCountries(d_Map, d_Players);
+        AssignReinforcement.assignReinforcementArmies(d_Player1);
+        AssignReinforcement.assignReinforcementArmies(d_Player2);
+
+        String d_CountryId = "pero";
+        d_DOrder = new Deploy(d_Player1,d_CountryId,d_NumberOfArmies);
+        //performed checks for owned country and allowed army units.
+        boolean l_checkOwnedCountry = d_Player1.getOwnedCountries().containsKey(d_CountryId);
+        boolean l_checkArmies = (d_Player1.getOwnedArmies() >= d_NumberOfArmies);
+
+        if(l_checkOwnedCountry && l_checkArmies){
+            d_Player1.addOrder(d_DOrder);
+            d_Player1.issue_order();
+            d_Player1.setOwnedArmies(d_Player1.getOwnedArmies()-d_NumberOfArmies);
+            System.out.println("After Deploy reinforcement Pool:"+d_Player1.getOwnedArmies());
+        }
+        else{
+            System.out.println("Country not owned by player or insufficient Army units | please pass to next player");
+        }
+
+        System.out.println(d_Player1.getD_orderList());
+        Order l_toRemove = d_Player1.next_order();
+        System.out.println("Order: " +l_toRemove+ " executed for player: "+d_Player1.getPlayerName());
+        System.out.println(d_Player1.getD_orderList());
+        l_toRemove.execute();
+        CountryDetails l_c= d_Player1.getOwnedCountries().get(d_CountryId.toLowerCase());
+        System.out.println(l_c.getNumberOfArmies());
+        //Check if num of armies deployed correctly
+        assertEquals(d_NumberOfArmies ,l_c.getNumberOfArmies());
+
+
+        CountryDetails d_RandomCountryWithArmies = null;
+        int l_maxArmies = 0, l_numArmies;
+        for (CountryDetails l_countryDetails : d_Player1.getOwnedCountries().values()) {
+            l_numArmies = l_countryDetails.getNumberOfArmies();
+            System.out.println(l_countryDetails.getCountryId());
+            if (l_numArmies > l_maxArmies) {
+                System.out.println(l_countryDetails.getNumberOfArmies());
+                System.out.println(l_countryDetails.getCountryId());
+                d_RandomCountryWithArmies = l_countryDetails;
+                break;
+            }
+        }
+        assertEquals("pero", d_RandomCountryWithArmies.getCountryId().toLowerCase());
     }
 }
