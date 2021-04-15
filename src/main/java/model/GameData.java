@@ -84,7 +84,7 @@ public class GameData extends Observable implements Serializable {
         this.d_ActivePlayer = p_activePlayer;
         this.d_Card = p_card;
         this.d_CardsDealt = p_cardsDealt;
-        this.logger = Logger.getLogger("MyLog");
+       
         try{
             FileHandler fh;
             fh = new FileHandler("src/main/resources/game/" + this.d_Map.getMapName() + ".log");
@@ -223,22 +223,6 @@ public class GameData extends Observable implements Serializable {
     }
 
     /**
-     * Gets the logger to log information.
-     * @return Logger object to log information.
-     */
-    public Logger getLogger() {
-        return logger;
-    }
-
-    /**
-     * Sets the logger to a specific logger object.
-     * @param p_logger Logger object to set to.
-     */
-    public void setLogger(Logger p_logger) {
-        this.logger = p_logger;
-    }
-
-    /**
      * Remove player
      * @param p_p PLayer to be removed.
      */
@@ -258,20 +242,5 @@ public class GameData extends Observable implements Serializable {
         d_CardsDealt = 0;
     }
 
-    /**
-     * Sets up the logger file.
-     */
-    public void setUpLogger(){
-        try{
-            FileHandler fh;
-            fh = new FileHandler("src/main/resources/game/" + this.d_Map.getMapName() + ".log");
-            this.logger.addHandler(fh);
-            SimpleFormatter formatter = new SimpleFormatter();
-            fh.setFormatter(formatter);
-        }catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 }
