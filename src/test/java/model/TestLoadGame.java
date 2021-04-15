@@ -44,7 +44,7 @@ public class TestLoadGame {
      */
     @Test
     public void testLoadGame(){
-         d_Ge.parseCommand(null, "loadgame dummygamee");
+         d_Ge.parseCommand(null, "loadgame newgames");
          
         Assert.assertEquals(InternalPhase.ISSUE_ORDERS, d_Ge.getGame().getGamePhase());
     } 
@@ -53,8 +53,8 @@ public class TestLoadGame {
      */
     @Test
     public void testLoadGame3(){
-        d_Ge.parseCommand(null, "loadgame dummygamee");
-        Assert.assertEquals("b", d_Ge.getGame().getActivePlayer().getPlayerName().toLowerCase());
+        d_Ge.parseCommand(null, "loadgame newgames");
+        Assert.assertEquals("p2", d_Ge.getGame().getActivePlayer().getPlayerName().toLowerCase());
     }
 
 }
