@@ -212,6 +212,7 @@ public class TournamentEngine extends GameEngine{
                 //AssignCountries and Reinforcements
                 assignEachPlayerReinforcements(d_Players);
                 //tournament -M demo.map -P cheater random -G 1 -D 10
+                //tournament -M dummy.map ameroki.map -P cheater aggressive -G 4 -D 30
 
 
                 for (int j = 1; j <= p_numberOfTurns; j++) {
@@ -261,14 +262,28 @@ public class TournamentEngine extends GameEngine{
                         System.out.println("Total Orders  :" + l_count);
                         //Execute Current Orders
                         while (l_count != 0) {
-                            for (Player l_p : d_Players) {
-                                Queue<Order> l_temp = l_p.getD_orderList();
-                                if (l_temp.size() > 0) {
-                                    Order l_toRemove = l_p.next_order();
+                            if (d_Players.size() == 1){
+                                Order l_toRemove = d_Players.get(0).next_order();
+                                if(l_toRemove != null){
                                     l_toRemove.execute();
                                 }
-                            }
+                                l_winner.put(l_gameNumber, d_Players.get(0).getPlayerName());
+                                break;
+                            }else{
+                                for (Player l_p : d_Players) {
+                                    Queue<Order> l_temp = l_p.getD_orderList();
+                                    if (l_temp.size() > 0) {
+                                        Order l_toRemove = l_p.next_order();
+                                        if(l_toRemove != null){
+                                            l_toRemove.execute();
+                                        }
+                                    }
+                                    if (l_p.getOwnedCountries().size() == 0) {
+                                        d_Players.remove(l_p);
+                                    }
+                                }
                             l_count--;
+                            }
                         }
 
                         //Flush Owned Cards
