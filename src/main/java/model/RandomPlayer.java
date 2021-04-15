@@ -52,7 +52,8 @@ public class RandomPlayer extends PlayerStrategy {
      */
     private CountryDetails findRandomCountry() {
         Object[] values = d_Player.getOwnedCountries().values().toArray();
-        Object randomValue = values[rand.nextInt(values.length)];
+        int totalC = values.length - 1;
+        Object randomValue = values[rand.nextInt(totalC + 1)];
         d_RandomCountry = (CountryDetails) randomValue;
         return d_RandomCountry;
     }
