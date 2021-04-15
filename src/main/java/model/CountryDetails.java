@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
@@ -9,7 +10,7 @@ import java.util.HashMap;
  * @author Shravya
  *
  */
-public class CountryDetails {
+public class CountryDetails  implements Serializable {
 
 	private int d_Index;
 	private String d_CountryId;

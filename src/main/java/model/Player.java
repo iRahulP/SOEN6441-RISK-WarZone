@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -7,7 +8,7 @@ import java.util.*;
  *
  * @author Aarthi
  */
-public class Player {
+public class Player  implements Serializable{
 
     private String d_PlayerName;
     private HashMap<String, Continent> d_OwnedContinents;

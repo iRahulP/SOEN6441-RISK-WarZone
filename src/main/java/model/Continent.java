@@ -1,6 +1,7 @@
 package model;
 
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
@@ -11,7 +12,7 @@ import java.util.HashMap;
  *
  * @author Aarthi
  */
-public class Continent {
+public class Continent  implements Serializable {
 
     private int d_ControlValue;
     private String d_ContinentColor;
