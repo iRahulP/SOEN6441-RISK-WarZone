@@ -9,8 +9,17 @@ import java.io.Serializable;
  */
 public class Deploy implements Order,Serializable {
 
+	/**
+	 * d_NumArmies number of the armies
+	 */
     private int d_NumArmies;
+    /**
+     * d_CountryId Id of the country
+     */
     private String d_CountryId;
+    /**
+     * d_Player player
+     */
     private Player d_Player;
 
     /**
