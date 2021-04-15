@@ -33,7 +33,6 @@ public class BenevolentPlayer extends PlayerStrategy{
     private CountryDetails findWeakestCountryDetails() {
         Collection<CountryDetails> l_countries=d_Player.getOwnedCountries().values();
         int l_minArmies = 100;
-        //d_WeakCountry =null;
         for(CountryDetails l_countryDetails : l_countries) {
             int l_numArmies = l_countryDetails.getNumberOfArmies();
             if( l_numArmies < l_minArmies) {
@@ -47,21 +46,6 @@ public class BenevolentPlayer extends PlayerStrategy{
         }
         return d_WeakCountry;
     }
-/*
-    private CountryDetails findInitialCountry() {
-        for(CountryDetails l_country : this.d_Player.getOwnedCountries().values())
-        {
-            for (CountryDetails l_neighborCountry : l_country.getNeighbours().values()) {
-                if(!this.d_Player.getOwnedCountries().containsKey(l_neighborCountry)){
-                    d_InitialCountry = l_country;
-                    return d_InitialCountry;
-                }
-            }
-        }
-        return d_InitialCountry;
-    }
-
- */
 
     /**
      * This function returns the source country from which
@@ -70,21 +54,17 @@ public class BenevolentPlayer extends PlayerStrategy{
      */
     @Override
     protected CountryDetails toMoveFrom() {
-        //findInitialCountry();
         d_SourceCountry=null;
 
         Object[] values = d_Player.getOwnedCountries().values().toArray();
         Object randomValue = values[random.nextInt(values.length)];
         d_SourceCountry = (CountryDetails) randomValue;
-        //return d_SourceCountry;
 
         if(d_SourceCountry!=null){
             return d_SourceCountry;
         } else{
             return null;
         }
-
-
     }
 
     /**
