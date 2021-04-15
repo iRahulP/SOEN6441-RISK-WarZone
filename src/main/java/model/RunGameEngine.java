@@ -347,6 +347,7 @@ public class RunGameEngine {
      * Saves risk game.
      * @param p_game Represents the state of the game.
      * @param p_fileName Name of the file saving the game.
+     * @return true boolean value. 
      */
     public boolean saveGame(GameData  p_game, String p_fileName){
         GameDataBuilder l_gameDataBuilder = new GameDataBuilder();

@@ -17,6 +17,7 @@ public class TournamentEngine extends GameEngine{
 
     /**
      * Creates a tournament engine object.
+     * @param p_Ge is object of gameEngine
      */
     public TournamentEngine(GameEngine p_Ge){
         super();
