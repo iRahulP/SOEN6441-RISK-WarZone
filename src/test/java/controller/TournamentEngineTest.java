@@ -1,7 +1,5 @@
 package controller;
 
-import controller.GameEngine;
-import controller.TournamentEngine;
 import model.GameData;
 import model.StartUp;
 import org.junit.Assert;
@@ -71,9 +69,6 @@ public class TournamentEngineTest {
 
         message = d_Te.parse(null, "tournament -M dummy.map ameroki.map -P benevolent random  -G 3 -D 55");
         Assert.assertEquals("Comand has to be in form of 'tournament -M listofmapfiles -P listofplayerstrategies -G numberofgames -D maxnumberofturns'", message);
-
-        message = d_Te.parse(null, "tournament -M dummy.map ameroki.map -P benevolent random  -G 3 -D 15");
-        Assert.assertEquals("success", message);
     }
 
 
