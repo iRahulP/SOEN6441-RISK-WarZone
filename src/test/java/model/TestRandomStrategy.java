@@ -164,4 +164,25 @@ public class TestRandomStrategy{
         }
         assertEquals("pero", d_RandomCountryWithArmies.getCountryId().toLowerCase());
     }
+
+
+    /**
+     * Tests Random Country which is unbound to random Generation
+     */
+    @Test
+    public void testRandomCountry() {
+        d_Stup.assignCountries(d_Map, d_Players);
+        AssignReinforcement.assignReinforcementArmies(d_Player1);
+        AssignReinforcement.assignReinforcementArmies(d_Player2);
+
+        Random rand = new Random();
+        Object[] values = d_Player1.getOwnedCountries().values().toArray();
+        int totalC = values.length - 1;
+        Object randomValue = values[rand.nextInt(totalC + 1)];
+        CountryDetails d_RandomCountry = (CountryDetails) randomValue;
+        System.out.println(d_RandomCountry);
+
+        assertNotEquals(null,d_RandomCountry);
+    }
+
 }
