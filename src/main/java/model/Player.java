@@ -10,14 +10,41 @@ import java.util.*;
  */
 public class Player  implements Serializable{
 
+	/**
+	 * d_PlayerName name of player
+	 */
     private String d_PlayerName;
+    /**
+     * d_OwnedContinents hold the continent owned by player
+     */
     private HashMap<String, Continent> d_OwnedContinents;
+    /**
+     * d_OwnedCountries hold the countries owned by player
+     */
     private HashMap<String, CountryDetails> d_OwnedCountries;
+    /**
+     * d_OwnedArmies represent the armied owned by player
+     */
     private int d_OwnedArmies;
+    /**
+     * d_ReinforcementArmies determine reinforcement armies
+     */
     private int d_ReinforcementArmies;
+    /**
+     * d_CountryId ID of the country
+     */
     private String d_CountryId;
+    /**
+     * d_Order reference for order
+     */
     private Order d_Order;
+    /**
+     * d_OrderList maintain the lis of order
+     */
     private Queue<Order> d_OrderList;
+    /**
+     * d_isHuman check whether the player type is human or not
+     */
     private boolean d_isHuman;
 
     /**
