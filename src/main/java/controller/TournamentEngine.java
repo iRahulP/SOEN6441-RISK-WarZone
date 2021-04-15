@@ -277,13 +277,13 @@ public class TournamentEngine extends GameEngine{
                         }
 
                         //check if any player needs to be removed as of losing all territories
-                        for (Player l_p : d_Players) {
-                            if (l_p.getOwnedCountries().size() == 0) {
-                                System.out.println(l_p.getPlayerName() + " has lost all its territories and is no longer part of the game");
-                                d_LogEntry.setMessage(l_p.getPlayerName() + " has lost all its territories and is no longer part of the game");
-                                d_Players.remove(l_p);
-                            }
-                        }
+//                        for (Player l_p : d_Players) {
+//                            if (l_p.getOwnedCountries().size() == 0) {
+//                                System.out.println(l_p.getPlayerName() + " has lost all its territories and is no longer part of the game");
+//                                d_LogEntry.setMessage(l_p.getPlayerName() + " has lost all its territories and is no longer part of the game");
+//                                d_Players.remove(l_p);
+//                            }
+//                        }
 
                         assignEachPlayerReinforcements(d_Players);
 
@@ -305,11 +305,14 @@ public class TournamentEngine extends GameEngine{
                         d_LogEntry.setMessage(l_p.getPlayerName() + " has Won the Game!");
                         l_winner.put(l_gameNumber, l_p.getPlayerName());
                         break;
+                    }else{
+                        l_winner.put(l_gameNumber, "Draw");
+                        break;
                     }
                 }
                 //Case when all Turns ended and no Winner was returned
                 //Need to ref some Boolean here or will always draw
-                l_winner.put(l_gameNumber, "Draw");
+                //l_winner.put(l_gameNumber, "Draw");
             }
         }
         //return winner;
