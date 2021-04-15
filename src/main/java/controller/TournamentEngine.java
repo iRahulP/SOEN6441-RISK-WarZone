@@ -411,8 +411,8 @@ public class TournamentEngine extends GameEngine{
      * @param p_Players  GameEngine ref from main to get track of players
      */
     public void assignEachPlayerReinforcements(ArrayList<Player> p_Players){
-        for(Player p: p_Players) {
-            AssignReinforcement.assignReinforcementArmies(p);
+        for(Player l_p: p_Players) {
+            AssignReinforcement.assignReinforcementArmies(l_p);
         }
     }
 }
