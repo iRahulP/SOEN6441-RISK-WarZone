@@ -191,29 +191,18 @@ public class RandomPlayer extends PlayerStrategy {
     @Override
     public Order createOrder() {
         l_attackingCountry = toAttackFrom();
-        //System.out.println(l_attackingCountry);
         l_defendingCountry = toAttack(l_attackingCountry);
-        //System.out.println(l_defendingCountry);
         l_advanceCountry = toAdvance(l_attackingCountry);
-        //System.out.println(targetCountryNeighbour(l_attackingCountry));
 
-        //Random value from 0-6
         int rndOrder = rand.nextInt(7);
-        //Gets Armies owned
         int rnd_num_of_armies_pool = d_Player.getOwnedArmies();
-        //issues random Order
         switch (rndOrder) {
             case (0):
-                //System.out.println("Issuing Deploy");
-                //int randArmies = rand.nextInt(rnd_num_of_armies_pool);
-                //allowing Random Player to deploy all armies from pool
                 if(d_Player.getOwnedArmies() != 0) {
-                    //System.out.println(d_Player.getOwnedArmies());
-                    //int randArmies = rand.nextInt(rnd_num_of_armies_pool);
-                    //Total owned -
                     d_Player.setOwnedArmies(0);
-                    if(findRandomCountry() != null){
-                        return new Deploy(d_Player, findRandomCountry().getCountryId(), rnd_num_of_armies_pool);
+                    CountryDetails ex = findRandomCountry();
+                    if(ex != null){
+                        return new Deploy(d_Player, ex.getCountryId(), rnd_num_of_armies_pool);
                     }else
                         return null;
                 }else{
@@ -222,7 +211,6 @@ public class RandomPlayer extends PlayerStrategy {
 
 
             case (1):
-                //System.out.println("Issuing Attack");
                 if (l_defendingCountry != null)
                     return new Advance(d_Player, l_attackingCountry.getCountryId(), l_defendingCountry.getCountryId(), rand.nextInt(l_attackingCountry.getNumberOfArmies()), l_defendingCountry.getOwnerPlayer());
                 else
@@ -231,7 +219,6 @@ public class RandomPlayer extends PlayerStrategy {
 
 
             case (2):
-                //System.out.println("Issuing Advance");
                 if (l_advanceCountry != null)
                     return new Advance(d_Player, l_attackingCountry.getCountryId(), l_advanceCountry.getCountryId(), rand.nextInt(l_attackingCountry.getNumberOfArmies()), l_advanceCountry.getOwnerPlayer());
                 else
@@ -240,7 +227,6 @@ public class RandomPlayer extends PlayerStrategy {
 
 
             case (3):
-                //System.out.println("Issuing Blockade");
                 if (d_Player.doesCardExists("Blockade")) {
                     d_Player.removeCard("Blockade");
                     return new Blockade(d_Player, findRandomCountry().getCountryId());
@@ -250,7 +236,6 @@ public class RandomPlayer extends PlayerStrategy {
 
 
             case (4):
-                //System.out.println("Issuing Airlift");
                 CountryDetails findOther = findOtherRandomCountry();
                 if (d_Player.doesCardExists("Airlift") && l_attackingCountry!= null && findOther != null) {
                     d_Player.removeCard("Airlift");
@@ -261,7 +246,6 @@ public class RandomPlayer extends PlayerStrategy {
 
 
             case (5):
-                //System.out.println("Issuing Negotiaite");
                 if (d_Player.doesCardExists("Diplomacy")) {
                     d_Player.removeCard("Diplomacy");
                     return new Diplomacy(d_Player, getRandomPlayer());
@@ -271,7 +255,6 @@ public class RandomPlayer extends PlayerStrategy {
 
 
             default:
-                //System.out.println("Issuing Bomb");
                 CountryDetails tmp = targetCountryNeighbour(l_attackingCountry);
                 if (d_Player.doesCardExists("Bomb") && l_attackingCountry != null && tmp != null) {
                     d_Player.removeCard("Bomb");
