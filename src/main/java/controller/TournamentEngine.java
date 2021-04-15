@@ -21,8 +21,6 @@ public class TournamentEngine extends GameEngine{
      */
     public TournamentEngine(GameEngine p_Ge){
         super();
-        d_Game = new GameData();
-        d_RunG = new RunGameEngine();
         d_StartUp = new StartUp(p_Ge);
     }
 
@@ -169,11 +167,15 @@ public class TournamentEngine extends GameEngine{
         HashMap<Integer, String> winner = new HashMap<Integer, String>();
         //Start playing on each map
         for(String mapName : mapFiles) {
+            System.out.println("Playing on :"+mapName);
             //Start playing each game
-            d_Ge = new GameEngine();
             for (int i = 1; i <= numberOfGames; i++) {
                 gameNumber++;
-
+                System.out.println("Playing Game :"+gameNumber);
+                d_Ge = new GameEngine();
+                d_Game = new GameData();
+                d_RunG = new RunGameEngine();
+                d_StartUp = new StartUp(d_Ge);
                 //load the map
                 d_Map = d_RunG.loadMap(mapName);
                 //Create player objects
@@ -294,6 +296,15 @@ public class TournamentEngine extends GameEngine{
                                 break;
                             }
                         }
+                    }
+                }
+                //Check if any Player Won
+                for (Player l_p : d_Players) {
+                    if (l_p.getOwnedCountries().size() == d_Map.getCountries().size()) {
+                        System.out.println(l_p.getPlayerName() + " has Won the Game!");
+                        d_LogEntry.setMessage(l_p.getPlayerName() + " has Won the Game!");
+                        winner.put(gameNumber, l_p.getPlayerName());
+                        break;
                     }
                 }
                 //Case when all Turns ended and no Winner was returned

@@ -29,21 +29,19 @@ public class Bomb implements Order{
     @Override
     public boolean execute() {
         //Check if Source player negotiating target Player
-        if(d_CPlayer.d_NegotiateList.contains(d_Player)){
-            System.out.println(d_CPlayer.getPlayerName()+" has negotiated "+d_Player.getPlayerName());
+        if (d_CPlayer.d_NegotiateList.contains(d_Player)) {
+            System.out.println(d_CPlayer.getPlayerName() + " has negotiated " + d_Player.getPlayerName());
             //skip execute
             return false;
         }
-        CountryDetails l_c= d_Player.getOwnedCountries().get(d_CountryId.toLowerCase());
-        int l_existingArmies = l_c.getNumberOfArmies();
-        double armies = Double.valueOf(l_existingArmies / 2);
-        l_c.setNumberOfArmies((int)armies);
-
-//        if(l_c.getNumberOfArmies() == 0){
-//            //set territory as neutral
-//            d_Player.getOwnedCountries().remove(l_c.getCountryId().toLowerCase());
-//        }
-        return true;
+        CountryDetails l_c = d_Player.getOwnedCountries().get(d_CountryId.toLowerCase());
+        if (l_c != null) {
+            int l_existingArmies = l_c.getNumberOfArmies();
+            double armies = Double.valueOf(l_existingArmies / 2);
+            l_c.setNumberOfArmies((int) armies);
+            return true;
+        }
+    return false;
     }
 
     /**
