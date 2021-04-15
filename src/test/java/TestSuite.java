@@ -38,8 +38,9 @@ import org.junit.runners.Suite;
         TournamentEngineTest.class,
         TestRandomStrategy.class,
         TestBenevolentPlayer.class,
-        TestSaveGame.class,
-        TestCheaterPlayer.class
+        TestCheaterPlayer.class,
+        TestSaveGame.class
+        
 })
 
 /**
