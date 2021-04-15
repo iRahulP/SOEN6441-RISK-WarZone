@@ -3,9 +3,12 @@ package model;
 import controller.GameEngine;
 import org.junit.*;
 import java.util.*;
-
 import static org.junit.Assert.*;
 
+/**
+ * Tests benevolent order for non-human player
+ * @author Shravya
+ */
 public class TestBenevolentPlayer {
     Order d_DOrder;
     Queue<Order> d_OrderList;
@@ -32,24 +35,29 @@ public class TestBenevolentPlayer {
         d_Rge = new RunGameEngine();
         d_Stup = new StartUp(d_Ge);
         d_Map = d_Rge.loadMap("dummy.map");
-        d_SourceCountry = "India";
-        d_WeakCountry = "India";
+        d_SourceCountry = "japan";
+        d_WeakCountry = "south_afrori";
         d_Players = new ArrayList<Player>();
         d_Players.add(d_Player1);
         d_Players.add(d_Player2);
+        d_Player1.setOwnedArmies(3);
+        d_Player2.setOwnedArmies(4);
         d_GamePhase = InternalPhase.ISSUE_ORDERS;
         l_checkOwnedCountry = true;
-        d_DOrder = new Deploy(d_Player1,d_SourceCountry,d_NumberOfArmies);
+        d_DOrder = new Deploy(d_Player1,d_WeakCountry,d_NumberOfArmies);
         d_OrderList = new ArrayDeque<>();
     }
 
+    /**
+     * Test benevolent order
+     */
     @Test
     public void testBenevolentStart(){
         d_Stup.assignCountries(d_Map, d_Players);
         AssignReinforcement.assignReinforcementArmies(d_Player1);
         AssignReinforcement.assignReinforcementArmies(d_Player2);
 
-        d_Player1.setStrategy(new RandomPlayer(d_Player1, d_Map));
+        d_Player1.setStrategy(new BenevolentPlayer(d_Player1, d_Map));
         d_Player1.setD_isHuman(false);
 
         boolean ord = false;
@@ -64,4 +72,5 @@ public class TestBenevolentPlayer {
             assertEquals(1, d_Player1.getD_orderList().size());
         }
     }
+
 }
