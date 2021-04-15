@@ -84,8 +84,14 @@ public class GameEngine {
      * Store the active player
      */
     public Player d_ActivePlayer;
-
-    MainPlay d_MainPlay;
+    /**
+     * Store Mainplay object
+     */
+    public MainPlay d_MainPlay;
+    /**
+     * Stores Phase name
+     */
+    public String d_PhaseName;
     /**
      * Initializes the variables and objects required to play the game and act on user commands
      */
@@ -118,11 +124,15 @@ public class GameEngine {
       d_Play = new PlayRisk();
       d_LogEntry = new LogEntryBuffer();
       d_WriteLog = new WriteLogEntry();
+      d_PhaseName= p_gameData.getD_PhaseName();
+
+      if(d_PhaseName.equals("MainPlay")) {
+          d_MainPlay = new MainPlay(this);
+          d_Phase = d_MainPlay;
+      } else
       d_Phase=p_gameData.getD_Phase();
-    this.d_Game= new GameData(d_Map,"domination", d_GamePhase,d_Phase, d_Players, d_ActivePlayer, d_Card);
 
-
-      d_MainPlay = new MainPlay(this);
+      this.d_Game= new GameData(d_Map,"domination", d_GamePhase,d_Phase, d_Players, d_ActivePlayer, d_Card,d_PhaseName);
       System.out.println(d_Game);
       d_LogEntry.attach(d_WriteLog);
       System.out.println("gamengine hellos");
@@ -223,8 +233,9 @@ public class GameEngine {
     	this.d_Game.setD_Phase(d_Phase);
     	this.d_Game.setPlayers(d_Players);
     	this.d_Game.setMapType("domination");
-    	this.d_Game.setCardsDealt(load);	
-    	d_Game = new GameData(d_Map,"domination", d_GamePhase,d_Phase, d_Players, d_ActivePlayer, d_Card);
+    	this.d_Game.setCardsDealt(load);
+    	this.d_Game.setD_PhaseName(d_Phase.getD_PhaseName());
+    	d_Game = new GameData(d_Map,"domination", d_GamePhase,d_Phase, d_Players, d_ActivePlayer, d_Card,d_Phase.getD_PhaseName());
     }
     /**
      * Returns the game state.
