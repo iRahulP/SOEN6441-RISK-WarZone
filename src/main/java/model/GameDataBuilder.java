@@ -49,6 +49,10 @@ public class GameDataBuilder implements Serializable {
     private int d_CardsDealt;
 
     /**
+     * Stores the name of the Phase
+     */
+    private String d_PhaseName;
+    /**
      * Set the game map with the input argument.
      * @param p_map map to set as the game map.
      * @return GameDataBuilder object
@@ -128,11 +132,21 @@ public class GameDataBuilder implements Serializable {
     }
 
     /**
+     * Stores the current phase name
+     * @param p_phaseName phase name
+     * @return GameDataBuilder object
+     */
+    public GameDataBuilder setPhaseName(String p_phaseName)
+    {
+        this.d_PhaseName = p_phaseName;
+        return this;
+    }
+    /**
      * Creates the required GameData object.
      * @return returns the newly created GameData object.
      */
     public GameData buildGameData(){
     	//System.out.println(d_Map+" "+ d_MapType+" "+ d_GamePhase+" "+ d_Players+" "+ d_ActivePlayer+" "+ d_Card+" "+d_CardsDealt);
-        return new GameData(d_Map, d_MapType, d_GamePhase,d_Phase, d_Players, d_ActivePlayer, d_Card);
+        return new GameData(d_Map, d_MapType, d_GamePhase,d_Phase, d_Players, d_ActivePlayer, d_Card,d_PhaseName);
     }
 }
