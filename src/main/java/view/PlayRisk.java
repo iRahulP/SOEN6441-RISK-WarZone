@@ -74,7 +74,7 @@ public class PlayRisk {
                                 break;
                             }
                        }
-                        System.out.println("wasup1");
+                        
                       //set controller to turn controller to continue playing the loaded game
                         
                         cmd = new GameEngine(cmd.getGame());                                                                    
@@ -126,12 +126,10 @@ public class PlayRisk {
                     
                     //Loops through all Players in Round Robin fashion collecting orders.
                     int l_numberOfPlayers = cmd.getGame().getPlayers().size();
-                   System.out.println(l_numberOfPlayers);
-                   
+                               
                     	while(true) {
                         while (traversalCounter < l_numberOfPlayers) {
-                        	System.out.println(traversalCounter);
-                            Player l_p = cmd.d_Players.get(traversalCounter);
+                        	Player l_p = cmd.d_Players.get(traversalCounter);
                             System.out.println("It's " + l_p.getPlayerName() + "'s turn");
                             System.out.println("Player " + l_p.getPlayerName() + " has " + l_p.getOwnedArmies() + " Army units currently!");
                             //listen orders from players - deploy | pass
