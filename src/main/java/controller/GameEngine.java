@@ -70,6 +70,7 @@ public class GameEngine {
     public GameData d_Game;
     public GameEngine d_Ge;
     public StartUp d_StartUp;
+    public static int load=0;
     /**
      * Initializes the variables and objects required to play the game and act on user commands
      */
@@ -86,7 +87,21 @@ public class GameEngine {
         d_Game= new GameData();
         d_LogEntry.attach(d_WriteLog);
     }
-
+  public GameEngine(GameData p_gameData) {
+	  d_Map = p_gameData.getMap();
+      d_RunG = new RunGameEngine();
+      //d_StartUp = new StartUp(d_Ge);
+      d_Arfc = new AssignReinforcement();
+      d_Players = p_gameData.getPlayers();
+      d_GamePhase = p_gameData.getGamePhase();
+      d_Play = new PlayRisk();
+      d_LogEntry = new LogEntryBuffer();
+      d_WriteLog = new WriteLogEntry();
+      this.d_Game= p_gameData;
+      System.out.println(d_Game);
+      d_LogEntry.attach(d_WriteLog);
+      System.out.println("gamengine hellos");
+  }
     /**
      * Ensures map name is valid.
      * @param p_sample input string
@@ -145,7 +160,7 @@ public class GameEngine {
      * Creates a game data object.
      * @param p_gameDataBuilder Helps build GameData object.
      */
-    public void createGameData(GameDataBuilder p_gameDataBuilder){
+    public void createGameData(GameDataBuilder p_gameDataBuilder){      	
         this.d_Game = p_gameDataBuilder.buildGameData();
     }
     /**
@@ -163,7 +178,9 @@ public class GameEngine {
      * @param p_newCommand Command to be interpreted
      * @return next game InternalPhase
      */
+   
     public InternalPhase parseCommand(Player p_player, String p_newCommand) {
+    	
         int l_controlValue = 0;
         int l_numberOfArmies = 0;
         String l_mapName = null;
@@ -179,7 +196,9 @@ public class GameEngine {
         String[] l_data = p_newCommand.split("\\s+");
         String l_commandName = l_data[0];
         String l_fileName;
-
+    	
+    	
+    	
         //initial command line commands
         //NULL : editmap / loadmap
         if (d_GamePhase.equals(InternalPhase.NULL)) {
@@ -195,6 +214,8 @@ public class GameEngine {
                             createGameData(l_gameDataBuilder);
                             System.out.println("Loaded successfully");
                             d_LogEntry.setMessage("Game loaded successfully.");
+                            load=1;
+                            
                         }
                         //method call for load game and parse this filename as argument
                     }else{
@@ -635,10 +656,15 @@ public class GameEngine {
                                 if (l_data.length == 2) {
                                     if (isAlphabetic(l_data[1])) {
                                         String fileName = l_data[1];
-                                        d_RunG.saveGame(this.d_Game, fileName);
+                                        boolean l_save=d_RunG.saveGame(this.d_Game, fileName);
+                                        if(l_save) {
                                         System.out.println("current Game saved is saved ");
                                         d_LogEntry.setMessage("current Game saved is saved");
-                                    }
+                                        }else {
+                                        	 System.out.println("current Game saved is not saved  ");
+                                             d_LogEntry.setMessage("current Game saved is not saved");
+                                        }
+                                        }
                                 } else {
                                     String message = "Invalid command. enter file name to save a game.";
                                     d_LogEntry.setMessage("Invalid command. enter file name to save a game.");
@@ -763,9 +789,10 @@ public class GameEngine {
                     break;
             }
         }
-        return d_GamePhase;
+        
+    	
+    	return d_GamePhase;
     }
-
     /**
      * Gets Player Name of Current player
      * @param p_playerName player object

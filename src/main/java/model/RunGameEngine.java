@@ -348,7 +348,7 @@ public class RunGameEngine {
      * @param p_game Represents the state of the game.
      * @param p_fileName Name of the file saving the game.
      */
-    public void saveGame(GameData  p_game, String p_fileName){
+    public boolean saveGame(GameData  p_game, String p_fileName){
         GameDataBuilder l_gameDataBuilder = new GameDataBuilder();
         l_gameDataBuilder.setMap(p_game.getMap());
         l_gameDataBuilder.setMapType(p_game.getMapType());
@@ -367,6 +367,7 @@ public class RunGameEngine {
         } catch(IOException e) {
             e.printStackTrace();
         }
+        return true;
     }
     /**
      * Loads risk game.
@@ -374,11 +375,12 @@ public class RunGameEngine {
      * @return GameDataBuilder object to build GameData object.
      */
     public GameDataBuilder loadGame(String p_fileName){
-        GameDataBuilder l_gameDataBuilder;
+        GameDataBuilder l_gameDataBuilder=new GameDataBuilder();
         try{
         	 FileInputStream l_f = new FileInputStream((new File("src/main/resources/game/" + p_fileName)));
              ObjectInputStream l_o = new ObjectInputStream((l_f));
              l_gameDataBuilder = (GameDataBuilder) l_o.readObject();
+             
         } catch(FileNotFoundException e){
             return null;
         } catch(IOException e) {

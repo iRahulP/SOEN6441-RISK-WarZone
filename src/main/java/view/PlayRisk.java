@@ -32,9 +32,10 @@ public class PlayRisk {
           //initial command reader from cli
           String l_cmd;
           String message;
-          int traversalCounter;
+          int traversalCounter = 0;
           InternalPhase l_gamePhase = InternalPhase.NULL;
           GameEngine cmd = new GameEngine();
+          //GameEngine lcmd ;
           PlayRisk game = new PlayRisk();
           TournamentEngine tEngine;
 
@@ -61,23 +62,28 @@ public class PlayRisk {
                         game.printSavedGames();
                         do {
                             l_cmd = sc.nextLine();
-                            cmd.parseCommand(null, l_cmd);
+                            l_gamePhase = cmd.parseCommand(null, l_cmd);
                             System.out.println("!11");
                         } while (cmd.parseCommand(null, l_cmd).equals("Loaded successfully"));
 
                         System.out.println("heeeellllo");
                         //set traversal counter by finding appropriate player
-                        traversalCounter = -1;
+                        traversalCounter = 0;
+                        System.out.println(cmd.getGame().getPlayers());
                         for (Player player1 : cmd.getGame().getPlayers()) {
+                        	
                             traversalCounter++;
+                            System.out.println(traversalCounter);
                             if (player1 == cmd.getGame().getActivePlayer()) {
                                 break;
                             }
-                        }
+                       }
                         System.out.println("wasup1");
-                        //set controller to turn controller to continue playing the loaded game
-                        cmd = new GameEngine();
-
+                      //set controller to turn controller to continue playing the loaded game
+                        
+                        cmd = new GameEngine(cmd.getGame());                        
+                                                
+                        
                     } else if (l_cmd.equals("2")) {
 
 
@@ -125,8 +131,42 @@ public class PlayRisk {
                             cmd.setGamePhase(l_gamePhase);
                             l_traversalCounter = 0;
                         }
+                    }else {
+                    	System.out.println("invalid command, Enter 1 to load game and enter 2 to load maps.");
                     }
-                }
+                    
+                    //Loops through all Players in Round Robin fashion collecting orders.
+                    int l_numberOfPlayers = cmd.getGame().getPlayers().size();
+                   System.out.println(l_numberOfPlayers);
+                   System.out.println("aaaaaaaaaa");
+                    
+                    	System.out.println("bbbbbbbbbbb");
+                        while (traversalCounter < l_numberOfPlayers) {
+                        	System.out.println(traversalCounter);
+                        	System.out.println("bbbbbbbbbbb");
+                            Player l_p = cmd.d_Players.get(traversalCounter);
+                            System.out.println("It's " + l_p.getPlayerName() + "'s turn");
+                            System.out.println("Player " + l_p.getPlayerName() + " has " + l_p.getOwnedArmies() + " Army units currently!");
+                            //listen orders from players - deploy | pass
+                            l_gamePhase = InternalPhase.ISSUE_ORDERS;
+                            cmd.setGamePhase(l_gamePhase);
+                            while (l_gamePhase != InternalPhase.TURN) {
+                                //System.out.println(l_p.getD_isHuman());
+                                if (l_p.getD_isHuman()) {
+                                    l_cmd = sc.nextLine();
+                                    l_gamePhase = cmd.parseCommand(l_p, l_cmd);
+                                } else {
+                                    l_gamePhase = cmd.parseCommand(l_p, "");
+                                }
+                            }
+                            //gets to next Player
+                            traversalCounter++;
+                        }
+                        l_gamePhase = InternalPhase.ISSUE_ORDERS;
+                        cmd.setGamePhase(l_gamePhase);
+                        traversalCounter = 0;
+                    }
+                
             } else if (l_cmd.equals("2")) {
                 //tournament mode
                 tEngine = new TournamentEngine(cmd);
