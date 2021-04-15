@@ -188,7 +188,10 @@ public class AggresivePlayer extends PlayerStrategy{
                             break;
                     }
                     int l_randomVal;
-                    l_randomVal = l_random.nextInt(l_attackingCountry.getNumberOfArmies());
+                    if(l_attackingCountry.getNumberOfArmies() > 0)
+                        l_randomVal = l_random.nextInt(l_attackingCountry.getNumberOfArmies());
+                    else
+                        return null;
                     if(l_randomVal!=0)
                         return new Advance(d_Player, l_attackingCountry.getCountryId(), l_defendingCountry.getCountryId(),l_randomVal , d_DefendingCountry.getOwnerPlayer());
                     else
