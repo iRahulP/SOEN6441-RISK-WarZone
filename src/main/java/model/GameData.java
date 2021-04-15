@@ -76,19 +76,18 @@ public class GameData extends Observable implements Serializable {
      * @param p_card Card of cards.
      * @param p_cardsDealt Number of cards dealt till now
      */
-    public GameData(GameMap p_map, String p_mapType, InternalPhase p_gamePhase, ArrayList<Player> p_players, Player p_activePlayer, Card p_card, int p_cardsDealt){
+    public GameData(GameMap p_map, String p_mapType, InternalPhase p_gamePhase, ArrayList<Player> p_players, Player p_activePlayer, Card p_card){
         this.d_Map = p_map;
         this.d_MapType = p_mapType;
         this.d_GamePhase = p_gamePhase;
         this.d_Players = p_players;
         this.d_ActivePlayer = p_activePlayer;
         this.d_Card = p_card;
-        this.d_CardsDealt = p_cardsDealt;
+       // this.d_CardsDealt = p_cardsDealt;
        
         try{
             FileHandler fh;
             fh = new FileHandler("src/main/resources/game/" + this.d_Map.getMapName() + ".log");
-            this.logger.addHandler(fh);
             SimpleFormatter formatter = new SimpleFormatter();
             fh.setFormatter(formatter);
         }catch (SecurityException e) {
@@ -146,10 +145,10 @@ public class GameData extends Observable implements Serializable {
 
         this.d_GamePhase = p_gamePhase;
         if(this.d_GamePhase==InternalPhase.ASSIGN_REINFORCEMENTS){
-            this.logger.info(this.d_ActivePlayer.getPlayerName() + "'s reinforcement phase");
+            System.out.println(this.d_ActivePlayer.getPlayerName() + "'s reinforcement phase");
             notifyObservers(this);
         } else if (this.d_GamePhase == InternalPhase.ISSUE_ORDERS) {
-            this.logger.info(this.d_ActivePlayer.getPlayerName() + "'s Issue order phase");
+        	System.out.println(this.d_ActivePlayer.getPlayerName() + "'s Issue order phase");
             notifyObservers(this);
         }
     }
@@ -185,7 +184,6 @@ public class GameData extends Observable implements Serializable {
    public void setActivePlayer(Player p_player){
         this.d_ActivePlayer = p_player;
         if(p_player!=null){
-            this.logger.info("Active player: " + p_player.getPlayerName() + "\n");
             notifyObservers(this);
         }
    }
@@ -241,6 +239,4 @@ public class GameData extends Observable implements Serializable {
         d_Card = new Card();
         d_CardsDealt = 0;
     }
-
-
 }

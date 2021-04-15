@@ -119,6 +119,6 @@ public class GameDataBuilder implements Serializable {
      */
     public GameData buildGameData(){
     	System.out.println(d_Map+" "+ d_MapType+" "+ d_GamePhase+" "+ d_Players+" "+ d_ActivePlayer+" "+ d_Card+" "+d_CardsDealt);
-        return new GameData(d_Map, d_MapType, d_GamePhase, d_Players, d_ActivePlayer, d_Card, d_CardsDealt);
+        return new GameData(d_Map, d_MapType, d_GamePhase, d_Players, d_ActivePlayer, d_Card);
     }
 }

@@ -1,11 +1,13 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * Class containing logic for implementation of deploy order
  * @author Rahul
  *
  */
-public class Deploy implements Order{
+public class Deploy implements Order,Serializable {
 
     private int d_NumArmies;
     private String d_CountryId;

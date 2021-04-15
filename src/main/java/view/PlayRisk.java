@@ -111,6 +111,7 @@ public class PlayRisk {
                             while (l_traversalCounter < l_numberOfPlayers) {
                                 Player l_p = cmd.d_Players.get(l_traversalCounter);
                                 System.out.println("It's " + l_p.getPlayerName() + "'s turn");
+                                cmd.setD_ActivePlayer( l_p);
                                 System.out.println("Player " + l_p.getPlayerName() + " has " + l_p.getOwnedArmies() + " Army units currently!");
                                 //listen orders from players - deploy | pass
                                 l_gamePhase = InternalPhase.ISSUE_ORDERS;
