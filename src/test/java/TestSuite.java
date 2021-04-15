@@ -1,5 +1,7 @@
 import controller.TournamentEngineTest;
 import model.*;
+import view.TestLogEntryBuffer;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

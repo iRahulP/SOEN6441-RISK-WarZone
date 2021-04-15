@@ -1,6 +1,12 @@
-package model;
+package view;
 
 import controller.GameEngine;
+import model.GameMap;
+import model.Load;
+import model.Player;
+import model.RunGameEngine;
+import model.StartUp;
+
 import org.junit.Before;
 import org.junit.Test;
 
