@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -9,7 +10,7 @@ import view.MapView;
 /**
  * Implementation of MainPlay phase of the game.
  */
-public class MainPlay extends Play{
+public class MainPlay extends Play  implements Serializable{
 
 	/**
 	 * mv Reference for MapView.

@@ -355,12 +355,10 @@ public class RunGameEngine {
         l_gameDataBuilder.setMapType(p_game.getMapType());
         l_gameDataBuilder.setGamePhase(p_game.getGamePhase());
         l_gameDataBuilder.setPlayers(p_game.getPlayers());
-        System.out.println(p_game.getPlayers());
         l_gameDataBuilder.setActivePlayer(p_game.getActivePlayer());
-        System.out.println(p_game.getActivePlayer());
         l_gameDataBuilder.setDeck(p_game.getDeck());
         l_gameDataBuilder.setCardsDealt((p_game.getCardsDealt()));
-
+        l_gameDataBuilder.setPhase(p_game.getD_Phase());
         try{
            // FileOutputStream l_f = new FileOutputStream(new File("src/main/resources/game/" + p_fileName));
             ObjectOutputStream l_o = new ObjectOutputStream(new FileOutputStream(new File("src/main/resources/game/" + p_fileName)));

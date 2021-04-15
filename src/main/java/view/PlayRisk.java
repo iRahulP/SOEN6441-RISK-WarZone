@@ -68,12 +68,11 @@ public class PlayRisk {
 
                         System.out.println("heeeellllo");
                         //set traversal counter by finding appropriate player
-                        traversalCounter = 0;
+                        traversalCounter = -1;
                         System.out.println(cmd.getGame().getPlayers());
                         for (Player player1 : cmd.getGame().getPlayers()) {
                         	
                             traversalCounter++;
-                            System.out.println(traversalCounter);
                             if (player1 == cmd.getGame().getActivePlayer()) {
                                 break;
                             }
@@ -139,12 +138,10 @@ public class PlayRisk {
                     //Loops through all Players in Round Robin fashion collecting orders.
                     int l_numberOfPlayers = cmd.getGame().getPlayers().size();
                    System.out.println(l_numberOfPlayers);
-                   System.out.println("aaaaaaaaaa");
-                    
-                    	System.out.println("bbbbbbbbbbb");
+                   
+                    	while(true) {
                         while (traversalCounter < l_numberOfPlayers) {
                         	System.out.println(traversalCounter);
-                        	System.out.println("bbbbbbbbbbb");
                             Player l_p = cmd.d_Players.get(traversalCounter);
                             System.out.println("It's " + l_p.getPlayerName() + "'s turn");
                             System.out.println("Player " + l_p.getPlayerName() + " has " + l_p.getOwnedArmies() + " Army units currently!");
@@ -167,7 +164,7 @@ public class PlayRisk {
                         cmd.setGamePhase(l_gamePhase);
                         traversalCounter = 0;
                     }
-                
+            }
             } else if (l_cmd.equals("2")) {
                 //tournament mode
                 tEngine = new TournamentEngine(cmd);

@@ -22,6 +22,11 @@ public class GameDataBuilder implements Serializable {
      * Stores the current phase of the game.
      */
     private InternalPhase d_GamePhase;
+    
+    /**
+     * Stores the current phase of the game.
+     */
+    private Phase d_Phase;
 
     /**
      * Stores the list of players playing the game.
@@ -72,6 +77,15 @@ public class GameDataBuilder implements Serializable {
         this.d_GamePhase = p_gamePhase;
         return this;
     }
+    /**
+     * Set the phase of the game with the input argument.
+     * @param p_Phase new phase of the game.
+     * @return GameDataBuilder object
+     */
+    public GameDataBuilder setPhase(Phase p_Phase) {
+        this.d_Phase = p_Phase;
+        return this;
+    }
 
     /**
      * Set the list of players.
@@ -118,7 +132,7 @@ public class GameDataBuilder implements Serializable {
      * @return returns the newly created GameData object.
      */
     public GameData buildGameData(){
-    	System.out.println(d_Map+" "+ d_MapType+" "+ d_GamePhase+" "+ d_Players+" "+ d_ActivePlayer+" "+ d_Card+" "+d_CardsDealt);
-        return new GameData(d_Map, d_MapType, d_GamePhase, d_Players, d_ActivePlayer, d_Card);
+    	//System.out.println(d_Map+" "+ d_MapType+" "+ d_GamePhase+" "+ d_Players+" "+ d_ActivePlayer+" "+ d_Card+" "+d_CardsDealt);
+        return new GameData(d_Map, d_MapType, d_GamePhase,d_Phase, d_Players, d_ActivePlayer, d_Card);
     }
 }

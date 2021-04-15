@@ -68,7 +68,7 @@ public class GameEngine {
      * Holds the data related to the game.
      */
     public GameData d_Game;
-    public GameEngine d_Ge;
+    public GameEngine d_Ge; 
     public StartUp d_StartUp;
     public static int load=0;
     public Player d_ActivePlayer;
@@ -99,7 +99,8 @@ public class GameEngine {
       d_Play = new PlayRisk();
       d_LogEntry = new LogEntryBuffer();
       d_WriteLog = new WriteLogEntry();
-      this.d_Game= new GameData(d_Map,"domination", d_GamePhase, d_Players, d_ActivePlayer, d_Card);
+      d_Phase=p_gameData.getD_Phase();
+    this.d_Game= new GameData(d_Map,"domination", d_GamePhase,d_Phase, d_Players, d_ActivePlayer, d_Card);
     
       System.out.println(d_Game);
       d_LogEntry.attach(d_WriteLog);
@@ -159,7 +160,14 @@ public class GameEngine {
     {
         d_Phase = p_Phase;
     }
-    
+    /**
+     * gets the current phase
+     * @return d_Phase is the phase that is to be set
+     */    
+    public Phase getPhase() {
+		return d_Phase;
+    	
+    }
     /**
      * gets the player that is active.
      * @return d_ActivePlayer
@@ -183,17 +191,15 @@ public class GameEngine {
     }
     public void setGame() {
     	System.out.println(d_ActivePlayer.getPlayerName());
-    	this.d_Game.setDeck(d_Card);
     	System.out.println(this.d_Game.getDeck());
-    	
-    	this.d_Game.setMap(d_Map);
     	System.out.println(this.d_Game.getMap());
     	this.d_Game.setActivePlayer(d_ActivePlayer);
     	this.d_Game.setGamePhase(d_GamePhase);
+    	this.d_Game.setD_Phase(d_Phase);
     	this.d_Game.setPlayers(d_Players);
     	this.d_Game.setMapType("domination");
     	this.d_Game.setCardsDealt(load);	
-    	d_Game = new GameData(d_Map,"domination", d_GamePhase, d_Players, d_ActivePlayer, d_Card);
+    	d_Game = new GameData(d_Map,"domination", d_GamePhase,d_Phase, d_Players, d_ActivePlayer, d_Card);
     }
     /**
      * Returns the game state.
