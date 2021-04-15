@@ -35,10 +35,8 @@ public class PlayRisk {
           int traversalCounter = 0;
           InternalPhase l_gamePhase = InternalPhase.NULL;
           GameEngine cmd = new GameEngine();
-          //GameEngine lcmd ;
           PlayRisk game = new PlayRisk();
           TournamentEngine tEngine;
-
           boolean validCommand = false;
           boolean loadGame = false;
   		
@@ -63,10 +61,9 @@ public class PlayRisk {
                         do {
                             l_cmd = sc.nextLine();
                             l_gamePhase = cmd.parseCommand(null, l_cmd);
-                            System.out.println("!11");
                         } while (cmd.parseCommand(null, l_cmd).equals("Loaded successfully"));
 
-                        System.out.println("heeeellllo");
+                        
                         //set traversal counter by finding appropriate player
                         traversalCounter = -1;
                         System.out.println(cmd.getGame().getPlayers());
@@ -80,20 +77,12 @@ public class PlayRisk {
                         System.out.println("wasup1");
                       //set controller to turn controller to continue playing the loaded game
                         
-                        cmd = new GameEngine(cmd.getGame());                        
-                                                
-                        
-                    } else if (l_cmd.equals("2")) {
-
-
+                        cmd = new GameEngine(cmd.getGame());                                                                    
+                        } else if (l_cmd.equals("2")) {
                         System.out.println("try, Selecting a map from the below mentioned sample maps or create a new one: ");
                         l_game.sampleMaps();
-//
-//        //initial command reader from cli
-//        String l_cmd;
-//        InternalPhase l_gamePhase = InternalPhase.NULL;
-//        GameEngine cmd = new GameEngine();
 
+                        //initial command reader from cli
                         //looping for commands until initial Phases where Player iteration not required!
                         while (l_gamePhase != InternalPhase.ISSUE_ORDERS) {
                             l_cmd = sc.nextLine();
