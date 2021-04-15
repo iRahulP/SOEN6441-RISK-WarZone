@@ -68,9 +68,21 @@ public class GameEngine {
      * Holds the data related to the game.
      */
     public GameData d_Game;
+    /**
+     * Reference for GameEngine
+     */
     public GameEngine d_Ge; 
+    /**
+     * Reference for StartUp
+     */
     public StartUp d_StartUp;
+    /**
+     * initializing load variable
+     */
     public static int load=0;
+    /**
+     * Store the active player
+     */
     public Player d_ActivePlayer;
     /**
      * Initializes the variables and objects required to play the game and act on user commands
@@ -89,6 +101,11 @@ public class GameEngine {
       
         d_LogEntry.attach(d_WriteLog);
     }
+    
+    /**
+     * Constructor of GameEngine to initialize with given parameter
+     * @param p_gameData Reference of gamedata class
+     */
   public GameEngine(GameData p_gameData) {
 	  d_Map = p_gameData.getMap();
       d_RunG = new RunGameEngine();
@@ -189,6 +206,10 @@ public class GameEngine {
     public void createGameData(GameDataBuilder p_gameDataBuilder){      	
         this.d_Game = p_gameDataBuilder.buildGameData();
     }
+    
+    /**
+     * Set the game state
+     */
     public void setGame() {
     	System.out.println(d_ActivePlayer.getPlayerName());
     	System.out.println(this.d_Game.getDeck());
