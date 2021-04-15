@@ -198,9 +198,18 @@ public class RandomPlayer extends PlayerStrategy {
         switch (rndOrder) {
             case (0):
                 //System.out.println("Issuing Deploy");
-                int randArmies = rand.nextInt(rnd_num_of_armies_pool);
-                d_Player.setOwnedArmies(d_Player.getOwnedArmies() - randArmies);
-                return new Deploy(d_Player, findRandomCountry().getCountryId(), randArmies);
+                //int randArmies = rand.nextInt(rnd_num_of_armies_pool);
+                //allowing Random Player to deploy all armies from pool
+                if(d_Player.getOwnedArmies() != 0) {
+                    //System.out.println(d_Player.getOwnedArmies());
+                    //int randArmies = rand.nextInt(rnd_num_of_armies_pool);
+                    //Total owned -
+                    d_Player.setOwnedArmies(0);
+                    return new Deploy(d_Player, findRandomCountry().getCountryId(), rnd_num_of_armies_pool);
+                }else{
+                    return null;
+                }
+
 
             case (1):
                 //System.out.println("Issuing Attack");
