@@ -769,11 +769,8 @@ public class GameEngine {
 
                     System.out.println("Current Orders were executed,Starting again with assigning Reinforcements!");
                     System.out.println("Reinforcements assigned! Players can provide deploy Orders now!");
-                    System.out.println("\nPlayer 1 can provide deploy | pass order..");
                     d_LogEntry.setMessage("Current Orders were executed,Starting again with assigning Reinforcements!");
                     d_LogEntry.setMessage("Reinforcements assigned! Players can provide deploy Orders now!");
-                    d_LogEntry.setMessage("\nPlayer 1 can provide deploy | pass order..");
-
                     d_GamePhase = InternalPhase.ISSUE_ORDERS;
                 }
 
@@ -839,10 +836,10 @@ public class GameEngine {
 
                         System.out.println("Current Orders were executed,Starting again with assigning Reinforcements!");
                         System.out.println("Reinforcements assigned! Players can provide deploy Orders now!");
-                        System.out.println("\nPlayer 1 can provide deploy | pass order..");
+                        System.out.println("\nnext Player can provide deploy | pass order..");
                         d_LogEntry.setMessage("Current Orders were executed,Starting again with assigning Reinforcements!");
                         d_LogEntry.setMessage("Reinforcements assigned! Players can provide deploy Orders now!");
-                        d_LogEntry.setMessage("\nPlayer 1 can provide deploy | pass order..");
+                        d_LogEntry.setMessage("\nnext Player can provide deploy | pass order..");
 
                         d_GamePhase = InternalPhase.ISSUE_ORDERS;
                     }
