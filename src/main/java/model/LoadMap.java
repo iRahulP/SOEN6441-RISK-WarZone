@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 /**
  * 
- * Class handles the functionality of loading the map.
+ * Class read the map and determine its type
  *
  */
 public class LoadMap {
@@ -20,6 +20,11 @@ public class LoadMap {
     private GameMap d_Map;
     String d_MapType;
     
+    /**
+     * Method to determine the type of the map
+     * @param p_mapName name of map
+     * @return return the type of map
+     */
     public String readMap(String p_mapName) {
         d_Map = new GameMap(p_mapName);
         try {
@@ -44,10 +49,18 @@ public class LoadMap {
         return d_MapType;
     }
     
+    /**
+     * Setter method to set the type of map
+     * @param p_mapType type of map
+     */
     public void setMapType(String p_mapType) {
     	 d_MapType = p_mapType;
     }
 
+    /**
+     * Getter method to get the type of map
+     * @return return the type of map
+     */
     public String getMapType() {
    	  return d_MapType;
    }
