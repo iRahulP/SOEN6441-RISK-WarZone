@@ -48,6 +48,12 @@ import java.util.ArrayList;
          */
         
         private Phase d_Phase;
+
+        /**
+         *Stores the current phase name
+         */
+         private String d_PhaseName;
+
         /**
          * Get the current phase of the game.
          * @return returns the current phase of the game.
@@ -87,7 +93,7 @@ import java.util.ArrayList;
          * @param p_activePlayer Player who's turn is going on
          * @param p_card Card of cards.
          */
-        public GameData(GameMap p_map, String p_mapType, InternalPhase p_gamePhase,Phase p_phase, ArrayList<Player> p_players, Player p_activePlayer, Card p_card){
+        public GameData(GameMap p_map, String p_mapType, InternalPhase p_gamePhase,Phase p_phase, ArrayList<Player> p_players, Player p_activePlayer, Card p_card,String p_phaseName){
             this.d_Map = p_map;
             this.d_MapType = p_mapType;
             this.d_GamePhase = p_gamePhase;
@@ -95,6 +101,7 @@ import java.util.ArrayList;
             this.d_Players = p_players;
             this.d_ActivePlayer = p_activePlayer;
             this.d_Card = p_card;
+            this.d_PhaseName = p_phaseName;
            // this.d_CardsDealt = p_cardsDealt;
         }
 
@@ -190,6 +197,22 @@ import java.util.ArrayList;
        }
 
         /**
+        * This function is a setter function for phasename
+        */
+        public void setD_PhaseName(String p_phaseName)
+       {
+           this.d_PhaseName = p_phaseName;
+       }
+
+       /**
+       * This function is a getter function for phaseName
+       * @return d_PhaseName
+       */
+      public String getD_PhaseName() {
+         return d_PhaseName;
+      }
+
+    /**
          * Gets the deck of card.
          * @return Returns the deck of card.
          */
@@ -228,6 +251,7 @@ import java.util.ArrayList;
         public void removePlayer(Player p_p){
             this.d_Players.remove(p_p);
         }
+
 
         /**
          * Resets the game data
