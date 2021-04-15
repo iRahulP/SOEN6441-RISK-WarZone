@@ -84,6 +84,8 @@ public class GameEngine {
      * Store the active player
      */
     public Player d_ActivePlayer;
+
+    MainPlay d_MainPlay;
     /**
      * Initializes the variables and objects required to play the game and act on user commands
      */
@@ -118,7 +120,9 @@ public class GameEngine {
       d_WriteLog = new WriteLogEntry();
       d_Phase=p_gameData.getD_Phase();
     this.d_Game= new GameData(d_Map,"domination", d_GamePhase,d_Phase, d_Players, d_ActivePlayer, d_Card);
-    
+
+
+      d_MainPlay = new MainPlay(this);
       System.out.println(d_Game);
       d_LogEntry.attach(d_WriteLog);
       System.out.println("gamengine hellos");
