@@ -178,6 +178,7 @@ public class PlayRisk {
                 validCommand = true;
             } else {
                 System.out.println("Invalid Command, Enter 1 to play single-game mode or 2 to play tournament mode.");
+                validCommand = true;
             }
         }
     }
