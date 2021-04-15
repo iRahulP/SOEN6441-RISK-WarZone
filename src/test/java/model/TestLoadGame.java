@@ -45,7 +45,17 @@ public class TestLoadGame {
     @Test
     public void testLoadGame(){
          d_Ge.parseCommand(null, "loadgame dummygamee");
+         
         Assert.assertEquals(InternalPhase.ISSUE_ORDERS, d_Ge.getGame().getGamePhase());
+    } 
+    /**
+     * Tests if valid game phase is maintained or not.
+     */
+    @Test
+    public void testLoadGame3(){
+        d_Ge.parseCommand(null, "loadgame dummygamee");
+        
+        Assert.assertEquals("b", d_Ge.getGame().getActivePlayer().getPlayerName().toLowerCase());
     }
 
 }
