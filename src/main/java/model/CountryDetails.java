@@ -63,13 +63,21 @@ public class CountryDetails  implements Serializable {
 		this.d_NumberOfArmies = 0;
 	}
 	
-	public CountryDetails(String countryName, String xCoOrdinate, String yCoOrdinate, String inContinent){
+	/**
+	 * Creates CountryDetails object as per the argument parameters.
+	 * This constructor used while reading from ".map" files.
+	 * @param p_countryId Id of country
+	 * @param p_xCoOrdinate x-coordinate on GUI map
+	 * @param p_yCoOrdinate y-coordinate on GUI map
+	 * @param p_inContinent continent in which country is present
+	 */
+	public CountryDetails(String p_countryId, String p_xCoOrdinate, String p_yCoOrdinate, String p_inContinent){
 		this.d_Index = 0;
-		this.d_CountryId = countryName;
-		this.d_InContinent = inContinent;
+		this.d_CountryId = p_countryId;
+		this.d_InContinent = p_inContinent;
 		this.d_Neighbours = new HashMap<String, CountryDetails>();
-		this.d_XCoOrdinate = Integer.parseInt(xCoOrdinate);
-		this.d_YCoOrdinate = Integer.parseInt(yCoOrdinate);
+		this.d_XCoOrdinate = Integer.parseInt(p_xCoOrdinate);
+		this.d_YCoOrdinate = Integer.parseInt(p_yCoOrdinate);
 		this.d_NumberOfArmies = 0;
 		this.ownerPlayer = null;
 	}
