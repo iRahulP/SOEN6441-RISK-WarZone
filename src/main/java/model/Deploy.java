@@ -31,10 +31,13 @@ public class Deploy implements Order,Serializable {
      */
     public boolean execute(){
         CountryDetails l_c= d_Player.getOwnedCountries().get(d_CountryId.toLowerCase());
-        int l_existingArmies = l_c.getNumberOfArmies();
-        l_existingArmies += d_NumArmies;
-        l_c.setNumberOfArmies(l_existingArmies);
-        return true;
+        if(l_c != null){
+            int l_existingArmies = l_c.getNumberOfArmies();
+            l_existingArmies += d_NumArmies;
+            l_c.setNumberOfArmies(l_existingArmies);
+            return true;
+        }
+        return false;
     }
 
     /**
