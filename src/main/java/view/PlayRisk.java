@@ -37,24 +37,25 @@ public class PlayRisk {
           GameEngine cmd = new GameEngine();
           PlayRisk game = new PlayRisk();
           TournamentEngine tEngine;
-          boolean validCommand = false;
+          boolean valid = false;
           boolean loadGame = false;
   		
           System.out.println("Welcome to Risk Game based on Warzone!");
-          System.out.println("Enter 1 to play single-game mode or 2 to play tournament mode.");
-          l_cmd = sc.nextLine();
-        while (!validCommand) {
+          while (!valid) {
+            System.out.println("Enter 1 to play single-game mode or 2 to play tournament mode.");
+            l_cmd = sc.nextLine();
+
             if (l_cmd.equals("1")) {
                 //single-game mode
                 //select user-choice to load game or play new game
-                while (!validCommand) {
+                while (!valid) {
                     System.out.println("Enter 1 to load a saved game or 2 to edit/load map for new game.");
                     l_cmd = sc.nextLine();
 
                     if (l_cmd.equals("1")) {
 
                         //loads game
-                        validCommand = true;
+                        valid = true;
                         loadGame = true;
                         System.out.println("To continue, select a game to load from the existing save games.");
                         game.printSavedGames();
@@ -122,6 +123,7 @@ public class PlayRisk {
                         }
                     }else {
                     	System.out.println("invalid command, Enter 1 to load game and enter 2 to load maps.");
+                        continue;
                     }
                     
                     //Loops through all Players in Round Robin fashion collecting orders.
@@ -160,10 +162,9 @@ public class PlayRisk {
                     l_cmd = sc.nextLine();
                     message = tEngine.parse(null, l_cmd);
                 } while (!message.equals("success"));
-                validCommand = true;
+                valid = true;
             } else {
                 System.out.println("Invalid Command, Enter 1 to play single-game mode or 2 to play tournament mode.");
-                validCommand = true;
             }
         }
     }
