@@ -102,9 +102,9 @@ public class GameEngine {
       d_Phase=p_gameData.getD_Phase();
     this.d_Game= new GameData(d_Map,"domination", d_GamePhase,d_Phase, d_Players, d_ActivePlayer, d_Card);
     
-      
+      System.out.println(d_Game);
       d_LogEntry.attach(d_WriteLog);
-      
+      System.out.println("gamengine hellos");
   }
    
 	/**

@@ -40,7 +40,8 @@ import org.junit.runners.Suite;
         TestRandomStrategy.class,
         TestBenevolentPlayer.class,
         TestCheaterPlayer.class,
-        TestSaveGame.class
+        TestSaveGame.class,
+        TestLoadGame.class
         
 })
 

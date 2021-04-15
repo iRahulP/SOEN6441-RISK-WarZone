@@ -46,6 +46,7 @@ import java.util.ArrayList;
         /**
          * Logs the information related to the game.
          */
+        
         private Phase d_Phase;
         /**
          * Get the current phase of the game.

@@ -359,6 +359,8 @@ public class RunGameEngine {
         l_gameDataBuilder.setDeck(p_game.getDeck());
         l_gameDataBuilder.setCardsDealt((p_game.getCardsDealt()));
         l_gameDataBuilder.setPhase(p_game.getD_Phase());
+        
+        System.out.println(l_gameDataBuilder);
         try{
            // FileOutputStream l_f = new FileOutputStream(new File("src/main/resources/game/" + p_fileName));
             ObjectOutputStream l_o = new ObjectOutputStream(new FileOutputStream(new File("src/main/resources/game/" + p_fileName)));
