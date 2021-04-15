@@ -57,8 +57,13 @@ public class BenevolentPlayer extends PlayerStrategy{
         d_SourceCountry=null;
 
         Object[] values = d_Player.getOwnedCountries().values().toArray();
-        Object randomValue = values[random.nextInt(values.length)];
-        d_SourceCountry = (CountryDetails) randomValue;
+        int totalC = values.length - 1;
+        if(d_Player.getOwnedCountries().size() != 0){
+            Object randomValue = values[random.nextInt(totalC + 1)];
+            d_SourceCountry = (CountryDetails) randomValue;
+        }
+        //Object randomValue = values[random.nextInt(values.length)];
+        //d_SourceCountry = (CountryDetails) randomValue;
 
         if(d_SourceCountry!=null){
             return d_SourceCountry;
