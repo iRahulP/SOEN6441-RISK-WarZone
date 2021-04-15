@@ -27,7 +27,7 @@ public class RandomPlayer extends PlayerStrategy {
 
     /**
      * Finds random Country to Bomb from map which is not owned by current player
-     *
+     * @param d_RandomCountryWithArmies country
      * @return random CountryID
      */
     private CountryDetails targetCountryNeighbour(CountryDetails d_RandomCountryWithArmies) {
@@ -87,7 +87,7 @@ public class RandomPlayer extends PlayerStrategy {
     /**
      * toAttack function implements attacks to the
      * neighboring country from random country
-     *
+     * @param d_RandomCountryWithArmies country
      * @return country to attack
      */
     protected CountryDetails toAttack(CountryDetails d_RandomCountryWithArmies) {
@@ -109,7 +109,7 @@ public class RandomPlayer extends PlayerStrategy {
     /**
      * toAdvance function implements advance to the
      * neighboring country from random owned country
-     *
+     * @param d_RandomCountryWithArmies country
      * @return country to advance
      */
     protected CountryDetails toAdvance(CountryDetails d_RandomCountryWithArmies) {
@@ -158,6 +158,7 @@ public class RandomPlayer extends PlayerStrategy {
 
     /**
      * Gets a random Player for negotiation
+     * @return Player
      */
     protected Player getRandomPlayer() {
         Player l_diffPlayer = null;

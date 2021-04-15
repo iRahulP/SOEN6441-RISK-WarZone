@@ -84,7 +84,7 @@ public class Player  implements Serializable{
 
     /**
      * Sets strategy for a specific player
-     * @param p_strategy
+     * @param p_strategy strategy
      */
     public void setStrategy(PlayerStrategy p_strategy) {
         d_Strategy = p_strategy;

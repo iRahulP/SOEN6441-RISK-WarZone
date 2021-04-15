@@ -74,7 +74,6 @@ public class GameData extends Observable implements Serializable {
      * @param p_players List of players involved in the game
      * @param p_activePlayer Player who's turn is going on
      * @param p_card Card of cards.
-     * @param p_cardsDealt Number of cards dealt till now
      */
     public GameData(GameMap p_map, String p_mapType, InternalPhase p_gamePhase, ArrayList<Player> p_players, Player p_activePlayer, Card p_card){
         this.d_Map = p_map;

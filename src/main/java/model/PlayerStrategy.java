@@ -19,21 +19,25 @@ public abstract class PlayerStrategy {
 
     /**
      * method to create Orders based on specific Strategy for player
+     * @return Order
      */
     public abstract Order createOrder();
 
     /**
-     *method to return the Country from where attack takes place
+     * method to return the Country from where attack takes place
+     * @return Country
      */
     protected abstract CountryDetails toAttackFrom();
 
     /**
-     *method to return the Country on which attack happens
+     * method to return the Country on which attack happens
+     * @return Country
      */
     protected abstract CountryDetails toAttack();
 
     /**
-     *method to return Country to move armies from
+     * method to return Country to move armies from
+     * @return Country
      */
     protected abstract CountryDetails toMoveFrom();
 }

@@ -29,7 +29,7 @@ public class AggresivePlayer extends PlayerStrategy{
 
     /**
      * Finds country with highest number of armies owned by player
-     * @return strongest CountryDetails object
+     * strongest CountryDetails object
      */
     private void findStrongestCountryDetails()
     {
