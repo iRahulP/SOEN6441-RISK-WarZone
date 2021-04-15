@@ -14,10 +14,25 @@ import java.util.HashMap;
  */
 public class Continent  implements Serializable {
 
+	/**
+	 * controlvalue of continent
+	 */
     private int d_ControlValue;
+    /**
+     * color of the continent
+     */
     private String d_ContinentColor;
+    /**
+     * Id of the continent
+     */
     private String d_ContinentId;
+    /**
+     * index of the map
+     */
     private int d_InMapIndex;
+    /**
+     * Countries present in the continent
+     */
     private HashMap<String, CountryDetails> d_Countries;
 
     /**
