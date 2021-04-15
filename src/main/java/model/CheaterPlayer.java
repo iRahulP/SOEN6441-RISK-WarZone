@@ -24,7 +24,9 @@ public class CheaterPlayer extends PlayerStrategy{
 
 	@Override
 	public Order createOrder() {
-	
+
+		this.d_Player.setOwnedArmies(0);
+
 		HashMap<String, CountryDetails> l_countryList = new HashMap<String, CountryDetails>();
         for(String l_s : this.d_Player.getOwnedCountries().keySet()){
             l_countryList.put(l_s, this.d_Player.getOwnedCountries().get(l_s));
