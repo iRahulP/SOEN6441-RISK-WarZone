@@ -71,6 +71,7 @@ public class GameEngine {
     public GameEngine d_Ge;
     public StartUp d_StartUp;
     public static int load=0;
+    public Player d_ActivePlayer;
     /**
      * Initializes the variables and objects required to play the game and act on user commands
      */
@@ -85,6 +86,7 @@ public class GameEngine {
         d_LogEntry = new LogEntryBuffer();
         d_WriteLog = new WriteLogEntry();
         d_Game= new GameData();
+      
         d_LogEntry.attach(d_WriteLog);
     }
   public GameEngine(GameData p_gameData) {
@@ -97,12 +99,14 @@ public class GameEngine {
       d_Play = new PlayRisk();
       d_LogEntry = new LogEntryBuffer();
       d_WriteLog = new WriteLogEntry();
-      this.d_Game= p_gameData;
+      this.d_Game= new GameData(d_Map,"domination", d_GamePhase, d_Players, d_ActivePlayer, d_Card);
+    
       System.out.println(d_Game);
       d_LogEntry.attach(d_WriteLog);
       System.out.println("gamengine hellos");
   }
-    /**
+   
+	/**
      * Ensures map name is valid.
      * @param p_sample input string
      * @return true if valid match, else false
@@ -157,11 +161,39 @@ public class GameEngine {
     }
     
     /**
+     * gets the player that is active.
+     * @return d_ActivePlayer
+     */
+    public Player getD_ActivePlayer() {
+    	return d_ActivePlayer;
+    }
+    /**
+     * sets the active player during game.
+     * @param d_ActivePlayer its the object of active player.
+     */
+    public void setD_ActivePlayer(Player d_ActivePlayer) {
+    	this.d_ActivePlayer = d_ActivePlayer;
+    }
+    /**
      * Creates a game data object.
      * @param p_gameDataBuilder Helps build GameData object.
      */
     public void createGameData(GameDataBuilder p_gameDataBuilder){      	
         this.d_Game = p_gameDataBuilder.buildGameData();
+    }
+    public void setGame() {
+    	System.out.println(d_ActivePlayer.getPlayerName());
+    	this.d_Game.setDeck(d_Card);
+    	System.out.println(this.d_Game.getDeck());
+    	
+    	this.d_Game.setMap(d_Map);
+    	System.out.println(this.d_Game.getMap());
+    	this.d_Game.setActivePlayer(d_ActivePlayer);
+    	this.d_Game.setGamePhase(d_GamePhase);
+    	this.d_Game.setPlayers(d_Players);
+    	this.d_Game.setMapType("domination");
+    	this.d_Game.setCardsDealt(load);	
+    	d_Game = new GameData(d_Map,"domination", d_GamePhase, d_Players, d_ActivePlayer, d_Card);
     }
     /**
      * Returns the game state.
@@ -214,7 +246,7 @@ public class GameEngine {
                             createGameData(l_gameDataBuilder);
                             System.out.println("Loaded successfully");
                             d_LogEntry.setMessage("Game loaded successfully.");
-                            load=1;
+                          
                             
                         }
                         //method call for load game and parse this filename as argument
@@ -658,6 +690,7 @@ public class GameEngine {
                                 if (l_data.length == 2) {
                                     if (isAlphabetic(l_data[1])) {
                                         String fileName = l_data[1];
+                                        setGame();
                                         boolean l_save=d_RunG.saveGame(this.d_Game, fileName);
                                         if(l_save) {
                                         System.out.println("current Game saved is saved ");
@@ -872,4 +905,5 @@ public class GameEngine {
         }
         return null;
     }
+	
 }
