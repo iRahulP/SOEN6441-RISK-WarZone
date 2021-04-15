@@ -38,11 +38,13 @@ public class Airlift implements Order{
         l_cSource.setNumberOfArmies(l_existingSourceArmies);
 
         CountryDetails l_cTarget= d_Player.getOwnedCountries().get(d_TargetCountryId.toLowerCase());
-        int l_existingTargetArmies = l_cTarget.getNumberOfArmies();
-        l_existingTargetArmies += d_NumArmies;
-        l_cTarget.setNumberOfArmies(l_existingTargetArmies);
-
-        return true;
+        if(l_cTarget != null){
+            int l_existingTargetArmies = l_cTarget.getNumberOfArmies();
+            l_existingTargetArmies += d_NumArmies;
+            l_cTarget.setNumberOfArmies(l_existingTargetArmies);
+            return true;
+        }
+        return false;
     }
 
     /**
