@@ -10,9 +10,21 @@ import java.util.HashMap;
  *
  */
 public class GameMap implements Serializable{
+	/**
+	 * d_MapName name of the map
+	 */
 	private String d_MapName;
+	/**
+	 * d_Valid determine validity of map
+	 */
 	private boolean d_Valid;
+	/**
+	 * d_Continents- store all the continents of map
+	 */
 	private HashMap<String,Continent> d_Continents;
+	/**
+	 * d_Countries- store all the countries of map
+	 */
 	private HashMap<String,CountryDetails> d_Countries;
 	
 	/**
