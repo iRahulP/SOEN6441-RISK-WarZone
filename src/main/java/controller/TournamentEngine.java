@@ -26,27 +26,27 @@ public class TournamentEngine extends GameEngine{
 
     /**
      * Function responsible for handling command for tournament
-     * @param player Player playing the move
-     * @param newCommand Command to be interpreted
+     * @param p_player Player playing the move
+     * @param p_newCommand Command to be interpreted
      * @return success if command is valid else appropriate message which indicates reason of failure
      */
-    public String parse(Player player, String newCommand){
-        String[] data = newCommand.split("\\s+");
-        String commandName = data[0];
-        int noOfMaps;
-        int noOfGames;
-        int noOfTurns;
-        ArrayList<String> maps = new ArrayList<String>();
-        ArrayList<String> strategies = new ArrayList<String>();
+    public String parse(Player p_player, String p_newCommand){
+        String[] l_data = p_newCommand.split("\\s+");
+        String l_commandName = l_data[0];
+        int l_noOfMaps;
+        int l_noOfGames;
+        int l_noOfTurns;
+        ArrayList<String> l_maps = new ArrayList<String>();
+        ArrayList<String> l_strategies = new ArrayList<String>();
 
-        if (commandName.equals("tournament")) {
+        if (l_commandName.equals("tournament")) {
             try {
-                if (data[1].equals("-M")) {
+                if (l_data[1].equals("-M")) {
                     int i = 2;
-                    while (!data[i].equals("-P")) {
-                        if (i < data.length) {
-                            if (isMapNameValid(data[i])) {
-                                maps.add(data[i]);
+                    while (!l_data[i].equals("-P")) {
+                        if (i < l_data.length) {
+                            if (isMapNameValid(l_data[i])) {
+                                l_maps.add(l_data[i]);
                             } else {
                                 printFailureMessage();
                                 return "Comand has to be in form of 'tournament -M listofmapfiles -P listofplayerstrategies -G numberofgames -D maxnumberofturns'";
@@ -58,16 +58,16 @@ public class TournamentEngine extends GameEngine{
                         i++;
                     }
 
-                    if(maps.size()>=1 && maps.size()<=5 && allMapExists(maps)) {
+                    if(l_maps.size()>=1 && l_maps.size()<=5 && allMapExists(l_maps)) {
 
-                        if (data[i].equals("-P")) {
+                        if (l_data[i].equals("-P")) {
 
-                            int indexNew = i + 1;
+                            int l_indexNew = i + 1;
 
-                            while (!data[indexNew].equals("-G")) {
-                                if (indexNew < data.length) {
-                                    if (isPlayerStrategyValid(data[indexNew])) {
-                                        strategies.add(data[indexNew]);
+                            while (!l_data[l_indexNew].equals("-G")) {
+                                if (l_indexNew < l_data.length) {
+                                    if (isPlayerStrategyValid(l_data[l_indexNew])) {
+                                        l_strategies.add(l_data[l_indexNew]);
                                     } else {
                                         printFailureMessage();
                                         return "Comand has to be in form of 'tournament -M listofmapfiles -P listofplayerstrategies -G numberofgames -D maxnumberofturns'";
@@ -77,16 +77,16 @@ public class TournamentEngine extends GameEngine{
                                     printFailureMessage();
                                     return "Comand has to be in form of 'tournament -M listofmapfiles -P listofplayerstrategies -G numberofgames -D maxnumberofturns'";
                                 }
-                                indexNew++;
+                                l_indexNew++;
                             }
 
-                            if(strategies.size()>=2 && strategies.size()<=5 && isPlayerStrategyDistinct(strategies)) {
+                            if(l_strategies.size()>=2 && l_strategies.size()<=5 && isPlayerStrategyDistinct(l_strategies)) {
                                 //System.out.println(strategies);
 
-                                if (data[indexNew].equals("-G")) {
-                                    if (indexNew + 1 < data.length) {
-                                        if (data[indexNew + 1].matches("[1-5]")) {
-                                            noOfGames = Integer.parseInt(data[indexNew + 1]);
+                                if (l_data[l_indexNew].equals("-G")) {
+                                    if (l_indexNew + 1 < l_data.length) {
+                                        if (l_data[l_indexNew + 1].matches("[1-5]")) {
+                                            l_noOfGames = Integer.parseInt(l_data[l_indexNew + 1]);
                                             //System.out.println("Number of Games:" + noOfGames);
                                         } else {
                                             printFailureMessage();
@@ -97,18 +97,18 @@ public class TournamentEngine extends GameEngine{
                                         return "Comand has to be in form of 'tournament -M listofmapfiles -P listofplayerstrategies -G numberofgames -D maxnumberofturns'";
                                     }
 
-                                    int newIndex = indexNew + 2;
+                                    int l_newIndex = l_indexNew + 2;
 
-                                    if (data[newIndex].equals("-D")) {
+                                    if (l_data[l_newIndex].equals("-D")) {
 
 
-                                        if (newIndex + 1 < data.length) {
+                                        if (l_newIndex + 1 < l_data.length) {
 
-                                            int n = Integer.parseInt(data[newIndex + 1]);
+                                            int l_n = Integer.parseInt(l_data[l_newIndex + 1]);
 
-                                            if (n >= 10 && n <= 50) {
-                                                noOfTurns = Integer.parseInt(data[newIndex + 1]);
-                                                playTournament(maps, strategies, noOfGames, noOfTurns);
+                                            if (l_n >= 10 && l_n <= 50) {
+                                                l_noOfTurns = Integer.parseInt(l_data[l_newIndex + 1]);
+                                                playTournament(l_maps, l_strategies, l_noOfGames, l_noOfTurns);
                                                 return "success";
                                             } else {
                                                 printFailureMessage();
@@ -155,32 +155,32 @@ public class TournamentEngine extends GameEngine{
 
     /**
      * Conducts the tournament as per the mentioned arguments.
-     * @param mapFiles  List of map files to play on
-     * @param strategies    List of player strategies
-     * @param numberOfGames Number of games to play
-     * @param numberOfTurns Number of turns to play
+     * @param p_mapFiles  List of map files to play on
+     * @param p_strategies    List of player strategies
+     * @param p_numberOfGames Number of games to play
+     * @param p_numberOfTurns Number of turns to play
      */
-    public void playTournament(ArrayList<String> mapFiles, ArrayList<String> strategies, int numberOfGames, int numberOfTurns){
-        int numberOfPlayers = strategies.size();
-        int traversalCounter = 0;
-        int gameNumber = 0;
-        HashMap<Integer, String> winner = new HashMap<Integer, String>();
+    public void playTournament(ArrayList<String> p_mapFiles, ArrayList<String> p_strategies, int p_numberOfGames, int p_numberOfTurns){
+        int l_numberOfPlayers = p_strategies.size();
+        int l_traversalCounter = 0;
+        int l_gameNumber = 0;
+        HashMap<Integer, String> l_winner = new HashMap<Integer, String>();
         //Start playing on each map
-        for(String mapName : mapFiles) {
-            System.out.println("Playing on :"+mapName);
+        for(String l_mapName : p_mapFiles) {
+            System.out.println("Playing on :"+l_mapName);
             //Start playing each game
-            for (int i = 1; i <= numberOfGames; i++) {
-                gameNumber++;
-                System.out.println("Playing Game :"+gameNumber);
+            for (int i = 1; i <= p_numberOfGames; i++) {
+                l_gameNumber++;
+                System.out.println("Playing Game :"+l_gameNumber);
                 d_Ge = new GameEngine();
                 d_Game = new GameData();
                 d_RunG = new RunGameEngine();
                 d_StartUp = new StartUp(d_Ge);
                 //load the map
-                d_Map = d_RunG.loadMap(mapName);
+                d_Map = d_RunG.loadMap(l_mapName);
                 //Create player objects
-                for (String strategy : strategies) {
-                    d_StartUp.addPlayer(d_Players, strategy);
+                for (String l_strategy : p_strategies) {
+                    d_StartUp.addPlayer(d_Players, l_strategy);
                 }
                 //Setting strategies as same as Player Names
                 for (Player l_p : d_Players) {
@@ -214,7 +214,7 @@ public class TournamentEngine extends GameEngine{
                 //tournament -M demo.map -P cheater random -G 1 -D 10
 
 
-                for (int j = 1; j <= numberOfTurns; j++) {
+                for (int j = 1; j <= p_numberOfTurns; j++) {
                     int l_counter = 0;
                     System.out.println("It's " + j + "'th Turn");
 
@@ -292,7 +292,7 @@ public class TournamentEngine extends GameEngine{
                             if (l_p.getOwnedCountries().size() == d_Map.getCountries().size()) {
                                 System.out.println(l_p.getPlayerName() + " has Won the Game!");
                                 d_LogEntry.setMessage(l_p.getPlayerName() + " has Won the Game!");
-                                winner.put(gameNumber, l_p.getPlayerName());
+                                l_winner.put(l_gameNumber, l_p.getPlayerName());
                                 break;
                             }
                         }
@@ -303,33 +303,33 @@ public class TournamentEngine extends GameEngine{
                     if (l_p.getOwnedCountries().size() == d_Map.getCountries().size()) {
                         System.out.println(l_p.getPlayerName() + " has Won the Game!");
                         d_LogEntry.setMessage(l_p.getPlayerName() + " has Won the Game!");
-                        winner.put(gameNumber, l_p.getPlayerName());
+                        l_winner.put(l_gameNumber, l_p.getPlayerName());
                         break;
                     }
                 }
                 //Case when all Turns ended and no Winner was returned
                 //Need to ref some Boolean here or will always draw
-                winner.put(gameNumber, "Draw");
+                l_winner.put(l_gameNumber, "Draw");
             }
         }
         //return winner;
         TournamentResultView tournamentResultView = new TournamentResultView();
-        tournamentResultView.displayTournamentResult(winner, mapFiles);
+        tournamentResultView.displayTournamentResult(l_winner, p_mapFiles);
     }
 
     /**
      * Ensures that all maps exist
-     * @param list list of name of maps
+     * @param p_list list of name of maps
      * @return true if valid else false
      */
-    public boolean allMapExists(ArrayList<String> list){
-        int counter=0;
-        for(String s:list){
+    public boolean allMapExists(ArrayList<String> p_list){
+        int l_counter=0;
+        for(String s:p_list){
             if(isMapExists(s)){
-                counter++;
+                l_counter++;
             }
         }
-        if(counter == list.size()){
+        if(l_counter == p_list.size()){
             return true;
         }else{
             return false;
@@ -339,15 +339,15 @@ public class TournamentEngine extends GameEngine{
     /**
      * Checks if the map with argument name exists or not.
      * If it exists, it also checks if its valid or not.
-     * @param mapName Name of the map file to be checked.
+     * @param p_mapName Name of the map file to be checked.
      * @return true if file exists and is a valid file, otherwise false.
      */
-    public boolean isMapExists(String mapName) {
-        String filePath = "src/main/resources/maps/" + mapName;
-        File f = new File(filePath);
+    public boolean isMapExists(String p_mapName) {
+        String l_filePath = "src/main/resources/maps/" + p_mapName;
+        File f = new File(l_filePath);
         if (f.exists()) {
             RunGameEngine rGE = new RunGameEngine();
-            d_Map = rGE.loadMap(mapName);
+            d_Map = rGE.loadMap(p_mapName);
             return true;
         } else {
             return false;
@@ -366,23 +366,23 @@ public class TournamentEngine extends GameEngine{
     /**
      * Ensures map name is valid.
      *
-     * @param s input string
+     * @param p_s input string
      * @return true if valid match, else false
      */
-    public boolean isMapNameValid(String s) {
-        return s != null && s.matches("^[a-zA-Z.]*$");
+    public boolean isMapNameValid(String p_s) {
+        return p_s != null && p_s.matches("^[a-zA-Z.]*$");
     }
 
     /**
      * Ensures player strategy is valid
-     * @param s strategy of the player
+     * @param p_s strategy of the player
      * @return true if valid else false
      */
-    public boolean isPlayerStrategyValid(String s){
+    public boolean isPlayerStrategyValid(String p_s){
 
-        String[] array = new String[]{"aggressive", "benevolent", "random", "cheater"};
+        String[] l_array = new String[]{"aggressive", "benevolent", "random", "cheater"};
         for(int i=0; i<4; i++){
-            if(s.equals(array[i])){
+            if(p_s.equals(l_array[i])){
                 return true;
             }
         }
@@ -391,14 +391,14 @@ public class TournamentEngine extends GameEngine{
 
     /**
      * Ensure that all strategies of player are distinct
-     * @param list list of player's strategy
+     * @param p_list list of player's strategy
      * @return true if valid else false
      */
-    public boolean isPlayerStrategyDistinct(ArrayList<String> list){
+    public boolean isPlayerStrategyDistinct(ArrayList<String> p_list){
 
-        for(int i=0;i<list.size();i++){
-            for(int j = i+1; j<list.size(); j++){
-                if(list.get(i).equals(list.get(j))){
+        for(int i=0;i<p_list.size();i++){
+            for(int j = i+1; j<p_list.size(); j++){
+                if(p_list.get(i).equals(p_list.get(j))){
                     return false;
                 }
             }
