@@ -29,21 +29,20 @@ public class TestCheaterPlayer {
     	d_Player2= new Player("p2");
     	game= new GameData();
     	d_Map=d_RunGame.loadMap("demo.map");
-    	game.setMap(d_Map);
     	d_Pg1 = new CheaterPlayer(d_Player1,d_Map);
         game.getPlayers().add(d_Player1);
         d_Pg2 = new CheaterPlayer(d_Player2,d_Map);
         game.getPlayers().add(d_Player2);
         
-        d_Player1.getOwnedCountries().put("one", game.getMap().getCountries().get("one"));
-        d_Player1.getOwnedCountries().put("two", game.getMap().getCountries().get("two"));
+        d_Player1.getOwnedCountries().put("one", d_Map.getCountries().get("one"));
+        d_Player1.getOwnedCountries().put("two", d_Map.getCountries().get("two"));
         
         d_Player1.getOwnedCountries().get("one").setOwnerPlayer(d_Player1);
         d_Player1.getOwnedCountries().get("two").setOwnerPlayer(d_Player1);
         
-        d_Player2.getOwnedCountries().put("four", game.getMap().getCountries().get("four"));
-        d_Player2.getOwnedCountries().put("three", game.getMap().getCountries().get("three"));
-        d_Player2.getOwnedCountries().put("five", game.getMap().getCountries().get("five"));
+        d_Player2.getOwnedCountries().put("four",d_Map.getCountries().get("four"));
+        d_Player2.getOwnedCountries().put("three",d_Map.getCountries().get("three"));
+        d_Player2.getOwnedCountries().put("five", d_Map.getCountries().get("five"));
        
         d_Player2.getOwnedCountries().get("four").setOwnerPlayer(d_Player2);
         d_Player2.getOwnedCountries().get("three").setOwnerPlayer(d_Player2);
