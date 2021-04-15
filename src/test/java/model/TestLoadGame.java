@@ -16,7 +16,7 @@ public class TestLoadGame {
 	 /**
      * Represents the state of the game
      */
-    GameData game;
+    GameData d_Game;
 
     /**
      * To help load the map.
@@ -35,7 +35,7 @@ public class TestLoadGame {
     public void before(){
         //initialize required references
         d_RunG = new RunGameEngine();
-        game = new GameData();
+        d_Game = new GameData();
         d_Ge = new GameEngine();
     }
 
@@ -54,7 +54,6 @@ public class TestLoadGame {
     @Test
     public void testLoadGame3(){
         d_Ge.parseCommand(null, "loadgame dummygamee");
-        
         Assert.assertEquals("b", d_Ge.getGame().getActivePlayer().getPlayerName().toLowerCase());
     }
 
