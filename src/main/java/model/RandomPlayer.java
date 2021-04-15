@@ -51,10 +51,15 @@ public class RandomPlayer extends PlayerStrategy {
      * @return random CountryID
      */
     private CountryDetails findRandomCountry() {
+        d_RandomCountry = null;
         Object[] values = d_Player.getOwnedCountries().values().toArray();
+        System.out.println(d_Player.getOwnedCountries());
+        System.out.println(d_Player.getPlayerName());
         int totalC = values.length - 1;
-        Object randomValue = values[rand.nextInt(totalC + 1)];
-        d_RandomCountry = (CountryDetails) randomValue;
+        if(d_Player.getOwnedCountries().size() != 0){
+            Object randomValue = values[rand.nextInt(totalC + 1)];
+            d_RandomCountry = (CountryDetails) randomValue;
+        }
         return d_RandomCountry;
     }
 
@@ -207,7 +212,10 @@ public class RandomPlayer extends PlayerStrategy {
                     //int randArmies = rand.nextInt(rnd_num_of_armies_pool);
                     //Total owned -
                     d_Player.setOwnedArmies(0);
-                    return new Deploy(d_Player, findRandomCountry().getCountryId(), rnd_num_of_armies_pool);
+                    if(findRandomCountry() != null){
+                        return new Deploy(d_Player, findRandomCountry().getCountryId(), rnd_num_of_armies_pool);
+                    }else
+                        return null;
                 }else{
                     return null;
                 }

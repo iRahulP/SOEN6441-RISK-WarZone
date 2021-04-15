@@ -1,5 +1,6 @@
 package view;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import controller.GameEngine;
@@ -13,7 +14,7 @@ import model.Player;
  * @author yashs
  *
  */
-public class MapView {
+public class MapView  implements Serializable {
 
 	
 	/**

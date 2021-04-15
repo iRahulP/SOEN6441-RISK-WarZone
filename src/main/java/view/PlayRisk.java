@@ -35,10 +35,8 @@ public class PlayRisk {
           int traversalCounter = 0;
           InternalPhase l_gamePhase = InternalPhase.NULL;
           GameEngine cmd = new GameEngine();
-          //GameEngine lcmd ;
           PlayRisk game = new PlayRisk();
           TournamentEngine tEngine;
-
           boolean validCommand = false;
           boolean loadGame = false;
   		
@@ -63,17 +61,15 @@ public class PlayRisk {
                         do {
                             l_cmd = sc.nextLine();
                             l_gamePhase = cmd.parseCommand(null, l_cmd);
-                            System.out.println("!11");
                         } while (cmd.parseCommand(null, l_cmd).equals("Loaded successfully"));
 
-                        System.out.println("heeeellllo");
+                        
                         //set traversal counter by finding appropriate player
-                        traversalCounter = 0;
+                        traversalCounter = -1;
                         System.out.println(cmd.getGame().getPlayers());
                         for (Player player1 : cmd.getGame().getPlayers()) {
                         	
                             traversalCounter++;
-                            System.out.println(traversalCounter);
                             if (player1 == cmd.getGame().getActivePlayer()) {
                                 break;
                             }
@@ -81,20 +77,12 @@ public class PlayRisk {
                         System.out.println("wasup1");
                       //set controller to turn controller to continue playing the loaded game
                         
-                        cmd = new GameEngine(cmd.getGame());                        
-                                                
-                        
-                    } else if (l_cmd.equals("2")) {
-
-
+                        cmd = new GameEngine(cmd.getGame());                                                                    
+                        } else if (l_cmd.equals("2")) {
                         System.out.println("try, Selecting a map from the below mentioned sample maps or create a new one: ");
                         l_game.sampleMaps();
-//
-//        //initial command reader from cli
-//        String l_cmd;
-//        InternalPhase l_gamePhase = InternalPhase.NULL;
-//        GameEngine cmd = new GameEngine();
 
+                        //initial command reader from cli
                         //looping for commands until initial Phases where Player iteration not required!
                         while (l_gamePhase != InternalPhase.ISSUE_ORDERS) {
                             l_cmd = sc.nextLine();
@@ -139,12 +127,10 @@ public class PlayRisk {
                     //Loops through all Players in Round Robin fashion collecting orders.
                     int l_numberOfPlayers = cmd.getGame().getPlayers().size();
                    System.out.println(l_numberOfPlayers);
-                   System.out.println("aaaaaaaaaa");
-                    
-                    	System.out.println("bbbbbbbbbbb");
+                   
+                    	while(true) {
                         while (traversalCounter < l_numberOfPlayers) {
                         	System.out.println(traversalCounter);
-                        	System.out.println("bbbbbbbbbbb");
                             Player l_p = cmd.d_Players.get(traversalCounter);
                             System.out.println("It's " + l_p.getPlayerName() + "'s turn");
                             System.out.println("Player " + l_p.getPlayerName() + " has " + l_p.getOwnedArmies() + " Army units currently!");
@@ -167,7 +153,7 @@ public class PlayRisk {
                         cmd.setGamePhase(l_gamePhase);
                         traversalCounter = 0;
                     }
-                
+            }
             } else if (l_cmd.equals("2")) {
                 //tournament mode
                 tEngine = new TournamentEngine(cmd);
