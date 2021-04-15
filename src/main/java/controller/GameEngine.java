@@ -406,12 +406,14 @@ public class GameEngine {
             }
             System.out.println("Total Armies left with all Players in Pool: "+l_counter);
             d_LogEntry.setMessage("Total Armies left with all Players in Pool: "+l_counter);
-            if(!p_player.getD_Deck().isEmpty()){
-                p_player.showCards();
-            }
+//            if(!p_player.getD_Deck().isEmpty()){
+//                System.out.println(p_player.getPlayerName());
+//                p_player.showCards();
+//                System.out.println(p_player.getPlayerName());
+//            }
 
             //case when atleast one player has any army/armies left
-            if (l_counter >= 0) {
+            if (l_counter > 0) {
                 if(!p_player.getD_isHuman()){
                     //Call for issueOrder() of non human Player
                     p_player.issueOrder();
@@ -709,6 +711,74 @@ public class GameEngine {
         //EXECUTE ORDERS : execute, showmap
         else if (d_GamePhase.equals(InternalPhase.EXECUTE_ORDERS)) {
             d_LogEntry.setMessage("In Execute Orders Phase:");
+            //Execution of Orders for nonHuman Player
+            if(!p_player.getD_isHuman()){
+                //Call for issueOrder() of non human Player
+                int l_count = 0;
+                for (Player l_p : d_Players) {
+                    Queue<Order> l_temp = l_p.getD_orderList();
+                    l_count = l_count +l_temp.size();
+                }
+
+                if(l_count == 0){
+                    System.out.println("Orders already executed!");
+                    d_LogEntry.setMessage("Orders already executed!");
+                    d_Phase.showMap(d_Players, d_Map);
+                    d_GamePhase = InternalPhase.ISSUE_ORDERS;
+                    return d_GamePhase;
+                }
+                else{
+                    System.out.println("Total Orders  :" + l_count);
+                    d_LogEntry.setMessage("Total Orders  :" + l_count);
+                    while (l_count != 0) {
+                        for (Player l_p : d_Players) {
+                            Queue<Order> l_temp = l_p.getD_orderList();
+                            if (l_temp.size() > 0) {
+                                Order l_toRemove = l_p.next_order();
+                                System.out.println("Order: " +l_toRemove+ " executed for player: "+l_p.getPlayerName());
+                                d_LogEntry.setMessage("Order: " +l_toRemove+ " executed for player: "+l_p.getPlayerName());
+                                l_toRemove.execute();
+                            }
+                        }
+                        l_count--;
+                    }
+                    for(Player l_p : d_Players) {
+                        l_p.flushNegotiators();
+                    }
+                    System.out.println("Orders executed!");
+                    d_LogEntry.setMessage("Orders executed!");
+                    //d_Phase.showMap(d_Players, d_Map);
+                    d_Phase.reinforce();
+                    //Check if any Player owns all Countries
+                    for (Player l_p : d_Players){
+                        if(l_p.getOwnedCountries().size() == d_Map.getCountries().size()){
+                            System.out.println(l_p.getPlayerName()+" has Won the Game!");
+                            d_LogEntry.setMessage(l_p.getPlayerName()+" has Won the Game!");
+                            d_LogEntry.detach(d_WriteLog);
+                            System.exit(0);
+                        }
+                    }
+                    //check if any player needs to be removed as of losing all territories
+                    for (Player l_p : d_Players){
+                        if(l_p.getOwnedCountries().size() == 0){
+                            System.out.println(l_p.getPlayerName()+" has lost all its territories and is no longer part of the game");
+                            d_LogEntry.setMessage(l_p.getPlayerName()+" has lost all its territories and is no longer part of the game");
+                            d_Players.remove(l_p);
+                        }
+                    }
+
+                    System.out.println("Current Orders were executed,Starting again with assigning Reinforcements!");
+                    System.out.println("Reinforcements assigned! Players can provide deploy Orders now!");
+                    System.out.println("\nPlayer 1 can provide deploy | pass order..");
+                    d_LogEntry.setMessage("Current Orders were executed,Starting again with assigning Reinforcements!");
+                    d_LogEntry.setMessage("Reinforcements assigned! Players can provide deploy Orders now!");
+                    d_LogEntry.setMessage("\nPlayer 1 can provide deploy | pass order..");
+
+                    d_GamePhase = InternalPhase.ISSUE_ORDERS;
+                }
+
+                return d_GamePhase;
+            }
             switch (l_commandName) {
                 case "execute":
                     d_LogEntry.setCommand(l_commandName+" Command is being executed");
