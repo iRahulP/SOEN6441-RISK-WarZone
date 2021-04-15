@@ -23,6 +23,7 @@ import org.junit.runners.Suite;
         TestBlockade.class,
         TestNeutralTerritory.class,
         TestAirlift.class,
+        TestMapType.class,
         TestBomb.class,
         TestAdjacent.class,
         TestPhase.class,
