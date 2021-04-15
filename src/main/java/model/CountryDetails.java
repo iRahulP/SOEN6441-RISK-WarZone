@@ -12,13 +12,37 @@ import java.util.HashMap;
  */
 public class CountryDetails  implements Serializable {
 
+	/**
+	 * d_Index - index of the country
+	 */
 	private int d_Index;
+	/**
+	 * d_CountryId - Id of the country
+	 */
 	private String d_CountryId;
+	/**
+	 * d_InContinent - Name of the continent in which country is present
+	 */
 	private String d_InContinent;
+	/**
+	 * d_Neighbours- neighbor of the country
+	 */
 	private HashMap<String, CountryDetails> d_Neighbours;
+	/**
+	 * d_XCoOrdinate - x- coordinate of the country
+	 */
 	private int d_XCoOrdinate;
+	/**
+	 * d_YCoOrdinate - y-coordinate of the country
+	 */
 	private int d_YCoOrdinate;
+	/**
+	 * d_NumberOfArmies- Armies present on the country
+	 */
 	private int d_NumberOfArmies;
+	/**
+	 * ownerPlayer - owner of the country
+	 */
 	Player ownerPlayer;
 
 	/**
