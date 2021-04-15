@@ -17,6 +17,9 @@ import java.util.HashMap;
  */
 class DominationMap {
 
+	/**
+	 * d_InMapIndex - Index of map
+	 */
 	 public static int d_InMapIndex = 1;
 	 private GameMap d_DominationMap;
 	 private HashMap<Integer, CountryDetails> d_ListOfCountries;
