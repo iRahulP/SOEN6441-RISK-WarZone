@@ -22,7 +22,6 @@ public class TestBenevolentPlayer {
     GameEngine d_Ge;
     RunGameEngine d_Rge;
     boolean l_checkOwnedCountry;
-    int d_NumberOfArmies = 4;
 
     /**
      * Set up the context
@@ -44,7 +43,7 @@ public class TestBenevolentPlayer {
         d_Player2.setOwnedArmies(4);
         d_GamePhase = InternalPhase.ISSUE_ORDERS;
         l_checkOwnedCountry = true;
-        d_DOrder = new Deploy(d_Player1,d_WeakCountry,d_NumberOfArmies);
+        d_DOrder = new Deploy(d_Player1,d_WeakCountry,d_Player1.getOwnedArmies());
         d_OrderList = new ArrayDeque<>();
     }
 
@@ -73,4 +72,36 @@ public class TestBenevolentPlayer {
         }
     }
 
+    /**
+     * Tests Random Country with Armies deployed
+     */
+    @Test
+    public void testArmiesDeployed() {
+        d_Stup.assignCountries(d_Map, d_Players);
+        AssignReinforcement.assignReinforcementArmies(d_Player1);
+        AssignReinforcement.assignReinforcementArmies(d_Player2);
+
+        //String d_CountryId = "japan";
+        d_DOrder = new Deploy(d_Player1, d_WeakCountry, d_Player1.getOwnedArmies());
+        //performed checks for owned country and allowed army units.
+        boolean l_checkOwnedCountry = d_Player1.getOwnedCountries().containsKey(d_WeakCountry);
+
+        if (l_checkOwnedCountry) {
+            d_Player1.addOrder(d_DOrder);
+            d_Player1.issue_order();
+            System.out.println("After Deploy reinforcement Pool:" + d_Player1.getOwnedArmies());
+        } else {
+            System.out.println("Country not owned by player or insufficient Army units | please pass to next player");
+        }
+
+        System.out.println("Order stored: "+d_Player1.getD_orderList());
+        Order l_toRemove = d_Player1.next_order();
+        System.out.println("Order: " + l_toRemove + " executed for player: " + d_Player1.getPlayerName());
+        System.out.println(d_Player1.getD_orderList());
+        l_toRemove.execute();
+        CountryDetails l_c = d_Player1.getOwnedCountries().get(d_WeakCountry.toLowerCase());
+        System.out.println(l_c.getNumberOfArmies());
+        //Check if num of armies deployed correctly
+        assertEquals(d_Player1.getOwnedArmies(), l_c.getNumberOfArmies());
+    }
 }
