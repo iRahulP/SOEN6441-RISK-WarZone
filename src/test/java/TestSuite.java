@@ -37,7 +37,9 @@ import org.junit.runners.Suite;
         TestRemoveCard.class,
         TournamentEngineTest.class,
         TestRandomStrategy.class,
-        TestBenevolentPlayer.class
+        TestBenevolentPlayer.class,
+        TestSaveGame.class,
+        TestCheaterPlayer.class
 })
 
 /**
