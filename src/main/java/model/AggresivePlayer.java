@@ -58,7 +58,7 @@ public class AggresivePlayer extends PlayerStrategy{
     {
         if(d_StrongestCountry!=null) {
             for (CountryDetails l_neighborCountry : d_StrongestCountry.getNeighbours().values()) {
-                if (!this.d_Player.getOwnedCountries().containsKey(l_neighborCountry)) {
+                if (!this.d_Player.getOwnedCountries().containsKey(l_neighborCountry.getCountryId())) {
                     d_DefendingCountry = l_neighborCountry;
                     return d_DefendingCountry;
                 }
@@ -91,7 +91,7 @@ public class AggresivePlayer extends PlayerStrategy{
 
         if(d_StrongestCountry!=null) {
             for (CountryDetails l_neighborCountry : d_StrongestCountry.getNeighbours().values()) {
-                if (this.d_Player.getOwnedCountries().containsKey(l_neighborCountry)) {
+                if (this.d_Player.getOwnedCountries().containsKey(l_neighborCountry.getCountryId())) {
                     int l_currentCountryArmies = l_neighborCountry.getNumberOfArmies();
                     if (l_currentCountryArmies >= l_maxArmies) {
                         l_maxArmies = l_currentCountryArmies;
@@ -102,7 +102,10 @@ public class AggresivePlayer extends PlayerStrategy{
             }
         }
         if(l_maxArmies == 0)
-            return null;
+        {
+            d_MoveFromCountry = setInitialMoveFromCountry();
+            return d_MoveFromCountry;
+        }
         else
             return d_MoveFromCountry;
     }
@@ -143,7 +146,7 @@ public class AggresivePlayer extends PlayerStrategy{
         for(CountryDetails l_country : this.d_Player.getOwnedCountries().values())
         {
             for (CountryDetails l_neighborCountry : l_country.getNeighbours().values()) {
-                if(!this.d_Player.getOwnedCountries().containsKey(l_neighborCountry)){
+                if(!this.d_Player.getOwnedCountries().containsKey(l_neighborCountry.getCountryId())){
                     d_InitialCountry = l_country;
                     return d_InitialCountry;
                 }
@@ -151,6 +154,29 @@ public class AggresivePlayer extends PlayerStrategy{
 
         }
         return d_InitialCountry;
+    }
+
+    /**
+     * sets the initial country where armies can be moved to strongest country.
+     * @return Initial random country neighbor to strongest country
+     */
+    private CountryDetails setInitialMoveFromCountry() {
+        int l_maxArmies = 0;
+        for(CountryDetails l_country : this.d_Player.getOwnedCountries().values())
+        {
+            for (CountryDetails l_neighborCountry : l_country.getNeighbours().values()) {
+                if(this.d_Player.getOwnedCountries().containsKey(l_neighborCountry.getCountryId())){
+                    d_MoveFromCountry = l_neighborCountry;
+                    d_MoveFromCountry.setNumberOfArmies(2);
+                    d_MoveFromCountry = l_country;
+                    l_maxArmies = d_MoveFromCountry.getNumberOfArmies();
+                    d_MaxArmies =l_maxArmies;
+                    return d_MoveFromCountry;
+                }
+            }
+
+        }
+        return null;
     }
 
     @Override
@@ -173,7 +199,7 @@ public class AggresivePlayer extends PlayerStrategy{
                     System.out.println("Reinforcement armies are all used by player ");
                     break;
                 }
-                int l_reinforceArmies = l_random.nextInt(d_Player.getOwnedArmies());
+                int l_reinforceArmies = d_Player.getOwnedArmies();
                 d_TestReinforceArmies = l_reinforceArmies;
                 if(d_Player.getOwnedArmies() == 1)
                     l_reinforceArmies = 1;
@@ -246,7 +272,7 @@ public class AggresivePlayer extends PlayerStrategy{
                         } else
                             break;
                     }
-                    return new Advance(d_Player, l_moveFromCountry.getCountryId(), l_attackingCountry.getCountryId(), d_MaxArmies, l_attackingCountry.getOwnerPlayer());
+                    return new Advance(d_Player, l_moveFromCountry.getCountryId(), l_attackingCountry.getCountryId(), d_MaxArmies-1, l_attackingCountry.getOwnerPlayer());
                 } else
                     return null;
 
