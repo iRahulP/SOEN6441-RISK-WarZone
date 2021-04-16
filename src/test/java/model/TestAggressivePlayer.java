@@ -33,7 +33,7 @@ public class TestAggressivePlayer {
         d_Ge = new GameEngine();
         d_Rge = new RunGameEngine();
         d_Stup = new StartUp(d_Ge);
-        d_Map = d_Rge.loadMap("dummy.map");
+        d_Map = d_Rge.loadMap("ameroki.map");
         d_Players = new ArrayList<Player>();
         d_Players.add(d_Player1);
         d_Players.add(d_Player2);
@@ -140,6 +140,65 @@ public class TestAggressivePlayer {
             }
             else
                 System.out.println("Invalid attack order given");
+        }
+        else
+            System.out.println("The random value for deployment armies is not gretaer than 0");
+
+    }
+
+    /**
+     * Test Aggressive Advance  order
+     */
+    @Test
+    public void testAggressiveAdvance(){
+
+        d_Stup.assignCountries(d_Map, d_Players);
+        AssignReinforcement.assignReinforcementArmies(d_Player1);
+        AssignReinforcement.assignReinforcementArmies(d_Player2);
+
+        AggresivePlayer l_strat = new AggresivePlayer(d_Player1, d_Map);
+        d_Player1.setStrategy(l_strat);
+        d_Player1.setD_isHuman(false);
+
+        l_strat.isTest(true);
+
+        //to test deploy
+        l_strat.setTestOrderValue(0);
+        Order l_order = l_strat.createOrder();
+
+        d_StrongestCountry = l_strat.d_StrongestCountry;
+
+        if(l_strat.d_TestReinforceArmies > 0) {
+            d_Player1.addOrder(l_order);
+            d_Player1.issue_order();
+
+            System.out.println("Order stored: " + d_Player1.getD_orderList());
+            Order l_toRemove = d_Player1.next_order();
+            System.out.println("Order: " + l_toRemove + " executed for player: " + d_Player1.getPlayerName());
+            System.out.println(d_Player1.getD_orderList());
+            l_toRemove.execute();
+            CountryDetails l_c = d_Player1.getOwnedCountries().get(d_StrongestCountry.getCountryId().toLowerCase());
+            System.out.println("Armies deployed on country "+l_c.getCountryId().toLowerCase()+" "+l_c.getNumberOfArmies());
+            //Check if num of armies deployed correctly
+
+            System.out.println("Armies in strongest country "+l_strat.d_StrongestCountry.getNumberOfArmies());
+            l_strat.setTestOrderValue(2);
+            Order l_order1 = l_strat.createOrder();
+            if(l_order1!=null) {
+                d_Player1.addOrder(l_order1);
+                d_Player1.issue_order();
+                System.out.println("Order stored: " + d_Player1.getD_orderList());
+                Order l_toRemove1 = d_Player1.next_order();
+                System.out.println("Order: " + l_toRemove1 + " executed for player: " + d_Player1.getPlayerName());
+                System.out.println(d_Player1.getD_orderList());
+                l_toRemove1.execute();
+
+                System.out.println("Moving from country : " + l_strat.d_MoveFromCountry.getCountryId() + " to country :  " + l_strat.d_StrongestCountry.getCountryId());
+                System.out.println("Armies in strongest country " + l_strat.d_StrongestCountry.getNumberOfArmies());
+                System.out.println("Armies in moving from country " + l_strat.d_MoveFromCountry.getNumberOfArmies());
+            }
+            else
+                System.out.println("Invalid advance order given");
         }
         else
             System.out.println("The random value for deployment armies is not gretaer than 0");
