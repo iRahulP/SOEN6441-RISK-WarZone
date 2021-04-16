@@ -168,7 +168,7 @@ public class TournamentEngine extends GameEngine{
         int Ps = d_Players.size();
         while(Ps != 0 ){
             d_Players.remove(0);
-            Ps -= Ps;
+            Ps -= 1;
         }
 
         //Start playing on each map
@@ -178,7 +178,7 @@ public class TournamentEngine extends GameEngine{
             int P = d_Players.size();
             while(P != 0 ){
                 d_Players.remove(0);
-                P -= P;
+                P -= 1;
             }
             for (int i = 1; i <= p_numberOfGames; i++) {
                 l_gameNumber++;
@@ -195,7 +195,7 @@ public class TournamentEngine extends GameEngine{
                 int Psiz = d_Players.size();
                 while(Psiz != 0 ){
                     d_Players.remove(0);
-                    Psiz -= Psiz;
+                    Psiz -= 1;
                 }
 
                 //Create player objects
@@ -352,7 +352,7 @@ public class TournamentEngine extends GameEngine{
 //                                    }
 //
 //                                }
-                            //l_count--;
+                                //l_count--;
                             }
                         }
                         System.out.println("Total Armies left with all Players in Pool: " + l_counter);
@@ -372,6 +372,7 @@ public class TournamentEngine extends GameEngine{
                         l_winner.put(l_gameNumber, l_p.getPlayerName());
                         break;
                     }else{
+                        System.out.println("Current Game resulted in a Draw");
                         l_winner.put(l_gameNumber, "Draw");
                         break;
                     }
@@ -381,7 +382,7 @@ public class TournamentEngine extends GameEngine{
                 int Psize = d_Players.size();
                 while(Psize != 0 ){
                     d_Players.remove(0);
-                    Psize -= Psize;
+                    Psize -= 1;
                 }
                 System.out.println("Players left after game "+d_Players.size());
             }
