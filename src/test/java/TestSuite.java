@@ -43,7 +43,8 @@ import org.junit.runners.Suite;
         TestBenevolentPlayer.class,
         TestCheaterPlayer.class,
         TestSaveGame.class,
-        TestLoadGame.class
+        TestLoadGame.class,
+		TestAggressivePlayer.class
         
 })
 
