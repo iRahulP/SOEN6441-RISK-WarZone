@@ -22,11 +22,24 @@ public class TestLoadMap {
     }
 
     /**
-     * Test to edit the map which is not existing and build it from scratch.
+     * Test to load the domination map 
      */
     @Test
-    public void testLoadMap(){
-        d_MapName= "world.map";
+    public void testDominationLoadMap(){
+        d_MapName= "dummy.map";
+        System.out.println(d_MapName);
+        d_Map = d_RunGame.loadMap(d_MapName);
+        assertEquals(d_Map.getMapName(), d_MapName);
+    }
+    
+
+    /**
+     * Test to load the conquest map
+     */
+    @Test
+    public void testConquestLoadMap(){
+        d_MapName= "Asia.map";
+        System.out.println(d_MapName);
         d_Map = d_RunGame.loadMap(d_MapName);
         assertEquals(d_Map.getMapName(), d_MapName);
     }

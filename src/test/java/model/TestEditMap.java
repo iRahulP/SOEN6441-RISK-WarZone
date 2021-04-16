@@ -28,16 +28,29 @@ public class TestEditMap {
     @Test
     public void testEditNewMap(){
     	d_MapName= "practice.map";
+    	System.out.println(d_MapName);
         d_Map = d_RunGame.editMap(d_MapName);
         assertEquals(d_Map.getMapName(), d_MapName);
     }
     
     /**
-     * Test to edit the map which exist in folder.
+     * Test to edit the domination map which exist in folder.
      */
     @Test
-    public void testEditExistingMap(){
+    public void testEditExistingDominationMap(){
     	d_MapName= "dummy.map";
+    	System.out.println(d_MapName);
+        d_Map = d_RunGame.editMap(d_MapName);
+        assertEquals(d_Map.getMapName(), d_MapName);
+    }
+    
+    /**
+     * Test to edit the conquest map which exist in folder.
+     */
+    @Test
+    public void testEditExistingConquestMap(){
+    	d_MapName= "Asia.map";
+    	System.out.println(d_MapName);
         d_Map = d_RunGame.editMap(d_MapName);
         assertEquals(d_Map.getMapName(), d_MapName);
     }
