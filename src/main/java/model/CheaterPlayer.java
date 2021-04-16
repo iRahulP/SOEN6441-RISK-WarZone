@@ -41,23 +41,23 @@ public class CheaterPlayer extends PlayerStrategy{
             		d_OtherPlayer.getOwnedCountries().remove(l_neighbours.getCountryId().toLowerCase());
             		d_Player.addCard();
             		l_neighbours.setOwnerPlayer(this.d_Player);
+            		System.out.println("Cheater has owned country: "+ l_neighbours.getCountryId() );
             		
-            		//if player owns all the countries
-            		/*if(this.d_Player.getOwnedCountries().size() == d_Map.getCountries().size()) {
-            			System.out.println(d_Player+ " has won the game");
-            			System.exit(0);
-            		}*/
             	}
+            	
             }
+            
         }
+        
         
         //double the armies that have neighbor enemy country
 		for(CountryDetails l_newcountries : this.d_Player.getOwnedCountries().values()){
             for(CountryDetails l_newneighbours : l_newcountries.getNeighbours().values()){
-            	//if(!(l_newneighbours.getOwnerPlayer().equals(d_Player))) {
             	if(!(this.d_Player.getOwnedCountries().containsKey(l_newneighbours.getCountryId().toLowerCase()))) {
             		l_newcountries.setNumberOfArmies(l_newcountries.getNumberOfArmies() * 2);
+            		System.out.println("cheater has doubled army on "+ l_newcountries.getCountryId() + " country");
             	}
+            	
             }
         }
 		
