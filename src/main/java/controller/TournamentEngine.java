@@ -80,7 +80,7 @@ public class TournamentEngine extends GameEngine{
                                 l_indexNew++;
                             }
 
-                            if(l_strategies.size()>=2 && l_strategies.size()<=5 && isPlayerStrategyDistinct(l_strategies)) {
+                            if(l_strategies.size()>=2 && l_strategies.size()<=4 && isPlayerStrategyDistinct(l_strategies)) {
                                 //System.out.println(strategies);
 
                                 if (l_data[l_indexNew].equals("-G")) {
@@ -207,10 +207,15 @@ public class TournamentEngine extends GameEngine{
                     }
                 }
                 //System.out.println(d_Players.size());
-                d_StartUp = new StartUp(d_Ge);
                 d_StartUp.assignCountries(d_Map, d_Players);
+//                for (Player p : d_Players) {
+//                    System.out.println(p.getOwnedCountries());
+//                }
                 //AssignCountries and Reinforcements
                 assignEachPlayerReinforcements(d_Players);
+//                for (Player p : d_Players) {
+//                    System.out.println(p.getOwnedArmies());
+//                }
                 //tournament -M demo.map -P cheater random -G 1 -D 10
                 //tournament -M dummy.map ameroki.map -P cheater aggressive -G 4 -D 30
 
@@ -303,14 +308,14 @@ public class TournamentEngine extends GameEngine{
                         assignEachPlayerReinforcements(d_Players);
 
                         //Check if any Player Won
-                        for (Player l_p : d_Players) {
-                            if (l_p.getOwnedCountries().size() == d_Map.getCountries().size()) {
-                                System.out.println(l_p.getPlayerName() + " has Won the Game!");
-                                d_LogEntry.setMessage(l_p.getPlayerName() + " has Won the Game!");
-                                l_winner.put(l_gameNumber, l_p.getPlayerName());
-                                break;
-                            }
-                        }
+//                        for (Player l_p : d_Players) {
+//                            if (l_p.getOwnedCountries().size() == d_Map.getCountries().size()) {
+//                                System.out.println(l_p.getPlayerName() + " has Won the Game!");
+//                                d_LogEntry.setMessage(l_p.getPlayerName() + " has Won the Game!");
+//                                l_winner.put(l_gameNumber, l_p.getPlayerName());
+//                                break;
+//                            }
+//                        }
                     }
                 }
                 //Check if any Player Won
@@ -325,9 +330,13 @@ public class TournamentEngine extends GameEngine{
                         break;
                     }
                 }
-                //Case when all Turns ended and no Winner was returned
-                //Need to ref some Boolean here or will always draw
-                //l_winner.put(l_gameNumber, "Draw");
+
+                //Flushing Objects which are getting reused
+                int Psize = d_Players.size();
+                while(Psize != 0 ){
+                    d_Players.remove(0);
+                    Psize -= Psize;
+                }
             }
         }
         //return winner;
