@@ -9,8 +9,10 @@ import java.util.Random;
  * @author  Aarthi
  */
 public class AggresivePlayer extends PlayerStrategy{
-    private int d_OrderVal,d_maxArmies;
+    private int d_OrderVal,d_MaxArmies;
     CountryDetails d_StrongestCountry,d_DefendingCountry,d_MoveFromCountry,d_InitialCountry;
+    boolean d_IsTest;
+    public int d_TestReinforceArmies;
 
     /**
      * default Constructor for PlayerStrategy
@@ -23,7 +25,8 @@ public class AggresivePlayer extends PlayerStrategy{
         d_StrongestCountry = null;
         d_DefendingCountry = null;
         d_InitialCountry = null;
-        d_maxArmies = 0;
+        d_MaxArmies = 0;
+        d_IsTest = false;
     }
 
 
@@ -93,7 +96,7 @@ public class AggresivePlayer extends PlayerStrategy{
                     if (l_currentCountryArmies >= l_maxArmies) {
                         l_maxArmies = l_currentCountryArmies;
                         d_MoveFromCountry = l_neighborCountry;
-                        d_maxArmies = l_maxArmies;
+                        d_MaxArmies = l_maxArmies;
                     }
                 }
             }
@@ -114,13 +117,35 @@ public class AggresivePlayer extends PlayerStrategy{
         d_OrderVal = l_random.nextInt(3);
     }
 
+    /**
+     * Sets the random value for tests
+     * @param p_random input random value
+     */
+    public void setTestOrderValue(int p_random)
+    {
+        d_OrderVal = p_random;
+    }
+
+    /**
+     * Sets the d_IsTest value to true in testcases
+     * @param p_isTest input boolean value
+     */
+    public void isTest(boolean p_isTest)
+    {
+        d_IsTest = p_isTest;
+    }
+
+    /**
+     * Finds the initial country where armies can be deployed.
+     * @return Initial random country
+     */
     private CountryDetails findInitialCountry() {
         for(CountryDetails l_country : this.d_Player.getOwnedCountries().values())
         {
             for (CountryDetails l_neighborCountry : l_country.getNeighbours().values()) {
                 if(!this.d_Player.getOwnedCountries().containsKey(l_neighborCountry)){
-                d_InitialCountry = l_country;
-                return d_InitialCountry;
+                    d_InitialCountry = l_country;
+                    return d_InitialCountry;
                 }
             }
 
@@ -137,7 +162,10 @@ public class AggresivePlayer extends PlayerStrategy{
         l_moveFromCountry  = toMoveFrom();   //neighbor of strongest country with max armies
 
         Random l_random = new Random();
-        setRandomOrderValue();
+
+        if(!d_IsTest)
+            setRandomOrderValue();
+
         switch(d_OrderVal) {
             case 0:
                 if(d_Player.getOwnedArmies() == 0)
@@ -146,6 +174,7 @@ public class AggresivePlayer extends PlayerStrategy{
                     break;
                 }
                 int l_reinforceArmies = l_random.nextInt(d_Player.getOwnedArmies());
+                d_TestReinforceArmies = l_reinforceArmies;
                 if(d_Player.getOwnedArmies() == 1)
                     l_reinforceArmies = 1;
                 if (l_reinforceArmies != 0) {
@@ -156,6 +185,7 @@ public class AggresivePlayer extends PlayerStrategy{
                     }else{
                         findInitialCountry();
                         if(d_InitialCountry!=null) {
+                            d_StrongestCountry = d_InitialCountry;
                             System.out.println("Armies deployed on country :" + d_InitialCountry.getCountryId() + " " + l_reinforceArmies);
                             d_Player.setOwnedArmies(d_Player.getOwnedArmies() - l_reinforceArmies);
                             return new Deploy(d_Player, d_InitialCountry.getCountryId(), l_reinforceArmies);
@@ -212,11 +242,11 @@ public class AggresivePlayer extends PlayerStrategy{
                         int l_value = l_randomCard.nextInt(2);
                         if (l_value == 0) {
                             d_Player.removeCard("Airlift");
-                            return new Airlift(d_Player, l_moveFromCountry.getCountryId(), l_attackingCountry.getCountryId(), d_maxArmies);
+                            return new Airlift(d_Player, l_moveFromCountry.getCountryId(), l_attackingCountry.getCountryId(), d_MaxArmies);
                         } else
                             break;
                     }
-                    return new Advance(d_Player, l_moveFromCountry.getCountryId(), l_attackingCountry.getCountryId(), d_maxArmies, l_attackingCountry.getOwnerPlayer());
+                    return new Advance(d_Player, l_moveFromCountry.getCountryId(), l_attackingCountry.getCountryId(), d_MaxArmies, l_attackingCountry.getOwnerPlayer());
                 } else
                     return null;
 
