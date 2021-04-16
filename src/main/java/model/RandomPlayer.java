@@ -53,8 +53,6 @@ public class RandomPlayer extends PlayerStrategy {
     private CountryDetails findRandomCountry() {
         d_RandomCountry = null;
         Object[] values = d_Player.getOwnedCountries().values().toArray();
-        System.out.println(d_Player.getOwnedCountries());
-        System.out.println(d_Player.getPlayerName());
         int totalC = values.length - 1;
         if(d_Player.getOwnedCountries().size() != 0){
             Object randomValue = values[rand.nextInt(totalC + 1)];
@@ -143,6 +141,7 @@ public class RandomPlayer extends PlayerStrategy {
      *
      * @return country to attack from
      */
+    @Override
     protected CountryDetails toAttackFrom() {
         d_RandomCountryWithArmies = null;
         int l_maxArmies = 0, l_numArmies;
