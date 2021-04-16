@@ -50,25 +50,25 @@ public class TournamentEngineTest {
     public void testTournamentCommand(){
 
         String message = d_Te.parse(null, "tournament -M -P player  -G 3 -D 5");
-        Assert.assertEquals("Comand has to be in form of 'tournament -M listofmapfiles -P listofplayerstrategies -G numberofgames -D maxnumberofturns'", message);
+        Assert.assertEquals("Command has to be in form of 'tournament -M listofmapfiles{1-5} -P listofplayerstrategies{2-4} -G numberofgames{1-5} -D maxnumberofturns{10-50}", message);
 
         message = d_Te.parse(null, "tournament -M dummy.map ameroki.map ConquestCliff.map eurasien.map uk.map world.map -P player  -G 3 -D 5");
-        Assert.assertEquals("Comand has to be in form of 'tournament -M listofmapfiles -P listofplayerstrategies -G numberofgames -D maxnumberofturns'", message);
+        Assert.assertEquals("Command has to be in form of 'tournament -M listofmapfiles{1-5} -P listofplayerstrategies{2-4} -G numberofgames{1-5} -D maxnumberofturns{10-50}", message);
 
         message = d_Te.parse(null, "tournament -M dummy.map ameroki.map -P human  -G 3 -D 15");
-        Assert.assertEquals("Comand has to be in form of 'tournament -M listofmapfiles -P listofplayerstrategies -G numberofgames -D maxnumberofturns'", message);
+        Assert.assertEquals("Command has to be in form of 'tournament -M listofmapfiles{1-5} -P listofplayerstrategies{2-4} -G numberofgames{1-5} -D maxnumberofturns{10-50}", message);
 
         message = d_Te.parse(null, "tournament -M dummy.map ameroki.map -P benevolent benevolent  -G 3 -D 15");
-        Assert.assertEquals("Comand has to be in form of 'tournament -M listofmapfiles -P listofplayerstrategies -G numberofgames -D maxnumberofturns'", message);
+        Assert.assertEquals("Command has to be in form of 'tournament -M listofmapfiles{1-5} -P listofplayerstrategies{2-4} -G numberofgames{1-5} -D maxnumberofturns{10-50}", message);
 
         message = d_Te.parse(null, "tournament -M dummy.map ameroki.map -P benevolent random cheater aggressive random  -G 3 -D 15");
-        Assert.assertEquals("Comand has to be in form of 'tournament -M listofmapfiles -P listofplayerstrategies -G numberofgames -D maxnumberofturns'", message);
+        Assert.assertEquals("Command has to be in form of 'tournament -M listofmapfiles{1-5} -P listofplayerstrategies{2-4} -G numberofgames{1-5} -D maxnumberofturns{10-50}", message);
 
         message = d_Te.parse(null, "tournament -M dummy.map ameroki.map -P benevolent random  -G 3 -D 5");
-        Assert.assertEquals("Comand has to be in form of 'tournament -M listofmapfiles -P listofplayerstrategies -G numberofgames -D maxnumberofturns'", message);
+        Assert.assertEquals("Command has to be in form of 'tournament -M listofmapfiles{1-5} -P listofplayerstrategies{2-4} -G numberofgames{1-5} -D maxnumberofturns{10-50}", message);
 
         message = d_Te.parse(null, "tournament -M dummy.map ameroki.map -P benevolent random  -G 3 -D 55");
-        Assert.assertEquals("Comand has to be in form of 'tournament -M listofmapfiles -P listofplayerstrategies -G numberofgames -D maxnumberofturns'", message);
+        Assert.assertEquals("Command has to be in form of 'tournament -M listofmapfiles{1-5} -P listofplayerstrategies{2-4} -G numberofgames{1-5} -D maxnumberofturns{10-50}", message);
     }
 
 

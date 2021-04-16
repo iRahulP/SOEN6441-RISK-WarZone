@@ -158,7 +158,7 @@ public class PlayRisk {
                 //tournament mode
                 tEngine = new TournamentEngine(cmd);
                 do {
-                    System.out.println("Enter a valid tournament command of the form 'tournament -M listofmapfiles -P listofplayerstrategies -G numberofgames -D maxnumberofturns'");
+                    System.out.println("Command has to be in form of 'tournament -M listofmapfiles{1-5} -P listofplayerstrategies{2-4} -G numberofgames{1-5} -D maxnumberofturns{10-50}");
                     l_cmd = sc.nextLine();
                     message = tEngine.parse(null, l_cmd);
                 } while (!message.equals("success"));
