@@ -224,39 +224,39 @@ public class AggresivePlayer extends PlayerStrategy{
 
             case 1:
                 //create attack Order
-                if(l_attackingCountry.getNumberOfArmies() == 0)
-                {
-                    System.out.println("The number of armies in strongest country is 0 ,deploy before advance");
+                if(l_attackingCountry!=null) {
+                    if (l_attackingCountry.getNumberOfArmies() == 0) {
+                        System.out.println("The number of armies in strongest country is 0 ,deploy before advance");
+                        return null;
+                    }
+                    if (l_defendingCountry != null) {
+
+                        //check if a player has Bomb card.
+                        //If yes randomly it can be used otherwise attack order takes place
+                        if (d_Player.doesCardExists("Bomb")) {
+                            Random l_randomCard = new Random();
+                            int l_value = l_randomCard.nextInt(2);
+                            if (l_value == 0) {
+                                d_Player.removeCard("Bomb");
+                                return new Bomb(d_Player, l_defendingCountry.getOwnerPlayer(), l_defendingCountry.getCountryId());
+                            } else
+                                break;
+                        }
+                        int l_randomVal;
+                        if (l_attackingCountry.getNumberOfArmies() > 0)
+                            l_randomVal = l_random.nextInt(l_attackingCountry.getNumberOfArmies());
+                        else
+                            return null;
+                        if (l_randomVal != 0)
+                            return new Advance(d_Player, l_attackingCountry.getCountryId(), l_defendingCountry.getCountryId(), l_randomVal, d_DefendingCountry.getOwnerPlayer());
+                        else
+                            return null;
+                    } else
+                        System.out.println("Neighbor does not exist for this country :" + l_attackingCountry.getCountryId());
                     return null;
                 }
-                if(l_defendingCountry!=null) {
-
-                    //check if a player has Bomb card.
-                    //If yes randomly it can be used otherwise attack order takes place
-                    if(d_Player.doesCardExists("Bomb")) {
-                        Random l_randomCard = new Random();
-                        int l_value = l_randomCard.nextInt(2);
-                        if (l_value == 0) {
-                            d_Player.removeCard("Bomb");
-                            return new Bomb(d_Player, l_defendingCountry.getOwnerPlayer(), l_defendingCountry.getCountryId());
-                        }
-                        else
-                            break;
-                    }
-                    int l_randomVal;
-                    if(l_attackingCountry.getNumberOfArmies() > 0)
-                        l_randomVal = l_random.nextInt(l_attackingCountry.getNumberOfArmies());
-                    else
-                        return null;
-                    if(l_randomVal!=0)
-                        return new Advance(d_Player, l_attackingCountry.getCountryId(), l_defendingCountry.getCountryId(),l_randomVal , d_DefendingCountry.getOwnerPlayer());
-                    else
-                        return null;
-                }
                 else
-                    System.out.println("Neighbor does not exist for this country :"+ l_attackingCountry.getCountryId());
-                return null;
-
+                    return null;
 
             case 2:
                 //move maximum armies from one country to strongest country
