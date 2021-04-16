@@ -54,7 +54,7 @@ public class BenevolentPlayer extends PlayerStrategy{
      */
     @Override
     protected CountryDetails toMoveFrom() {
-        d_SourceCountry=null;
+        //d_SourceCountry=null;
 
         Object[] values = d_Player.getOwnedCountries().values().toArray();
         int totalC = values.length - 1;
@@ -62,14 +62,8 @@ public class BenevolentPlayer extends PlayerStrategy{
             Object randomValue = values[random.nextInt(totalC + 1)];
             d_SourceCountry = (CountryDetails) randomValue;
         }
-        //Object randomValue = values[random.nextInt(values.length)];
-        //d_SourceCountry = (CountryDetails) randomValue;
 
-        if(d_SourceCountry!=null){
-            return d_SourceCountry;
-        } else{
-            return null;
-        }
+        return d_SourceCountry;
     }
 
     /**
@@ -79,14 +73,15 @@ public class BenevolentPlayer extends PlayerStrategy{
      */
     protected CountryDetails toAdvance()
     {
-        findWeakestCountryDetails();
-        for(CountryDetails l_neighborCountry : d_SourceCountry.getNeighbours().values())
-        {
-            if(this.d_Player.getOwnedCountries().containsKey(l_neighborCountry) && (l_neighborCountry == d_WeakCountry))
-            {
-                d_WeakCountry = l_neighborCountry;
-                return d_WeakCountry;
+        if(d_SourceCountry!=null) {
+            findWeakestCountryDetails();
+            for (CountryDetails l_neighborCountry : d_SourceCountry.getNeighbours().values()) {
+                if (this.d_Player.getOwnedCountries().containsKey(l_neighborCountry.getCountryId()) && (l_neighborCountry == d_WeakCountry)) {
+                    return d_WeakCountry;
+                }
             }
+        } else{
+            return null;
         }
 
         //if no neighbors found to advance
@@ -106,25 +101,39 @@ public class BenevolentPlayer extends PlayerStrategy{
 
         int l_rndOrder = random.nextInt(2);
         int rnd_num_of_armies_pool = d_Player.getOwnedArmies();
+        CountryDetails l_cD = findWeakestCountryDetails();
 
         switch(l_rndOrder) {
             case 0:
-                int l_reinforceArmies = d_Player.getOwnedArmies();
-                if (l_reinforceArmies!= 0) {
+                if (l_cD!= null) {
                     //deploy on weak country
                     d_Player.setOwnedArmies(0);
-                    return new Deploy(d_Player, d_WeakCountry.getCountryId(),rnd_num_of_armies_pool);
+                    return new Deploy(d_Player, l_cD.getCountryId(),rnd_num_of_armies_pool);
                 } else {
                     System.out.println("Cannot be deployed on weak country");
                 }
                 break;
             case 1:
                 //create advance Order
-                if(l_advanceCountry != null)
-                    return new Advance(d_Player, l_sourceCountry.getCountryId(), l_advanceCountry.getCountryId(), random.nextInt(l_sourceCountry.getNumberOfArmies()), l_advanceCountry.getOwnerPlayer());
-                else
-                    System.out.println("Neighbor does not exist for this country");
-                break;
+                if(l_sourceCountry.getNumberOfArmies() == 0)
+                {
+                    System.out.println("The number of armies in strongest country is 0 ,deploy before advance");
+                    return null;
+                }
+
+                if(l_advanceCountry!=null) {
+                    int l_randomVal;
+                    if (l_sourceCountry.getNumberOfArmies() > 0)
+                        l_randomVal = random.nextInt(l_sourceCountry.getNumberOfArmies());
+                    else
+                        return null;
+
+                    if (l_randomVal != 0)
+                        return new Advance(d_Player, l_sourceCountry.getCountryId(), l_advanceCountry.getCountryId(), l_randomVal, l_advanceCountry.getOwnerPlayer());
+                    else
+                        System.out.println("Neighbor does not exist for this country"+ l_sourceCountry.getCountryId());
+                    break;
+                }
         }
 
         return null;
