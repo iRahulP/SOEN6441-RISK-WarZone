@@ -386,6 +386,7 @@ public class RunGameEngine {
              l_gameDataBuilder = (GameDataBuilder) l_o.readObject();
              
         } catch(FileNotFoundException e){
+            System.out.println("Entered file name doesnot exist.");
             return null;
         } catch(IOException e) {
             return null;

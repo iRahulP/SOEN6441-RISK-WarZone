@@ -288,8 +288,7 @@ public class GameEngine {
                             createGameData(l_gameDataBuilder);
                             System.out.println("Loaded successfully");
                             d_LogEntry.setMessage("Game loaded successfully.");
-                          
-                            
+                           
                         }
                         //method call for load game and parse this filename as argument
                     }else{
