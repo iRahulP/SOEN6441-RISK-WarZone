@@ -27,13 +27,16 @@ public class Blockade implements Order{
     public boolean execute() {
 
         CountryDetails l_c= d_Player.getOwnedCountries().get(d_CountryId.toLowerCase());
-        int l_existingArmies = l_c.getNumberOfArmies();
-        l_existingArmies *= 3;
-        l_c.setNumberOfArmies(l_existingArmies);
+        if(l_c != null){
+            int l_existingArmies = l_c.getNumberOfArmies();
+            l_existingArmies *= 3;
+            l_c.setNumberOfArmies(l_existingArmies);
 
-        //Making territory neutral
-        d_Player.getOwnedCountries().remove(l_c.getCountryId().toLowerCase());
-        return true;
+            //Making territory neutral
+            d_Player.getOwnedCountries().remove(l_c.getCountryId().toLowerCase());
+            return true;
+        }
+        return false;
     }
 
     /**
