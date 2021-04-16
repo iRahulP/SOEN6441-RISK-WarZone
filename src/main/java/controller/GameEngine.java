@@ -900,12 +900,20 @@ public class GameEngine {
                             }
                         }
                         //check if any player needs to be removed as of losing all territories
-                        for (Player l_p : d_Players){
+                        Iterator itr=d_Players.listIterator();
+                        while(itr.hasNext()){
+                            Player l_p = (Player)itr.next();
                             if(l_p.getOwnedCountries().size() == 0){
                                 System.out.println(l_p.getPlayerName()+" has lost all its territories and is no longer part of the game");
                                 d_LogEntry.setMessage(l_p.getPlayerName()+" has lost all its territories and is no longer part of the game");
                                 d_Players.remove(l_p);
                             }
+                        }
+                        if(d_Players.size() == 1){
+                            System.out.println(d_Players.get(0).getPlayerName()+" has Won the Game!");
+                            d_LogEntry.setMessage(d_Players.get(0).getPlayerName()+" has Won the Game!");
+                            d_LogEntry.detach(d_WriteLog);
+                            System.exit(0);
                         }
 
                         System.out.println("Current Orders were executed,Starting again with assigning Reinforcements!");
