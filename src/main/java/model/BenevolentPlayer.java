@@ -105,35 +105,39 @@ public class BenevolentPlayer extends PlayerStrategy{
 
         switch(l_rndOrder) {
             case 0:
-                if (l_cD!= null) {
+                if (l_cD != null) {
                     //deploy on weak country
                     d_Player.setOwnedArmies(0);
-                    return new Deploy(d_Player, l_cD.getCountryId(),rnd_num_of_armies_pool);
+                    return new Deploy(d_Player, l_cD.getCountryId(), rnd_num_of_armies_pool);
                 } else {
                     System.out.println("Cannot be deployed on weak country");
                 }
                 break;
             case 1:
                 //create advance Order
-                if(l_sourceCountry.getNumberOfArmies() == 0)
-                {
+                if (l_sourceCountry != null) {
+                    if (l_sourceCountry.getNumberOfArmies() == 0) {
                     System.out.println("The number of armies in strongest country is 0 ,deploy before advance");
                     return null;
                 }
 
-                if(l_advanceCountry!=null) {
-                    int l_randomVal;
-                    if (l_sourceCountry.getNumberOfArmies() > 0)
-                        l_randomVal = random.nextInt(l_sourceCountry.getNumberOfArmies());
-                    else
-                        return null;
+                if (l_advanceCountry != null) {
+                        int l_randomVal;
+                        if (l_sourceCountry.getNumberOfArmies() > 0)
+                            l_randomVal = random.nextInt(l_sourceCountry.getNumberOfArmies());
+                        else
+                            return null;
 
-                    if (l_randomVal != 0)
-                        return new Advance(d_Player, l_sourceCountry.getCountryId(), l_advanceCountry.getCountryId(), l_randomVal, l_advanceCountry.getOwnerPlayer());
-                    else
-                        System.out.println("Neighbor does not exist for this country"+ l_sourceCountry.getCountryId());
+                        if (l_randomVal != 0)
+                            return new Advance(d_Player, l_sourceCountry.getCountryId(), l_advanceCountry.getCountryId(), l_randomVal, l_advanceCountry.getOwnerPlayer());
+                        else
+                            System.out.println("Neighbor does not exist for this country" + l_sourceCountry.getCountryId());
                     break;
                 }
+                } else {
+                    return null;
+                }
+
         }
 
         return null;
