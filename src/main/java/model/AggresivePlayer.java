@@ -187,8 +187,9 @@ public class AggresivePlayer extends PlayerStrategy{
         l_defendingCountry = toAttack();     //neighbor country not belonging to player
         l_moveFromCountry  = toMoveFrom();   //neighbor of strongest country with max armies
 
-        System .out.println("Countries owned by player "+d_Player.getOwnedCountries().size());
-            //TODO
+        System .out.println("Countries owned by Aggressive player "+d_Player.getOwnedCountries().size());
+        System .out.println("Armies owned by Aggressive player "+d_Player.getOwnedArmies());
+        //TODO
         if (d_Player.getOwnedCountries().size() == 0){
             //TODO
         }
