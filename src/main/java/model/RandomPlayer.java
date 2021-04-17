@@ -74,15 +74,12 @@ public class RandomPlayer extends PlayerStrategy {
         }
         else {
             CountryDetails temp = null;
-            boolean t = true;
-            do {
-                d_RandomCountry = findRandomCountry();
-                if (d_RandomCountry != d_RandomCountryWithArmies) {
-                    //if source different than target then return for airlift
-                    temp = d_RandomCountry;
-                    t = false;
-                }
-            }while (t);
+            //get a random Source country
+            d_RandomCountry = findRandomCountry();
+            if (d_RandomCountry != d_RandomCountryWithArmies) {
+                //if source different than target then return for airlift
+                temp = d_RandomCountry;
+            }
             return temp;
         }
     }
@@ -145,11 +142,13 @@ public class RandomPlayer extends PlayerStrategy {
     protected CountryDetails toAttackFrom() {
         d_RandomCountryWithArmies = null;
         int l_maxArmies = 0, l_numArmies;
-        for (CountryDetails l_countryDetails : this.d_Player.getOwnedCountries().values()) {
-            l_numArmies = l_countryDetails.getNumberOfArmies();
-            if (l_numArmies > l_maxArmies) {
-                d_RandomCountryWithArmies = l_countryDetails;
-                return d_RandomCountryWithArmies;
+        if(this.d_Player.getOwnedCountries().size() != 0){
+            for (CountryDetails l_countryDetails : this.d_Player.getOwnedCountries().values()) {
+                l_numArmies = l_countryDetails.getNumberOfArmies();
+                if (l_numArmies > l_maxArmies) {
+                    d_RandomCountryWithArmies = l_countryDetails;
+                    return d_RandomCountryWithArmies;
+                }
             }
         }
         return d_RandomCountryWithArmies;
@@ -235,11 +234,14 @@ public class RandomPlayer extends PlayerStrategy {
 
 
             case (4):
-                CountryDetails findOther = findOtherRandomCountry();
-                if (d_Player.doesCardExists("Airlift") && l_attackingCountry!= null && findOther != null) {
-                    d_Player.removeCard("Airlift");
-                    return new Airlift(d_Player, l_attackingCountry.getCountryId(), findOther.getCountryId(), rand.nextInt(l_attackingCountry.getNumberOfArmies()));
-                } else
+                if(l_attackingCountry != null){
+                    CountryDetails findOther = findOtherRandomCountry();
+                    if (d_Player.doesCardExists("Airlift") && findOther != null) {
+                        d_Player.removeCard("Airlift");
+                        return new Airlift(d_Player, l_attackingCountry.getCountryId(), findOther.getCountryId(), rand.nextInt(l_attackingCountry.getNumberOfArmies()));
+                    }
+                }
+                 else
                     System.out.println("Player doesn't own Card Airlift or Source Country has no Armies to Move");
                 return null;
 

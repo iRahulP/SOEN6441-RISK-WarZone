@@ -145,6 +145,7 @@ public class StartUp extends Play {
 											l_p.setD_isHuman(false);
 											break;
 										default:
+											System.out.println("Wrong Strategy, Player set as human");
 											l_p.setD_isHuman(true);
 											break;
 									}
