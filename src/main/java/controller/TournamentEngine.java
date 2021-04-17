@@ -239,7 +239,7 @@ public class TournamentEngine extends GameEngine{
                 //tournament -M demo.map -P cheater random -G 1 -D 10
                 //tournament -M dummy.map ameroki.map -P cheater aggressive -G 4 -D 30
 
-
+                boolean anyOneWon = false;
                 for (int j = 1; j <= p_numberOfTurns; j++) {
                     int l_counter = 0;
                     System.out.println("It's " + j + "'th Turn");
@@ -261,7 +261,11 @@ public class TournamentEngine extends GameEngine{
                     while (l_counter > 0) {
                         //get Orders
                         for (Player p : d_Players) {
-                            p.issueOrder();
+                            if (p.getOwnedCountries().size() != 0) {
+                                p.issueOrder();
+                            } else {
+                                p.setOwnedArmies(0);
+                            }
 //                            if(p.getPlayerName().equals("cheater")){
 //                                if (p.getOwnedCountries().size() == d_Map.getCountries().size()) {
 //                                    System.out.println(p.getPlayerName() + " has Won the Game!");
@@ -312,46 +316,58 @@ public class TournamentEngine extends GameEngine{
                                         l_count--;
                                     }
                                 }
+                                anyOneWon = true;
                                 l_count = 0;
                                 win = false;
                                 break;
                             }else{
                                 System.out.println("When More Players");
-                                for (Player l_p : d_Players) {
-                                    Queue<Order> l_temp = l_p.getD_orderList();
-                                    System.out.println("Got Order :"+l_temp+" from "+l_p.getPlayerName());
-                                    if (l_temp.size() > 0) {
-                                        Order l_toRemove = l_p.next_order();
-                                        if(l_toRemove != null){
-                                            System.out.println("Executing "+l_toRemove);
-                                            l_toRemove.execute();
-                                            l_count--;
-                                        }
-                                    }
-//                                    if (l_p.getOwnedCountries().size() == 0) {
-//                                        d_Players.remove(l_p);
-//                                    }
-                                }
-//                                Iterator itr=d_Players.listIterator();
-//                                while(itr.hasNext())
-//                                {
-//                                    Player l_p = (Player)itr.next();
+//                                for (Player l_p : d_Players) {
 //                                    Queue<Order> l_temp = l_p.getD_orderList();
+//                                    System.out.println("Got Order :"+l_temp+" from "+l_p.getPlayerName());
 //                                    if (l_temp.size() > 0) {
 //                                        Order l_toRemove = l_p.next_order();
-//                                        System.out.println("Got Order :"+l_temp+" from "+l_p.getPlayerName());
 //                                        if(l_toRemove != null){
+//                                            System.out.println("Executing "+l_toRemove);
 //                                            l_toRemove.execute();
 //                                            l_count--;
 //                                        }
 //                                    }
-//                                    if (l_p.getOwnedCountries().size() == 0) {
-//                                        itr.remove();
-//                                        //  if(l_playerSize == 1)
-//                                        //   break;
-//                                    }
-//
+////                                    if (l_p.getOwnedCountries().size() == 0) {
+////                                        d_Players.remove(l_p);
+////                                    }
 //                                }
+                                Iterator itr=d_Players.listIterator();
+                                while(itr.hasNext())
+                                {
+                                    Player l_p = (Player)itr.next();
+                                    System.out.println(l_p.getPlayerName());
+                                    Queue<Order> l_temp = l_p.getD_orderList();
+                                    System.out.println(l_temp);
+                                    if (l_temp.size() > 0) {
+                                        Order l_toRemove = l_p.next_order();
+                                        System.out.println(l_toRemove);
+                                        System.out.println("Got Order :"+l_temp+" from "+l_p.getPlayerName());
+                                        if(l_toRemove != null){
+                                            System.out.println(l_toRemove);
+                                            System.out.println(l_p);
+                                            l_toRemove.execute();
+                                            l_count--;
+                                        }
+                                    }
+                                    if (l_p.getOwnedCountries().size() == 0) {
+                                        System.out.println(l_p.getPlayerName()+": removed");
+                                        itr.remove();
+                                    }
+                                    if(d_Players.size() == 1){
+                                        System.out.println(l_p.getPlayerName() + " has Won the Game!");
+                                        d_LogEntry.setMessage(l_p.getPlayerName() + " has Won the Game!");
+                                        l_winner.put(l_gameNumber, l_p.getPlayerName());
+                                        System.out.println(l_winner.size());
+                                        anyOneWon = true;
+                                        break;
+                                    }
+                                }
                                 //l_count--;
                             }
                         }
@@ -365,6 +381,20 @@ public class TournamentEngine extends GameEngine{
                     assignEachPlayerReinforcements(d_Players);
                 }
                 //Check if any Player Won
+//                if(anyOneWon = false){
+//                    for (Player l_p : d_Players) {
+//                        if (l_p.getOwnedCountries().size() == d_Map.getCountries().size()) {
+//                            System.out.println(l_p.getPlayerName() + " has Won the Game!");
+//                            d_LogEntry.setMessage(l_p.getPlayerName() + " has Won the Game!");
+//                            l_winner.put(l_gameNumber, l_p.getPlayerName());
+//                            anyOneWon = true;
+//                            break;
+//                        }
+//                    }
+//                }else{
+//                    System.out.println("Current Game resulted in a Draw");
+//                    l_winner.put(l_gameNumber, "Draw");
+//                }
                 for (Player l_p : d_Players) {
                     if (l_p.getOwnedCountries().size() == d_Map.getCountries().size()) {
                         System.out.println(l_p.getPlayerName() + " has Won the Game!");
