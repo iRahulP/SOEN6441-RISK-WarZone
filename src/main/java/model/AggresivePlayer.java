@@ -187,6 +187,12 @@ public class AggresivePlayer extends PlayerStrategy{
         l_defendingCountry = toAttack();     //neighbor country not belonging to player
         l_moveFromCountry  = toMoveFrom();   //neighbor of strongest country with max armies
 
+        System .out.println("Countries owned by player "+d_Player.getOwnedCountries().size());
+            //TODO
+        if (d_Player.getOwnedCountries().size() == 0){
+            //TODO
+        }
+
         Random l_random = new Random();
 
         if(!d_IsTest)
@@ -200,6 +206,7 @@ public class AggresivePlayer extends PlayerStrategy{
                     break;
                 }
                 int l_reinforceArmies = d_Player.getOwnedArmies();
+                System.out.println(" Aggressive reinforce armies owned by player"+d_Player.getOwnedArmies());
                 d_TestReinforceArmies = l_reinforceArmies;
                 if(d_Player.getOwnedArmies() == 1)
                     l_reinforceArmies = 1;
@@ -224,7 +231,15 @@ public class AggresivePlayer extends PlayerStrategy{
 
             case 1:
                 //create attack Order
-                if(l_attackingCountry!=null) {
+                if(l_attackingCountry ==null) {
+                    //then the attacking country or strongest country will be null if doesnt own any countries
+                    if (d_Player.getOwnedCountries() == null){
+                        System.out.println("The countries owned by player is null ");
+                        //TODO armies can be set to zero in such a case
+                    }
+                    return null;
+                }
+                else{
                     if (l_attackingCountry.getNumberOfArmies() == 0) {
                         System.out.println("The number of armies in strongest country is 0 ,deploy before advance");
                         return null;
@@ -255,8 +270,6 @@ public class AggresivePlayer extends PlayerStrategy{
                         System.out.println("Neighbor does not exist for this country :" + l_attackingCountry.getCountryId());
                     return null;
                 }
-                else
-                    return null;
 
             case 2:
                 //move maximum armies from one country to strongest country
