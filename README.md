@@ -11,3 +11,14 @@ Risk Game Implementation as part of SOEN6441(Advanced Programming Practices) cou
 * **Rucha Prajapati** - 40170922
 * **Shravya Nalla** - 40162273
 * **Yash Shah** - 40163452
+
+# Architecture
+
+The project uses Model-View-Controller Pattern
+
+# Design Patterns
+
+* **Adapter Pattern**
+* **State Pattern**
+* **Command Pattern**
+* **Strategy Pattern**
