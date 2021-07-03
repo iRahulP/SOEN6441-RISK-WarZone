@@ -22,3 +22,8 @@ The project uses Model-View-Controller Pattern
 * **State Pattern**
 * **Command Pattern**
 * **Strategy Pattern**
+
+# General Info@Warzone Game
+
+This wiki covers information about all parts of the game Warzone.
+# https://www.warzone.com/wiki/Main_Page
